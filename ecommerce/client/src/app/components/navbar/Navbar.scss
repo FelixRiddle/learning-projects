@@ -1,0 +1,24 @@
+nav {
+	
+	a {
+		padding: 20px;
+		text-decoration: none;
+		color: black;
+
+		&:hover {
+			cursor: pointer;
+		}
+	}
+	
+	#footbar {
+		display: flex;
+		flex-direction: column;
+		justify-content: left;
+	}
+}
+
+.navbar1 {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+}

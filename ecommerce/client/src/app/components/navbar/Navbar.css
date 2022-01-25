@@ -1,0 +1,21 @@
+nav a {
+  padding: 20px;
+  text-decoration: none;
+  color: black;
+}
+nav a:hover {
+  cursor: pointer;
+}
+nav #footbar {
+  display: flex;
+  flex-direction: column;
+  justify-content: left;
+}
+
+.navbar1 {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+/*# sourceMappingURL=Navbar.css.map */
