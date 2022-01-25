@@ -14,7 +14,7 @@ app.use(express.json());
 app.use(cors());
 
 app.use("/api/products", require("./routes/products"));
-app.use("/api/auth", require("./routes/auth"));
+app.use("/api/users", require("./routes/auth"));
 
 app.listen(process.env.PORT, () => {
 	console.log(`Server listening on port ${process.env.PORT}`);

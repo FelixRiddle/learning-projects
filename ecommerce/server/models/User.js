@@ -1,13 +1,13 @@
 const mongoose = require("mongoose");
 
 const userSchema = new mongoose.Schema({
-	first_name: {
+	firstName: {
 		type: String,
 		required: true,
 		min: 3,
 		max: 128,
 	},
-	last_name: {
+	lastName: {
 		type: String,
 		required: true,
 		min: 3,
@@ -26,7 +26,7 @@ const userSchema = new mongoose.Schema({
 	},
 	age: {
 		type: Date,
-		required: true,
+		default: Date.now,
 	},
 	country: {
 		type: String,
@@ -44,7 +44,7 @@ const userSchema = new mongoose.Schema({
 		type: String,
 		max: 128,
 	},
-	postal_code: {
+	postalCode: {
 		type: String,
 		max: 32,
 	},

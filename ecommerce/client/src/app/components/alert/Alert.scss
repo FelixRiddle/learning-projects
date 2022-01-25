@@ -1,0 +1,23 @@
+.alert {
+	border-radius: 20px;
+	padding: 20px;
+	width: 30%;
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	margin: 20px;
+}
+
+.danger {
+	background-color: rgba(255, 97, 97, 0.7);
+	border: 3px solid rgba(209, 60, 60, 0.4);
+}
+
+.success {
+	background-color: rgba(98, 216, 98, 0.8);
+	border: 3px solid rgb(105, 197, 105, .7);
+}
+
+.force-center {
+	margin-left: 34%;
+}

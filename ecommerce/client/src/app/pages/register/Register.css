@@ -1,3 +1,53 @@
+form .labels {
+  grid-area: labels;
+}
+form .inputs {
+  grid-area: inputs;
+}
+form button {
+  grid-area: button;
+}
+form .title {
+  grid-area: title;
+}
+form label, form input {
+  display: block;
+  font-size: 25px;
+  padding: 20px;
+  margin: 20px;
+  display: block;
+  border: none;
+}
+form label {
+  text-align: center;
+}
+form input {
+  border-bottom: 1px solid gray;
+}
+form input:focus {
+  border-radius: 5px;
+  border: 3px solid rgba(115, 250, 255, 0.8);
+  outline: none;
+}
+form button {
+  padding: 10px;
+  margin: 10px;
+  width: 60%;
+  font-size: 25px;
+  background-color: rgba(115, 200, 255, 0.4);
+  border: none;
+  border-radius: 5px;
+  color: #333;
+  border: 3px solid rgba(115, 200, 255, 0.5);
+}
+form button:focus {
+  background-color: #737dff;
+}
 
+.grid-container {
+  display: grid;
+  grid-template-areas: ". title title ." ". labels inputs ." ". . button .";
+  padding: 10px;
+}
 
 /*# sourceMappingURL=Register.css.map */
