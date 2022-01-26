@@ -1,0 +1,95 @@
+.profile h6 {
+  font-size: 25px;
+  margin-left: 40%;
+  text-align: left;
+  grid-area: titles;
+}
+.profile .changeBasicInfo > form,
+.profile .changePasswords > form,
+.profile .changeAddress > form {
+  display: grid;
+  grid-template-areas: ". labels inputs ." ". buttons buttons .";
+}
+.profile .changeBasicInfo > form .profileLabels > label,
+.profile .changeBasicInfo > form .profileInputs > input,
+.profile .changeBasicInfo > form .changePasswordsLabels > label,
+.profile .changeBasicInfo > form .changePasswordsInputs > input,
+.profile .changeBasicInfo > form .changeAddressLabels > label,
+.profile .changeBasicInfo > form .changeAddressInputs > input,
+.profile .changePasswords > form .profileLabels > label,
+.profile .changePasswords > form .profileInputs > input,
+.profile .changePasswords > form .changePasswordsLabels > label,
+.profile .changePasswords > form .changePasswordsInputs > input,
+.profile .changePasswords > form .changeAddressLabels > label,
+.profile .changePasswords > form .changeAddressInputs > input,
+.profile .changeAddress > form .profileLabels > label,
+.profile .changeAddress > form .profileInputs > input,
+.profile .changeAddress > form .changePasswordsLabels > label,
+.profile .changeAddress > form .changePasswordsInputs > input,
+.profile .changeAddress > form .changeAddressLabels > label,
+.profile .changeAddress > form .changeAddressInputs > input {
+  display: block;
+  font-size: 25px;
+  padding: 20px;
+  margin: 20px;
+  display: block;
+  border: none;
+}
+.profile .changeBasicInfo > form .profileLabels > label,
+.profile .changeBasicInfo > form .changePasswordsLabels > label,
+.profile .changeBasicInfo > form .changeAddressLabels > label,
+.profile .changePasswords > form .profileLabels > label,
+.profile .changePasswords > form .changePasswordsLabels > label,
+.profile .changePasswords > form .changeAddressLabels > label,
+.profile .changeAddress > form .profileLabels > label,
+.profile .changeAddress > form .changePasswordsLabels > label,
+.profile .changeAddress > form .changeAddressLabels > label {
+  grid-area: labels;
+}
+.profile .changeBasicInfo > form .profileInputs > input,
+.profile .changeBasicInfo > form .changePasswordsInputs > input,
+.profile .changeBasicInfo > form .changeAddressInputs > input,
+.profile .changePasswords > form .profileInputs > input,
+.profile .changePasswords > form .changePasswordsInputs > input,
+.profile .changePasswords > form .changeAddressInputs > input,
+.profile .changeAddress > form .profileInputs > input,
+.profile .changeAddress > form .changePasswordsInputs > input,
+.profile .changeAddress > form .changeAddressInputs > input {
+  grid-area: inputs;
+  border-bottom: 1px solid gray;
+}
+.profile .changeBasicInfo > form .profileInputs > input:focus,
+.profile .changeBasicInfo > form .changePasswordsInputs > input:focus,
+.profile .changeBasicInfo > form .changeAddressInputs > input:focus,
+.profile .changePasswords > form .profileInputs > input:focus,
+.profile .changePasswords > form .changePasswordsInputs > input:focus,
+.profile .changePasswords > form .changeAddressInputs > input:focus,
+.profile .changeAddress > form .profileInputs > input:focus,
+.profile .changeAddress > form .changePasswordsInputs > input:focus,
+.profile .changeAddress > form .changeAddressInputs > input:focus {
+  border-radius: 5px;
+  border: 3px solid rgba(115, 250, 255, 0.8);
+  outline: none;
+}
+.profile .changeBasicInfo > form button,
+.profile .changePasswords > form button,
+.profile .changeAddress > form button {
+  grid-area: buttons;
+  background-color: black;
+  padding: 10px;
+  margin: 10px;
+  width: 60%;
+  font-size: 25px;
+  background-color: rgba(115, 200, 255, 0.4);
+  border: none;
+  border-radius: 5px;
+  color: #333;
+  border: 3px solid rgba(115, 200, 255, 0.5);
+}
+.profile .changeBasicInfo > form button:focus,
+.profile .changePasswords > form button:focus,
+.profile .changeAddress > form button:focus {
+  background-color: #737dff;
+}
+
+/*# sourceMappingURL=Profile.css.map */

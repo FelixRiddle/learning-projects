@@ -22,8 +22,6 @@ function Login() {
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
-		let response = "";
-
 		await axios
 			//"http://localhost:3001/api/users/register"
 			.post("http://localhost:3001/api/users/login", { ...input })

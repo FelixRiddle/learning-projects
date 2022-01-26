@@ -8,6 +8,7 @@ import About from "../../pages/about/About";
 import Login from "../../pages/login/Login";
 import Register from "../../pages/register/Register";
 import Search from "../../pages/search/Search";
+import Profile from "../../pages/profile/Profile";
 
 function Navbar() {
 	const [user, setUser] = useState("");
@@ -73,6 +74,7 @@ const Links = (props) => {
 							<a className="navlink" onClick={props.handleLogout} href="/">
 								Logout
 							</a>
+							<a href="/profile">Profile</a>
 						</span>
 					))}
 			</span>
@@ -90,6 +92,7 @@ const GoToRoutes = () => {
 				<Route path="/login" element={<Login />} />
 				<Route path="/register" element={<Register />} />
 				<Route path="/search" element={<Search />} />
+				<Route path="/profile" element={<Profile />} />
 			</Routes>
 		</BrowserRouter>
 	);

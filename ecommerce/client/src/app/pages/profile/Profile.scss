@@ -1,0 +1,68 @@
+.profile {
+	h6 {
+		font-size: 25px;
+		margin-left: 40%;
+		text-align: left;
+		grid-area: titles;
+	}
+
+	.changeBasicInfo > form,
+	.changePasswords > form,
+	.changeAddress > form {
+		.profileLabels > label,
+		.profileInputs > input,
+		.changePasswordsLabels > label,
+		.changePasswordsInputs > input,
+		.changeAddressLabels > label,
+		.changeAddressInputs > input {
+			display: block;
+			font-size: 25px;
+			padding: 20px;
+			margin: 20px;
+			display: block;
+			border: none;
+		}
+
+		.profileLabels > label,
+		.changePasswordsLabels > label,
+		.changeAddressLabels > label {
+			grid-area: labels;
+		}
+
+		.profileInputs > input,
+		.changePasswordsInputs > input,
+		.changeAddressInputs > input {
+			grid-area: inputs;
+			border-bottom: 1px solid gray;
+
+			&:focus {
+				border-radius: 5px;
+				border: 3px solid rgba(115, 250, 255, 0.8);
+				outline: none;
+			}
+		}
+
+		button {
+			grid-area: buttons;
+			background-color: black;
+			padding: 10px;
+			margin: 10px;
+			width: 60%;
+			font-size: 25px;
+			background-color: rgba(115, 200, 255, 0.4);
+			border: none;
+			border-radius: 5px;
+			color: #333;
+			border: 3px solid rgba(115, 200, 255, 0.5);
+
+			&:focus {
+				background-color: rgba(115, 125, 255, 1);
+			}
+		}
+		
+		display: grid;
+		grid-template-areas:
+			". labels inputs ."
+			". buttons buttons .";
+	}
+}
