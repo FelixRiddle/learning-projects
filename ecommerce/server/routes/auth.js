@@ -5,6 +5,10 @@ const bcrypt = require("bcrypt");
 const { registerValidation, loginValidation } = require("../validation");
 
 router.post("/register", async (req, res) => {
+	const time = new Date().getTime();
+	const date = new Date(time);
+	console.log(`Date: ${date.toString()}`);
+	console.log(req.body);
 	try {
 		const { error } = registerValidation(req.body);
 		error && console.log(error);
@@ -30,27 +34,32 @@ router.post("/register", async (req, res) => {
 });
 
 router.post("/login", async (req, res) => {
+	const time = new Date().getTime();
+	const date = new Date(time);
+	console.log(`Date: ${date.toString()}`);
+	console.log(req.body);
 	try {
 		const { error } = loginValidation(req.body);
 		error && console.log(error);
-		if (error) return res.status(400).send(error.details[0].message);
+		if (error) return res.send(error.details[0].message);
 
 		// Get the user
 		const user = await User.findOne({ email: req.body.email });
 
 		// Use ambiguous messages to prevent hacking attemps
 		const msg = "Email or password is wrong.";
-		if (!user) return res.status(400).send(msg);
+		if (!user) return res.send(msg);
 
 		// Check if the password is correct
 		const validPass = await bcrypt.compare(req.body.password, user.password);
-		if (!validPass) return res.status(400).send(msg);
+		if (!validPass) return res.send(msg);
 
 		// Create and assign a token
 		const token = jwt.sign({ _id: user._id }, process.env.TOKEN_SECRET);
-		res.header("auth-token", token).status(200).send(token);
+		res.header("auth-token", token).status(200).send({ token, message: "Successfully logged in."});
 	} catch (err) {
 		console.log(err);
+		res.status(400).send(err);
 	}
 });
 

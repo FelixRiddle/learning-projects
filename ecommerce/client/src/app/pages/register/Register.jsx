@@ -29,7 +29,7 @@ function Register() {
 			setMessage("Passwords don't match.");
 			return;
 		}
-
+		
 		axios
 			.post("http://localhost:3001/api/users/register", { ...data })
 			.then((res) => {
@@ -95,10 +95,10 @@ function Register() {
 	};
 
 	return (
-		<div>
+		<div className="register">
 			<h2 className="title">Register</h2>
 			<form className="grid-container">
-				<div className="labels">
+				<div className="registerLabels">
 					<label className="first-name" htmlFor="firstName">
 						First name
 					</label>
@@ -116,7 +116,7 @@ function Register() {
 					</label>
 				</div>
 
-				<div className="inputs">
+				<div className="registerInputs">
 					<input
 						className="first-name"
 						type="text"
@@ -158,7 +158,7 @@ function Register() {
 						placeholder="Enter your password again"
 					/>
 				</div>
-				<button type="submit" onClick={handleSubmit}>
+				<button className="registerButton" type="submit" onClick={handleSubmit}>
 					Create account
 				</button>
 			</form>

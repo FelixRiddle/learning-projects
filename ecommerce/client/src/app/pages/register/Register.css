@@ -1,16 +1,15 @@
-form .labels {
+.register .title {
+  grid-area: title;
+  font-size: 25px;
+  margin-left: 40%;
+}
+.register form .registerLabels {
   grid-area: labels;
 }
-form .inputs {
+.register form .registerInputs {
   grid-area: inputs;
 }
-form button {
-  grid-area: button;
-}
-form .title {
-  grid-area: title;
-}
-form label, form input {
+.register form .registerLabels > label, .register form .registerInputs > input {
   display: block;
   font-size: 25px;
   padding: 20px;
@@ -18,18 +17,16 @@ form label, form input {
   display: block;
   border: none;
 }
-form label {
-  text-align: center;
-}
-form input {
+.register form .registerInputs > input {
   border-bottom: 1px solid gray;
 }
-form input:focus {
+.register form .registerInputs > input:focus {
   border-radius: 5px;
   border: 3px solid rgba(115, 250, 255, 0.8);
   outline: none;
 }
-form button {
+.register form .registerButton {
+  grid-area: button;
   padding: 10px;
   margin: 10px;
   width: 60%;
@@ -40,11 +37,10 @@ form button {
   color: #333;
   border: 3px solid rgba(115, 200, 255, 0.5);
 }
-form button:focus {
+.register form .registerButton:focus {
   background-color: #737dff;
 }
-
-.grid-container {
+.register .grid-container {
   display: grid;
   grid-template-areas: ". title title ." ". labels inputs ." ". . button .";
   padding: 10px;

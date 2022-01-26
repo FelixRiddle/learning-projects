@@ -1,3 +1,45 @@
-
+.login .loginTitle {
+  font-size: 25px;
+  margin-left: 40%;
+}
+.login form .loginLabels > label,
+.login form .loginInputs > input {
+  display: block;
+  font-size: 25px;
+  padding: 20px;
+  margin: 20px;
+  display: block;
+  border: none;
+}
+.login form .loginInputs > input {
+  border-bottom: 1px solid gray;
+}
+.login form .loginInputs > input:focus {
+  border-radius: 5px;
+  border: 3px solid rgba(115, 250, 255, 0.8);
+  outline: none;
+}
+.login form .loginButton {
+  padding: 10px;
+  margin: 10px;
+  width: 60%;
+  font-size: 25px;
+  background-color: rgba(115, 200, 255, 0.4);
+  border: none;
+  border-radius: 5px;
+  color: #333;
+  border: 3px solid rgba(115, 200, 255, 0.5);
+}
+.login form .loginButton:focus {
+  background-color: #737dff;
+}
+.login .grid-container {
+  padding: 10px;
+  display: flex;
+  justify-content: space-evenly;
+  flex-direction: row;
+  flex: none;
+  align-items: center;
+}
 
 /*# sourceMappingURL=Login.css.map */

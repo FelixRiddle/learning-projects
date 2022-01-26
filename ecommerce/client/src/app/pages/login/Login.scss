@@ -1,0 +1,54 @@
+.login {
+
+	.loginTitle {
+		font-size: 25px;
+		margin-left: 40%;
+	}
+	
+	form {
+		.loginLabels > label,
+		.loginInputs > input {
+			display: block;
+			font-size: 25px;
+			padding: 20px;
+			margin: 20px;
+			display: block;
+			border: none;
+		}
+
+		.loginInputs > input {
+			border-bottom: 1px solid gray;
+
+			&:focus {
+				border-radius: 5px;
+				border: 3px solid rgba(115, 250, 255, 0.8);
+				outline: none;
+			}
+		}
+
+		.loginButton {
+			padding: 10px;
+			margin: 10px;
+			width: 60%;
+			font-size: 25px;
+			background-color: rgba(115, 200, 255, 0.4);
+			border: none;
+			border-radius: 5px;
+			color: #333;
+			border: 3px solid rgba(115, 200, 255, 0.5);
+
+			&:focus {
+				background-color: rgba(115, 125, 255, 1);
+			}
+		}
+	}
+
+	.grid-container {
+		padding: 10px;
+		display: flex;
+		justify-content: space-evenly;
+		flex-direction: row;
+		flex: none;
+		align-items: center;
+	}
+}

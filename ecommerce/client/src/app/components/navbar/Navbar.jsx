@@ -56,7 +56,7 @@ const Links = () => {
 			<a className="navbar" href="/about">
 				About
 			</a>
-			<a className="navbar" href="/home">
+			<a className="navbar" href="/login">
 				Login
 			</a>
 			<a className="navbar" href="/register">

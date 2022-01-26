@@ -21,8 +21,8 @@ module.exports.registerValidation = registerValidation = (data) => {
 module.exports.loginValidation = loginValidation = (data) => {
 	const schema = Joi.object({
 		email: Joi.string().min(5).required().email(),
-		password: Joi.string().min(8).max(128).required(),
+		password: Joi.string().min(8).max(max).required(),
 	});
 
-	return schema.validate(data, schema);
+	return schema.validate(data);
 };
