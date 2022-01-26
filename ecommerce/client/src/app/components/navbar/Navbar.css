@@ -11,11 +11,18 @@ nav #footbar {
   flex-direction: column;
   justify-content: left;
 }
+nav .navbarspan {
+  margin: 20px;
+}
 
-.navbar1 {
+.navbar {
   display: flex;
   flex-direction: row;
   justify-content: center;
+}
+
+.navlink {
+  font-size: 20px;
 }
 
 /*# sourceMappingURL=Navbar.css.map */

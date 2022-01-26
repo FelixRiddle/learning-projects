@@ -55,7 +55,8 @@ router.post("/login", async (req, res) => {
 		if (!validPass) return res.send(msg);
 
 		// Create and assign a token
-		const token = jwt.sign({ _id: user._id }, process.env.TOKEN_SECRET);
+		const { password, ...userData } = user._doc;
+		const token = jwt.sign(userData, process.env.TOKEN_SECRET);
 		res.header("auth-token", token).status(200).send({ token, message: "Successfully logged in."});
 	} catch (err) {
 		console.log(err);

@@ -20,9 +20,11 @@ function Login() {
 		});
 	};
 
-	const handleSubmit = (e) => {
+	const handleSubmit = async (e) => {
 		e.preventDefault();
-		axios
+		let response = "";
+
+		await axios
 			//"http://localhost:3001/api/users/register"
 			.post("http://localhost:3001/api/users/login", { ...input })
 			.then((res) => {
@@ -39,11 +41,14 @@ function Login() {
 						["Email", "Password"],
 						setMessage
 					);
-				} else if (typeof res.data === "object") {
+				} else if (res.data.token) {
+					localStorage.setItem("token", res.data.token);
+
 					setState("success");
 					setMessage(
 						"Successfully logged in, going to the home page in 5 seconds..."
 					);
+					
 					setTimeout(() => {
 						window.location.href = "/home";
 					}, 5000);

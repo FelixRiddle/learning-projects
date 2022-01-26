@@ -1,7 +1,7 @@
 import "./Navbar.css";
 import React, { useState, useEffect } from "react";
 import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
-//import jwt from "jsonwebtoken";
+import jwt_decode from "jwt-decode";
 
 import Home from "../../pages/home/Home";
 import About from "../../pages/about/About";
@@ -10,33 +10,34 @@ import Register from "../../pages/register/Register";
 import Search from "../../pages/search/Search";
 
 function Navbar() {
-	const [user, setUser] = useState("")
-	
+	const [user, setUser] = useState("");
+
 	const handleLogout = () => {
 		localStorage.removeItem("token");
 		window.location.href = "/";
 	};
-	
+
 	useEffect(() => {
-		const user = localStorage.getItem("user");
-		/*
+		const token = localStorage.getItem("token");
 		if (token) {
-			//const user = jwt.decode(token);*/
-			
+			const user = jwt_decode(token);
+
 			if (!user) {
 				console.log(`No previous session found.`);
 				localStorage.removeItem("token");
 			} else {
 				console.log(`Previous session found.`);
+				console.log(`User:`);
+				console.log(user);
 				setUser(user);
 			}
-		//}
-	}, [])
+		}
+	}, []);
 
 	return (
 		<>
 			{/* Links */}
-			<Links />
+			<Links user={user} handleLogout={handleLogout} />
 
 			{/* Go to routes */}
 			<GoToRoutes />
@@ -47,21 +48,34 @@ function Navbar() {
 	);
 }
 
-const Links = () => {
+const Links = (props) => {
 	return (
-		<nav className="navbar1">
-			<a className="navbar" href="/">
-				Mercado
-			</a>
-			<a className="navbar" href="/about">
-				About
-			</a>
-			<a className="navbar" href="/login">
-				Login
-			</a>
-			<a className="navbar" href="/register">
-				Register
-			</a>
+		<nav className="navbar">
+			<span className="navbarspan">
+				<a className="navlink" href="/">
+					Mercado
+				</a>
+				<a className="navlink" href="/about">
+					About
+				</a>
+				{(!props.user && (
+					<span>
+						<a className="navlink" href="/login">
+							Login
+						</a>
+						<a className="navlink" href="/register">
+							Register
+						</a>
+					</span>
+				)) ||
+					(props.user && (
+						<span>
+							<a className="navlink" onClick={props.handleLogout} href="/">
+								Logout
+							</a>
+						</span>
+					))}
+			</span>
 		</nav>
 	);
 };
@@ -71,6 +85,7 @@ const GoToRoutes = () => {
 		<BrowserRouter>
 			<Routes>
 				<Route path="/" element={<Home />} />
+				<Route path="/home" element={<Home />} />
 				<Route path="/about" element={<About />} />
 				<Route path="/login" element={<Login />} />
 				<Route path="/register" element={<Register />} />
