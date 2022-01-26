@@ -57,4 +57,5 @@ const userSchema = new mongoose.Schema({
 	},
 });
 
+// Here "User" is the collection
 module.exports = mongoose.model("User", userSchema);

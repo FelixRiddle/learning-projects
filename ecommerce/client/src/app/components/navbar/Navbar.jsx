@@ -1,6 +1,7 @@
 import "./Navbar.css";
 import React, { useState, useEffect } from "react";
 import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
+//import jwt from "jsonwebtoken";
 
 import Home from "../../pages/home/Home";
 import About from "../../pages/about/About";
@@ -9,6 +10,29 @@ import Register from "../../pages/register/Register";
 import Search from "../../pages/search/Search";
 
 function Navbar() {
+	const [user, setUser] = useState("")
+	
+	const handleLogout = () => {
+		localStorage.removeItem("token");
+		window.location.href = "/";
+	};
+	
+	useEffect(() => {
+		const user = localStorage.getItem("user");
+		/*
+		if (token) {
+			//const user = jwt.decode(token);*/
+			
+			if (!user) {
+				console.log(`No previous session found.`);
+				localStorage.removeItem("token");
+			} else {
+				console.log(`Previous session found.`);
+				setUser(user);
+			}
+		//}
+	}, [])
+
 	return (
 		<>
 			{/* Links */}
