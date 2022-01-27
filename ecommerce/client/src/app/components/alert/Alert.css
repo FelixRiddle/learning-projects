@@ -18,6 +18,11 @@
   border: 3px solid rgba(105, 197, 105, 0.7);
 }
 
+.caution {
+  background-color: rgba(221, 219, 80, 0.8);
+  border: 3px solid rgba(187, 152, 57, 0.7);
+}
+
 .force-center {
   margin-left: 34%;
 }

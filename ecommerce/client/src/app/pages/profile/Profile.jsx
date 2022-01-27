@@ -1,7 +1,9 @@
-import React, { useState, useEffect, useDebugValue } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import jwt_decode from "jwt-decode";
 import "./Profile.css";
+import handleMessageValidation from "../../../lib/handleMessageValidation";
+import Alert from "../../components/alert/Alert";
 
 function Profile() {
 	const [input, setInput] = useState({
@@ -19,13 +21,12 @@ function Profile() {
 		postalCode: "",
 		address: "",
 	});
+	const [state, setState] = useState("none");
+	const [message, setMessage] = useState("none");
+	const [isLoggedIn, setIsLoggedIn] = useState(false);
 
 	const handleChange = (e) => {
 		const { name, value } = e.target;
-		console.log(`Changing: ${name}`);
-		console.log(e.target);
-		console.log(typeof value);
-		console.log(value);
 		setInput((prevInput) => {
 			return {
 				...prevInput,
@@ -34,9 +35,47 @@ function Profile() {
 		});
 	};
 
-	const handleSubmit = (e) => {
+	const handleBasicInfoSubmit = async (e) => {
 		e.preventDefault();
-		axios.post("http://localhost:3001/api/users/profile");
+		await axios
+			.post("http://localhost:3001/api/profile/changeBasicInfo", { ...input })
+			.then((res) => {
+				console.log(`Response ${res.data}`);
+				console.log(`Typeof: ${typeof res.data}`);
+				if (res.data === "Email or password is wrong.") {
+					setState("danger");
+					setMessage("Email or password is wrong.");
+				} else if (typeof res.data === "string") {
+					setState("danger");
+					handleMessageValidation(
+						input,
+						res,
+						["Email", "Password"],
+						setMessage
+					);
+				} else if (res.data.token) {
+					localStorage.setItem("token", res.data.token);
+					setState("success");
+					setMessage("Information changed.");
+				}
+			})
+			.catch((err) => {
+				console.error(err);
+				setState("danger");
+				setMessage(
+					"Internal server error, the website may be offline for a short time, try again later."
+				);
+			});
+	};
+
+	const handleChangePasswordsSubmit = (e) => {
+		e.preventDefault();
+		axios.post("http://localhost:3001/api/profile/changePassword");
+	};
+
+	const handleChangeAddressSubmit = (e) => {
+		e.preventDefault();
+		axios.post("http://localhost:3001/api/profile/changeAddress");
 	};
 
 	useEffect(() => {
@@ -45,10 +84,11 @@ function Profile() {
 			const user = jwt_decode(token);
 
 			if (!user) {
-				console.log(`No previous session found.`);
+				setMessage(`The user you are logged in is invalid.`);
 				localStorage.removeItem("token");
 			} else {
 				console.log(`Previous session found.`);
+				setIsLoggedIn(true);
 				// All this just for a date xD
 				const tempAge = new Date(Date.parse(user.age));
 				const newAge = [
@@ -56,37 +96,46 @@ function Profile() {
 					("0" + (tempAge.getMonth() + 1)).slice(-2),
 					("0" + tempAge.getDate()).slice(-2),
 				].join("-");
-				
+
 				setInput({ ...user, age: newAge });
 			}
+		} else {
+			setMessage(`Error 403: You aren't logged in.`);
 		}
 	}, []);
-
+	
 	return (
-		<div className="profile">
+		<div>
 			<title>Profile</title>
 			<h2>Profile</h2>
+			{(isLoggedIn && (
+				<div className="profile">
+					{/* Basic information */}
+					<ChangeBasicInfo
+						handleChange={handleChange}
+						input={input}
+						handleSubmit={handleBasicInfoSubmit}
+					/>
 
-			{/* Basic information */}
-			<ChangeBasicInfo
-				handleChange={handleChange}
-				input={input}
-				handleSubmit={handleSubmit}
-			/>
+					{/* Change password */}
+					<ChangePasswords
+						handleChange={handleChange}
+						input={input}
+						handleSubmit={handleChangePasswordsSubmit}
+					/>
 
-			{/* Change password */}
-			<ChangePasswords
-				handleChange={handleChange}
-				input={input}
-				handleSubmit={handleSubmit}
-			/>
-
-			{/* Change address */}
-			<ChangeAddress
-				handleChange={handleChange}
-				input={input}
-				handleSubmit={handleSubmit}
-			/>
+					{/* Change address */}
+					<ChangeAddress
+						handleChange={handleChange}
+						input={input}
+						handleSubmit={handleChangeAddressSubmit}
+					/>
+				</div>
+			)) || (
+				<div className="profile">
+					<Alert class="danger" description={message} forceCenter={true} />
+				</div>
+			)}
 		</div>
 	);
 }
@@ -94,7 +143,7 @@ function Profile() {
 const ChangeBasicInfo = (props) => {
 	const handleChange = props.handleChange;
 	const input = props.input;
-	const handleSubmit = props.handleSubmit;
+	const handleSubmit = props.handleBasicInfoSubmit;
 
 	return (
 		<div className="changeBasicInfo">
@@ -156,7 +205,7 @@ const ChangeBasicInfo = (props) => {
 const ChangePasswords = (props) => {
 	const handleChange = props.handleChange;
 	const input = props.input;
-	const handleSubmit = props.handleSubmit;
+	const handleSubmit = props.handleChangePasswordsSubmit;
 
 	return (
 		<div className="changePasswords">
@@ -202,7 +251,7 @@ const ChangePasswords = (props) => {
 const ChangeAddress = (props) => {
 	const handleChange = props.handleChange;
 	const input = props.input;
-	const handleSubmit = props.handleSubmit;
+	const handleSubmit = props.handleChangeAddressSubmit;
 
 	return (
 		<div className="changeAddress">

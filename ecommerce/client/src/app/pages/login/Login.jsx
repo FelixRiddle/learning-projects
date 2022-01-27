@@ -1,14 +1,17 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
+import jwt_decode from "jwt-decode";
+
 import handleMessageValidation from "../../../lib/handleMessageValidation";
 import "./Login.css";
-
 import Alert from "../../components/alert/Alert";
 
 function Login() {
 	const [input, setInput] = useState({ email: "", password: "" });
 	const [message, setMessage] = useState("none");
 	const [state, setState] = useState("");
+	const [isLoggedIn, setIsLoggedIn] = useState(false);
+	const [isPasswordShown, setIsPasswordShown] = useState(false);
 
 	const handleChange = (e) => {
 		const { name, value } = e.target;
@@ -46,7 +49,7 @@ function Login() {
 					setMessage(
 						"Successfully logged in, going to the home page in 5 seconds..."
 					);
-					
+
 					setTimeout(() => {
 						window.location.href = "/home";
 					}, 5000);
@@ -61,9 +64,38 @@ function Login() {
 			});
 	};
 
+	useEffect(() => {
+		const token = localStorage.getItem("token");
+		if (token) {
+			const user = jwt_decode(token);
+
+			if (!user) {
+				setMessage(`The user you are logged in is invalid.`);
+				localStorage.removeItem("token");
+			} else {
+				console.log(`Previous session found.`);
+				setIsLoggedIn(true);
+				// All this just for a date xD
+				const tempAge = new Date(Date.parse(user.age));
+				const newAge = [
+					tempAge.getUTCFullYear(),
+					("0" + (tempAge.getMonth() + 1)).slice(-2),
+					("0" + tempAge.getDate()).slice(-2),
+				].join("-");
+
+				setInput({ ...user, age: newAge });
+			}
+		} else {
+			setMessage(`You are already logged in.`);
+		}
+	}, []);
+
 	return (
 		<div className="login">
 			<h2 className="loginTitle">Login</h2>
+			{isLoggedIn && (
+				<Alert class="caution" description={message} forceCenter={true} />
+			)}
 			<form className="grid-container" action="submit">
 				<div className="loginLabels">
 					<label htmlFor="email">Email</label>
@@ -77,6 +109,19 @@ function Login() {
 						onChange={handleChange}
 						value={input.email}
 					/>
+					{/* show-hide password icon image */}
+					{(!isPasswordShown && (
+						<image
+							className="password-show-hide-icon"
+							src="http://localhost:3001/public/Show.png"
+						/>
+					)) ||
+						(isPasswordShown && (
+							<image
+								className="password-show-hide-icon"
+								src="http://localhost:3001/public/icons/Hide.png"
+							/>
+						))}
 					<input
 						type="password"
 						placeholder="Password"

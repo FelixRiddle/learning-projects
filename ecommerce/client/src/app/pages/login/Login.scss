@@ -18,6 +18,10 @@
 
 		.loginInputs > input {
 			border-bottom: 1px solid gray;
+			
+			.password-show-hide-icon {
+				position: absolute;
+			}
 
 			&:focus {
 				border-radius: 5px;
