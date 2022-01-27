@@ -5,6 +5,16 @@
 		margin-left: 40%;
 	}
 	
+	.password-show-hide-icon {
+		position: absolute;
+		left: 40%;
+		top: 45%;
+		
+		&:hover {
+			cursor: pointer;
+		}
+	}
+	
 	form {
 		.loginLabels > label,
 		.loginInputs > input {
@@ -18,10 +28,6 @@
 
 		.loginInputs > input {
 			border-bottom: 1px solid gray;
-			
-			.password-show-hide-icon {
-				position: absolute;
-			}
 
 			&:focus {
 				border-radius: 5px;

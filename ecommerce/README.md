@@ -7,3 +7,20 @@ $ cd ../client
 $ npm start
 You need sass
 $ sass --watch src:src
+
+# Objectives
+-[x] Login
+ -[x] Add watch password icon
+ -[] Show "You are already logged in" alert
+-[x] Profile
+ -[x] If the user is not logged in, show 401
+ -[] Change basic info
+  -[] Ask for password before submitting a request
+  -[] Show a warning when it's empty
+  -[] Validate email
+  -[] Validate age
+  -[] Update data
+-[] License
+ -[] Add the following attributions
+ -[] <a href="https://www.flaticon.com/free-icons/vision" title="vision icons">Vision icons created by Freepik - Flaticon</a>
+ -[] <a href="https://www.flaticon.com/free-icons/hide" title="hide icons">Hide icons created by Pixel perfect - Flaticon</a>

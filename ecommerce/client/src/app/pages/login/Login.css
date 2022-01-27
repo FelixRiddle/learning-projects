@@ -2,6 +2,14 @@
   font-size: 25px;
   margin-left: 40%;
 }
+.login .password-show-hide-icon {
+  position: absolute;
+  left: 40%;
+  top: 45%;
+}
+.login .password-show-hide-icon:hover {
+  cursor: pointer;
+}
 .login form .loginLabels > label,
 .login form .loginInputs > input {
   display: block;
@@ -13,9 +21,6 @@
 }
 .login form .loginInputs > input {
   border-bottom: 1px solid gray;
-}
-.login form .loginInputs > input .password-show-hide-icon {
-  position: absolute;
 }
 .login form .loginInputs > input:focus {
   border-radius: 5px;

@@ -109,21 +109,8 @@ function Login() {
 						onChange={handleChange}
 						value={input.email}
 					/>
-					{/* show-hide password icon image */}
-					{(!isPasswordShown && (
-						<image
-							className="password-show-hide-icon"
-							src="http://localhost:3001/public/Show.png"
-						/>
-					)) ||
-						(isPasswordShown && (
-							<image
-								className="password-show-hide-icon"
-								src="http://localhost:3001/public/icons/Hide.png"
-							/>
-						))}
 					<input
-						type="password"
+						type={isPasswordShown ? "text" : "password"}
 						placeholder="Password"
 						name="password"
 						onChange={handleChange}
@@ -139,6 +126,23 @@ function Login() {
 			)) ||
 				(state === "danger" && (
 					<Alert class="danger" description={message} forceCenter={true} />
+				))}
+			{/* show-hide password icon image */}
+			{(!isPasswordShown && (
+				<img
+					className="password-show-hide-icon"
+					alt="Show password"
+					src="http://localhost:3001/public/icons/Show.png"
+					onClick={() => setIsPasswordShown(!isPasswordShown)}
+				/>
+			)) ||
+				(isPasswordShown && (
+					<img
+						className="password-show-hide-icon"
+						alt="Show password"
+						src="http://localhost:3001/public/icons/Hide.png"
+						onClick={() => setIsPasswordShown(!isPasswordShown)}
+					/>
 				))}
 		</div>
 	);

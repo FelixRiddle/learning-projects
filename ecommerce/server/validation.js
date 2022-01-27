@@ -26,3 +26,13 @@ module.exports.loginValidation = loginValidation = (data) => {
 
 	return schema.validate(data);
 };
+
+module.exports.basicInfoValidation = basicInfoValidation = (data) => {
+	return (schema = Joi.object({
+		firstName: Joi.string().min(3).max(max).required(),
+		lastName: Joi.string().min(3).max(max).required(),
+		email: Joi.string().min(5).required().email(),
+		phoneNumber: Joi.string().min(3).max(max),
+		age: Joi.date().max(max),
+	}));
+}
