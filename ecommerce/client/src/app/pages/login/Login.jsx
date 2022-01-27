@@ -75,18 +75,8 @@ function Login() {
 			} else {
 				console.log(`Previous session found.`);
 				setIsLoggedIn(true);
-				// All this just for a date xD
-				const tempAge = new Date(Date.parse(user.age));
-				const newAge = [
-					tempAge.getUTCFullYear(),
-					("0" + (tempAge.getMonth() + 1)).slice(-2),
-					("0" + tempAge.getDate()).slice(-2),
-				].join("-");
-
-				setInput({ ...user, age: newAge });
+				setMessage(`You are already logged in.`);
 			}
-		} else {
-			setMessage(`You are already logged in.`);
 		}
 	}, []);
 
@@ -121,12 +111,6 @@ function Login() {
 					Login
 				</button>
 			</form>
-			{(state === "success" && (
-				<Alert class="success" description={message} forceCenter={true} />
-			)) ||
-				(state === "danger" && (
-					<Alert class="danger" description={message} forceCenter={true} />
-				))}
 			{/* show-hide password icon image */}
 			{(!isPasswordShown && (
 				<img
@@ -143,6 +127,12 @@ function Login() {
 						src="http://localhost:3001/public/icons/Hide.png"
 						onClick={() => setIsPasswordShown(!isPasswordShown)}
 					/>
+				))}
+			{(state === "success" && (
+				<Alert class="success" description={message} forceCenter={true} />
+			)) ||
+				(state === "danger" && (
+					<Alert class="danger" description={message} forceCenter={true} />
 				))}
 		</div>
 	);

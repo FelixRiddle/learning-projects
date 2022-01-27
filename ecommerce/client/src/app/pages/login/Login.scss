@@ -6,9 +6,10 @@
 	}
 	
 	.password-show-hide-icon {
-		position: absolute;
-		left: 40%;
-		top: 45%;
+		position: relative;
+		left: 39.5%;
+		top: 20%;
+		top: -80px;
 		
 		&:hover {
 			cursor: pointer;
