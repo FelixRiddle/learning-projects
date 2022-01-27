@@ -17,7 +17,7 @@ router.post("/changeBasicInfo", verify, async (req, res) => {
 
 		// Check if the user is already in the database
 		const emailExist = await User.findOne({ email: req.body.email });
-		if (emailExist) return res.send(`Email already exists.`);
+		if (emailExist) return res.send(`That email is already in use.`);
 
 		const user = new User({ ...req.body });
 

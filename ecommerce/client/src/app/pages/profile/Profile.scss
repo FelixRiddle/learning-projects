@@ -5,10 +5,25 @@
 		text-align: left;
 		grid-area: titles;
 	}
+	.changeBasicInfo,
+	.changePasswords,
+	.changeAddress {
+		.errorPopup {
+			position: absolute;
+			width: 400px;
+			height: 50px;
+			background-color: rgb(223, 21, 21, .8);
+			border-radius: 10px;
+			padding: 10px;
+			top: 730px;
+			right: 50px;
+		}
+	}
 
 	.changeBasicInfo > form,
 	.changePasswords > form,
 	.changeAddress > form {
+		
 		.profileLabels > label,
 		.profileInputs > input,
 		.changePasswordsLabels > label,
@@ -34,11 +49,17 @@
 		.changeAddressInputs > input {
 			grid-area: inputs;
 			border-bottom: 1px solid gray;
+			outline: none;
 
+			&.danger {
+				border-radius: 5px;
+				border: 3px solid rgba(228, 63, 13, 0.8);
+				background-color: white;
+			}
+			
 			&:focus {
 				border-radius: 5px;
 				border: 3px solid rgba(115, 250, 255, 0.8);
-				outline: none;
 			}
 		}
 
@@ -49,12 +70,11 @@
 			margin: 10px;
 			width: 60%;
 			font-size: 25px;
-			background-color: rgba(115, 200, 255, 0.4);
+			background-color: rgba(17, 143, 228, 0.4);
 			border: none;
 			border-radius: 5px;
 			color: #333;
-			border: 3px solid rgba(115, 200, 255, 0.5);
-
+			
 			&:focus {
 				background-color: rgba(115, 125, 255, 1);
 			}
