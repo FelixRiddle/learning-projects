@@ -18,6 +18,16 @@
 			top: 730px;
 			right: 50px;
 		}
+		
+		.passwordIcon {
+			position: relative;
+			top: 680px;
+			left: 710px;
+			
+			&:hover {
+				cursor: pointer;
+			}
+		}
 	}
 
 	.changeBasicInfo > form,
@@ -68,7 +78,7 @@
 			background-color: black;
 			padding: 10px;
 			margin: 10px;
-			width: 60%;
+			width: 250px;
 			font-size: 25px;
 			background-color: rgba(17, 143, 228, 0.4);
 			border: none;

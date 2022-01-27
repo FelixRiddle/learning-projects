@@ -1,7 +1,12 @@
+import axios from "axios";
+
 const ChangePasswords = (props) => {
-	const handleChange = props.handleChange;
-	const input = props.input;
-	const handleSubmit = props.handleChangePasswordsSubmit;
+	const { handleChange, input } = props;
+
+	const handleChangePasswordsSubmit = (e) => {
+		e.preventDefault();
+		axios.post("http://localhost:3001/api/profile/changePassword");
+	};
 
 	return (
 		<div className="changePasswords">
@@ -36,7 +41,7 @@ const ChangePasswords = (props) => {
 						value={input.repeatNewPassword}
 					/>
 				</div>
-				<button type="submit" onClick={handleSubmit}>
+				<button type="submit" onClick={handleChangePasswordsSubmit}>
 					Change password
 				</button>
 			</form>

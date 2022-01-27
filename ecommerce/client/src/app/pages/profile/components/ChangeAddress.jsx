@@ -1,7 +1,12 @@
+import axios from "axios";
+
 const ChangeAddress = (props) => {
-	const handleChange = props.handleChange;
-	const input = props.input;
-	const handleSubmit = props.handleChangeAddressSubmit;
+	const { handleChange, input } = props;
+
+	const handleChangeAddressSubmit = (e) => {
+		e.preventDefault();
+		axios.post("http://localhost:3001/api/profile/changeAddress");
+	};
 
 	return (
 		<div className="changeAddress">
@@ -51,7 +56,7 @@ const ChangeAddress = (props) => {
 						value={input.address}
 					/>
 				</div>
-				<button type="submit" onClick={handleSubmit}>
+				<button type="submit" onClick={handleChangeAddressSubmit}>
 					Save address
 				</button>
 			</form>

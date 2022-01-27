@@ -22,7 +22,7 @@ const ChangeBasicInfo = (props) => {
 				errorMessage: "You must provide a password for making changes",
 			});
 			console.log(`Error message: ${passwordInfo.errorMessage}`);
-			
+
 			// Timeout
 			setTimeout(() => {
 				console.log(passwordInfo);
@@ -31,7 +31,7 @@ const ChangeBasicInfo = (props) => {
 					error: true,
 					errorMessage: "",
 				});
-				console.log(passwordInfo.error)
+				console.log(passwordInfo.error);
 			}, passwordInfo.duration);
 
 			return;
@@ -95,6 +95,26 @@ const ChangeBasicInfo = (props) => {
 					<div className="errorMessage">{passwordInfo.errorMessage}</div>
 				</div>
 			)}
+			{(!passwordInfo.show && (
+				<img
+					className="passwordIcon"
+					src="http://localhost:3001/public/icons/Show.png"
+					alt="Show password"
+					onClick={() =>
+						setPasswordInfo({ ...passwordInfo, show: !passwordInfo.show })
+					}
+				/>
+			)) ||
+				(passwordInfo.show && (
+					<img
+						className="passwordIcon"
+						src="http://localhost:3001/public/icons/Hide.png"
+						alt="Hide password"
+						onClick={() =>
+							setPasswordInfo({ ...passwordInfo, show: !passwordInfo.show })
+						}
+					/>
+				))}
 			<h6>Basic info</h6>
 			<form>
 				<div className="profileLabels">
@@ -144,7 +164,7 @@ const ChangeBasicInfo = (props) => {
 					/>
 					<input
 						className={passwordInfo.error ? "danger" : ""}
-						type="password"
+						type={passwordInfo.show ? "text" : "password"}
 						name="password"
 						placeholder="Password"
 						onChange={handleChange}

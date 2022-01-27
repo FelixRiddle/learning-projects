@@ -30,6 +30,7 @@ function Profile() {
 		error: false,
 		errorMessage: "",
 		duration: 10000,
+		show: false,
 	});
 
 	const handleChange = (e) => {
@@ -40,16 +41,6 @@ function Profile() {
 				[name]: value,
 			};
 		});
-	};
-
-	const handleChangePasswordsSubmit = (e) => {
-		e.preventDefault();
-		axios.post("http://localhost:3001/api/profile/changePassword");
-	};
-
-	const handleChangeAddressSubmit = (e) => {
-		e.preventDefault();
-		axios.post("http://localhost:3001/api/profile/changeAddress");
 	};
 
 	useEffect(() => {
@@ -98,14 +89,12 @@ function Profile() {
 					<ChangePasswords
 						handleChange={handleChange}
 						input={input}
-						handleChangePasswordsSubmit={handleChangePasswordsSubmit}
 					/>
 
 					{/* Change address */}
 					<ChangeAddress
 						handleChange={handleChange}
 						input={input}
-						handleChangeAddressSubmit={handleChangeAddressSubmit}
 					/>
 				</div>
 			)) || (
