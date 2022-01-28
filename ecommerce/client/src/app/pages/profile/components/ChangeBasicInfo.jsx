@@ -1,3 +1,4 @@
+import React, { useState } from "react";
 import axios from "axios";
 import handleMessageValidation from "../../../../lib/handleMessageValidation";
 
@@ -10,6 +11,7 @@ const ChangeBasicInfo = (props) => {
 		setState,
 		setMessage,
 	} = props;
+	const [resData, setResData] = useState({});
 
 	const handleBasicInfoSubmit = async (e) => {
 		e.preventDefault();
@@ -54,11 +56,20 @@ const ChangeBasicInfo = (props) => {
 		await axios
 			.post("http://localhost:3001/api/profile/changeBasicInfo", { ...input })
 			.then((res) => {
+				// Debug
 				console.log(`Response:`);
 				console.log(res.data);
+
+				// Save the response for later use
+				setResData({ ...res.data });
+				
 				if (res.data.message !== undefined) {
 					setState(res.data.state);
 					setMessage(res.data.message);
+					
+					if (!res.data.error) {
+						localStorage.setItem("token", res.data.token);
+					}
 
 					return;
 				} else if (res.data.joiMessage !== undefined) {
@@ -69,7 +80,7 @@ const ChangeBasicInfo = (props) => {
 						["Email", "Password"],
 						setMessage
 					);
-					
+
 					return;
 				}
 			})
@@ -84,6 +95,19 @@ const ChangeBasicInfo = (props) => {
 
 	return (
 		<div className="changeBasicInfo">
+			{resData.error &&
+				((resData.field === "email" && (
+					<div className="emailErrorPopup">
+						<div className="emailArrow"></div>
+						<div className="emailErrorMessage">{resData.errorMessage}</div>
+					</div>
+				)) ||
+					(resData.joiMessage && (
+						<div className="joiError">
+							<div className="joiErrorMessagesArrow"></div>
+							<div className="joiErrorMessage">{resData.errorMessage}</div>
+						</div>
+					)))}
 			{passwordInfo.errorMessage && (
 				<div className="errorPopup">
 					<div className="arrow"></div>

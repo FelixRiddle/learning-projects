@@ -18,6 +18,7 @@ router.post("/changeBasicInfo", verify, async (req, res) => {
 		if (error)
 			return res.send({
 				state: "danger",
+				error: true,
 				joiMessage: error.details[0].message,
 			});
 
@@ -34,6 +35,8 @@ router.post("/changeBasicInfo", verify, async (req, res) => {
 				if (emailExists)
 					return res.send({
 						state: "danger",
+						field: "email",
+						error: true,
 						message: `That email is already in use.`,
 					});
 			}
@@ -46,7 +49,12 @@ router.post("/changeBasicInfo", verify, async (req, res) => {
 		});
 		console.log(`User updated!`);
 
-		res.status(200).send({ user, state: "success", message: `User updated!` });
+		console.log(typeof user);
+		const token = jwt.sign(req.body, process.env.TOKEN_SECRET);
+		res
+			.header("auth-token", token)
+			.status(200)
+			.send({ token, user, state: "success", message: `User updated!` });
 	} catch (err) {
 		console.error(err);
 		res.status(400).send(err);
