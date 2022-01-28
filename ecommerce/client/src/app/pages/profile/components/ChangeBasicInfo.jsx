@@ -12,7 +12,6 @@ const ChangeBasicInfo = (props) => {
 	} = props;
 
 	const handleBasicInfoSubmit = async (e) => {
-		console.log(`Executed`);
 		e.preventDefault();
 
 		if (!input.password) {
@@ -21,7 +20,6 @@ const ChangeBasicInfo = (props) => {
 				error: true,
 				errorMessage: "You must provide a password for making changes",
 			});
-			console.log(`Error message: ${passwordInfo.errorMessage}`);
 
 			// Timeout
 			setTimeout(() => {
@@ -31,7 +29,6 @@ const ChangeBasicInfo = (props) => {
 					error: true,
 					errorMessage: "",
 				});
-				console.log(passwordInfo.error);
 			}, passwordInfo.duration);
 
 			return;
@@ -49,33 +46,31 @@ const ChangeBasicInfo = (props) => {
 					error: true,
 					errorMessage: "",
 				});
-				console.log(passwordInfo.error);
 			}, passwordInfo.duration);
 
 			return;
 		}
-		console.log(`Password suplied!`);
 
 		await axios
 			.post("http://localhost:3001/api/profile/changeBasicInfo", { ...input })
 			.then((res) => {
-				console.log(`Response ${res.data}`);
-				console.log(`Typeof: ${typeof res.data}`);
-				if (res.data === "Email or password is wrong.") {
-					setState("danger");
-					setMessage("Email or password is wrong.");
-				} else if (typeof res.data === "string") {
-					setState("danger");
+				console.log(`Response:`);
+				console.log(res.data);
+				if (res.data.message !== undefined) {
+					setState(res.data.state);
+					setMessage(res.data.message);
+
+					return;
+				} else if (res.data.joiMessage !== undefined) {
+					setState(res.data.state);
 					handleMessageValidation(
 						input,
 						res,
 						["Email", "Password"],
 						setMessage
 					);
-				} else if (res.data.token) {
-					localStorage.setItem("token", res.data.token);
-					setState("success");
-					setMessage("Information changed.");
+					
+					return;
 				}
 			})
 			.catch((err) => {

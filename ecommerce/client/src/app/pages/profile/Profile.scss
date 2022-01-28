@@ -15,7 +15,7 @@
 			background-color: rgb(223, 21, 21, .8);
 			border-radius: 10px;
 			padding: 10px;
-			top: 730px;
+			top: 782px;
 			right: 50px;
 		}
 		
@@ -80,13 +80,18 @@
 			margin: 10px;
 			width: 250px;
 			font-size: 25px;
-			background-color: rgba(17, 143, 228, 0.4);
+			background-color: rgba(17, 143, 228, 0.6);
 			border: none;
 			border-radius: 5px;
 			color: #333;
 			
 			&:focus {
 				background-color: rgba(115, 125, 255, 1);
+			}
+			
+			&:hover {
+				cursor: pointer;
+				background-color: rgba(50, 143, 255, 0.6);
 			}
 		}
 		

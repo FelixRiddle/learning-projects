@@ -24,6 +24,11 @@ const userSchema = new mongoose.Schema({
 		max: 128,
 		min: 8,
 	},
+	phoneNumber: {
+		type: String,
+		max: 128,
+		min: 4,
+	},
 	age: {
 		type: Date,
 		default: Date.now,

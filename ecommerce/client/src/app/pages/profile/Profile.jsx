@@ -22,6 +22,7 @@ function Profile() {
 		city: "",
 		postalCode: "",
 		address: "",
+		token: "",
 	});
 	const [state, setState] = useState("none");
 	const [message, setMessage] = useState("none");
@@ -61,8 +62,11 @@ function Profile() {
 					("0" + (tempAge.getMonth() + 1)).slice(-2),
 					("0" + tempAge.getDate()).slice(-2),
 				].join("-");
-
-				setInput({ ...user, age: newAge });
+				
+				setInput({
+					...user, age: newAge
+					, token
+				});
 			}
 		} else {
 			setMessage(`Error 403: You aren't logged in.`);

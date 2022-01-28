@@ -9,6 +9,7 @@ router.post("/register", async (req, res) => {
 	const date = new Date(time);
 	console.log(`Date: ${date.toString()}`);
 	console.log(req.body);
+	console.log("Register");
 	try {
 		const { error } = registerValidation(req.body);
 		error && console.log(error);
@@ -36,26 +37,30 @@ router.post("/register", async (req, res) => {
 router.post("/login", async (req, res) => {
 	const time = new Date().getTime();
 	const date = new Date(time);
+	const data = req.body;
 	console.log(`Date: ${date.toString()}`);
 	console.log(req.body);
+	console.log("Login");
 	try {
-		const { error } = loginValidation(req.body);
+		const { error } = loginValidation(data);
 		error && console.log(error);
 		if (error) return res.send(error.details[0].message);
 
 		// Get the user
-		const user = await User.findOne({ email: req.body.email });
+		const user = await User.findOne({ email: data.email });
 
 		// Use ambiguous messages to prevent hacking attemps
 		const msg = "Email or password is wrong.";
 		if (!user) return res.send(msg);
 
 		// Check if the password is correct
-		const validPass = await bcrypt.compare(req.body.password, user.password);
+		const validPass = await bcrypt.compare(data.password, user.password);
 		if (!validPass) return res.send(msg);
 
 		// Create and assign a token
-		const { password, ...userData } = user._doc;
+		// The variables on the left, are the ones that we don't want
+		// to save on jwt
+		const { password, __v, ...userData } = user._doc;
 		const token = jwt.sign(userData, process.env.TOKEN_SECRET);
 		res.header("auth-token", token).status(200).send({ token, message: "Successfully logged in."});
 	} catch (err) {

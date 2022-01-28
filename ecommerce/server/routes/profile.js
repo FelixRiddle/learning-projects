@@ -7,23 +7,46 @@ const verify = require("../verifyToken");
 
 router.post("/changeBasicInfo", verify, async (req, res) => {
 	const time = new Date().getTime();
-	const date = new Date(time);
-	console.log(`Date: ${date.toString()}`);
+	const currentDate = new Date(time);
+	const { _id, date, iat, token, ...data } = req.body;
+	console.log(`Date: ${currentDate.toString()}`);
 	console.log(req.body);
+	console.log("/changeBasicInfo");
 	try {
-		const { error } = basicInfoValidation(req.body);
+		const { error } = basicInfoValidation(data);
 		error && console.log(error);
-		if (error) return res.send(error.details[0].message);
+		if (error)
+			return res.send({
+				state: "danger",
+				joiMessage: error.details[0].message,
+			});
 
-		// Check if the user is already in the database
-		const emailExist = await User.findOne({ email: req.body.email });
-		if (emailExist) return res.send(`That email is already in use.`);
+		// Get the user
+		{
+			let user = await User.findOne({ _id });
+			if (!user)
+				return res.send({ state: "danger", message: "User doesn't exists." });
 
-		const user = new User({ ...req.body });
+			// If the user wants to change the email
+			if (data.email != user.email) {
+				console.log(`Changing email`);
+				const emailExists = await User.findOne({ email: data.email });
+				if (emailExists)
+					return res.send({
+						state: "danger",
+						message: `That email is already in use.`,
+					});
+			}
+		}
 
-		const savedUser = await user.save();
-		console.log(`User created!`);
-		res.status(200).send(savedUser);
+		const query = { _id };
+		const update = { ...data };
+		const user = await User.findOneAndUpdate(query, update, {
+			new: true, // For returning the document
+		});
+		console.log(`User updated!`);
+
+		res.status(200).send({ user, state: "success", message: `User updated!` });
 	} catch (err) {
 		console.error(err);
 		res.status(400).send(err);

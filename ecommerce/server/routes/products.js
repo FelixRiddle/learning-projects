@@ -3,8 +3,6 @@ const verify = require("../verifyToken");
 
 router.get("/products", verify, (req, res) => {
 	try {
-		
-		res.json({});
 	} catch (err) {
 		
 	}
