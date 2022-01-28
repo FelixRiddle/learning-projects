@@ -30,7 +30,6 @@ router.post("/changeBasicInfo", verify, async (req, res) => {
 
 			// If the user wants to change the email
 			if (data.email != user.email) {
-				console.log(`Changing email`);
 				const emailExists = await User.findOne({ email: data.email });
 				if (emailExists)
 					return res.send({

@@ -28,7 +28,7 @@ const ChangeBasicInfo = (props) => {
 				console.log(passwordInfo);
 				setPasswordInfo({
 					...passwordInfo,
-					error: true,
+					error: false,
 					errorMessage: "",
 				});
 			}, passwordInfo.duration);
@@ -45,7 +45,7 @@ const ChangeBasicInfo = (props) => {
 			setTimeout(() => {
 				setPasswordInfo({
 					...passwordInfo,
-					error: true,
+					error: false,
 					errorMessage: "",
 				});
 			}, passwordInfo.duration);
@@ -53,20 +53,24 @@ const ChangeBasicInfo = (props) => {
 			return;
 		}
 
+		if (resData !== undefined && resData.field === "email") {
+			// Timeout
+			setTimeout(() => {
+				setResData({ error: resData.error, message: "", field: "" });
+			}, passwordInfo.duration);
+			return;
+		}
+
 		await axios
 			.post("http://localhost:3001/api/profile/changeBasicInfo", { ...input })
 			.then((res) => {
-				// Debug
-				console.log(`Response:`);
-				console.log(res.data);
-
 				// Save the response for later use
 				setResData({ ...res.data });
-				
+
 				if (res.data.message !== undefined) {
 					setState(res.data.state);
 					setMessage(res.data.message);
-					
+
 					if (!res.data.error) {
 						localStorage.setItem("token", res.data.token);
 					}
@@ -80,6 +84,8 @@ const ChangeBasicInfo = (props) => {
 						["Email", "Password"],
 						setMessage
 					);
+
+					console.log(`Message: ${res.data.joiMessage}`);
 
 					return;
 				}
@@ -95,19 +101,18 @@ const ChangeBasicInfo = (props) => {
 
 	return (
 		<div className="changeBasicInfo">
-			{resData.error &&
-				((resData.field === "email" && (
-					<div className="emailErrorPopup">
-						<div className="emailArrow"></div>
-						<div className="emailErrorMessage">{resData.errorMessage}</div>
+			{(resData.field === "email" && resData.message && (
+				<div className="emailErrorPopup">
+					<div className="emailArrow"></div>
+					<div className="emailErrorMessage">{resData.message}</div>
+				</div>
+			)) ||
+				(resData.joiMessage && (
+					<div className="joiError">
+						<div className="joiErrorMessagesArrow"></div>
+						<div className="joiErrorMessage">{resData.joiMessage}</div>
 					</div>
-				)) ||
-					(resData.joiMessage && (
-						<div className="joiError">
-							<div className="joiErrorMessagesArrow"></div>
-							<div className="joiErrorMessage">{resData.errorMessage}</div>
-						</div>
-					)))}
+				))}
 			{passwordInfo.errorMessage && (
 				<div className="errorPopup">
 					<div className="arrow"></div>
@@ -161,11 +166,13 @@ const ChangeBasicInfo = (props) => {
 						value={input.lastName}
 					/>
 					<input
+						className={resData.error ? "danger" : ""}
 						type="email"
 						name="email"
 						placeholder="Email"
 						onChange={handleChange}
 						value={input.email}
+						onClick={(e) => setResData({ ...resData, error: false })}
 					/>
 					<input
 						type="date"
