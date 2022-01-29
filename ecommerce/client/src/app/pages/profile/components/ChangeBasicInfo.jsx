@@ -64,6 +64,9 @@ const ChangeBasicInfo = (props) => {
 		await axios
 			.post("http://localhost:3001/api/profile/changeBasicInfo", { ...input })
 			.then((res) => {
+				console.log(`Response: ${res.status}`);
+				console.log(res.data);
+
 				// Save the response for later use
 				setResData({ ...res.data });
 
@@ -101,6 +104,7 @@ const ChangeBasicInfo = (props) => {
 
 	return (
 		<div className="changeBasicInfo">
+			{/* Show or hide repeated email error message */}
 			{(resData.field === "email" && resData.message && (
 				<div className="emailErrorPopup">
 					<div className="emailArrow"></div>
@@ -113,12 +117,16 @@ const ChangeBasicInfo = (props) => {
 						<div className="joiErrorMessage">{resData.joiMessage}</div>
 					</div>
 				))}
+
+			{/* Show or hide password error message */}
 			{passwordInfo.errorMessage && (
 				<div className="errorPopup">
 					<div className="arrow"></div>
 					<div className="errorMessage">{passwordInfo.errorMessage}</div>
 				</div>
 			)}
+
+			{/* Show or hide the password */}
 			{(!passwordInfo.show && (
 				<img
 					className="passwordIcon"
@@ -139,6 +147,14 @@ const ChangeBasicInfo = (props) => {
 						}
 					/>
 				))}
+
+			{/* Show success message */}
+			{resData.state === "success" && resData.message && (
+				<div className="submitSuccessful">
+					<div className="successMessage success">{resData.message}</div>
+				</div>
+			)}
+
 			<h6>Basic info</h6>
 			<form>
 				<div className="profileLabels">
