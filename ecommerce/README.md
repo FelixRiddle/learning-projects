@@ -13,6 +13,7 @@ $ sass --watch src:src
 - React doesn't show false literal
 
 # Objectives
+(This looks better on VSCode)
 ✅ Login  
 -✅ Add show password icon  
 -✅ Show "You are already logged in" alert
@@ -31,10 +32,10 @@ $ sass --watch src:src
 | |✅ Update data  
 | |⬜️ Show messages  
 | | |✅ Server offline  
-| | |⬜️ Other errors  
+| | |✅ Other errors  
 | | | |✅ Email is already in use  
-| | | |⬜️ The password is incorrect  
-| | | |⬜️ If the server is offline/bad request  
+| | | |✅ The password is incorrect  
+| | | |✅ If the server is offline/bad request  
 | | |⬜️ Joi errors  
 | | |⬜️ Success message  
 | | | |⬜️ Popup is removed when the user clicks it  

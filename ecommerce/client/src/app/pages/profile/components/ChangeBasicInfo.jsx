@@ -21,8 +21,8 @@ const ChangeBasicInfo = (props) => {
 
 	const handleBasicInfoSubmit = async (e) => {
 		e.preventDefault();
-		console.log(`Email error:`);
-		console.log(emailError);
+		console.log(`Password error:`);
+		console.log(passwordInfo);
 
 		try {
 			setShowPasswordMessage(false);
@@ -30,7 +30,7 @@ const ChangeBasicInfo = (props) => {
 				setPasswordInfo({
 					...passwordInfo,
 					error: true,
-					errorMessage: "You must provide a password for making changes",
+					message: "You must provide a password for making changes",
 				});
 
 				// Timeout
@@ -49,13 +49,6 @@ const ChangeBasicInfo = (props) => {
 
 				return;
 			}
-			if (resData !== undefined && resData.field === "email") {
-				// Timeout
-				setTimeout(() => {
-					setResData({ error: resData.error, message: "", field: "" });
-				}, passwordInfo.duration);
-				return;
-			}
 		} catch (err) {}
 
 		const token = localStorage.getItem("token");
@@ -72,12 +65,25 @@ const ChangeBasicInfo = (props) => {
 				setResData({ ...res.data });
 
 				if (res.data.message !== undefined) {
-					setEmailError({
-						...error,
-						state: res.data.state,
-						message: res.data.message,
-					});
+					// Some validation
+					res.data.field === "email" &&
+						res.data.error &&
+						setEmailError({
+							...emailError,
+							state: res.data.state,
+							message: res.data.message,
+						});
+					if (res.data.field === "password" && res.data.error) {
+						setShowPasswordMessage(true);
+						setPasswordInfo({
+							...passwordInfo,
+							error: true,
+							state: res.data.state,
+							message: res.data.message,
+						});
+					}
 
+					// Set the response token on the local storage
 					if (!res.data.error) {
 						localStorage.setItem("token", res.data.token);
 					}
@@ -138,7 +144,7 @@ const ChangeBasicInfo = (props) => {
 					onClick={(e) => setShowPasswordMessage(false)}
 				>
 					<div className="arrow"></div>
-					<div className="errorMessage">{passwordInfo.errorMessage}</div>
+					<div className="errorMessage">{passwordInfo.message}</div>
 				</div>
 			)}
 
