@@ -8,63 +8,75 @@ const ChangeBasicInfo = (props) => {
 		input,
 		passwordInfo,
 		setPasswordInfo,
-		setState,
-		setMessage,
+		setError,
+		error,
 	} = props;
 	const [resData, setResData] = useState({});
 	const [showHidePasswordIcon, setShowHidePasswordIcon] = useState(true);
-	//const [userClickedAgain, setUserClickdAgain] = useState(false);
 	const [showPasswordMessage, setShowPasswordMessage] = useState(false);
-	const [timeouts, setTimeouts] = useState([]);
+	const [emailError, setEmailError] = useState({
+		state: "",
+		message: "",
+	});
 
 	const handleBasicInfoSubmit = async (e) => {
 		e.preventDefault();
+		console.log(`Email error:`);
+		console.log(emailError);
 
-		setShowPasswordMessage(false);
-		if (!input.password) {
-			setPasswordInfo({
-				...passwordInfo,
-				error: true,
-				errorMessage: "You must provide a password for making changes",
-			});
+		try {
+			setShowPasswordMessage(false);
+			if (!input.password) {
+				setPasswordInfo({
+					...passwordInfo,
+					error: true,
+					errorMessage: "You must provide a password for making changes",
+				});
 
-			// Timeout
-			setShowPasswordMessage(true);
+				// Timeout
+				setShowPasswordMessage(true);
 
-			return;
-		} else if (input.password.length < 8) {
-			setPasswordInfo({
-				...passwordInfo,
-				error: true,
-				errorMessage: "The password must be at least 8 characters long.",
-			});
+				return;
+			} else if (input.password.length < 8) {
+				setPasswordInfo({
+					...passwordInfo,
+					error: true,
+					errorMessage: "The password must be at least 8 characters long.",
+				});
 
-			// Timeout
-			setShowPasswordMessage(true);
+				// Timeout
+				setShowPasswordMessage(true);
 
-			return;
-		}
+				return;
+			}
+			if (resData !== undefined && resData.field === "email") {
+				// Timeout
+				setTimeout(() => {
+					setResData({ error: resData.error, message: "", field: "" });
+				}, passwordInfo.duration);
+				return;
+			}
+		} catch (err) {}
 
-		if (resData !== undefined && resData.field === "email") {
-			// Timeout
-			setTimeout(() => {
-				setResData({ error: resData.error, message: "", field: "" });
-			}, passwordInfo.duration);
-			return;
-		}
-
+		const token = localStorage.getItem("token");
 		await axios
-			.post("http://localhost:3001/api/profile/changeBasicInfo", { ...input })
+			.post("http://localhost:3001/api/profile/changeBasicInfo", {
+				token,
+				...input,
+			})
 			.then((res) => {
-				console.log(`Response: ${res.status}`);
+				console.log(`Response status: ${res.status}`);
 				console.log(res.data);
 
 				// Save the response for later use
 				setResData({ ...res.data });
 
 				if (res.data.message !== undefined) {
-					setState(res.data.state);
-					setMessage(res.data.message);
+					setEmailError({
+						...error,
+						state: res.data.state,
+						message: res.data.message,
+					});
 
 					if (!res.data.error) {
 						localStorage.setItem("token", res.data.token);
@@ -72,12 +84,13 @@ const ChangeBasicInfo = (props) => {
 
 					return;
 				} else if (res.data.joiMessage !== undefined) {
-					setState(res.data.state);
+					setError({ ...error, state: res.data.state });
 					handleMessageValidation(
 						input,
 						res,
 						["Email", "Password"],
-						setMessage
+						setError,
+						error
 					);
 
 					console.log(`Message: ${res.data.joiMessage}`);
@@ -87,10 +100,12 @@ const ChangeBasicInfo = (props) => {
 			})
 			.catch((err) => {
 				console.error(err);
-				setState("danger");
-				setMessage(
-					"Internal server error, the website may be offline for a short time, try again later."
-				);
+				setError({
+					...error,
+					state: "danger",
+					message:
+						"Internal server error, the website may be offline for a short time, try again later.",
+				});
 			});
 	};
 
@@ -103,8 +118,8 @@ const ChangeBasicInfo = (props) => {
 	return (
 		<div className="changeBasicInfo">
 			{/* Show or hide repeated email error message */}
-			{(resData.field === "email" && resData.message && (
-				<div className="emailErrorPopup">
+			{(resData.field === "email" && emailError.message && (
+				<div className="emailErrorPopup" onClick={() => setEmailError({})}>
 					<div className="emailArrow"></div>
 					<div className="emailErrorMessage">{resData.message}</div>
 				</div>
@@ -128,7 +143,7 @@ const ChangeBasicInfo = (props) => {
 			)}
 
 			{/* Show or hide the password */}
-			{(!passwordInfo.show && !timeouts && (
+			{(!passwordInfo.show && (
 				<img
 					className={
 						"passwordIcon " + (!showHidePasswordIcon && "passwordIconOffset")
@@ -140,7 +155,7 @@ const ChangeBasicInfo = (props) => {
 					}
 				/>
 			)) ||
-				(passwordInfo.show && !timeouts && (
+				(passwordInfo.show && (
 					<img
 						className={
 							"passwordIcon " + (!showHidePasswordIcon && "passwordIconOffset")

@@ -12,7 +12,7 @@ mongoose.connect(mongoURI, { useNewUrlParser: true }, () => {
 app.use(express.json());
 app.use(cors());
 
-app.use("/", (req, res) => {
+app.get("/test", (req, res) => {
 	return res.status(200).send({ status: "success", msg: "Server online" });
 });
 app.use("/public", express.static("public"));

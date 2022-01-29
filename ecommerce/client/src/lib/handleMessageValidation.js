@@ -7,8 +7,15 @@
  * @param {String} res Response of the request
  * @param {Array} placeholderValues Replacement for the key literals
  * @param {Callback} setMessage Callback for setting the message
+ * @param {Object} error Object containing error information
  */
-const handleMessageValidation = (input, res, placeholderValues, setMessage) => {
+const handleMessageValidation = (
+	input,
+	res,
+	placeholderValues,
+	setError,
+	error
+) => {
 	const inputKeys = [];
 	Object.entries(input).map((e) => inputKeys.push(`"${e[0]}"`));
 
@@ -28,9 +35,13 @@ const handleMessageValidation = (input, res, placeholderValues, setMessage) => {
 					placeholderValues[index]
 				)}`
 			);*/
-			setMessage(
-				responseData.replace(inputKeys[index], placeholderValues[index])
-			);
+			setError({
+				...error,
+				message: responseData.replace(
+					inputKeys[index],
+					placeholderValues[index]
+				),
+			});
 			return responseData.replace(inputKeys[index], placeholderValues[index]);
 		}
 	}

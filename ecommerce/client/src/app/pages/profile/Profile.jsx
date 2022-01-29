@@ -23,8 +23,11 @@ function Profile(props) {
 		postalCode: "",
 		address: "",
 	});
-	const [state, setState] = useState("");
-	const [message, setMessage] = useState("");
+	const [error, setError] = useState({
+		state: "",
+		message: "",
+		superiorError: false,
+	});
 	const [isLoggedIn, setIsLoggedIn] = useState(false);
 	const [passwordInfo, setPasswordInfo] = useState({
 		error: false,
@@ -32,7 +35,6 @@ function Profile(props) {
 		duration: 10000,
 		show: false,
 	});
-	const [user, setUser] = useState(props.user);
 
 	const handleChange = (e) => {
 		const { name, value } = e.target;
@@ -45,12 +47,15 @@ function Profile(props) {
 	};
 
 	useEffect(() => {
-		console.log(`Logging in...`);
-		axios.get("http://localhost:3001/").catch((err) => {
+		axios.get("http://localhost:3001/test").catch((err) => {
 			console.log(err);
-			setState("danger");
-			setMessage("Internal server offline.");
+			setError({
+				...error,
+				state: "danger",
+				message: "Internal server offline.",
+			});
 		});
+
 		try {
 			const user = props.user;
 			if (user) {
@@ -69,11 +74,13 @@ function Profile(props) {
 					age: newAge,
 				});
 
-				setState("");
-				setMessage("");
+				setError({ ...error, state: "", message: "" });
 			} else {
-				setState(`danger`);
-				setMessage(`Error 403: You aren't logged in.`);
+				setError({
+					...error,
+					state: "danger",
+					message: "Error 403: You aren't logged in.",
+				});
 			}
 		} catch (err) {}
 	}, [props.user]);
@@ -86,20 +93,20 @@ function Profile(props) {
 			{isLoggedIn && (
 				<div className="profile">
 					{/* Bad request/internal server error */}
-					{state === "danger" && message && (
-						<div className={`error ` + state}>
-							<div className="errorMessage">{message}</div>
+					{error.state === "danger" && error.message && (
+						<div className={`error ` + error.state}>
+							<div className="errorMessage">{error.message}</div>
 						</div>
 					)}
-					
+
 					{/* Basic information */}
 					<ChangeBasicInfo
 						handleChange={handleChange}
 						input={input}
 						passwordInfo={passwordInfo}
 						setPasswordInfo={setPasswordInfo}
-						setState={setState}
-						setMessage={setMessage}
+						setError={setError}
+						error={error}
 					/>
 
 					{/* Change password */}
@@ -110,9 +117,13 @@ function Profile(props) {
 				</div>
 			)}
 
-			{state && message && (
+			{error.state && error.message && (
 				<div className="profile">
-					<Alert className={state} description={message} forceCenter={true} />
+					<Alert
+						className={error.state}
+						description={error.message}
+						forceCenter={true}
+					/>
 				</div>
 			)}
 		</div>

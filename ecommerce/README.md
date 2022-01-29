@@ -23,16 +23,16 @@ $ sass --watch src:src
 | |✅ Ask for password before submitting a request  
 | | |✅show-hide password functionality  
 | | |✅ Show a warning when it's empty  
-| | | |⬜️ The warning must disappear after x seconds(I don't know how to do this, for now)
+| | | |⬜️ The warning must disappear after x seconds(I don't know how to do this, for now)  
 | | | |✅ The warning can also disappear if the user clicks on the field  
 | | | |✅ The red border doesn't disappear till the user clicks on the field  
-| | | |✅ The warning should disappear when the user clicks on it
+| | | |✅ The warning should disappear when the user clicks on it  
 | |✅ Validate email  
 | |✅ Update data  
 | |⬜️ Show messages  
 | | |✅ Server offline  
 | | |⬜️ Other errors  
-| | | |⬜️ Email is already in use  
+| | | |✅ Email is already in use  
 | | | |⬜️ The password is incorrect  
 | | | |⬜️ If the server is offline/bad request  
 | | |⬜️ Joi errors  

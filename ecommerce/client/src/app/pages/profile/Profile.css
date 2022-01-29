@@ -24,6 +24,9 @@
   border-radius: 10px;
   padding: 10px;
 }
+.profile .changeBasicInfo .emailErrorPopup:hover {
+  cursor: pointer;
+}
 .profile .changeBasicInfo .submitSuccessful {
   position: absolute;
   top: 800px;
