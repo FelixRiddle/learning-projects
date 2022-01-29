@@ -27,10 +27,36 @@
 .profile .changeBasicInfo .emailErrorPopup:hover {
   cursor: pointer;
 }
+.profile .changeBasicInfo .joiError {
+  position: absolute;
+  top: 780px;
+  left: 350px;
+  width: 400px;
+  height: 30px;
+  border-radius: 10px;
+  padding: 10px;
+  text-align: center;
+  border-radius: 10px;
+  padding: 20px;
+  z-index: 1;
+}
+.profile .changeBasicInfo .joiError:hover {
+  cursor: pointer;
+}
 .profile .changeBasicInfo .submitSuccessful {
   position: absolute;
   top: 800px;
-  left: 500px;
+  left: 350px;
+  width: 400px;
+  height: 30px;
+  border-radius: 10px;
+  padding: 10px;
+  text-align: center;
+  border-radius: 10px;
+  padding: 10px;
+}
+.profile .changeBasicInfo .submitSuccessful:hover {
+  cursor: pointer;
 }
 .profile .changeBasicInfo .errorPopup,
 .profile .changePasswords .errorPopup,

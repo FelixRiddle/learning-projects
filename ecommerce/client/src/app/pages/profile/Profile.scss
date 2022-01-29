@@ -5,7 +5,7 @@
 		text-align: left;
 		grid-area: titles;
 	}
-	
+
 	.error {
 		position: absolute;
 		width: 400px;
@@ -15,10 +15,6 @@
 		background-color: rgb(223, 21, 21, 0.8);
 		border-radius: 10px;
 		padding: 10px;
-		
-		.errorMessage {
-			
-		}
 	}
 
 	.changeBasicInfo {
@@ -32,9 +28,24 @@
 			border-radius: 10px;
 			padding: 10px;
 
-			.emailErrorMessage {
+			&:hover {
+				cursor: pointer;
 			}
-			
+		}
+
+		.joiError {
+			position: absolute;
+			top: 780px;
+			left: 350px;
+			width: 400px;
+			height: 30px;
+			border-radius: 10px;
+			padding: 10px;
+			text-align: center;
+			border-radius: 10px;
+			padding: 20px;
+			z-index: 1;
+
 			&:hover {
 				cursor: pointer;
 			}
@@ -43,10 +54,17 @@
 		.submitSuccessful {
 			position: absolute;
 			top: 800px;
-			left: 500px;
-			
-			.successMessage {
-				
+			left: 350px;
+			width: 400px;
+			height: 30px;
+			border-radius: 10px;
+			padding: 10px;
+			text-align: center;
+			border-radius: 10px;
+			padding: 10px;
+
+			&:hover {
+				cursor: pointer;
 			}
 		}
 	}
@@ -64,7 +82,7 @@
 			top: 768px;
 			right: 50px;
 			border: 1px solid red;
-			
+
 			&:hover {
 				cursor: pointer;
 			}
@@ -80,7 +98,7 @@
 				cursor: pointer;
 			}
 		}
-		
+
 		.passwordIconOffset {
 			left: 770px;
 			top: 670px;
@@ -141,7 +159,8 @@
 			border-radius: 5px;
 			color: #333;
 
-			&:active, &:focus {
+			&:active,
+			&:focus {
 				border-color: 2px solid blue;
 			}
 

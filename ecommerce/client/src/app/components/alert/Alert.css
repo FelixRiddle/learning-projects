@@ -9,7 +9,7 @@
 }
 
 .danger {
-  background-color: rgba(255, 97, 97, 0.7);
+  background-color: #ff6161;
   border: 3px solid rgba(209, 60, 60, 0.4);
 }
 

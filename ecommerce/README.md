@@ -16,11 +16,11 @@ $ sass --watch src:src
 (This looks better on VSCode)
 ✅ Login  
 -✅ Add show password icon  
--✅ Show "You are already logged in" alert
+-✅ Show "You are already logged in" alert  
 
 ✅ Profile  
 |✅ If the user is not logged in, show 401  
-|⬜️ ChangeBasicInfo part  
+|✅ ChangeBasicInfo part  
 | |✅ Ask for password before submitting a request  
 | | |✅show-hide password functionality  
 | | |✅ Show a warning when it's empty  
@@ -30,15 +30,15 @@ $ sass --watch src:src
 | | | |✅ The warning should disappear when the user clicks on it  
 | |✅ Validate email  
 | |✅ Update data  
-| |⬜️ Show messages  
+| |✅ Show messages  
 | | |✅ Server offline  
 | | |✅ Other errors  
 | | | |✅ Email is already in use  
 | | | |✅ The password is incorrect  
 | | | |✅ If the server is offline/bad request  
-| | |⬜️ Joi errors  
-| | |⬜️ Success message  
-| | | |⬜️ Popup is removed when the user clicks it  
+| | |✅ Joi errors  
+| | |✅ Success message  
+| | | |✅ Popup is removed when the user clicks it  
 | |✅ Save token locally  
 | |⬜️ If the users didn't change anything the save button is disabled  
 | |✅ Verify password through bcrypt  

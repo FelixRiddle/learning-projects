@@ -131,7 +131,7 @@ const ChangeBasicInfo = (props) => {
 				</div>
 			)) ||
 				(resData.joiMessage && (
-					<div className="joiError">
+					<div className="joiError danger" onClick={() => setResData({})}>
 						<div className="joiErrorMessagesArrow"></div>
 						<div className="joiErrorMessage">{resData.joiMessage}</div>
 					</div>
@@ -174,11 +174,13 @@ const ChangeBasicInfo = (props) => {
 					/>
 				))}
 
-			{/* TODO: These divs below */}
 			{/* Show success message */}
 			{resData.state === "success" && resData.message && (
-				<div className="submitSuccessful">
-					<div className="successMessage success">{resData.message}</div>
+				<div
+					className="submitSuccessful success"
+					onClick={() => setResData({})}
+				>
+					<div className="successMessage">{resData.message}</div>
 				</div>
 			)}
 
