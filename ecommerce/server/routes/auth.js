@@ -5,11 +5,6 @@ const bcrypt = require("bcrypt");
 const { registerValidation, loginValidation } = require("../validation");
 
 router.post("/register", async (req, res) => {
-	const time = new Date().getTime();
-	const date = new Date(time);
-	console.log(`Date: ${date.toString()}`);
-	console.log(req.body);
-	console.log("Register");
 	try {
 		const { error } = registerValidation(req.body);
 		error && console.log(error);
@@ -35,15 +30,9 @@ router.post("/register", async (req, res) => {
 });
 
 router.post("/login", async (req, res) => {
-	const time = new Date().getTime();
-	const date = new Date(time);
 	const data = req.body;
-	console.log(`Date: ${date.toString()}`);
-	console.log(req.body);
-	console.log("Login");
 	try {
 		const { error } = loginValidation(data);
-		error && console.log(error);
 		if (error) return res.send(error.details[0].message);
 
 		// Get the user

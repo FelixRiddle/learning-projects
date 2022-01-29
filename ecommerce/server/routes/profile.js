@@ -8,13 +8,11 @@ const verify = require("../verifyToken");
 router.post("/changeBasicInfo", verify, async (req, res) => {
 	const time = new Date().getTime();
 	const currentDate = new Date(time);
-	const { _id, date, iat, token, ...data } = req.body;
 	console.log(`Date: ${currentDate.toString()}`);
-	console.log(req.body);
 	console.log("/changeBasicInfo");
 	try {
-		const { error } = basicInfoValidation(data);
-		error && console.log(error);
+		// Validate data
+		const { error } = basicInfoValidation(req.body);
 		if (error)
 			return res.send({
 				state: "danger",
@@ -22,38 +20,57 @@ router.post("/changeBasicInfo", verify, async (req, res) => {
 				joiMessage: error.details[0].message,
 			});
 
-		// Get the user
-		{
-			let user = await User.findOne({ _id });
-			if (!user)
-				return res.send({ state: "danger", message: "User doesn't exists." });
+		const { _id, date, iat, token, password, ...data } = req.body;
+		let user = await User.findOne({ _id });
 
-			// If the user wants to change the email
-			if (data.email != user.email) {
-				const emailExists = await User.findOne({ email: data.email });
-				if (emailExists)
-					return res.send({
-						state: "danger",
-						field: "email",
-						error: true,
-						message: `That email is already in use.`,
-					});
+		console.log(`User document:`);
+		console.log(user);
+		if (!user) {
+			return res.send({ state: "danger", message: "User doesn't exists." });
+		} else {
+			// Compare passwords
+			const result = await bcrypt.compare(password, user.password);
+			if (!result) {
+				return res.send({
+					error: true,
+					field: "password",
+					state: "danger",
+					message: "The password is incorrect",
+				});
 			}
 		}
 
+		// If the user wants to change the email
+		console.log(`Provided email: ${data.email}, user email: ${user.email}`);
+		if (data.email != user.email) {
+			const emailExists = await User.findOne({ email: data.email });
+			console.log(`Does the email exists?: ${emailExists}`);
+			if (emailExists) {
+				return res.send({
+					state: "danger",
+					field: "email",
+					error: true,
+					message: `That email is already in use.`,
+				});
+			}
+		}
+
+		// Find and update
 		const query = { _id };
 		const update = { ...data };
-		const user = await User.findOneAndUpdate(query, update, {
+		user = await User.findOneAndUpdate(query, update, {
 			new: true, // For returning the document
 		});
 		console.log(`User updated!`);
 
-		console.log(typeof user);
-		const token = jwt.sign(req.body, process.env.TOKEN_SECRET);
-		res
-			.header("auth-token", token)
-			.status(200)
-			.send({ token, user, state: "success", message: `User updated!` });
+		const newToken = jwt.sign(req.body, process.env.TOKEN_SECRET);
+		return res.header("auth-token", newToken).status(200).send({
+			token: newToken,
+			user,
+			error: false,
+			state: "success",
+			message: `User updated!`,
+		});
 	} catch (err) {
 		console.error(err);
 		res.status(400).send(err);

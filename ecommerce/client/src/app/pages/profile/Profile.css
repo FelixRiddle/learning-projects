@@ -43,6 +43,12 @@
 .profile .changeAddress .passwordIcon:hover {
   cursor: pointer;
 }
+.profile .changeBasicInfo .passwordIconOffset,
+.profile .changePasswords .passwordIconOffset,
+.profile .changeAddress .passwordIconOffset {
+  left: 770px;
+  top: 670px;
+}
 .profile .changeBasicInfo > form,
 .profile .changePasswords > form,
 .profile .changeAddress > form {

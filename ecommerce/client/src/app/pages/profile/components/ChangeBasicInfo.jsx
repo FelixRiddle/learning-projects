@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import handleMessageValidation from "../../../../lib/handleMessageValidation";
 
@@ -12,6 +12,7 @@ const ChangeBasicInfo = (props) => {
 		setMessage,
 	} = props;
 	const [resData, setResData] = useState({});
+	const [showHidePasswordIcon, setShowHidePasswordIcon] = useState(true);
 
 	const handleBasicInfoSubmit = async (e) => {
 		e.preventDefault();
@@ -102,6 +103,12 @@ const ChangeBasicInfo = (props) => {
 			});
 	};
 
+	useEffect(() => {
+		axios
+			.get("http://localhost:3001/public/icons/Show.png")
+			.catch((err) => setShowHidePasswordIcon(false));
+	}, []);
+
 	return (
 		<div className="changeBasicInfo">
 			{/* Show or hide repeated email error message */}
@@ -129,7 +136,9 @@ const ChangeBasicInfo = (props) => {
 			{/* Show or hide the password */}
 			{(!passwordInfo.show && (
 				<img
-					className="passwordIcon"
+					className={
+						"passwordIcon " + (!showHidePasswordIcon && "passwordIconOffset")
+					}
 					src="http://localhost:3001/public/icons/Show.png"
 					alt="Show password"
 					onClick={() =>
@@ -139,7 +148,9 @@ const ChangeBasicInfo = (props) => {
 			)) ||
 				(passwordInfo.show && (
 					<img
-						className="passwordIcon"
+						className={
+							"passwordIcon " + (!showHidePasswordIcon && "passwordIconOffset")
+						}
 						src="http://localhost:3001/public/icons/Hide.png"
 						alt="Hide password"
 						onClick={() =>
@@ -148,6 +159,7 @@ const ChangeBasicInfo = (props) => {
 					/>
 				))}
 
+			{/* TODO: These divs below */}
 			{/* Show success message */}
 			{resData.state === "success" && resData.message && (
 				<div className="submitSuccessful">
@@ -182,7 +194,9 @@ const ChangeBasicInfo = (props) => {
 						value={input.lastName}
 					/>
 					<input
-						className={resData.error ? "danger" : ""}
+						className={
+							(resData.field === "email" && resData.error && "danger") || ""
+						}
 						type="email"
 						name="email"
 						placeholder="Email"

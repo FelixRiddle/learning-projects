@@ -19,29 +19,34 @@ function Navbar() {
 	};
 
 	useEffect(() => {
-		const token = localStorage.getItem("token");
-		if (token) {
-			const user = jwt_decode(token);
+		try {
+			const token = localStorage.getItem("token");
+			if (token) {
+				const prevSession = jwt_decode(token);
 
-			if (!user) {
-				console.log(`No previous session found.`);
-				localStorage.removeItem("token");
-			} else {
-				console.log(`Previous session found.`);
-				console.log(`User:`);
-				console.log(user);
-				setUser(user);
+				if (!prevSession) {
+					console.log(`No previous session found.`);
+					localStorage.removeItem("token");
+				} else {
+					console.log(`Previous session found.`);
+					console.log(`User:`);
+					console.log(prevSession);
+					setUser(prevSession);
+				}
 			}
+		} catch (err) {
+			console.log(`No previous session found.`);
 		}
+		console.log(`User: ${user}`);
 	}, []);
 
 	return (
 		<>
 			{/* Links */}
-			<Links user={user} handleLogout={handleLogout} />
+			<Links user={user} handleLogout={handleLogout}/>
 
 			{/* Go to routes */}
-			<GoToRoutes />
+			<GoToRoutes user={user} />
 
 			{/* Footer */}
 			<Footer />
@@ -82,17 +87,17 @@ const Links = (props) => {
 	);
 };
 
-const GoToRoutes = () => {
+const GoToRoutes = (props) => {
 	return (
 		<BrowserRouter>
 			<Routes>
 				<Route path="/" element={<Home />} />
 				<Route path="/home" element={<Home />} />
 				<Route path="/about" element={<About />} />
-				<Route path="/login" element={<Login />} />
+				<Route path="/login" element={<Login user={props.user} />} />
 				<Route path="/register" element={<Register />} />
 				<Route path="/search" element={<Search />} />
-				<Route path="/profile" element={<Profile />} />
+				<Route path="/profile" element={<Profile user={props.user}/>} />
 			</Routes>
 		</BrowserRouter>
 	);

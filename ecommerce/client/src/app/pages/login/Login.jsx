@@ -6,7 +6,7 @@ import handleMessageValidation from "../../../lib/handleMessageValidation";
 import "./Login.css";
 import Alert from "../../components/alert/Alert";
 
-function Login() {
+function Login(props) {
 	const [input, setInput] = useState({ email: "", password: "" });
 	const [message, setMessage] = useState("none");
 	const [state, setState] = useState("");
@@ -65,20 +65,8 @@ function Login() {
 	};
 
 	useEffect(() => {
-		const token = localStorage.getItem("token");
-		if (token) {
-			const user = jwt_decode(token);
-
-			if (!user) {
-				setMessage(`The user you are logged in is invalid.`);
-				localStorage.removeItem("token");
-			} else {
-				console.log(`Previous session found.`);
-				setIsLoggedIn(true);
-				setMessage(`You are already logged in.`);
-			}
-		}
-	}, []);
+		if (props.user) setIsLoggedIn(true);
+	}, [props.user]);
 
 	return (
 		<div className="login">

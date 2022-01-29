@@ -5,6 +5,12 @@
 		text-align: left;
 		grid-area: titles;
 	}
+	
+	.error {
+		.errorMessage {
+			
+		}
+	}
 
 	.changeBasicInfo {
 		.emailErrorPopup {
@@ -46,6 +52,7 @@
 			right: 50px;
 		}
 
+		// For the password icon
 		.passwordIcon {
 			position: relative;
 			top: 680px;
@@ -54,6 +61,11 @@
 			&:hover {
 				cursor: pointer;
 			}
+		}
+		
+		.passwordIconOffset {
+			left: 770px;
+			top: 670px;
 		}
 	}
 

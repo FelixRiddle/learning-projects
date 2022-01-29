@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import jwt_decode from "jwt-decode";
 import "./Profile.css";
 import Alert from "../../components/alert/Alert";
@@ -6,7 +6,7 @@ import ChangeBasicInfo from "./components/ChangeBasicInfo";
 import ChangePasswords from "./components/ChangePasswords";
 import ChangeAddress from "./components/ChangeAddress";
 
-function Profile() {
+function Profile(props) {
 	const [input, setInput] = useState({
 		firstName: "",
 		lastName: "",
@@ -21,10 +21,9 @@ function Profile() {
 		city: "",
 		postalCode: "",
 		address: "",
-		token: "",
 	});
-	const [state, setState] = useState("none");
-	const [message, setMessage] = useState("none");
+	const [state, setState] = useState("");
+	const [message, setMessage] = useState("");
 	const [isLoggedIn, setIsLoggedIn] = useState(false);
 	const [passwordInfo, setPasswordInfo] = useState({
 		error: false,
@@ -32,6 +31,7 @@ function Profile() {
 		duration: 10000,
 		show: false,
 	});
+	const [user, setUser] = useState(props.user);
 
 	const handleChange = (e) => {
 		const { name, value } = e.target;
@@ -44,14 +44,10 @@ function Profile() {
 	};
 
 	useEffect(() => {
-		const token = localStorage.getItem("token");
-		if (token) {
-			const user = jwt_decode(token);
-
-			if (!user) {
-				setMessage(`The user you are logged in is invalid.`);
-				localStorage.removeItem("token");
-			} else {
+		console.log(`Logging in...`);
+		try {
+			const user = props.user;
+			if (user) {
 				console.log(`Previous session found.`);
 				setIsLoggedIn(true);
 				// All this just for a date xD
@@ -61,22 +57,34 @@ function Profile() {
 					("0" + (tempAge.getMonth() + 1)).slice(-2),
 					("0" + tempAge.getDate()).slice(-2),
 				].join("-");
-				
+
 				setInput({
-					...user, age: newAge
-					, token
+					...user,
+					age: newAge,
 				});
+				
+				setState("")
+				setMessage("");
+			} else {
+				setState(`danger`);
+				setMessage(`Error 403: You aren't logged in.`);
 			}
-		} else {
-			setMessage(`Error 403: You aren't logged in.`);
-		}
-	}, []);
+		} catch (err) {}
+	}, [props.user]);
 
 	return (
 		<div>
 			<title>Profile</title>
 			<h2>Profile</h2>
-			{(isLoggedIn && (
+
+			{/* Bad request/internal server error */}
+			{state === "danger" && message && (
+				<div className={`error ` + state}>
+					<div className="errorMessage">{message}</div>
+				</div>
+			)}
+
+			{isLoggedIn && (
 				<div className="profile">
 					{/* Basic information */}
 					<ChangeBasicInfo
@@ -89,20 +97,16 @@ function Profile() {
 					/>
 
 					{/* Change password */}
-					<ChangePasswords
-						handleChange={handleChange}
-						input={input}
-					/>
+					<ChangePasswords handleChange={handleChange} input={input} />
 
 					{/* Change address */}
-					<ChangeAddress
-						handleChange={handleChange}
-						input={input}
-					/>
+					<ChangeAddress handleChange={handleChange} input={input} />
 				</div>
-			)) || (
+			)}
+			
+			{state && message && (
 				<div className="profile">
-					<Alert class="danger" description={message} forceCenter={true} />
+					<Alert className={state} description={message} forceCenter={true} />
 				</div>
 			)}
 		</div>

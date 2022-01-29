@@ -28,6 +28,33 @@ module.exports.loginValidation = loginValidation = (data) => {
 };
 
 module.exports.basicInfoValidation = basicInfoValidation = (data) => {
+	const {
+		firstName,
+		lastName,
+		email,
+		password,
+		phoneNumber,
+		country,
+		province,
+		city,
+		address,
+		postalCode,
+		age,
+	} = data;
+	const userFields = {
+		firstName,
+		lastName,
+		email,
+		password,
+		phoneNumber,
+		country,
+		province,
+		city,
+		address,
+		postalCode,
+		age,
+	};
+
 	const schema = Joi.object({
 		firstName: Joi.string().min(3).max(max).required(),
 		lastName: Joi.string().min(3).max(max).required(),
@@ -41,6 +68,6 @@ module.exports.basicInfoValidation = basicInfoValidation = (data) => {
 		postalCode: Joi.string().max(32),
 		age: Joi.date(),
 	});
-	
-	return schema.validate(data);
-}
+
+	return schema.validate(userFields);
+};
