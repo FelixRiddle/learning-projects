@@ -4,6 +4,16 @@
   text-align: left;
   grid-area: titles;
 }
+.profile .error {
+  position: absolute;
+  width: 400px;
+  top: 70px;
+  left: 355px;
+  text-align: center;
+  background-color: rgba(223, 21, 21, 0.8);
+  border-radius: 10px;
+  padding: 10px;
+}
 .profile .changeBasicInfo .emailErrorPopup {
   position: absolute;
   top: 510px;

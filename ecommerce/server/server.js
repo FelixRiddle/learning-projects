@@ -5,14 +5,16 @@ require("dotenv").config();
 const app = express();
 
 const mongoURI = process.env.MONGODB_URI;
-mongoose
-	.connect(mongoURI, { useNewUrlParser: true }, () => {
-		console.log(`Connected to MongoDB.`);
-	});
+mongoose.connect(mongoURI, { useNewUrlParser: true }, () => {
+	console.log(`Connected to MongoDB.`);
+});
 
 app.use(express.json());
 app.use(cors());
 
+app.use("/", (req, res) => {
+	return res.status(200).send({ status: "success", msg: "Server online" });
+});
 app.use("/public", express.static("public"));
 
 app.use("/api/products", require("./routes/products"));

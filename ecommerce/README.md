@@ -30,7 +30,7 @@ $ sass --watch src:src
 | |✅ Validate email  
 | |✅ Update data  
 | |⬜️ Show messages  
-| | |⬜️ Server offline  
+| | |✅ Server offline  
 | | |⬜️ Other errors  
 | | | |⬜️ Email is already in use  
 | | | |⬜️ The password is incorrect  

@@ -5,6 +5,7 @@ import Alert from "../../components/alert/Alert";
 import ChangeBasicInfo from "./components/ChangeBasicInfo";
 import ChangePasswords from "./components/ChangePasswords";
 import ChangeAddress from "./components/ChangeAddress";
+import axios from "axios";
 
 function Profile(props) {
 	const [input, setInput] = useState({
@@ -45,6 +46,11 @@ function Profile(props) {
 
 	useEffect(() => {
 		console.log(`Logging in...`);
+		axios.get("http://localhost:3001/").catch((err) => {
+			console.log(err);
+			setState("danger");
+			setMessage("Internal server offline.");
+		});
 		try {
 			const user = props.user;
 			if (user) {
@@ -62,8 +68,8 @@ function Profile(props) {
 					...user,
 					age: newAge,
 				});
-				
-				setState("")
+
+				setState("");
 				setMessage("");
 			} else {
 				setState(`danger`);
@@ -77,15 +83,15 @@ function Profile(props) {
 			<title>Profile</title>
 			<h2>Profile</h2>
 
-			{/* Bad request/internal server error */}
-			{state === "danger" && message && (
-				<div className={`error ` + state}>
-					<div className="errorMessage">{message}</div>
-				</div>
-			)}
-
 			{isLoggedIn && (
 				<div className="profile">
+					{/* Bad request/internal server error */}
+					{state === "danger" && message && (
+						<div className={`error ` + state}>
+							<div className="errorMessage">{message}</div>
+						</div>
+					)}
+					
 					{/* Basic information */}
 					<ChangeBasicInfo
 						handleChange={handleChange}
@@ -103,7 +109,7 @@ function Profile(props) {
 					<ChangeAddress handleChange={handleChange} input={input} />
 				</div>
 			)}
-			
+
 			{state && message && (
 				<div className="profile">
 					<Alert className={state} description={message} forceCenter={true} />
