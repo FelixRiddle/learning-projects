@@ -13,10 +13,14 @@ const ChangeBasicInfo = (props) => {
 	} = props;
 	const [resData, setResData] = useState({});
 	const [showHidePasswordIcon, setShowHidePasswordIcon] = useState(true);
+	//const [userClickedAgain, setUserClickdAgain] = useState(false);
+	const [showPasswordMessage, setShowPasswordMessage] = useState(false);
+	const [timeouts, setTimeouts] = useState([]);
 
 	const handleBasicInfoSubmit = async (e) => {
 		e.preventDefault();
 
+		setShowPasswordMessage(false);
 		if (!input.password) {
 			setPasswordInfo({
 				...passwordInfo,
@@ -25,14 +29,7 @@ const ChangeBasicInfo = (props) => {
 			});
 
 			// Timeout
-			setTimeout(() => {
-				console.log(passwordInfo);
-				setPasswordInfo({
-					...passwordInfo,
-					error: false,
-					errorMessage: "",
-				});
-			}, passwordInfo.duration);
+			setShowPasswordMessage(true);
 
 			return;
 		} else if (input.password.length < 8) {
@@ -43,13 +40,7 @@ const ChangeBasicInfo = (props) => {
 			});
 
 			// Timeout
-			setTimeout(() => {
-				setPasswordInfo({
-					...passwordInfo,
-					error: false,
-					errorMessage: "",
-				});
-			}, passwordInfo.duration);
+			setShowPasswordMessage(true);
 
 			return;
 		}
@@ -126,15 +117,18 @@ const ChangeBasicInfo = (props) => {
 				))}
 
 			{/* Show or hide password error message */}
-			{passwordInfo.errorMessage && (
-				<div className="errorPopup">
+			{showPasswordMessage && (
+				<div
+					className="errorPopup"
+					onClick={(e) => setShowPasswordMessage(false)}
+				>
 					<div className="arrow"></div>
 					<div className="errorMessage">{passwordInfo.errorMessage}</div>
 				</div>
 			)}
 
 			{/* Show or hide the password */}
-			{(!passwordInfo.show && (
+			{(!passwordInfo.show && !timeouts && (
 				<img
 					className={
 						"passwordIcon " + (!showHidePasswordIcon && "passwordIconOffset")
@@ -146,7 +140,7 @@ const ChangeBasicInfo = (props) => {
 					}
 				/>
 			)) ||
-				(passwordInfo.show && (
+				(passwordInfo.show && !timeouts && (
 					<img
 						className={
 							"passwordIcon " + (!showHidePasswordIcon && "passwordIconOffset")

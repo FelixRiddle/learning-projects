@@ -28,8 +28,14 @@
   background-color: rgba(223, 21, 21, 0.8);
   border-radius: 10px;
   padding: 10px;
-  top: 782px;
+  top: 768px;
   right: 50px;
+  border: 1px solid red;
+}
+.profile .changeBasicInfo .errorPopup:hover,
+.profile .changePasswords .errorPopup:hover,
+.profile .changeAddress .errorPopup:hover {
+  cursor: pointer;
 }
 .profile .changeBasicInfo .passwordIcon,
 .profile .changePasswords .passwordIcon,
