@@ -8,17 +8,83 @@ const ChangePasswords = (props) => {
 		showCurrentPassword: false,
 		showNewPassword: false,
 		showRepeatNewPassword: false,
+		state: "",
+		errorMessage: "",
+		field: "",
 	});
-	const [currentPassword, setCurrentPassword] = useState("");
-	const [newPassword, setNewPassword] = useState("");
-	const [repeatNewPassword, setRepeatNewPassword] = useState("");
+	const [passwordInput, setPasswordInput] = useState({
+		currentPassword: "",
+		newPassword: "",
+		repeatNewPassword: "",
+	});
+
+	const handlePasswordChange = (e) => {
+		const { name, value } = e.target;
+		setPasswordInput((prevInput) => {
+			return { ...prevInput, [name]: value };
+		});
+	};
 
 	const handleChangePasswordsSubmit = (e) => {
 		e.preventDefault();
-		axios.post("http://localhost:3001/api/profile/changePassword");
+		console.log(`Some information:`);
+		console.log(passwordInput);
+		console.log(passwordInput.currentPassword.length);
+		console.log(passwordInput.newPassword.length);
+		console.log(passwordInput.repeatNewPassword.length);
+
+		// Validation
+		if (passwordInput.currentPassword.length < 8) {
+			setPasswordInfo({
+				...passwordInfo,
+				state: "danger",
+				field: "currentPassword",
+				message: "The password must be 8 characters long.",
+			});
+			return;
+		}
+
+		if (passwordInput.newPassword.length < 8) {
+			setPasswordInfo({
+				...passwordInfo,
+				state: "danger",
+				field: "newPassword",
+				message: "The password must be 8 characters long.",
+			});
+			return;
+		}
+
+		if (passwordInput.repeatNewPassword.length < 8) {
+			setPasswordInfo({
+				...passwordInfo,
+				state: "danger",
+				field: "repeatNewPassword",
+				message: "The password must be 8 characters long.",
+			});
+			return;
+		} else if (passwordInput.newPassword !== passwordInput.repeatNewPassword) {
+			setPasswordInfo({
+				...passwordInfo,
+				state: "danger",
+				field: "",
+				message: "The passwords don't match.",
+			});
+			return;
+		}
+
+		axios
+			.post("http://localhost:3001/api/profile/changePassword", {
+				newPassword: passwordInput.newPassword,
+				currentPassword: passwordInput.currentPassword,
+			})
+			.then((res) => {})
+			.catch((err) => {
+				console.error(err);
+			});
 	};
 
 	useEffect(() => {
+		// Test if the icons exist/are online
 		axios
 			.get("http://localhost:3001/public/icons/Show.png")
 			.then((res) => {
@@ -34,6 +100,95 @@ const ChangePasswords = (props) => {
 	return (
 		<div className="changePasswords">
 			<h6>Change password</h6>
+
+			{/* For error or success messages */}
+			<Messages passwordInfo={passwordInfo} setPasswordInfo={setPasswordInfo} />
+
+			{/* For show-hide password icons */}
+			<ShowHidePasswords
+				passwordInfo={passwordInfo}
+				setPasswordInfo={setPasswordInfo}
+			/>
+
+			<form action="submit">
+				<div className="changePasswordsLabels">
+					<label htmlFor="password">Current password</label>
+					<label htmlFor="newPassword">New password</label>
+					<label htmlFor="repeatNewPassword">Repeat new password</label>
+				</div>
+				<div className="changePasswordsInputs">
+					{/* Change passwords */}
+					<input
+						onClick={() =>
+							passwordInfo.field === "currentPassword" &&
+							setPasswordInfo({ ...passwordInfo, field: "" })
+						}
+						className={passwordInfo.field === "currentPassword" && "danger"}
+						type={passwordInfo.showCurrentPassword ? "text" : "password"}
+						name="currentPassword"
+						placeholder="Current password"
+						onChange={handlePasswordChange}
+						value={passwordInput.currentPassword}
+					/>
+					<input
+						onClick={() =>
+							passwordInfo.field === "newPassword" &&
+							setPasswordInfo({ ...passwordInfo, field: "" })
+						}
+						className={passwordInfo.field === "newPassword" && "danger"}
+						type={passwordInfo.showNewPassword ? "text" : "password"}
+						name="newPassword"
+						placeholder="New password"
+						onChange={handlePasswordChange}
+						value={passwordInput.newPassword}
+					/>
+					<input
+						onClick={() =>
+							passwordInfo.field === "repeatNewPassword" &&
+							setPasswordInfo({ ...passwordInfo, field: "" })
+						}
+						className={passwordInfo.field === "repeatNewPassword" && "danger"}
+						type={passwordInfo.showRepeatNewPassword ? "text" : "password"}
+						name="repeatNewPassword"
+						placeholder="Repeat new password"
+						onChange={handlePasswordChange}
+						value={passwordInput.repeatNewPassword}
+					/>
+				</div>
+				<button type="submit" onClick={handleChangePasswordsSubmit}>
+					Change password
+				</button>
+			</form>
+		</div>
+	);
+};
+
+const Messages = (props) => {
+	const { passwordInfo, setPasswordInfo } = props;
+
+	return (
+		<div
+			className={"messages " + passwordInfo.state}
+			onClick={() => setPasswordInfo({ ...passwordInfo, message: "" })}
+			hidden={!passwordInfo.message && true}
+		>
+			{/* 
+			setPasswordInfo({
+				...passwordInfo,
+				state: "danger",
+				field: "currentPassword",
+				message: "The password must be 8 characters long.",
+			}); */}
+			<div>{passwordInfo.message}</div>
+		</div>
+	);
+};
+
+const ShowHidePasswords = (props) => {
+	const { passwordInfo, setPasswordInfo } = props;
+
+	return (
+		<div className="show-hide-passwords">
 			{/* show-hide current password */}
 			{(!passwordInfo.showCurrentPassword && (
 				<img
@@ -133,40 +288,6 @@ const ChangePasswords = (props) => {
 						alt="Hide repeat new password"
 					/>
 				))}
-			<form action="submit">
-				<div className="changePasswordsLabels">
-					<label htmlFor="password">Current password</label>
-					<label htmlFor="newPassword">New password</label>
-					<label htmlFor="repeatNewPassword">Repeat new password</label>
-				</div>
-				<div className="changePasswordsInputs">
-					{/* Change passwords */}
-					<input
-						type={passwordInfo.showCurrentPassword ? "text" : "password"}
-						name="password"
-						placeholder="Current password"
-						onChange={handleChange}
-						value={input.password}
-					/>
-					<input
-						type={passwordInfo.showNewPassword ? "text" : "password"}
-						name="newPassword"
-						placeholder="New password"
-						onChange={handleChange}
-						value={input.newPassword}
-					/>
-					<input
-						type={passwordInfo.showRepeatNewPassword ? "text" : "password"}
-						name="repeatNewPassword"
-						placeholder="Repeat new password"
-						onChange={handleChange}
-						value={input.repeatNewPassword}
-					/>
-				</div>
-				<button type="submit" onClick={handleChangePasswordsSubmit}>
-					Change password
-				</button>
-			</form>
 		</div>
 	);
 };

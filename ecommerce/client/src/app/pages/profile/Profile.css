@@ -58,31 +58,42 @@
 .profile .changeBasicInfo .submitSuccessful:hover {
   cursor: pointer;
 }
-.profile .changePasswords .show-hide-current-password {
+.profile .changePasswords .messages {
+  position: absolute;
+  top: 1320px;
+  left: 420px;
+  padding: 20px;
+  border: none;
+  border-radius: 5px;
+}
+.profile .changePasswords .messages:hover {
+  cursor: pointer;
+}
+.profile .changePasswords .show-hide-passwords .show-hide-current-password {
   position: absolute;
   left: 780px;
   top: 1127px;
 }
-.profile .changePasswords .show-hide-current-password:hover {
+.profile .changePasswords .show-hide-passwords .show-hide-current-password:hover {
   cursor: pointer;
 }
-.profile .changePasswords .show-hide-new-password {
+.profile .changePasswords .show-hide-passwords .show-hide-new-password {
   position: absolute;
   left: 780px;
   top: 1219px;
 }
-.profile .changePasswords .show-hide-new-password:hover {
+.profile .changePasswords .show-hide-passwords .show-hide-new-password:hover {
   cursor: pointer;
 }
-.profile .changePasswords .show-hide-repeat-new-password {
+.profile .changePasswords .show-hide-passwords .show-hide-repeat-new-password {
   position: absolute;
   left: 780px;
   top: 1309px;
 }
-.profile .changePasswords .show-hide-repeat-new-password:hover {
+.profile .changePasswords .show-hide-passwords .show-hide-repeat-new-password:hover {
   cursor: pointer;
 }
-.profile .changePasswords .offset-text {
+.profile .changePasswords .show-hide-passwords .offset-text {
   left: 840px;
 }
 .profile .changeBasicInfo .errorPopup,

@@ -68,38 +68,57 @@
 			}
 		}
 	}
-	
+
 	.changePasswords {
-		.show-hide-current-password {
+		.messages {
 			position: absolute;
-			left: 780px;
-			top: 1127px;
-			
+			top: 1320px;
+			left: 420px;
+			padding: 20px;
+			border: none;
+			border-radius: 5px;
+
+			.danger {
+			}
+			.success {
+			}
 			&:hover {
 				cursor: pointer;
 			}
 		}
-		.show-hide-new-password {
-			position: absolute;
-			left: 780px;
-			top: 1219px;
-			
-			&:hover {
-				cursor: pointer;
+
+		.show-hide-passwords {
+			.show-hide-current-password {
+				position: absolute;
+				left: 780px;
+				top: 1127px;
+
+				&:hover {
+					cursor: pointer;
+				}
 			}
-		}
-		.show-hide-repeat-new-password {
-			position: absolute;
-			left: 780px;
-			top: 1309px;
-			
-			&:hover {
-				cursor: pointer;
+			.show-hide-new-password {
+				position: absolute;
+				left: 780px;
+				top: 1219px;
+
+				&:hover {
+					cursor: pointer;
+				}
 			}
-		}
-		
-		.offset-text {
-			left: 840px;
+			.show-hide-repeat-new-password {
+				position: absolute;
+				left: 780px;
+				top: 1309px;
+
+				&:hover {
+					cursor: pointer;
+				}
+			}
+
+			.offset-text {
+				left: 840px;
+			}
 		}
 	}
 
