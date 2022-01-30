@@ -68,6 +68,40 @@
 			}
 		}
 	}
+	
+	.changePasswords {
+		.show-hide-current-password {
+			position: absolute;
+			left: 780px;
+			top: 1127px;
+			
+			&:hover {
+				cursor: pointer;
+			}
+		}
+		.show-hide-new-password {
+			position: absolute;
+			left: 780px;
+			top: 1219px;
+			
+			&:hover {
+				cursor: pointer;
+			}
+		}
+		.show-hide-repeat-new-password {
+			position: absolute;
+			left: 780px;
+			top: 1309px;
+			
+			&:hover {
+				cursor: pointer;
+			}
+		}
+		
+		.offset-text {
+			left: 840px;
+		}
+	}
 
 	.changeBasicInfo,
 	.changePasswords,
