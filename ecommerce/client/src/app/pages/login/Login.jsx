@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import jwt_decode from "jwt-decode";
 
-import handleMessageValidation from "../../../lib/handleMessageValidation";
+import { handleMessageValidation } from "../../../lib/handleMessageValidation";
 import "./Login.css";
 import Alert from "../../components/alert/Alert";
 

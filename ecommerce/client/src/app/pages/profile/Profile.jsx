@@ -71,6 +71,7 @@ function Profile(props) {
 
 				setInput({
 					...user,
+					password: "",
 					age: newAge,
 				});
 

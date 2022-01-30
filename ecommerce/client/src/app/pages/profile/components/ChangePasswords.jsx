@@ -1,16 +1,25 @@
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 
 const ChangePasswords = (props) => {
-	const { handleChange, input } = props;
+	const { handleChange, input, setError, error } = props;
+	const [passwordInfo, setPasswordInfo] = useState({
+		icon: false,
+	});
 
 	const handleChangePasswordsSubmit = (e) => {
 		e.preventDefault();
 		axios.post("http://localhost:3001/api/profile/changePassword");
 	};
+	
+	useEffect(() => {
+		
+	}, []);
 
 	return (
 		<div className="changePasswords">
 			<h6>Change password</h6>
+
 			<form action="submit">
 				<div className="changePasswordsLabels">
 					<label htmlFor="password">Current password</label>

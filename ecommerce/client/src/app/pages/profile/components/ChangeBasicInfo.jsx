@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import handleMessageValidation from "../../../../lib/handleMessageValidation";
+import { handleMessageValidationv2 } from "../../../../lib/handleMessageValidation";
 
 const ChangeBasicInfo = (props) => {
 	const {
@@ -21,8 +21,6 @@ const ChangeBasicInfo = (props) => {
 
 	const handleBasicInfoSubmit = async (e) => {
 		e.preventDefault();
-		console.log(`Password error:`);
-		console.log(passwordInfo);
 
 		try {
 			setShowPasswordMessage(false);
@@ -64,7 +62,7 @@ const ChangeBasicInfo = (props) => {
 				// Save the response for later use
 				setResData({ ...res.data });
 
-				if (res.data.message !== undefined) {
+				if (res.data.message !== undefined || res.data.joiMessage) {
 					// Some validation
 					res.data.field === "email" &&
 						res.data.error &&
@@ -73,6 +71,8 @@ const ChangeBasicInfo = (props) => {
 							state: res.data.state,
 							message: res.data.message,
 						});
+
+					// If the password isn't correct
 					if (res.data.field === "password" && res.data.error) {
 						setShowPasswordMessage(true);
 						setPasswordInfo({
@@ -83,23 +83,32 @@ const ChangeBasicInfo = (props) => {
 						});
 					}
 
+					// For data validation
+					console.log(`Outer`);
+					if (res.data.joiMessage !== undefined) {
+						console.log(`Joi error`);
+						const modifiedMessage = handleMessageValidationv2({
+							firstName: input.firstName,
+							lastName: input.lastName,
+							email: input.email,
+							password: input.password
+						}, res, [
+							"First name",
+							"Last name",
+							"Email",
+							"Password",
+						]);
+						setResData({
+							joiMessage: modifiedMessage,
+							error: res.data.error,
+							state: res.data.state,
+						});
+					}
+
 					// Set the response token on the local storage
 					if (!res.data.error) {
 						localStorage.setItem("token", res.data.token);
 					}
-
-					return;
-				} else if (res.data.joiMessage !== undefined) {
-					setError({ ...error, state: res.data.state });
-					handleMessageValidation(
-						input,
-						res,
-						["Email", "Password"],
-						setError,
-						error
-					);
-
-					console.log(`Message: ${res.data.joiMessage}`);
 
 					return;
 				}
