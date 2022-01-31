@@ -60,6 +60,10 @@ const userSchema = new mongoose.Schema({
 		type: Date,
 		default: Date.now,
 	},
+	lastUpdated: {
+		type: Date,
+		default: Date.now,
+	},
 });
 
 // Here "User" is the collection

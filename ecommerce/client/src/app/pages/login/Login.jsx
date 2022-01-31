@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
-import { handleMessageValidation } from "../../../lib/handleMessageValidation";
+import { handleMessageValidationv2 } from "../../../lib/handleMessageValidation";
 import "./Login.css";
 import Alert from "../../components/alert/Alert";
 
@@ -35,7 +35,7 @@ function Login(props) {
 					setMessage("Email or password is wrong.");
 				} else if (typeof res.data === "string") {
 					setState("danger");
-					handleMessageValidation(
+					handleMessageValidationv2(
 						input,
 						res,
 						["Email", "Password"],

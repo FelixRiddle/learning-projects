@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { handleMessageValidationv2 } from "../../../../lib/handleMessageValidation";
+import jwt_decode from "jwt-decode";
 
 const ChangeBasicInfo = (props) => {
 	const {
@@ -10,6 +11,7 @@ const ChangeBasicInfo = (props) => {
 		setPasswordInfo,
 		setError,
 		error,
+		setInput,
 	} = props;
 	const [resData, setResData] = useState({});
 	const [showHidePasswordIcon, setShowHidePasswordIcon] = useState(true);
@@ -18,6 +20,7 @@ const ChangeBasicInfo = (props) => {
 		state: "",
 		message: "",
 	});
+	const [token, setToken] = useState("");
 
 	const handleBasicInfoSubmit = async (e) => {
 		e.preventDefault();
@@ -49,7 +52,6 @@ const ChangeBasicInfo = (props) => {
 			}
 		} catch (err) {}
 
-		const token = localStorage.getItem("token");
 		await axios
 			.post("http://localhost:3001/api/profile/changeBasicInfo", {
 				token,
@@ -87,17 +89,16 @@ const ChangeBasicInfo = (props) => {
 					console.log(`Outer`);
 					if (res.data.joiMessage !== undefined) {
 						console.log(`Joi error`);
-						const modifiedMessage = handleMessageValidationv2({
-							firstName: input.firstName,
-							lastName: input.lastName,
-							email: input.email,
-							password: input.password
-						}, res, [
-							"First name",
-							"Last name",
-							"Email",
-							"Password",
-						]);
+						const modifiedMessage = handleMessageValidationv2(
+							{
+								firstName: input.firstName,
+								lastName: input.lastName,
+								email: input.email,
+								password: input.password,
+							},
+							res,
+							["First name", "Last name", "Email", "Password"]
+						);
 						setResData({
 							joiMessage: modifiedMessage,
 							error: res.data.error,
@@ -108,6 +109,7 @@ const ChangeBasicInfo = (props) => {
 					// Set the response token on the local storage
 					if (!res.data.error) {
 						localStorage.setItem("token", res.data.token);
+						setToken(localStorage.getItem("token"));
 					}
 
 					return;
@@ -124,11 +126,24 @@ const ChangeBasicInfo = (props) => {
 			});
 	};
 
+	// When the page starts
 	useEffect(() => {
 		axios
 			.get("http://localhost:3001/public/icons/Show.png")
 			.catch((err) => setShowHidePasswordIcon(false));
 	}, []);
+
+	useEffect(() => {
+		try {
+			setToken(localStorage.getItem("token"));
+			if (token) {
+				const { password, ...user } = jwt_decode(token);
+				setInput(user);
+			}
+		} catch (err) {
+			console.error(err);
+		}
+	}, [token]);
 
 	return (
 		<div className="changeBasicInfo">

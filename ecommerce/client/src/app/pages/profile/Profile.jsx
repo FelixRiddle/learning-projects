@@ -8,6 +8,7 @@ import ChangeAddress from "./components/ChangeAddress";
 import axios from "axios";
 
 function Profile(props) {
+	const { setReRender } = props;
 	const [input, setInput] = useState({
 		firstName: "",
 		lastName: "",
@@ -35,6 +36,7 @@ function Profile(props) {
 		duration: 10000,
 		show: false,
 	});
+	const { token, setToken } = props;
 
 	const handleChange = (e) => {
 		const { name, value } = e.target;
@@ -55,12 +57,14 @@ function Profile(props) {
 				message: "Internal server offline.",
 			});
 		});
+	}, []);
 
+	useEffect(() => {
 		try {
 			const user = props.user;
 			if (user) {
-				console.log(`Previous session found.`);
 				setIsLoggedIn(true);
+
 				// All this just for a date xD
 				const tempAge = new Date(Date.parse(user.age));
 				const newAge = [
@@ -83,7 +87,9 @@ function Profile(props) {
 					message: "Error 403: You aren't logged in.",
 				});
 			}
-		} catch (err) {}
+		} catch (err) {
+			console.error(err);
+		}
 	}, [props.user]);
 
 	return (
@@ -104,6 +110,7 @@ function Profile(props) {
 					<ChangeBasicInfo
 						handleChange={handleChange}
 						input={input}
+						setInput={setInput}
 						passwordInfo={passwordInfo}
 						setPasswordInfo={setPasswordInfo}
 						setError={setError}
@@ -111,7 +118,13 @@ function Profile(props) {
 					/>
 
 					{/* Change password */}
-					<ChangePasswords handleChange={handleChange} input={input} />
+					<ChangePasswords
+						handleChange={handleChange}
+						input={input}
+						setReRender={setReRender}
+						token={token}
+						setToken={setToken}
+					/>
 
 					{/* Change address */}
 					<ChangeAddress handleChange={handleChange} input={input} />

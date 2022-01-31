@@ -2,14 +2,18 @@ const router = require("express").Router();
 const User = require("../models/User");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
-const { basicInfoValidation } = require("../validation");
+const {
+	basicInfoValidation,
+	changePasswordValidation,
+} = require("../validation");
 const verify = require("../verifyToken");
 
 router.post("/changeBasicInfo", verify, async (req, res) => {
+	/*
 	const time = new Date().getTime();
 	const currentDate = new Date(time);
 	console.log(`Date: ${currentDate.toString()}`);
-	console.log("/changeBasicInfo");
+	console.log("/changeBasicInfo");*/
 	try {
 		// Validate data
 		const { error } = basicInfoValidation(req.body);
@@ -68,6 +72,76 @@ router.post("/changeBasicInfo", verify, async (req, res) => {
 			error: false,
 			state: "success",
 			message: `User updated!`,
+		});
+	} catch (err) {
+		console.error(err);
+		res.status(400).send(err);
+	}
+});
+
+router.post("/changePassword", verify, async (req, res) => {
+	const time = new Date().getTime();
+	const currentDate = new Date(time);
+	console.log(`Date: ${currentDate.toString()}`);
+	console.log("/changePassword");
+
+	try {
+		const { _id, repeatNewPassword, token, ...data } = req.body;
+
+		// Validate data
+		const { error } = changePasswordValidation(data);
+		console.log(`Joi error:`);
+		console.log(error);
+		if (error)
+			return res.send({
+				state: "danger",
+				error: true,
+				joiMessage: error.details[0].message,
+			});
+
+		let user = await User.findOne({ _id });
+		console.log(`User found:`);
+		console.log(user);
+
+		// KSDrjioejroiasiorjsodjfasfdojs;fpdj
+		if (data.currentPassword !== undefined && user) {
+			const result = await bcrypt.compare(data.currentPassword, user.password);
+			console.log(`Comparison result: ${result}`);
+			if (!result) {
+				// Passwords are not the same
+				return res.send({
+					error: true,
+					state: "danger",
+					message: "The current password is not correct.",
+					field: "currentPassword",
+					name: "Current password",
+				});
+			}
+			if (result) {
+				// Update password
+				let newPassword = await bcrypt.hash(data.newPassword, 10);
+				const query = { _id };
+				const update = {
+					password: newPassword,
+					lastUpdated: Date.now(),
+				};
+				let newUser = await User.findOneAndUpdate(query, update, { new: true });
+
+				const newToken = jwt.sign({ ...newUser._doc }, process.env.TOKEN_SECRET);
+				return res.header("auth-token", newToken).status(200).send({
+					token: newToken,
+					user,
+					error: false,
+					state: "success",
+					message: "Password updated successfully.",
+				});
+			}
+		}
+
+		return res.send({
+			error: true,
+			state: "danger",
+			message: "The user coulnd't be found.",
 		});
 	} catch (err) {
 		console.error(err);

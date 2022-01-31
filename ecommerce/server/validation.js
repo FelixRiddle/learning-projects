@@ -71,3 +71,12 @@ module.exports.basicInfoValidation = basicInfoValidation = (data) => {
 
 	return schema.validate(userFields);
 };
+
+module.exports.changePasswordValidation = changePasswordValidation = (data) => {
+	const schema = Joi.object({
+		currentPassword: Joi.string().min(8).max(max).required(),
+		newPassword: Joi.string().min(8).max(max).required(),
+	});
+
+	return schema.validate(data);
+};

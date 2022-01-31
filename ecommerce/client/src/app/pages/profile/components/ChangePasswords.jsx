@@ -1,21 +1,27 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { handleMessageValidationv2 } from "../../../../lib/handleMessageValidation";
 
 const ChangePasswords = (props) => {
-	const { handleChange, input, setError, error } = props;
+	const { input, setReRender } = props;
 	const [passwordInfo, setPasswordInfo] = useState({
 		icon: false,
 		showCurrentPassword: false,
 		showNewPassword: false,
 		showRepeatNewPassword: false,
 		state: "",
-		errorMessage: "",
+		message: "",
 		field: "",
 	});
 	const [passwordInput, setPasswordInput] = useState({
 		currentPassword: "",
 		newPassword: "",
 		repeatNewPassword: "",
+	});
+	const [resData, setResData] = useState({});
+	const [update, setUpdate] = useState({
+		token: "",
+		updated: false,
 	});
 
 	const handlePasswordChange = (e) => {
@@ -27,11 +33,66 @@ const ChangePasswords = (props) => {
 
 	const handleChangePasswordsSubmit = (e) => {
 		e.preventDefault();
+		if (!passwordValidation()) return;
+		
+		axios
+			.post("http://localhost:3001/api/profile/changePassword", {
+				newPassword: passwordInput.newPassword,
+				currentPassword: passwordInput.currentPassword,
+				_id: input._id,
+				token: update.token,
+			})
+			.then((res) => {
+				// The response should be like this
+				/*return res.header("auth-token", newToken).status(200).send({
+					token: newToken,
+					user,
+					error: false,
+					state: "success",
+					message: "Password updated successfully.",
+				}); */
+				if (res.data.joiMessage !== undefined) {
+					const responseMessage = handleMessageValidationv2(
+						{
+							currentPassword: passwordInput.currentPassword,
+							newPassword: passwordInput.newPassword,
+							repeatNewPassword: passwordInput.repeatNewPassword,
+						},
+						res,
+						["Current password", "New password", "Repeat password"]
+					);
+					setResData({ ...res.data, message: responseMessage });
+				}
+				if (res.data.message !== undefined) {
+					setPasswordInfo({
+						message: res.data.message,
+						error: res.data.error,
+						state: res.data.state,
+						field: res.data.field,
+					});
+					if (!res.data.error && res.data.state === "success") {
+						console.log(`New token saved`);
+
+						// Set the new token
+						const newToken = localStorage.setItem("token", res.data.token);
+						setUpdate({ ...update, token: newToken, updated: true });
+
+						setReRender(true);
+					}
+				}
+			})
+			.catch((err) => {
+				console.error(err);
+			});
+	};
+
+	const passwordValidation = () => {
+		/*
 		console.log(`Some information:`);
 		console.log(passwordInput);
 		console.log(passwordInput.currentPassword.length);
 		console.log(passwordInput.newPassword.length);
-		console.log(passwordInput.repeatNewPassword.length);
+		console.log(passwordInput.repeatNewPassword.length);*/
 
 		// Validation
 		if (passwordInput.currentPassword.length < 8) {
@@ -41,7 +102,7 @@ const ChangePasswords = (props) => {
 				field: "currentPassword",
 				message: "The password must be 8 characters long.",
 			});
-			return;
+			return false;
 		}
 
 		if (passwordInput.newPassword.length < 8) {
@@ -51,7 +112,7 @@ const ChangePasswords = (props) => {
 				field: "newPassword",
 				message: "The password must be 8 characters long.",
 			});
-			return;
+			return false;
 		}
 
 		if (passwordInput.repeatNewPassword.length < 8) {
@@ -61,7 +122,7 @@ const ChangePasswords = (props) => {
 				field: "repeatNewPassword",
 				message: "The password must be 8 characters long.",
 			});
-			return;
+			return false;
 		} else if (passwordInput.newPassword !== passwordInput.repeatNewPassword) {
 			setPasswordInfo({
 				...passwordInfo,
@@ -69,40 +130,46 @@ const ChangePasswords = (props) => {
 				field: "",
 				message: "The passwords don't match.",
 			});
-			return;
+			return false;
 		}
 
-		axios
-			.post("http://localhost:3001/api/profile/changePassword", {
-				newPassword: passwordInput.newPassword,
-				currentPassword: passwordInput.currentPassword,
-			})
-			.then((res) => {})
-			.catch((err) => {
-				console.error(err);
-			});
+		return true;
 	};
 
 	useEffect(() => {
+		// Get token
+		setUpdate({ ...update, token: localStorage.getItem("token") });
+
 		// Test if the icons exist/are online
 		axios
 			.get("http://localhost:3001/public/icons/Show.png")
 			.then((res) => {
 				setPasswordInfo({ ...passwordInfo, icon: true });
-				console.log(`Icons loaded!`);
 			})
 			.catch((err) => {
 				setPasswordInfo({ ...passwordInfo, icon: false });
-				console.log(`The icons couldn't be loaded!`);
 			});
 	}, []);
+
+	useEffect(() => {
+		// Update token state
+		if (update.updated) setUpdate({
+			...update, token: localStorage.getItem("token"),
+			updated: false
+		});
+	}, [update]);
 
 	return (
 		<div className="changePasswords">
 			<h6>Change password</h6>
 
 			{/* For error or success messages */}
-			<Messages passwordInfo={passwordInfo} setPasswordInfo={setPasswordInfo} />
+			<Messages
+				passwordInfo={passwordInfo}
+				setPasswordInfo={setPasswordInfo}
+				resData={resData}
+				setResData={setResData}
+			/>
 
 			{/* For show-hide password icons */}
 			<ShowHidePasswords
@@ -123,7 +190,9 @@ const ChangePasswords = (props) => {
 							passwordInfo.field === "currentPassword" &&
 							setPasswordInfo({ ...passwordInfo, field: "" })
 						}
-						className={passwordInfo.field === "currentPassword" && "danger"}
+						className={
+							(passwordInfo.field === "currentPassword" && "danger") || ""
+						}
 						type={passwordInfo.showCurrentPassword ? "text" : "password"}
 						name="currentPassword"
 						placeholder="Current password"
@@ -135,7 +204,7 @@ const ChangePasswords = (props) => {
 							passwordInfo.field === "newPassword" &&
 							setPasswordInfo({ ...passwordInfo, field: "" })
 						}
-						className={passwordInfo.field === "newPassword" && "danger"}
+						className={(passwordInfo.field === "newPassword" && "danger") || ""}
 						type={passwordInfo.showNewPassword ? "text" : "password"}
 						name="newPassword"
 						placeholder="New password"
@@ -147,7 +216,9 @@ const ChangePasswords = (props) => {
 							passwordInfo.field === "repeatNewPassword" &&
 							setPasswordInfo({ ...passwordInfo, field: "" })
 						}
-						className={passwordInfo.field === "repeatNewPassword" && "danger"}
+						className={
+							(passwordInfo.field === "repeatNewPassword" && "danger") || ""
+						}
 						type={passwordInfo.showRepeatNewPassword ? "text" : "password"}
 						name="repeatNewPassword"
 						placeholder="Repeat new password"
@@ -164,13 +235,18 @@ const ChangePasswords = (props) => {
 };
 
 const Messages = (props) => {
-	const { passwordInfo, setPasswordInfo } = props;
+	const { passwordInfo, setPasswordInfo, resData, setResData } = props;
 
 	return (
 		<div
-			className={"messages " + passwordInfo.state}
-			onClick={() => setPasswordInfo({ ...passwordInfo, message: "" })}
-			hidden={!passwordInfo.message && true}
+			className={
+				"messages " + (passwordInfo.state + " ") + (resData.state + " ")
+			}
+			onClick={() => {
+				setPasswordInfo({ ...passwordInfo, message: "" });
+				setResData({ ...resData, message: "", joiMessage: "" });
+			}}
+			hidden={!passwordInfo.message && !resData.message && true}
 		>
 			{/* 
 			setPasswordInfo({
@@ -179,7 +255,7 @@ const Messages = (props) => {
 				field: "currentPassword",
 				message: "The password must be 8 characters long.",
 			}); */}
-			<div>{passwordInfo.message}</div>
+			<div>{passwordInfo.message || resData.message}</div>
 		</div>
 	);
 };
