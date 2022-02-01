@@ -15,24 +15,18 @@ function Profile(props) {
 		email: "",
 		age: "",
 		phoneNumber: "",
-		password: "",
-		newPassword: "",
-		repeatNewPassword: "",
-		country: "",
-		province: "",
-		city: "",
-		postalCode: "",
-		address: "",
 	});
 	const [error, setError] = useState({
 		state: "",
 		message: "",
 		superiorError: false,
+		joiMessage: "",
 	});
 	const [isLoggedIn, setIsLoggedIn] = useState(false);
 	const [passwordInfo, setPasswordInfo] = useState({
 		error: false,
 		errorMessage: "",
+		joiMessage: "",
 		duration: 10000,
 		show: false,
 	});

@@ -64,7 +64,10 @@ function Login(props) {
 	};
 
 	useEffect(() => {
-		if (props.user) setIsLoggedIn(true);
+		if (props.user._id) {
+			setIsLoggedIn(true);
+			setMessage(`You are already logged in.`)
+		}
 	}, [props.user]);
 
 	return (

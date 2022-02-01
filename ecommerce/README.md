@@ -1,20 +1,16 @@
 # Run
+$ cd database  
+$ mongod --noauth --dbpath ./  
+$ cd ../server  
+$ npm start  
+$ cd ../client  
+$ npm start  
+You need sass  
+$ sass --watch src:src  
 
-$ cd database
-$ mongod --noauth --dbpath ./
-$ cd ../server
-$ npm start
-$ cd ../client
-$ npm start
-You need sass
-$ sass --watch src:src
-
-# Personal notes
-
-- React doesn't show false literal
+uwu
 
 # Objectives
-
 (This looks better on VSCode)
 ✅ Login  
 |✅ Add show password icon  
@@ -44,6 +40,7 @@ $ sass --watch src:src
 | |✅ Save token locally  
 | |✅ Verify password through bcrypt  
 |✅ Change password  
+| |✅ Refresh token  
 | |✅ show-hide password for the three fields  
 | |✅ Messages  
 | | |✅ Password length must be at least 8 characters long  
@@ -51,6 +48,16 @@ $ sass --watch src:src
 | | |✅ Joi validation(the password cannot be very large)  
 | | |✅ Current password isn't correct  
 | | |✅ Password updated successfully  
+|⬜️ Address  
+| |⬜️ Messages  
+| | |⬜️ Joi validation  
+| | |⬜️ Success  
+| |⬜ Refresh token  
+| |⬜ Backend functionality  
+| | |⬜ Validate data with joi  
+| | |⬜ Error handling  
+| | |⬜️ Update data  
+
 
 ⬜️ License  
 |⬜️ Add the following attributions  

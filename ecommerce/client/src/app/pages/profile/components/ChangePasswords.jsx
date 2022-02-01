@@ -44,13 +44,6 @@ const ChangePasswords = (props) => {
 			})
 			.then((res) => {
 				// The response should be like this
-				/*return res.header("auth-token", newToken).status(200).send({
-					token: newToken,
-					user,
-					error: false,
-					state: "success",
-					message: "Password updated successfully.",
-				}); */
 				if (res.data.joiMessage !== undefined) {
 					const responseMessage = handleMessageValidationv2(
 						{
@@ -248,13 +241,6 @@ const Messages = (props) => {
 			}}
 			hidden={!passwordInfo.message && !resData.message && true}
 		>
-			{/* 
-			setPasswordInfo({
-				...passwordInfo,
-				state: "danger",
-				field: "currentPassword",
-				message: "The password must be 8 characters long.",
-			}); */}
 			<div>{passwordInfo.message || resData.message}</div>
 		</div>
 	);

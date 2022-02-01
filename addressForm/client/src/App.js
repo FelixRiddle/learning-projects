@@ -1,9 +1,12 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { handleMessageValidationv2 } from "../../../../lib/handleMessageValidation";
+import { handleMessageValidationv2 } from "./lib/handleMessageValidation";
 
-const ChangeAddress = (props) => {
-	const { input } = props;
+const App = (props) => {
+	const [user, setUser] = useState({
+		email: "aaa@gmail.com",
+		password: "aaaaaaaa",
+	});
 	const [location, setLocation] = useState({
 		country: "",
 		province: "",
@@ -37,9 +40,7 @@ const ChangeAddress = (props) => {
 				if (res.data.joiMessage) {
 					const joiMessage = handleMessageValidationv2(
 						{
-							...input,
 							...location,
-							token,
 						},
 						res,
 						["Country", "Province/State", "City", "Postal Code", "Address"]
@@ -59,14 +60,48 @@ const ChangeAddress = (props) => {
 			});
 	};
 
+	const handleRegister = (e) => {
+		e.preventDefault();
+		axios
+			.post("http://localhost:3001/register", { ...user })
+			.then((res) => {
+				console.log(`Response:`);
+				console.log(res.status);
+				console.log(res.data);
+			})
+			.catch((err) => {
+				console.error(err);
+			});
+	};
+
+	const handleLogin = (e) => {
+		e.preventDefault();
+		axios
+			.post("http://localhost:3001/login", { ...user })
+			.then((res) => {
+				console.log(`Response:`);
+				console.log(res.status);
+				console.log(res.data);
+			})
+			.catch((err) => {
+				console.error(err);
+			});
+	};
+
 	useEffect(() => {
 		// Get token
 		setToken(localStorage.getItem("token"));
-	}, []);
+	}, [token]);
 
 	return (
 		<div className="changeAddress">
 			<h6>For location services</h6>
+			<button className="btn" onClick={handleRegister}>
+				Register
+			</button>
+			<button className="btn" onClick={handleLogin}>
+				Log in
+			</button>
 			<Message message={message} setMessage={setMessage} />
 
 			<form action="submit">
@@ -127,7 +162,7 @@ const Message = (props) => {
 
 	return (
 		<div
-			className={"message " + (message.state)}
+			className={"message " + message.state}
 			onClick={() =>
 				setMessage({
 					message: "",
@@ -143,4 +178,4 @@ const Message = (props) => {
 	);
 };
 
-export default ChangeAddress;
+export default App;

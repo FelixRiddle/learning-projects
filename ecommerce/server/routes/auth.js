@@ -19,19 +19,19 @@ router.post("/register", async (req, res) => {
 		const hashPassword = await bcrypt.hash(req.body.password, salt);
 
 		const user = new User({ ...req.body, password: hashPassword });
-
 		const savedUser = await user.save();
 		console.log(`User created!`);
-		res.status(200).send(savedUser);
+		return res.status(200).send(savedUser);
 	} catch (err) {
 		console.error(err);
-		res.status(400).send(err);
+		return res.status(400).send(err);
 	}
 });
 
 router.post("/login", async (req, res) => {
 	const data = req.body;
 	try {
+		console.log(typeof (loginValidation));
 		const { error } = loginValidation(data);
 		if (error) return res.send(error.details[0].message);
 
@@ -51,10 +51,10 @@ router.post("/login", async (req, res) => {
 		// to save on jwt
 		const { password, __v, ...userData } = user._doc;
 		const token = jwt.sign(userData, process.env.TOKEN_SECRET);
-		res.header("auth-token", token).status(200).send({ token, message: "Successfully logged in."});
+		return res.header("auth-token", token).status(200).send({ token, message: "Successfully logged in."});
 	} catch (err) {
 		console.log(err);
-		res.status(400).send(err);
+		return res.status(400).send(err);
 	}
 });
 
