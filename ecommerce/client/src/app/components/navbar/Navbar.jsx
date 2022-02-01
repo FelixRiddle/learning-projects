@@ -24,73 +24,39 @@ function Navbar() {
 	});
 	const [reRender, setReRender] = useState(false);
 	const [token, setToken] = useState("");
-	const [id, setId] = useState("");
 
 	const handleLogout = () => {
 		localStorage.removeItem("token");
 		window.location.href = "/";
 	};
 
-	const getPrevSession = async () => {
-		console.log(user._id && `User session restored.`);
-
+	useEffect(() => {
+		// If the user already exists
+		if (user._id) return;
+		
 		// Token management
 		const token = localStorage.getItem("token");
-		await setToken(token);
-		console.log(`Opening session...`);
-		if (token !== undefined) {
-			try {
-				if (user && user._id) console.log(`Session established.`);
-				if (user && !user._id) {
-					const prevSession = await jwt_decode(token);
-					console.log(`Decoding token...`);
-
-					if (!prevSession) {
-						console.log(`No previous session found.`);
-						localStorage.removeItem("token");
-					} else {
-						console.log(`Previous session found.`);
-						console.log(prevSession);
-						const {
-							_id,
-							firstName,
-							lastName,
-							email,
-							age,
-							date,
-							phoneNumber,
-							lastUpdated,
-							...irrelevant
-						} = prevSession;
-						await setId(_id);
-						console.log(`ID: ${id}`);
-						await setUser({
-							_id: _id,
-							firstName: firstName,
-							lastName: lastName,
-							email: email,
-							age: age,
-							date: date,
-							phoneNumber: phoneNumber,
-							lastUpdated: lastUpdated,
-						});
-						console.log(`New user:`);
-						console.log(user);
-					}
-				}
-			} catch (err) {
-				console.log(`No previous session found.`);
-				console.error(err);
-			}
+		setToken(token);
+		if (token && user && !user._id) {
+			Promise.resolve(jwt_decode(token))
+				.then((prevSession) => {
+					console.log(`Previous session found`);
+					setUser({ ...prevSession });
+				})
+				.catch((err) => {
+					console.log(`No previous session found`);
+					localStorage.removeItem("token");
+				});
 		} else {
 			console.log(`No previous session found.`);
 			localStorage.removeItem("token");
 		}
-	};
-	
+	}, [user]);
+
 	useEffect(() => {
-		getPrevSession();
-	}, []);
+		console.log(`Triggering re render.`);
+		if (reRender) setReRender(false);
+	}, [reRender]);
 
 	return (
 		<>
@@ -112,21 +78,18 @@ function Navbar() {
 }
 
 const Links = (props) => {
-	const { user, handleLogout } = props.user;
+	const { user, handleLogout } = props;
 	const [showProfile, setShowProfile] = useState(false);
 
-	if (user) {
-		console.log(`Inside links`);
-		console.log(user);
-		if (typeof user._id !== "undefined") {
-			setShowProfile(true);
-		} else {
-			setShowProfile(false);
+	useEffect(() => {
+		if (user) {
+			if (user._id) {
+				setShowProfile(true);
+			} else {
+				setShowProfile(false);
+			}
 		}
-	} else {
-		console.log(`User is ${typeof user}`);
-		console.log(user);
-	}
+	}, [user]);
 
 	return (
 		<nav className="navbar">
