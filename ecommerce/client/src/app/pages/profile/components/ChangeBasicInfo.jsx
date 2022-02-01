@@ -138,7 +138,9 @@ const ChangeBasicInfo = (props) => {
 			setToken(localStorage.getItem("token"));
 			if (token) {
 				const { password, ...user } = jwt_decode(token);
-				setInput(user);
+				setInput(user, (e) => {
+					console.log(e);
+				});
 			}
 		} catch (err) {
 			console.error(err);

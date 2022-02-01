@@ -7,11 +7,11 @@ module.exports.registerValidation = registerValidation = (data) => {
 		lastName: Joi.string().min(3).max(max).required(),
 		email: Joi.string().min(5).required().email(),
 		password: Joi.string().min(8).max(max).required(),
-		country: Joi.string().max(max),
-		province: Joi.string().max(max),
-		city: Joi.string().max(max),
-		address: Joi.string().max(max),
-		postalCode: Joi.string().max(32),
+		country: Joi.string().max(max).allow(null, ""),
+		province: Joi.string().max(max).allow(null, ""),
+		city: Joi.string().max(max).allow(null, ""),
+		address: Joi.string().max(max).allow(null, ""),
+		postalCode: Joi.string().max(32).allow(null, ""),
 		age: Joi.date(),
 	});
 
@@ -82,11 +82,11 @@ module.exports.changePasswordValidation = changePasswordValidation = (data) => {
 
 module.exports.changeAddressValidation = changeAddressValidation = (data) => {
 	const schema = Joi.object({
-		country: Joi.string().max(max),
-		province: Joi.string().max(max),
-		city: Joi.string().max(max),
-		address: Joi.string().max(max),
-		postalCode: Joi.string().max(32),
+		country: Joi.string().max(max).allow(null, ""),
+		province: Joi.string().max(max).allow(null, ""),
+		city: Joi.string().max(max).allow(null, ""),
+		address: Joi.string().max(max).allow(null, ""),
+		postalCode: Joi.string().max(32).allow(null, ""),
 	});
 
 	return schema.validate(data);

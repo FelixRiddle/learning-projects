@@ -1,3 +1,81 @@
-
+.changeAddress button {
+  background-color: black;
+  padding: 10px;
+  margin: 10px;
+  width: 250px;
+  font-size: 25px;
+  background-color: rgba(17, 143, 228, 0.6);
+  border: none;
+  border-radius: 5px;
+  color: #333;
+}
+.changeAddress button:active, .changeAddress button:focus {
+  border-color: 2px solid blue;
+}
+.changeAddress button:hover {
+  cursor: pointer;
+  background-color: rgba(50, 143, 255, 0.6);
+}
+.changeAddress .message .danger {
+  position: absolute;
+  top: 500px;
+  left: 500px;
+  width: 400px;
+  height: 50px;
+  background-color: rgba(223, 21, 21, 0.8);
+  border-radius: 10px;
+  padding: 10px;
+  text-align: center;
+}
+.changeAddress .message .danger:hover {
+  cursor: pointer;
+}
+.changeAddress .message .success {
+  position: absolute;
+  top: 500px;
+  left: 500px;
+  width: 400px;
+  height: 50px;
+  background-color: rgba(13, 231, 148, 0.8);
+  border-radius: 10px;
+  padding: 10px;
+  text-align: center;
+}
+.changeAddress .message .success:hover {
+  cursor: pointer;
+}
+.changeAddress form {
+  display: grid;
+  grid-template-areas: ". cal cai ." ". . button .";
+}
+.changeAddress form .changeAddressLabels {
+  grid-area: cal;
+}
+.changeAddress form .changeAddressLabels label {
+  display: flex;
+  flex-direction: column;
+}
+.changeAddress form .changeAddressInputs {
+  grid-area: cai;
+}
+.changeAddress form .changeAddressInputs input {
+  display: flex;
+  flex-direction: column;
+  border: none;
+  border-bottom: 1px solid gray;
+  outline: none;
+}
+.changeAddress form .changeAddressInputs input.danger {
+  border-radius: 5px;
+  border: 3px solid rgba(228, 63, 13, 0.8);
+  background-color: white;
+}
+.changeAddress form .changeAddressInputs input:focus {
+  border-radius: 5px;
+  border: 3px solid rgba(115, 250, 255, 0.8);
+}
+.changeAddress form button {
+  grid-area: button;
+}
 
 /*# sourceMappingURL=App.css.map */

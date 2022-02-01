@@ -30,6 +30,8 @@ const ChangeAddress = (props) => {
 		e.preventDefault();
 		axios
 			.post("http://localhost:3001/api/profile/changeAddress", {
+				...input,
+				token,
 				...location,
 			})
 			.then((res) => {
@@ -37,9 +39,7 @@ const ChangeAddress = (props) => {
 				if (res.data.joiMessage) {
 					const joiMessage = handleMessageValidationv2(
 						{
-							...input,
 							...location,
-							token,
 						},
 						res,
 						["Country", "Province/State", "City", "Postal Code", "Address"]

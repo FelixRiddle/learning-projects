@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { handleMessageValidationv2 } from "./lib/handleMessageValidation";
+import "./App.css";
+import jwt_decode from "jwt-decode";
 
 const App = (props) => {
 	const [user, setUser] = useState({
@@ -31,9 +33,13 @@ const App = (props) => {
 
 	const handleChangeAddressSubmit = (e) => {
 		e.preventDefault();
+
+		const decodedUser = jwt_decode(token);
 		axios
-			.post("http://localhost:3001/api/profile/changeAddress", {
+			.post("http://localhost:3001/changeAddress", {
+				token,
 				...location,
+				...decodedUser,
 			})
 			.then((res) => {
 				console.log(res);
@@ -53,7 +59,12 @@ const App = (props) => {
 					});
 					console.log(joiMessage);
 					console.log(message);
+				} else if (res.data) {
+					setMessage({ ...res.data });
+					console.log(message);
+					console.log(`Executed`);
 				}
+				console.log(`End of the line`);
 			})
 			.catch((err) => {
 				console.error(err);
@@ -82,6 +93,7 @@ const App = (props) => {
 				console.log(`Response:`);
 				console.log(res.status);
 				console.log(res.data);
+				setToken(localStorage.setItem("token", token));
 			})
 			.catch((err) => {
 				console.error(err);
@@ -102,7 +114,9 @@ const App = (props) => {
 			<button className="btn" onClick={handleLogin}>
 				Log in
 			</button>
-			<Message message={message} setMessage={setMessage} />
+			<div className="message">
+				<Message message={message} setMessage={setMessage} />
+			</div>
 
 			<form action="submit">
 				<div className="changeAddressLabels">
@@ -162,7 +176,7 @@ const Message = (props) => {
 
 	return (
 		<div
-			className={"message " + message.state}
+			className={message.state}
 			onClick={() =>
 				setMessage({
 					message: "",

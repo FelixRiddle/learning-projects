@@ -161,19 +161,26 @@ router.post("/changeAddress", verify, (req, res) => {
 	console.log("/changePassword");
 
 	try {
+		const { token, _id } = req.body;
+		const data = {
+			country: req.body.country,
+			province: req.body.province,
+			city: req.body.city,
+			postalCode: req.body.postalCode,
+			address: req.body.address,
+		};
+		
 		// Validate data
-		const { error } = changeAddressValidation(req.body);
+		const { error } = changeAddressValidation(data);
 		if (error)
 			return res.send({
 				state: "danger",
 				error: true,
 				joiMessage: error.details[0].message,
 			});
-
-		const data = req.body;
 		
 		// If no token was provided
-		if (!data.token) {
+		if (!token) {
 			return res.send({
 				error: true,
 				field: "token",
@@ -191,7 +198,7 @@ router.post("/changeAddress", verify, (req, res) => {
 			data.address
 		) {
 			// If for some reason there is no _id field
-			if (!data._id)
+			if (!_id)
 				return res.send({
 					state: "danger",
 					message:
@@ -199,7 +206,7 @@ router.post("/changeAddress", verify, (req, res) => {
 				});
 			
 			// Update the user
-			const query = { _id: data._id };
+			const query = { _id };
 			const update = {
 				country: data.country,
 				province: data.province,
