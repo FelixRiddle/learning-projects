@@ -10,14 +10,17 @@ const {
 const verify = require("../verifyToken");
 
 router.post("/changeBasicInfo", verify, async (req, res) => {
-	/*
+	// For debugging
 	const time = new Date().getTime();
 	const currentDate = new Date(time);
 	console.log(`Date: ${currentDate.toString()}`);
-	console.log("/changeBasicInfo");*/
+	console.log("/changeBasicInfo");
+
 	try {
 		// Validate data
 		const { error } = basicInfoValidation(req.body);
+		console.log(`Jwt error:`);
+		console.log(error);
 		if (error)
 			return res.send({
 				state: "danger",
@@ -31,7 +34,14 @@ router.post("/changeBasicInfo", verify, async (req, res) => {
 		console.log(`User document:`);
 		console.log(user);
 		if (!user) {
-			return res.send({ state: "danger", message: "User doesn't exists." });
+			return res.send({
+				error: true,
+				field: "",
+				state: "danger",
+				message:
+					"User doesn't exist, try logging out and logging in again." +
+					"\nIf the error persists please contact us.",
+			});
 		} else {
 			// Compare passwords
 			const result = await bcrypt.compare(password, user.password);
@@ -50,9 +60,9 @@ router.post("/changeBasicInfo", verify, async (req, res) => {
 			const emailExists = await User.findOne({ email: data.email });
 			if (emailExists) {
 				return res.send({
-					state: "danger",
-					field: "email",
 					error: true,
+					field: "email",
+					state: "danger",
 					message: `That email is already in use.`,
 				});
 			}
@@ -76,17 +86,20 @@ router.post("/changeBasicInfo", verify, async (req, res) => {
 		});
 	} catch (err) {
 		console.error(err);
-		res.status(400).send(err);
+		return res.send({
+			state: "danger",
+			error: true,
+			message: "Internal server error, please try again later.",
+		});
 	}
 });
 
 router.post("/changePassword", verify, async (req, res) => {
-	/*
+	// For debugging
 	const time = new Date().getTime();
 	const currentDate = new Date(time);
 	console.log(`Date: ${currentDate.toString()}`);
 	console.log("/changePassword");
-	*/
 
 	try {
 		const { _id, repeatNewPassword, token, ...data } = req.body;

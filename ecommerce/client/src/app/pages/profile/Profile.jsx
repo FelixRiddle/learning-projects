@@ -1,7 +1,5 @@
-import React, { useState, useEffect, useRef } from "react";
-import jwt_decode from "jwt-decode";
+import React, { useState, useEffect } from "react";
 import "./Profile.css";
-import Alert from "../../components/alert/Alert";
 import ChangeBasicInfo from "./components/ChangeBasicInfo";
 import ChangePasswords from "./components/ChangePasswords";
 import ChangeAddress from "./components/ChangeAddress";
@@ -14,6 +12,7 @@ function Profile(props) {
 		lastName: "",
 		email: "",
 		age: "",
+		password: "",
 		phoneNumber: "",
 	});
 	const [error, setError] = useState({
@@ -43,24 +42,22 @@ function Profile(props) {
 	};
 
 	useEffect(() => {
+		// If the error already exists
+		if (isLoggedIn) return;
+
 		axios.get("http://localhost:3001/test").catch((err) => {
 			console.log(err);
 			setError({
-				...error,
+				superiorError: false,
+				joiMessage: "",
 				state: "danger",
 				message: "Internal server offline.",
 			});
 		});
-	}, []);
 
-	useEffect(() => {
-		
-		// If the error already axists
-		if (error.message) return;
-		
 		try {
 			const user = props.user;
-			if (user) {
+			if (user && user._id) {
 				setIsLoggedIn(true);
 
 				// All this just for a date xD
@@ -71,73 +68,88 @@ function Profile(props) {
 					("0" + tempAge.getDate()).slice(-2),
 				].join("-");
 
-				setInput({
-					...user,
-					password: "",
-					age: newAge,
+				const { firstName, lastName, email, phoneNumber } = user;
+				setInput(() => {
+					return {
+						firstName,
+						lastName,
+						email,
+						phoneNumber,
+						password: "",
+						age: newAge,
+					};
 				});
 
-				setError({ ...error, state: "", message: "" });
-			} else {
 				setError({
-					...error,
+					superiorError: false,
+					joiMessage: "",
+					state: "",
+					message: "",
+				});
+				return;
+			} else {
+				setIsLoggedIn(false);
+				setError({
+					superiorError: false,
+					joiMessage: "",
 					state: "danger",
 					message: "Error 403: You aren't logged in.",
 				});
+				return;
 			}
 		} catch (err) {
+			setError({
+				state: "danger",
+				message: "Something went wrong, try logging out and login.",
+				superiorError: false,
+				joiMessage: "",
+			});
+			setIsLoggedIn(false);
 			console.error(err);
+			return;
 		}
-	}, [props.user]);
+	}, [props.user, isLoggedIn, input]);
 
 	return (
 		<div>
 			<title>Profile</title>
 			<h2>Profile</h2>
 
-			{isLoggedIn && (
-				<div className="profile">
-					{/* Bad request/internal server error */}
-					{error.state === "danger" && error.message && (
-						<div className={`error ` + error.state}>
-							<div className="errorMessage">{error.message}</div>
-						</div>
-					)}
+			<div className="profile">
+				{/* Bad request/internal server error/not logged in */}
+				{error.state === "danger" && error.message && (
+					<div className={"error " + (error.state && error.state)}>
+						<div className="errorMessage">{error.message}</div>
+					</div>
+				)}
 
-					{/* Basic information */}
-					<ChangeBasicInfo
-						handleChange={handleChange}
-						input={input}
-						setInput={setInput}
-						passwordInfo={passwordInfo}
-						setPasswordInfo={setPasswordInfo}
-						setError={setError}
-						error={error}
-					/>
+				{isLoggedIn && (
+					<div>
+						{/* Basic information */}
+						<ChangeBasicInfo
+							handleChange={handleChange}
+							input={input}
+							setInput={setInput}
+							passwordInfo={passwordInfo}
+							setPasswordInfo={setPasswordInfo}
+							setError={setError}
+							error={error}
+						/>
 
-					{/* Change password */}
-					<ChangePasswords
-						handleChange={handleChange}
-						input={input}
-						setReRender={setReRender}
-						token={token}
-						setToken={setToken}
-					/>
+						{/* Change password */}
+						<ChangePasswords
+							handleChange={handleChange}
+							input={input}
+							setReRender={setReRender}
+							token={token}
+							setToken={setToken}
+						/>
 
-					{/* Change address */}
-					<ChangeAddress handleChange={handleChange} input={input} />
-				</div>
-			)}
-
-			{error.state && error.message && (
-				<div className="profile">
-					<Alert
-						className={error.state}
-						description={error.message}
-						forceCenter={true}
-					/>
-				</div>
-			)}
+						{/* Change address */}
+						<ChangeAddress handleChange={handleChange} input={input} />
+					</div>
+				)}
+			</div>
 		</div>
 	);
 }

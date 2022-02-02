@@ -33,11 +33,11 @@ function Navbar() {
 	useEffect(() => {
 		// If the user already exists
 		if (user._id) return;
-		
+
 		// Token management
 		const token = localStorage.getItem("token");
-		setToken(token);
-		if (token && user && !user._id) {
+		if (token !== "undefined" && token && user && !user._id) {
+			console.log(`This doesn't execute`);
 			Promise.resolve(jwt_decode(token))
 				.then((prevSession) => {
 					console.log(`Previous session found`);

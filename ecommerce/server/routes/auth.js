@@ -7,7 +7,6 @@ const { registerValidation, loginValidation } = require("../validation");
 router.post("/register", async (req, res) => {
 	try {
 		const { error } = registerValidation(req.body);
-		error && console.log(error);
 		if (error) return res.send(error.details[0].message);
 
 		// Check if the user is already in the database

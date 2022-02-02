@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import axios from "axios";
 import { handleMessageValidationv2 } from "../../../../lib/handleMessageValidation";
-import jwt_decode from "jwt-decode";
+import { GlobalContext } from "../../../App";
 
 const ChangeBasicInfo = (props) => {
+	const { token, user, setToken } = useContext(GlobalContext);
 	const {
 		handleChange,
 		input,
@@ -11,7 +12,6 @@ const ChangeBasicInfo = (props) => {
 		setPasswordInfo,
 		setError,
 		error,
-		setInput,
 	} = props;
 	const [resData, setResData] = useState({});
 	const [showHidePasswordIcon, setShowHidePasswordIcon] = useState(true);
@@ -20,11 +20,24 @@ const ChangeBasicInfo = (props) => {
 		state: "",
 		message: "",
 	});
-	const [token, setToken] = useState("");
+	//const [token, setToken] = useState("");
 
 	const handleBasicInfoSubmit = async (e) => {
 		e.preventDefault();
 
+		dataValidation();
+
+		await axios
+			.post("http://localhost:3001/api/profile/changeBasicInfo", {
+				token,
+				_id: user._id,
+				...input,
+			})
+			.then((res) => handleResponse(res))
+			.catch((err) => handleError(err));
+	};
+
+	const dataValidation = () => {
 		try {
 			setShowPasswordMessage(false);
 			if (!input.password) {
@@ -35,9 +48,7 @@ const ChangeBasicInfo = (props) => {
 				});
 
 				// Timeout
-				setShowPasswordMessage(true);
-
-				return;
+				return setShowPasswordMessage(true);
 			} else if (input.password.length < 8) {
 				setPasswordInfo({
 					...passwordInfo,
@@ -46,84 +57,80 @@ const ChangeBasicInfo = (props) => {
 				});
 
 				// Timeout
-				setShowPasswordMessage(true);
-
-				return;
+				return setShowPasswordMessage(true);
 			}
 		} catch (err) {}
+	};
 
-		await axios
-			.post("http://localhost:3001/api/profile/changeBasicInfo", {
-				token,
-				...input,
-			})
-			.then((res) => {
-				console.log(`Response status: ${res.status}`);
-				console.log(res.data);
+	const handleError = (err) => {
+		console.error(err);
+		return setError({
+			...error,
+			state: "danger",
+			message:
+				"Internal server error, the website may be offline for a short time, try again later.",
+		});
+	};
 
-				// Save the response for later use
-				setResData({ ...res.data });
+	const handleResponse = (res) => {
+		const data = res.data;
 
-				if (res.data.message !== undefined || res.data.joiMessage) {
-					// Some validation
-					res.data.field === "email" &&
-						res.data.error &&
-						setEmailError({
-							...emailError,
-							state: res.data.state,
-							message: res.data.message,
-						});
+		// Save the response for later use
+		setResData({ ...data });
+		console.log(`On ChangeBasicInfo, response:`);
+		console.log(data);
 
-					// If the password isn't correct
-					if (res.data.field === "password" && res.data.error) {
-						setShowPasswordMessage(true);
-						setPasswordInfo({
-							...passwordInfo,
-							error: true,
-							state: res.data.state,
-							message: res.data.message,
-						});
-					}
-
-					// For data validation
-					console.log(`Outer`);
-					if (res.data.joiMessage !== undefined) {
-						console.log(`Joi error`);
-						const modifiedMessage = handleMessageValidationv2(
-							{
-								firstName: input.firstName,
-								lastName: input.lastName,
-								email: input.email,
-								password: input.password,
-							},
-							res,
-							["First name", "Last name", "Email", "Password"]
-						);
-						setResData({
-							joiMessage: modifiedMessage,
-							error: res.data.error,
-							state: res.data.state,
-						});
-					}
-
-					// Set the response token on the local storage
-					if (!res.data.error) {
-						localStorage.setItem("token", res.data.token);
-						setToken(localStorage.getItem("token"));
-					}
-
-					return;
-				}
-			})
-			.catch((err) => {
-				console.error(err);
-				setError({
-					...error,
-					state: "danger",
-					message:
-						"Internal server error, the website may be offline for a short time, try again later.",
+		// If there was an error
+		if (data.message || data.joiMessage) {
+			// Some validation
+			if (data.field === "email" && data.error) {
+				return setEmailError({
+					...emailError,
+					state: data.state,
+					message: data.message,
 				});
-			});
+			} // If the password isn't correct
+			else if (data.field === "password" && data.error) {
+				setShowPasswordMessage(true);
+				return setPasswordInfo({
+					...passwordInfo,
+					error: true,
+					state: data.state,
+					message: data.message,
+				});
+			} // For data validation
+			else if (data.joiMessage) {
+				const modifiedMessage = handleMessageValidationv2(
+					{
+						firstName: input.firstName,
+						lastName: input.lastName,
+						email: input.email,
+						password: input.password,
+					},
+					res,
+					["First name", "Last name", "Email", "Password"]
+				);
+				return setResData({
+					field: "",
+					message: modifiedMessage,
+					error: data.error,
+					state: data.state,
+				});
+			} // Normal message
+			else if (data.message) {
+				return setResData({
+					field: "",
+					message: data.message,
+					error: data.error,
+					state: data.state,
+				});
+			} // Set the response token on the local storage
+			else if (!data.error && data.token && data.token !== "undefined") {
+				console.log(`On changeBasicInfo, returned token: ${data.token}`);
+				localStorage.setItem("token", data.token);
+				return setToken(data.token);
+			}
+		}
 	};
 
 	// When the page starts
@@ -132,21 +139,6 @@ const ChangeBasicInfo = (props) => {
 			.get("http://localhost:3001/public/icons/Show.png")
 			.catch((err) => setShowHidePasswordIcon(false));
 	}, []);
-
-	useEffect(() => {
-		try {
-			let previousToken = localStorage.getItem("token");
-			setToken(previousToken);
-			if (token) {
-				const { password, ...user } = jwt_decode(token);
-				setInput(user, (e) => {
-					console.log(e);
-				});
-			}
-		} catch (err) {
-			console.error(err);
-		}
-	}, [token, setInput]);
 
 	return (
 		<div className="changeBasicInfo">
@@ -157,12 +149,19 @@ const ChangeBasicInfo = (props) => {
 					<div className="emailErrorMessage">{resData.message}</div>
 				</div>
 			)) ||
-				(resData.joiMessage && (
-					<div className="joiError danger" onClick={() => setResData({})}>
-						<div className="joiErrorMessagesArrow"></div>
-						<div className="joiErrorMessage">{resData.joiMessage}</div>
+				(resData.message && (
+					<div
+						className={"basicInfoMessage " + ((resData.state && resData.state) || "")}
+						onClick={() => setResData({})}
+					>
+						<div>{resData.message}</div>
 					</div>
 				))}
+
+			{/* <div className="joiError danger" onClick={() => setResData({})}>
+				<div className="joiErrorMessagesArrow"></div>
+				<div className="joiErrorMessage">{resData.message}</div>
+			</div> */}
 
 			{/* Show or hide password error message */}
 			{showPasswordMessage && (
@@ -200,16 +199,6 @@ const ChangeBasicInfo = (props) => {
 						}
 					/>
 				))}
-
-			{/* Show success message */}
-			{resData.state === "success" && resData.message && (
-				<div
-					className="submitSuccessful success"
-					onClick={() => setResData({})}
-				>
-					<div className="successMessage">{resData.message}</div>
-				</div>
-			)}
 
 			<h6>Basic info</h6>
 			<form>

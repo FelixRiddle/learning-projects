@@ -3,7 +3,7 @@ import axios from "axios";
 import { handleMessageValidationv2 } from "../../../../lib/handleMessageValidation";
 
 const ChangePasswords = (props) => {
-	const { input, setReRender } = props;
+	const { input } = props;
 	const [passwordInfo, setPasswordInfo] = useState({
 		icon: false,
 		showCurrentPassword: false,
@@ -68,9 +68,7 @@ const ChangePasswords = (props) => {
 
 						// Set the new token
 						const newToken = localStorage.setItem("token", res.data.token);
-						setUpdate({ ...update, token: newToken, updated: true });
-
-						setReRender(true);
+						setUpdate({ ...update, token: newToken, updated: false });
 					}
 				}
 			})
@@ -80,13 +78,6 @@ const ChangePasswords = (props) => {
 	};
 
 	const passwordValidation = () => {
-		/*
-		console.log(`Some information:`);
-		console.log(passwordInput);
-		console.log(passwordInput.currentPassword.length);
-		console.log(passwordInput.newPassword.length);
-		console.log(passwordInput.repeatNewPassword.length);*/
-
 		// Validation
 		if (passwordInput.currentPassword.length < 8) {
 			setPasswordInfo({
@@ -128,11 +119,8 @@ const ChangePasswords = (props) => {
 
 		return true;
 	};
-
+	
 	useEffect(() => {
-		// If the token already exists return
-		if (update.token) return;
-
 		// Test if the icons exist/are online
 		axios
 			.get("http://localhost:3001/public/icons/Show.png")
@@ -142,11 +130,19 @@ const ChangePasswords = (props) => {
 			.catch((err) => {
 				setPasswordInfo({ ...passwordInfo, icon: false });
 			});
+	}, [passwordInfo]);
+
+	useEffect(() => {
+		// If the token already exists return
+		if (update.token) return;
+		if (update.updated) return;
+		console.log(`Updating password...`);
 
 		// Get token
-		setUpdate({ ...update, token: localStorage.getItem("token") });
-	}, [update, passwordInfo]);
+		setUpdate({ ...update, token: localStorage.getItem("token"), updated: true, });
+	}, [update]);
 
+	/*
 	useEffect(() => {
 		// Update token state
 		if (update.updated)
@@ -155,7 +151,7 @@ const ChangePasswords = (props) => {
 				token: localStorage.getItem("token"),
 				updated: false,
 			});
-	}, [update]);
+	}, [update]);*/
 
 	return (
 		<div className="changePasswords">

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
+import jwt_decode from "jwt-decode";
 import { handleMessageValidationv2 } from "../../../../lib/handleMessageValidation";
 
 const ChangeAddress = (props) => {
@@ -77,6 +78,23 @@ const ChangeAddress = (props) => {
 		// Get token
 		setToken(localStorage.getItem("token"));
 	}, []);
+
+	useEffect(() => {
+		if (
+			location.country ||
+			location.province ||
+			location.city ||
+			location.postalCode ||
+			location.address
+		)
+			return;
+
+		if (token) {
+			const { country, province, city, postalCode, address } =
+				jwt_decode(token);
+			setLocation({ country, province, city, postalCode, address });
+		}
+	}, [location, token]);
 
 	return (
 		<div className="changeAddress">

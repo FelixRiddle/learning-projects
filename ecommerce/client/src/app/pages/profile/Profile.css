@@ -14,6 +14,16 @@
   border-radius: 10px;
   padding: 10px;
 }
+.profile .success {
+  border: none;
+}
+.profile .danger {
+  width: 400px;
+  text-align: center;
+  background-color: rgba(223, 21, 21, 0.8);
+  border-radius: 10px;
+  padding: 10px;
+}
 .profile .changeBasicInfo .emailErrorPopup {
   position: absolute;
   top: 510px;
@@ -28,7 +38,7 @@
 .profile .changeBasicInfo .emailErrorPopup:hover {
   cursor: pointer;
 }
-.profile .changeBasicInfo .joiError {
+.profile .changeBasicInfo .basicInfoMessage {
   position: absolute;
   top: 780px;
   left: 350px;
@@ -41,7 +51,7 @@
   padding: 20px;
   z-index: 1;
 }
-.profile .changeBasicInfo .joiError:hover {
+.profile .changeBasicInfo .basicInfoMessage:hover {
   cursor: pointer;
 }
 .profile .changeBasicInfo .submitSuccessful {
