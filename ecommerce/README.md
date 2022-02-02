@@ -1,4 +1,5 @@
 # Run
+
 $ cd database  
 $ mongod --noauth --dbpath ./  
 $ cd ../server  
@@ -6,11 +7,12 @@ $ npm start
 $ cd ../client  
 $ npm start  
 You need sass  
-$ sass --watch src:src  
+$ sass --watch src:src
 
 uwu
 
 # Objectives
+
 (This looks better on VSCode)
 ✅ Login  
 |✅ Add show password icon  
@@ -48,16 +50,15 @@ uwu
 | | |✅ Joi validation(the password cannot be very large)  
 | | |✅ Current password isn't correct  
 | | |✅ Password updated successfully  
-|⬜️ Address  
-| |⬜️ Messages  
-| | |⬜️ Joi validation  
-| | |⬜️ Success  
-| |⬜ Refresh token  
-| |⬜ Backend functionality  
-| | |⬜ Validate data with joi  
-| | |⬜ Error handling  
-| | |⬜️ Update data  
-
+|✅ Address  
+| |✅ Messages  
+| | |✅ Joi validation  
+| | |✅ Success  
+| |✅ Refresh token  
+| |✅ Backend functionality  
+| | |✅ Validate data with joi  
+| | |✅ Error handling  
+| | |✅ Update data
 
 ⬜️ License  
 |⬜️ Add the following attributions  

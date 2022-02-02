@@ -52,6 +52,20 @@ const ChangeAddress = (props) => {
 					});
 					console.log(joiMessage);
 					console.log(message);
+				} else if (res.data) {
+					const { token, error, state, message } = res.data;
+
+					// Save token
+					if (token) localStorage.setItem("token", token);
+
+					// Show message
+					setMessage({
+						message,
+						state,
+						error,
+					});
+				} else {
+					console.log(`Impossible.`);
 				}
 			})
 			.catch((err) => {
@@ -127,7 +141,7 @@ const Message = (props) => {
 
 	return (
 		<div
-			className={"message " + (message.state)}
+			className={"message " + message.state}
 			onClick={() =>
 				setMessage({
 					message: "",

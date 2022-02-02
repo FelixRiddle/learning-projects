@@ -135,7 +135,8 @@ const ChangeBasicInfo = (props) => {
 
 	useEffect(() => {
 		try {
-			setToken(localStorage.getItem("token"));
+			let previousToken = localStorage.getItem("token");
+			setToken(previousToken);
 			if (token) {
 				const { password, ...user } = jwt_decode(token);
 				setInput(user, (e) => {
@@ -145,7 +146,7 @@ const ChangeBasicInfo = (props) => {
 		} catch (err) {
 			console.error(err);
 		}
-	}, [token]);
+	}, [token, setInput]);
 
 	return (
 		<div className="changeBasicInfo">

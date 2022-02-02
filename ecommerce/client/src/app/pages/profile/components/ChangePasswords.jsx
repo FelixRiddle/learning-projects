@@ -34,7 +34,7 @@ const ChangePasswords = (props) => {
 	const handleChangePasswordsSubmit = (e) => {
 		e.preventDefault();
 		if (!passwordValidation()) return;
-		
+
 		axios
 			.post("http://localhost:3001/api/profile/changePassword", {
 				newPassword: passwordInput.newPassword,
@@ -130,8 +130,8 @@ const ChangePasswords = (props) => {
 	};
 
 	useEffect(() => {
-		// Get token
-		setUpdate({ ...update, token: localStorage.getItem("token") });
+		// If the token already exists return
+		if (update.token) return;
 
 		// Test if the icons exist/are online
 		axios
@@ -142,14 +142,19 @@ const ChangePasswords = (props) => {
 			.catch((err) => {
 				setPasswordInfo({ ...passwordInfo, icon: false });
 			});
-	}, []);
+
+		// Get token
+		setUpdate({ ...update, token: localStorage.getItem("token") });
+	}, [update, passwordInfo]);
 
 	useEffect(() => {
 		// Update token state
-		if (update.updated) setUpdate({
-			...update, token: localStorage.getItem("token"),
-			updated: false
-		});
+		if (update.updated)
+			setUpdate({
+				...update,
+				token: localStorage.getItem("token"),
+				updated: false,
+			});
 	}, [update]);
 
 	return (

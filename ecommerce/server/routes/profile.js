@@ -154,7 +154,7 @@ router.post("/changePassword", verify, async (req, res) => {
 });
 
 // For the change address part
-router.post("/changeAddress", verify, (req, res) => {
+router.post("/changeAddress", verify, async (req, res) => {
 	const time = new Date().getTime();
 	const currentDate = new Date(time);
 	console.log(`Date: ${currentDate.toString()}`);
@@ -169,7 +169,7 @@ router.post("/changeAddress", verify, (req, res) => {
 			postalCode: req.body.postalCode,
 			address: req.body.address,
 		};
-		
+
 		// Validate data
 		const { error } = changeAddressValidation(data);
 		if (error)
@@ -178,7 +178,7 @@ router.post("/changeAddress", verify, (req, res) => {
 				error: true,
 				joiMessage: error.details[0].message,
 			});
-		
+
 		// If no token was provided
 		if (!token) {
 			return res.send({
@@ -188,7 +188,7 @@ router.post("/changeAddress", verify, (req, res) => {
 				message: "Session terminated, please logout and login again.",
 			});
 		}
-		
+
 		// If the user provided at least 1 field with information
 		if (
 			data.country ||
@@ -204,7 +204,10 @@ router.post("/changeAddress", verify, (req, res) => {
 					message:
 						"Sorry there was an internal error, try to logout and login again.",
 				});
-			
+
+			const foundUser = await User.findOne({ _id });
+			console.log(foundUser);
+
 			// Update the user
 			const query = { _id };
 			const update = {
@@ -214,10 +217,18 @@ router.post("/changeAddress", verify, (req, res) => {
 				postalCode: data.postalCode,
 				address: data.address,
 			};
-			const newUser = User.findOneAndUpdate(query, update, { new: true });
-			console.log(`New user:`);
-			console.log(newUser);
-			return res.send({ state: "success", message: "Information updated." });
+			const newUser = await User.findOneAndUpdate(query, update, { new: true });
+			console.log(`New user`);
+			console.log({ ...newUser._doc });
+
+			const newToken = jwt.sign({ ...newUser._doc }, process.env.TOKEN_SECRET);
+
+			return res.status(200).send({
+				token: newToken,
+				error: false,
+				state: "success",
+				message: "Information updated.",
+			});
 		} else {
 			return res.send({
 				state: "danger",

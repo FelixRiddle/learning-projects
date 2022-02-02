@@ -54,6 +54,10 @@ function Profile(props) {
 	}, []);
 
 	useEffect(() => {
+		
+		// If the error already axists
+		if (error.message) return;
+		
 		try {
 			const user = props.user;
 			if (user) {

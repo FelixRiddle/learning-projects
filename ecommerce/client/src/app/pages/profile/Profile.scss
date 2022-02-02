@@ -118,6 +118,22 @@
 			}
 		}
 	}
+	
+	.changeAddress {
+		.message {
+			position: absolute;
+			position: absolute;
+			top: 2000px;
+			left: 320px;
+			padding: 20px;
+			border: none;
+			border-radius: 5px;
+			
+			&:hover {
+				cursor: pointer;
+			}
+		}
+	}
 
 	.changeBasicInfo,
 	.changePasswords,

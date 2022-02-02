@@ -97,6 +97,18 @@
 .profile .changePasswords .show-hide-passwords .offset-text {
   left: 840px;
 }
+.profile .changeAddress .message {
+  position: absolute;
+  position: absolute;
+  top: 2000px;
+  left: 320px;
+  padding: 20px;
+  border: none;
+  border-radius: 5px;
+}
+.profile .changeAddress .message:hover {
+  cursor: pointer;
+}
 .profile .changeBasicInfo .errorPopup,
 .profile .changePasswords .errorPopup,
 .profile .changeAddress .errorPopup {
