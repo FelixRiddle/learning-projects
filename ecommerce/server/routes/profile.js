@@ -75,11 +75,11 @@ router.post("/changeBasicInfo", verify, async (req, res) => {
 			new: true, // For returning the document
 		});
 		console.log(`User updated!`);
+		console.log(user._doc);
 
-		const newToken = jwt.sign(req.body, process.env.TOKEN_SECRET);
+		const newToken = jwt.sign({ ...user._doc }, process.env.TOKEN_SECRET);
 		return res.header("auth-token", newToken).status(200).send({
 			token: newToken,
-			user,
 			error: false,
 			state: "success",
 			message: `User updated!`,
@@ -147,7 +147,6 @@ router.post("/changePassword", verify, async (req, res) => {
 				);
 				return res.header("auth-token", newToken).status(200).send({
 					token: newToken,
-					user,
 					error: false,
 					state: "success",
 					message: "Password updated successfully.",

@@ -15,9 +15,13 @@ function App() {
 		email: "",
 		password: "",
 		age: "",
-		date: "",
 		phoneNumber: "",
+    country: "",
+    province: "",
+    city: "",
+    postalCode: "",
 		lastUpdated: "",
+		date: "",
 	});
 	const [token, setToken] = useState("");
 
@@ -50,7 +54,7 @@ function App() {
     console.log(`Token: ${token}`);
 		if (token) return;
 		setToken(localStorage.getItem("token"));
-	}, [token]);
+	}, [token, setToken]);
 
 	return (
 		<div className="App">

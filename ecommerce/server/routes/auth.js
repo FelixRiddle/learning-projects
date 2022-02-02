@@ -28,9 +28,14 @@ router.post("/register", async (req, res) => {
 });
 
 router.post("/login", async (req, res) => {
+	// For debugging
+	const time = new Date().getTime();
+	const currentDate = new Date(time);
+	console.log(`Date: ${currentDate.toString()}`);
+	console.log("/login");
+	
 	const data = req.body;
 	try {
-		console.log(typeof (loginValidation));
 		const { error } = loginValidation(data);
 		if (error) return res.send(error.details[0].message);
 
@@ -50,7 +55,10 @@ router.post("/login", async (req, res) => {
 		// to save on jwt
 		const { password, __v, ...userData } = user._doc;
 		const token = jwt.sign(userData, process.env.TOKEN_SECRET);
-		return res.header("auth-token", token).status(200).send({ token, message: "Successfully logged in."});
+		return res
+			.header("auth-token", token)
+			.status(200)
+			.send({ token, message: "Successfully logged in." });
 	} catch (err) {
 		console.log(err);
 		return res.status(400).send(err);

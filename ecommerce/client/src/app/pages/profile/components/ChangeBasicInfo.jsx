@@ -99,7 +99,7 @@ const ChangeBasicInfo = (props) => {
 					message: data.message,
 				});
 			} // For data validation
-			else if (data.joiMessage) {
+			else if (data.joiMessage && data.error) {
 				const modifiedMessage = handleMessageValidationv2(
 					{
 						firstName: input.firstName,
@@ -117,7 +117,7 @@ const ChangeBasicInfo = (props) => {
 					state: data.state,
 				});
 			} // Normal message
-			else if (data.message) {
+			else if (data.message && data.error) {
 				return setResData({
 					field: "",
 					message: data.message,
@@ -126,7 +126,6 @@ const ChangeBasicInfo = (props) => {
 				});
 			} // Set the response token on the local storage
 			else if (!data.error && data.token && data.token !== "undefined") {
-				console.log(`On changeBasicInfo, returned token: ${data.token}`);
 				localStorage.setItem("token", data.token);
 				return setToken(data.token);
 			}
@@ -151,17 +150,14 @@ const ChangeBasicInfo = (props) => {
 			)) ||
 				(resData.message && (
 					<div
-						className={"basicInfoMessage " + ((resData.state && resData.state) || "")}
+						className={
+							"basicInfoMessage " + ((resData.state && resData.state) || "")
+						}
 						onClick={() => setResData({})}
 					>
 						<div>{resData.message}</div>
 					</div>
 				))}
-
-			{/* <div className="joiError danger" onClick={() => setResData({})}>
-				<div className="joiErrorMessagesArrow"></div>
-				<div className="joiErrorMessage">{resData.message}</div>
-			</div> */}
 
 			{/* Show or hide password error message */}
 			{showPasswordMessage && (
