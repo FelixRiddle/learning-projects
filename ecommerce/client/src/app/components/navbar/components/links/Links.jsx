@@ -6,6 +6,11 @@ import "./Links.css";
 const Links = (props) => {
 	const { user } = useContext(GlobalContext);
 	const [showProfile, setShowProfile] = useState(false);
+	const [input, setInput] = useState("");
+	
+	const handleSearch = () => {
+		
+	}
 
 	const handleLogout = () => {
 		localStorage.removeItem("token");
@@ -51,6 +56,10 @@ const Links = (props) => {
 							</a>
 						</span>
 					))}
+				<search className="search">
+					<input type="text" placeholder="Search" name="search" />
+					<img src="http://localhost:3001/public/" alt="Loupe" onClick={handleSearch}/>
+				</search>
 			</span>
 		</nav>
 	);
