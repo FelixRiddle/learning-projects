@@ -7,9 +7,9 @@ const ChangeBasicInfo = (props) => {
 	const { token, user, setToken } = useContext(GlobalContext);
 	const {
 		handleChange,
-		input,
 		passwordInfo,
 		setPasswordInfo,
+		input,
 		setError,
 		error,
 	} = props;

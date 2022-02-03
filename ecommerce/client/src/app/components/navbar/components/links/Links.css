@@ -1,0 +1,24 @@
+.top-navbar {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+.top-navbar .navbar-span {
+  /*
+  	.logged-in {
+  	}
+
+  	.not-logged-in {
+  	}*/
+}
+.top-navbar .navbar-span .navbar-link {
+  font-size: 15px;
+  padding-right: 20px;
+  text-decoration: none;
+  color: black;
+}
+.top-navbar .navbar-span .navbar-link:hover {
+  cursor: pointer;
+}
+
+/*# sourceMappingURL=Links.css.map */

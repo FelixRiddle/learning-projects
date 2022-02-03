@@ -4,8 +4,6 @@ import React, { useState, useEffect } from "react";
 import jwt_decode from "jwt-decode";
 
 export const GlobalContext = React.createContext();
-// Two components - Provider, Consumer
-// UserContext.Provider
 
 function App() {
 	const [user, setUser] = useState({
@@ -16,18 +14,19 @@ function App() {
 		password: "",
 		age: "",
 		phoneNumber: "",
-    country: "",
-    province: "",
-    city: "",
-    postalCode: "",
+		country: "",
+		province: "",
+		city: "",
+		postalCode: "",
 		lastUpdated: "",
 		date: "",
 	});
 	const [token, setToken] = useState("");
+	const [currentSite, setCurrentSite] = useState("");
 
-  useEffect(() => {
-    console.log(`User:`)
-    console.log(user);
+	useEffect(() => {
+		console.log(`User:`);
+		console.log(user);
 		// If the user already exists
 		if (user._id) return;
 
@@ -50,15 +49,17 @@ function App() {
 		}
 	}, [user]);
 
-  useEffect(() => {
-    console.log(`Token: ${token}`);
+	useEffect(() => {
+		console.log(`Token: ${token}`);
 		if (token) return;
 		setToken(localStorage.getItem("token"));
 	}, [token, setToken]);
 
 	return (
 		<div className="App">
-			<GlobalContext.Provider value={{ user, setUser, token, setToken }}>
+			<GlobalContext.Provider
+				value={{ user, setUser, token, setToken, currentSite, setCurrentSite }}
+			>
 				<Navbar />
 			</GlobalContext.Provider>
 		</div>

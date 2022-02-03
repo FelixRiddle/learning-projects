@@ -1,11 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 
+import { GlobalContext } from "../../App";
 import { handleMessageValidationv2 } from "../../../lib/handleMessageValidation";
 import "./Login.css";
 import Alert from "../../components/alert/Alert";
 
 function Login(props) {
+	const { user } = useContext(GlobalContext);
 	const [input, setInput] = useState({ email: "", password: "" });
 	const [message, setMessage] = useState("none");
 	const [state, setState] = useState("");
@@ -25,7 +27,6 @@ function Login(props) {
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 		await axios
-			//"http://localhost:3001/api/users/register"
 			.post("http://localhost:3001/api/users/login", { ...input })
 			.then((res) => {
 				console.log(`Response ${res.data}`);
@@ -64,11 +65,11 @@ function Login(props) {
 	};
 
 	useEffect(() => {
-		if (props.user._id) {
+		if (user._id) {
 			setIsLoggedIn(true);
-			setMessage(`You are already logged in.`)
+			setMessage(`You are already logged in.`);
 		}
-	}, [props.user]);
+	}, [user]);
 
 	return (
 		<div className="login">

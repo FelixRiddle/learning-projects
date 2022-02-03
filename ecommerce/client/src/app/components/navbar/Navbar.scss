@@ -1,32 +1,10 @@
-nav {
-	
-	a {
-		padding: 20px;
-		text-decoration: none;
-		color: black;
+.rootnavbar {
 
-		&:hover {
-			cursor: pointer;
-		}
-	}
-	
-	#footbar {
+	.footbar {
 		display: flex;
-		flex-direction: column;
+		flex-direction: row;
 		justify-content: left;
-	}
-	
-	.navbarspan {
-		margin: 20px;
-	}
-}
 
-.navbar {
-	display: flex;
-	flex-direction: row;
-	justify-content: center;
-}
-
-.navlink {
-	font-size: 20px;
+		border: 1px solid cyan;
+	}
 }

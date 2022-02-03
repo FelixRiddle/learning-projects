@@ -1,11 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import "./Profile.css";
 import ChangeBasicInfo from "./components/ChangeBasicInfo";
 import ChangePasswords from "./components/ChangePasswords";
 import ChangeAddress from "./components/ChangeAddress";
 import axios from "axios";
+import { GlobalContext } from "../../App";
 
 function Profile(props) {
+	const { token, setToken, user } = useContext(GlobalContext);
 	const { setReRender } = props;
 	const [input, setInput] = useState({
 		firstName: "",
@@ -29,7 +31,6 @@ function Profile(props) {
 		duration: 10000,
 		show: false,
 	});
-	const { token, setToken } = props;
 
 	const handleChange = (e) => {
 		const { name, value } = e.target;
@@ -56,7 +57,6 @@ function Profile(props) {
 		});
 
 		try {
-			const user = props.user;
 			if (user && user._id) {
 				setIsLoggedIn(true);
 
@@ -108,7 +108,7 @@ function Profile(props) {
 			console.error(err);
 			return;
 		}
-	}, [props.user, isLoggedIn, input]);
+	}, [user, isLoggedIn, input]);
 
 	return (
 		<div>

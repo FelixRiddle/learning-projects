@@ -1,0 +1,25 @@
+.top-navbar {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-evenly;
+
+	.navbar-span {
+		/*
+			.logged-in {
+			}
+
+			.not-logged-in {
+			}*/
+
+		.navbar-link {
+			font-size: 15px;
+			padding-right: 20px;
+			text-decoration: none;
+			color: black;
+
+			&:hover {
+				cursor: pointer;
+			}
+		}
+	}
+}
