@@ -1,6 +1,8 @@
+import "./Footer.css";
+
 const Footer = () => {
 	return (
-		<nav className="footbar">
+		<nav className="footer-navbar">
 			<a id="footbar-item-1" href="/faq">
 				Frequent asked questions
 			</a>

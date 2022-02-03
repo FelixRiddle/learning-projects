@@ -1,0 +1,11 @@
+.footer-navbar {
+	display: flex;
+	flex-direction: row;
+	justify-content: left;
+	
+	& > * {
+		text-decoration: none;
+		color: black;
+		padding-right: 70px;
+	}
+}

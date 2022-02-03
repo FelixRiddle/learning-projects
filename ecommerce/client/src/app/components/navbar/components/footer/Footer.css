@@ -1,0 +1,12 @@
+.footer-navbar {
+  display: flex;
+  flex-direction: row;
+  justify-content: left;
+}
+.footer-navbar > * {
+  text-decoration: none;
+  color: black;
+  padding-right: 70px;
+}
+
+/*# sourceMappingURL=Footer.css.map */

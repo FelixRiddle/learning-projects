@@ -46,20 +46,23 @@
 | | |✅ Validate data with joi  
 | | |✅ Error handling  
 | | |✅ Update data  
-|⬜️ Navbar
-| |⬜️ Add a search input
-| | |⬜️ Search for products
+|⬜️ Navbar  
+| |✅ Add a search input  
+| | |⬜️ Search for products  
+| |✅ Icon/Links  
+| | |✅ Replace every link with icons
+| | |✅ Show words if icons are not available
 
 |Others
 | |⬜️ Add dark mode, for this, create a gigantic div that covers everything
 and move it accordingly with z-index.
 
-⬜️ Licenses
+⬜️ Licenses  
 |⬜️ Add the following attributions  
 | |⬜️ show: <a href="https://www.flaticon.com/free-icons/vision" title="vision icons">Vision icons created by Freepik - Flaticon</a>  
 | |⬜️ hide: <a href="https://www.flaticon.com/free-icons/hide" title="hide icons">Hide icons created by Pixel perfect - Flaticon</a>  
 | |⬜️ bag_1: <a href="https://www.flaticon.com/free-icons/bag" title="bag icons">Bag icons created by Phoenix Group - Flaticon</a>  
-| |⬜️ bag_2: <a href="https://www.flaticon.com/free-icons/shopping-cart" title="shopping cart icons">Shopping cart icons created by Hada Studio - Flaticon</a>
+| |⬜️ bag_2: <a href="https://www.flaticon.com/free-icons/shopping-cart" title="shopping cart icons">Shopping cart icons created by Hada Studio - Flaticon</a>  
 | |⬜️ user_1: <a href="https://www.flaticon.com/free-icons/user" title="user icons">User icons created by Freepik - Flaticon</a>  
 | |⬜️ user_2: <a href="https://www.flaticon.com/free-icons/user" title="user icons">User icons created by kmg design - Flaticon</a>  
 | |⬜️ heart_1: <a href="https://www.flaticon.com/free-icons/heart" title="heart icons">Heart icons created by Gregor Cresnar - Flaticon</a>  
@@ -67,4 +70,9 @@ and move it accordingly with z-index.
 | |⬜️ star_1 and star_2: <a href="https://www.flaticon.com/free-icons/star" title="star icons">Star icons created by Pixel perfect - Flaticon</a>  
 | |⬜️ shopping_cart_1 and shopping_cart_2: <a href="https://www.flaticon.com/free-icons/supermarket" title="supermarket icons">Supermarket icons created by Freepik - Flaticon</a>  
 | |⬜️ loupe_1: <a href="https://www.flaticon.com/free-icons/loupe" title="loupe icons">Loupe icons created by Arkinasi - Flaticon</a>  
-| |⬜️ loupe_3: <a href="https://www.flaticon.com/free-icons/search" title="search icons">Search icons created by Freepik - Flaticon</a>
+| |⬜️ loupe_3: <a href="https://www.flaticon.com/free-icons/search" title="search icons">Search icons created by Freepik - Flaticon</a>  
+| |⬜️ logout_1: <a href="https://www.flaticon.com/free-icons/logout" title="logout icons">Logout icons created by Gregor Cresnar - Flaticon</a>  
+| |⬜️ register_1: <a href="https://www.flaticon.com/free-icons/register" title="register icons">Register icons created by Pixel perfect - Flaticon</a>  
+| |⬜️ home_1: <a href="https://www.flaticon.com/free-icons/home-button" title="home button icons">Home button icons created by Freepik - Flaticon</a>  
+| |⬜️
+| |⬜️

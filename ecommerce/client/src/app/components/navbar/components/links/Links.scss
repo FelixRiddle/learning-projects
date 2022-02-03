@@ -1,4 +1,5 @@
 .top-navbar {
+	width: 100%;
 	display: flex;
 	flex-direction: row;
 	justify-content: space-evenly;
@@ -17,6 +18,37 @@
 			text-decoration: none;
 			color: black;
 
+			&:hover {
+				cursor: pointer;
+			}
+		}
+		
+		.navbar-icon {
+			width: 25px;
+			height: 25px;
+			
+			position: relative;
+			top: 10px;
+			
+			&:hover {
+				cursor: pointer;
+			}
+		}
+	}
+	
+	.search {
+		.search-input {
+			font-size: 15px;
+		}
+		
+		.search-icon {
+			width: 20px;
+			height: 20px;
+			
+			position: relative;
+			top: 5px;
+			left: 3px;
+			
 			&:hover {
 				cursor: pointer;
 			}

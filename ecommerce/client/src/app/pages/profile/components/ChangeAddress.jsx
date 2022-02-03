@@ -1,11 +1,10 @@
 import { useEffect, useState, useContext } from "react";
 import axios from "axios";
-import jwt_decode from "jwt-decode";
 import { handleMessageValidationv2 } from "../../../../lib/handleMessageValidation";
 import { GlobalContext } from "../../../App";
 
 const ChangeAddress = (props) => {
-	const { token, setToken, user } = useContext(GlobalContext);
+	const { token, user } = useContext(GlobalContext);
 	const { input } = props;
 	const [location, setLocation] = useState({
 		country: "",
