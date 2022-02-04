@@ -37,15 +37,32 @@
 .create-product .form > * {
   flex: 1 100%;
 }
-.create-product .btn {
+.create-product .images-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: left;
+}
+.create-product .images-container .images {
+  border: 1px solid red;
+}
+.create-product .images-container .images .tiny-image {
+  width: 64px;
+  height: 64px;
+}
+.create-product .button-position {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+.create-product .button-position .btn {
   background-color: lightblue;
   border: none;
   outline: none;
   border-radius: 5px;
   padding: 10px;
   margin: 5px;
-  position: relative;
-  left: 45%;
 }
 
 /*# sourceMappingURL=CreateProduct.css.map */

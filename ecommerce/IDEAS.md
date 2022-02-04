@@ -58,6 +58,7 @@
 | | |✅ Upload file  
 | | |✅ Icon for upload  
 | | |⬜️ Show images on the left  
+| | | |✅ Show tiny images below  
 | | | |⬜️ The user can select an image  
 | | | | |⬜️ The user can change it
 | | | | |⬜️ The user can delete it
@@ -85,7 +86,10 @@ and move it accordingly with z-index.
 | |⬜️ home_1: <a href="https://www.flaticon.com/free-icons/home-button" title="home button icons">Home button icons created by Freepik - Flaticon</a>  
 | |⬜️ plus_1: <a href="https://www.flaticon.com/free-icons/plus" title="plus icons">Plus icons created by Fuzzee - Flaticon</a>  
 | |⬜️ iconsx512/upload_1: <a href="https://www.flaticon.com/free-icons/upload" title="upload icons">Upload icons created by Freepik - Flaticon</a>  
-| |⬜️  iconsx64/upload_1: <a href="https://www.flaticon.com/free-icons/file-upload" title="file upload icons">File upload icons created by Ilham Fitrotul Hayat - Flaticon</a>  
+| |⬜️ iconsx64/upload_1: <a href="https://www.flaticon.com/free-icons/file-upload" title="file upload icons">File upload icons created by Ilham Fitrotul Hayat - Flaticon</a>  
+| |⬜️ iconsx64/image_1: <a href="https://www.flaticon.com/free-icons/picture" title="picture icons">Picture icons created by Freepik - Flaticon</a>  
 | |⬜️  
 | |⬜️  
 | |⬜️  
+| |⬜️  
+| |⬜️

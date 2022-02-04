@@ -1,5 +1,6 @@
 /* eslint-disable jsx-a11y/alt-text */
 import React, { useState, useEffect } from "react";
+import { v4 as uuidv4 } from "uuid";
 
 function UploadImage(props) {
 	const {
@@ -26,9 +27,16 @@ function UploadImage(props) {
 	};
 
 	return (
-		<span className={classes} onClick={promptInput}>
+		<span key={uuidv4()} className={classes} onClick={promptInput}>
 			<img src="http://localhost:3001/public/iconsx64/upload_1.png" />
-			<input id="file-input" hidden={true} type="file" onChange={changeFn} />
+			<input
+				id="file-input"
+				name={name}
+				hidden={true}
+				multiple={true}
+				type="file"
+				onChange={changeFn}
+			/>
 		</span>
 	);
 }

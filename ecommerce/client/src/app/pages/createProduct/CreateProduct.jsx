@@ -5,9 +5,12 @@ import { GlobalContext } from "../../App";
 import { handleMessageValidationv2 } from "../../../lib/handleMessageValidation";
 import "./CreateProduct.css";
 import UploadImage from "../../components/upload_image/UploadImage";
+import ShowTinyImage from "./components/ShowTinyImage";
+import { v4 as uuidv4 } from "uuid";
 
 function CreateProduct() {
 	const { user, token } = useContext(GlobalContext);
+	const defaultImage = "http://localhost:3001/public/iconsx64/image_1.png";
 	const [input, setInput] = useState({
 		name: "",
 		stock: "",
@@ -21,6 +24,7 @@ function CreateProduct() {
 		state: "",
 	});
 	const [loading, setLoading] = useState(false);
+	const [imagePaths, setImagePaths] = useState([defaultImage]);
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
@@ -71,6 +75,10 @@ function CreateProduct() {
 		// If the input were files
 		if (e.target.files && e.target.files[0]) {
 			const files = await e.target.files;
+			setLoading(true);
+
+			console.log(`Uploading image...`);
+
 			return setInput((prevInput) => {
 				return {
 					...prevInput,
@@ -87,13 +95,36 @@ function CreateProduct() {
 		});
 	};
 
-	const handleUploadImage = () => {};
-
 	useEffect(() => {
-		/*
-		console.log(`Input length`);
-		console.log(input.images.length);*/
-	}, [input]);
+		if (input && input.images && input.images[0]) {
+			// If it's not loading return
+			if (!loading) return;
+
+			console.log(`Images`);
+			console.log(input.images);
+			console.log(`Image paths`);
+			console.log(imagePaths);
+
+			// Create a temp array and traverse user images
+			const imageUrls = [defaultImage];
+			console.log(`Inserting image`);
+			for (let i in input.images) {
+				// If the current image is the default image break
+				//if (typeof input.images[i] === "string") continue;
+
+				// If not convert the file to url and push it to the array
+				imageUrls.unshift(URL.createObjectURL(input.images[i]));
+			}
+			console.log(`Image urls`);
+			console.log(imageUrls);
+			// If there are less than 10 inserted images
+			if (imagePaths.length < 10) {
+				setImagePaths([...imageUrls]);
+			}
+
+			setLoading(false);
+		}
+	}, [input, imagePaths, loading]);
 
 	return (
 		<div className="create-product">
@@ -103,7 +134,7 @@ function CreateProduct() {
 					classes="image-input"
 					type="file"
 					name="images"
-					fn={handleUploadImage}
+					changeFn={handleChange}
 				/>
 				<span className="labels">
 					<label htmlFor="name">Name</label>
@@ -143,9 +174,20 @@ function CreateProduct() {
 				</span>
 				{/* <span className="extra"></span> */}
 			</form>
-			<button className="btn" type="submit" onSubmit={handleSubmit}>
-				Submit product
-			</button>
+			{/* One default image is always at the end of the array
+			When default image is the last, disable input, and change it to
+			another icon.*/}
+			<div className="images-container">
+				{imagePaths.map((e, index) => {
+					console.log(e);
+					return <ShowTinyImage key={uuidv4()} imageSrc={e} index={index} />;
+				})}
+			</div>
+			<span className="button-position">
+				<button className="btn" type="submit" onSubmit={handleSubmit}>
+					Submit product
+				</button>
+			</span>
 		</div>
 	);
 }
