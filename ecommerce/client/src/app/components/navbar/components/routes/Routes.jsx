@@ -6,6 +6,7 @@ import Login from "../../../../pages/login/Login";
 import Register from "../../../../pages/register/Register";
 import Search from "../../../../pages/search/Search";
 import Profile from "../../../../pages/profile/Profile";
+import CreateProduct from "../../../../pages/createProduct/CreateProduct";
 
 const Routes = (props) => {
 	return (
@@ -19,12 +20,9 @@ const Routes = (props) => {
 				<Route path="/search" element={<Search />} />
 				<Route
 					path="/profile"
-					element={
-						<Profile
-							setReRender={props.setReRender}
-						/>
-					}
+					element={<Profile setReRender={props.setReRender} />}
 				/>
+				<Route path="/createProduct" element={<CreateProduct />} />
 			</Routes1>
 		</BrowserRouter>
 	);

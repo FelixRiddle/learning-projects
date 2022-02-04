@@ -52,8 +52,12 @@
 | |✅ Icon/Links  
 | | |✅ Replace every link with icons
 | | |✅ Show words if icons are not available
+| | |⬜️ Add a small pop-up that tells what the icon is for.
+|⬜️ Create Product  
+| |✅ Form  
+| | |✅ Upload file  
 
-|Others
+|Others  
 | |⬜️ Add dark mode, for this, create a gigantic div that covers everything
 and move it accordingly with z-index.
 
@@ -74,5 +78,6 @@ and move it accordingly with z-index.
 | |⬜️ logout_1: <a href="https://www.flaticon.com/free-icons/logout" title="logout icons">Logout icons created by Gregor Cresnar - Flaticon</a>  
 | |⬜️ register_1: <a href="https://www.flaticon.com/free-icons/register" title="register icons">Register icons created by Pixel perfect - Flaticon</a>  
 | |⬜️ home_1: <a href="https://www.flaticon.com/free-icons/home-button" title="home button icons">Home button icons created by Freepik - Flaticon</a>  
-| |⬜️
+| |⬜️ <a href="https://www.flaticon.com/free-icons/plus" title="plus icons">Plus icons created by Fuzzee - Flaticon</a>  
+| |⬜️  
 | |⬜️

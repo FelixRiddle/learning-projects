@@ -4,14 +4,6 @@
   flex-direction: row;
   justify-content: space-evenly;
 }
-.top-navbar .navbar-span {
-  /*
-  	.logged-in {
-  	}
-
-  	.not-logged-in {
-  	}*/
-}
 .top-navbar .navbar-span .navbar-link {
   font-size: 15px;
   padding-right: 20px;

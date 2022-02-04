@@ -54,7 +54,7 @@ const userSchema = new mongoose.Schema({
 		max: 32,
 	},
 	products: {
-		type: Object,
+		type: Array, // Store products id
 	},
 	date: {
 		type: Date,

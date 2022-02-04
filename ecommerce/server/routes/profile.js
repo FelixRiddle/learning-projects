@@ -19,8 +19,6 @@ router.post("/changeBasicInfo", verify, async (req, res) => {
 	try {
 		// Validate data
 		const { error } = basicInfoValidation(req.body);
-		console.log(`Jwt error:`);
-		console.log(error);
 		if (error)
 			return res.send({
 				state: "danger",

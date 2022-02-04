@@ -1,21 +1,38 @@
 const mongoose = require("mongoose");
 
 const product = new mongoose.Schema({
-	product_name: {
+	ownerId: {
+		type: String,
+		required: true,
+	},
+	name: {
 		type: String,
 		required: true,
 		min: 3,
 		max: 128,
 	},
-	product_images: {
+	images: {
 		type: Array,
 		required: true,
 		min: 1,
 		max: 10,
 	},
+	stock: {
+		type: Number,
+		default: 0,
+	},
+	price: {
+		type: Number,
+		required: true,
+		default: 0,
+	},
 	date: {
 		type: Date,
 		default: Date.now,
+	},
+	lastUpdated: {
+		type: Date,
+		defualt: Date.now,
 	},
 });
 

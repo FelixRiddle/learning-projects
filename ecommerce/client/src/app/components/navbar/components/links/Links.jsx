@@ -36,9 +36,6 @@ const Links = (props) => {
 	return (
 		<nav className="top-navbar">
 			<span className="navbar-span">
-				{/* <a className="navbar-link" href="/">
-					Mercado
-				</a> */}
 				<IconLink
 					classes="navbar-link"
 					iconClasses="navbar-icon"
@@ -85,6 +82,14 @@ const Links = (props) => {
 								iconName="user_1.png"
 								iconClasses="navbar-icon"
 								textClass="navbar-link"
+							/>
+							<IconLink
+								classes="navbar-link"
+								iconClasses="navbar-icon"
+								textClass="navbar-link"
+								linkref="/createProduct"
+								title="Create product"
+								iconName="plus_1.png"
 							/>
 						</span>
 					))}

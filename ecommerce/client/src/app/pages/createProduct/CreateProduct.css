@@ -1,0 +1,42 @@
+.create-product .title {
+  text-align: center;
+}
+.create-product .form {
+  display: flex;
+  flex-direction: row;
+}
+.create-product .form .labels {
+  display: flex;
+  flex-shrink: 2;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+.create-product .form .labels > * {
+  padding: 10px;
+  margin: 10px;
+}
+.create-product .form .inputs {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  flex-shrink: 2;
+}
+.create-product .form .inputs > * {
+  padding: 10px;
+  margin: 10px;
+}
+.create-product .form > * {
+  flex: 1 100%;
+}
+.create-product .btn {
+  background-color: lightblue;
+  border: none;
+  outline: none;
+  border-radius: 5px;
+  padding: 10px;
+  margin: 5px;
+  position: relative;
+  left: 45%;
+}
+
+/*# sourceMappingURL=CreateProduct.css.map */
