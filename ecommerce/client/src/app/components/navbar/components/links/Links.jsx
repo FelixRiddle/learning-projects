@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import { GlobalContext } from "../../../../App";
 
 import "./Links.css";
-import IconLink from "./components/IconLink";
+import IconLink from "../../../iconLink/IconLink";
 
 const Links = (props) => {
 	const { user } = useContext(GlobalContext);

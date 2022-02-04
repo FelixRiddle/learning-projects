@@ -56,6 +56,11 @@
 |⬜️ Create Product  
 | |✅ Form  
 | | |✅ Upload file  
+| | |✅ Icon for upload  
+| | |⬜️ Show images on the left  
+| | | |⬜️ The user can select an image  
+| | | | |⬜️ The user can change it
+| | | | |⬜️ The user can delete it
 
 |Others  
 | |⬜️ Add dark mode, for this, create a gigantic div that covers everything
@@ -78,6 +83,9 @@ and move it accordingly with z-index.
 | |⬜️ logout_1: <a href="https://www.flaticon.com/free-icons/logout" title="logout icons">Logout icons created by Gregor Cresnar - Flaticon</a>  
 | |⬜️ register_1: <a href="https://www.flaticon.com/free-icons/register" title="register icons">Register icons created by Pixel perfect - Flaticon</a>  
 | |⬜️ home_1: <a href="https://www.flaticon.com/free-icons/home-button" title="home button icons">Home button icons created by Freepik - Flaticon</a>  
-| |⬜️ <a href="https://www.flaticon.com/free-icons/plus" title="plus icons">Plus icons created by Fuzzee - Flaticon</a>  
+| |⬜️ plus_1: <a href="https://www.flaticon.com/free-icons/plus" title="plus icons">Plus icons created by Fuzzee - Flaticon</a>  
+| |⬜️ iconsx512/upload_1: <a href="https://www.flaticon.com/free-icons/upload" title="upload icons">Upload icons created by Freepik - Flaticon</a>  
+| |⬜️  iconsx64/upload_1: <a href="https://www.flaticon.com/free-icons/file-upload" title="file upload icons">File upload icons created by Ilham Fitrotul Hayat - Flaticon</a>  
 | |⬜️  
-| |⬜️
+| |⬜️  
+| |⬜️  

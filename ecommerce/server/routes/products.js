@@ -4,7 +4,7 @@ const verify = require("../verifyToken");
 const User = require("../models/User");
 const validateCreateProduct = require("../validation");
 
-router.get("/createProduct", verify, (req, res) => {
+router.get("/createProduct", verify, async (req, res) => {
 	// For debugging
 	const time = new Date().getTime();
 	const currentDate = new Date(time);
@@ -13,7 +13,7 @@ router.get("/createProduct", verify, (req, res) => {
 
 	try {
 		const { token, _id, name, images, stock, price } = req.body;
-		const { error } = validateCreateProduct({ name, stock, price });
+		const { error } = await validateCreateProduct({ name, stock, price });
 		if (error)
 			return res.send({
 				state: "danger",

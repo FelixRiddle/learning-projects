@@ -4,6 +4,7 @@ import axios from "axios";
 import { GlobalContext } from "../../App";
 import { handleMessageValidationv2 } from "../../../lib/handleMessageValidation";
 import "./CreateProduct.css";
+import UploadImage from "../../components/upload_image/UploadImage";
 
 function CreateProduct() {
 	const { user, token } = useContext(GlobalContext);
@@ -19,6 +20,7 @@ function CreateProduct() {
 		field: "",
 		state: "",
 	});
+	const [loading, setLoading] = useState(false);
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
@@ -65,7 +67,7 @@ function CreateProduct() {
 
 	const handleChange = async (e) => {
 		const { name, value } = await e.target;
-		
+
 		// If the input were files
 		if (e.target.files && e.target.files[0]) {
 			const files = await e.target.files;
@@ -85,26 +87,24 @@ function CreateProduct() {
 		});
 	};
 
-	/*
+	const handleUploadImage = () => {};
+
 	useEffect(() => {
-		console.log(`Input updated.`);
-		console.log(input);
-		if (input && input.images && input.images[0]) {
-			console.log(`There are actually images (O,O)`);
-			console.log(`Array:`);
-			console.log(input.images);
-			for (let i in input.images) {
-				console.log(`Element at ${i}`);
-				console.log(input.images[i]);
-			}
-		}
-	}, [input]);*/
+		/*
+		console.log(`Input length`);
+		console.log(input.images.length);*/
+	}, [input]);
 
 	return (
 		<div className="create-product">
 			<h2 className="title">Create a product</h2>
 			<form action="submit" className="form">
-				<span className="extra-2"></span>
+				<UploadImage
+					classes="image-input"
+					type="file"
+					name="images"
+					fn={handleUploadImage}
+				/>
 				<span className="labels">
 					<label htmlFor="name">Name</label>
 					<label htmlFor="images">Images</label>
@@ -141,7 +141,7 @@ function CreateProduct() {
 						onChange={handleChange}
 					/>
 				</span>
-				<span className="extra"></span>
+				{/* <span className="extra"></span> */}
 			</form>
 			<button className="btn" type="submit" onSubmit={handleSubmit}>
 				Submit product

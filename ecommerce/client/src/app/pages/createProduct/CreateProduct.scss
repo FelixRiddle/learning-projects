@@ -2,40 +2,51 @@
 	.title {
 		text-align: center;
 	}
-	
+
 	.form {
 		display: flex;
 		flex-direction: row;
+		
+		.image-input {
+			display: flex;
+			flex-direction: row;
+			justify-content: center;
+			align-items: center;
+			
+			&:hover {
+				cursor: pointer;
+			}
+		}
 		
 		.labels {
 			display: flex;
 			flex-shrink: 2;
 			flex-direction: column;
 			justify-content: space-evenly;
-			
+
 			& > * {
 				padding: 10px;
 				margin: 10px;
 			}
 		}
-		
+
 		.inputs {
 			display: flex;
 			flex-direction: column;
 			justify-content: space-evenly;
 			flex-shrink: 2;
-			
+
 			& > * {
 				padding: 10px;
 				margin: 10px;
 			}
 		}
-		
+
 		& > * {
 			flex: 1 100%;
 		}
 	}
-	
+
 	.btn {
 		background-color: lightblue;
 		border: none;
@@ -43,7 +54,7 @@
 		border-radius: 5px;
 		padding: 10px;
 		margin: 5px;
-		
+
 		position: relative;
 		left: 45%;
 	}
