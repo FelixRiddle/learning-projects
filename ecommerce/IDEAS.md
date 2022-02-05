@@ -57,10 +57,11 @@
 | |✅ Form  
 | | |✅ Upload file  
 | | |✅ Icon for upload  
-| | |✅ Fixed image size  
-| | |⬜️ Show images on the left  
+| | |✅ Show big image on the left
+| | | |✅ Fixed image size  
 | | | |✅ Show tiny images below  
-| | | |⬜️ The user can select an image  
+| | | | |✅ Add feedback to the selected image  
+| | | |✅ The user can select an image  
 | | | | |⬜️ The user can change it
 | | | | |⬜️ The user can delete it
 

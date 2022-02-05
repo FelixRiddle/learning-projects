@@ -117,6 +117,10 @@ function CreateProduct() {
 		});
 	};
 
+	const handleTinyImageClick = (imageSrc) => {
+		setSelectedImage(imageSrc);
+	};
+
 	useEffect(() => {
 		if (input && input.images) {
 			if (!isFirstUpload) return;
@@ -130,13 +134,13 @@ function CreateProduct() {
 				// Convert the file to url and push it to the begionning of the array
 				imageUrls.unshift(URL.createObjectURL(input.images[i]));
 			}
-			
+
 			// If there are less than 10 inserted images
 			if (imagePaths.length < 10) {
 				setImagePaths([...imageUrls]);
 				console.log(`Image paths inserted.`);
 			}
-			
+
 			setLoading(false);
 		}
 	}, [input, imagePaths, isFirstUpload]);
@@ -204,7 +208,20 @@ function CreateProduct() {
 			<div className="images-container">
 				{imagePaths.map((e, index) => {
 					console.log(e);
-					return <ShowTinyImage key={uuidv4()} imageSrc={e} index={index} />;
+
+					const isSelected = e === selectedImage;
+					return (
+						<ShowTinyImage
+							key={uuidv4()}
+							imageSrc={e}
+							index={index}
+							clickFn={handleTinyImageClick}
+							classes={"images "}
+							imageClasses={
+								"tiny-image " + ((isSelected && "selected-image") || "")
+							}
+						/>
+					);
 				})}
 			</div>
 			<span className="button-position">
