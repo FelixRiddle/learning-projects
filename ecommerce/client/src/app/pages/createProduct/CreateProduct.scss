@@ -12,7 +12,8 @@
 			flex-direction: row;
 			justify-content: center;
 			align-items: center;
-			border: 1px solid violet;
+			outline-style: solid;
+			outline-color: blueviolet;
 
 			.image {
 				width: 40vw;
@@ -24,27 +25,45 @@
 			}
 		}
 
-		.labels {
-			display: flex;
-			flex-shrink: 2;
-			flex-direction: column;
-			justify-content: space-evenly;
-
-			& > * {
-				padding: 10px;
-				margin: 10px;
+		.product-details {
+			.form-title {
+				text-align: left;
+				margin-left: 20px;
 			}
-		}
 
-		.inputs {
-			display: flex;
-			flex-direction: column;
-			justify-content: space-evenly;
-			flex-shrink: 2;
+			.labels-inputs {
+				display: flex;
+				flex-direction: row;
 
-			& > * {
-				padding: 10px;
-				margin: 10px;
+				.labels {
+					display: flex;
+					flex-shrink: 2;
+					flex-direction: column;
+					justify-content: space-evenly;
+					
+					& > * {
+						padding: 10px;
+						margin: 10px;
+					}
+				}
+
+				.inputs {
+					display: flex;
+					flex-direction: column;
+					justify-content: space-evenly;
+					
+					width: 100%;
+					height: 100%;
+					
+					input {
+						width: 50%;
+					}
+
+					& > * {
+						padding: 10px;
+						margin: 10px;
+					}
+				}
 			}
 		}
 
@@ -65,13 +84,13 @@
 			outline-style: solid;
 			outline-color: gray;
 		}
-		
+
 		// For the last image of the tiny images
 		.last-image {
-			opacity: .5;
-			
+			opacity: 0.5;
+
 			&:hover {
-				cursor:default;
+				cursor: default;
 			}
 		}
 

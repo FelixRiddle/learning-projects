@@ -182,44 +182,49 @@ function CreateProduct() {
 					title="Uploaded image"
 					changeFn={handleChange}
 				/>
-
-				<span className="labels">
-					<label htmlFor="name">Name</label>
-					<label htmlFor="images">Images</label>
-					<label htmlFor="stock">Stock</label>
-					<label htmlFor="price">Price</label>
+				<span className="product-details">
+					<div className="form-title">
+						<h4>Product details</h4>
+					</div>
+					<div className="labels-inputs">
+						<span className="labels">
+							<label htmlFor="name">Name</label>
+							<label htmlFor="images">Images</label>
+							<label htmlFor="stock">Stock</label>
+							<label htmlFor="price">Price</label>
+						</span>
+						<span className="inputs">
+							<input
+								type="text"
+								name="name"
+								placeholder="Name"
+								value={input.name}
+								onChange={handleChange}
+							/>
+							<input
+								type="file"
+								name="images"
+								accept="image/*"
+								multiple={true}
+								onChange={handleChange}
+							/>
+							<input
+								type="text"
+								name="stock"
+								placeholder="Stock"
+								value={input.stock}
+								onChange={handleChange}
+							/>
+							<input
+								type="text"
+								name="price"
+								placeholder="Price"
+								value={input.price}
+								onChange={handleChange}
+							/>
+						</span>
+					</div>
 				</span>
-				<span className="inputs">
-					<input
-						type="text"
-						name="name"
-						placeholder="Name"
-						value={input.name}
-						onChange={handleChange}
-					/>
-					<input
-						type="file"
-						name="images"
-						accept="image/*"
-						multiple={true}
-						onChange={handleChange}
-					/>
-					<input
-						type="text"
-						name="stock"
-						placeholder="Stock"
-						value={input.stock}
-						onChange={handleChange}
-					/>
-					<input
-						type="text"
-						name="price"
-						placeholder="Price"
-						value={input.price}
-						onChange={handleChange}
-					/>
-				</span>
-				{/* <span className="extra"></span> */}
 			</form>
 
 			{/* One default image is always at the end of the array
@@ -244,6 +249,7 @@ function CreateProduct() {
 									(isLastImage && "last-image"))
 							}
 							isDisabled={isLastImage}
+							defaultImage={defaultUploadImage}
 						/>
 					);
 				})}

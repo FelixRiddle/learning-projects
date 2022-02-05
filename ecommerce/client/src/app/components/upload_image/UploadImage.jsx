@@ -1,20 +1,31 @@
 /* eslint-disable jsx-a11y/alt-text */
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 
 function UploadImage(props) {
 	// Component properties
-	const { classes, linkref, title, classCondition, changeFn, name } = props;
+	const {
+		classes,
+		linkref,
+		title,
+		classCondition,
+		changeFn,
+		name,
+		defaultImage,
+	} = props;
 
 	// Constants
 	const spanId = uuidv4();
 	const imgId = uuidv4();
 
+	// States
+	const [hidden, setHidden] = useState(true);
+
 	const promptInput = (e) => {
 		document.getElementById("file-input").click();
 	};
 
-	const handleLoadImage = () => {
+	useEffect(() => {
 		const realImg = new Image();
 		realImg.src = linkref;
 
@@ -25,7 +36,7 @@ function UploadImage(props) {
 		if (parentElement && img) {
 			const parentWidth = parentElement.clientWidth;
 			const parentHeight = parentElement.clientHeight;
-			
+
 			// Debug
 			// console.log(`Real width: ${realImg.width}`);
 			// console.log(`Real height: ${realImg.width}`);
@@ -41,16 +52,18 @@ function UploadImage(props) {
 				img.style.height = realImg.height + "px";
 			}
 		}
-	};
+		
+		setHidden(false);
+	}, [imgId, linkref, spanId]);
 
 	return (
 		<span id={spanId} className={classes} onClick={promptInput}>
 			<img
 				id={imgId}
 				className={(classCondition && "image") || ""}
-				src={linkref}
+				src={(!hidden && linkref) || defaultImage}
 				alt={title}
-				onLoad={handleLoadImage}
+				hidden={hidden}
 			/>
 			<input
 				id="file-input"
