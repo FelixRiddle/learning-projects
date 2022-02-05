@@ -9,6 +9,7 @@ function UploadImage(props) {
 		title,
 		iconClasses,
 		textClass,
+		classCondition,
 		clickFn,
 		changeFn,
 		name,
@@ -28,7 +29,7 @@ function UploadImage(props) {
 
 	return (
 		<span key={uuidv4()} className={classes} onClick={promptInput}>
-			<img src="http://localhost:3001/public/iconsx64/upload_1.png" />
+			<img className={classCondition && "image"} src={linkref} />
 			<input
 				id="file-input"
 				name={name}

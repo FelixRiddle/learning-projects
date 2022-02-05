@@ -11,6 +11,10 @@
   justify-content: center;
   align-items: center;
 }
+.create-product .form .image-input .image {
+  width: 40vw;
+  height: 40vh;
+}
 .create-product .form .image-input:hover {
   cursor: pointer;
 }
@@ -49,6 +53,9 @@
 .create-product .images-container .images .tiny-image {
   width: 64px;
   height: 64px;
+}
+.create-product .images-container .images:hover {
+  cursor: pointer;
 }
 .create-product .button-position {
   display: flex;

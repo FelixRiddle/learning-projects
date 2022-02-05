@@ -10,7 +10,11 @@ import { v4 as uuidv4 } from "uuid";
 
 function CreateProduct() {
 	const { user, token } = useContext(GlobalContext);
+
 	const defaultImage = "http://localhost:3001/public/iconsx64/image_1.png";
+	const defaultUploadImage =
+		"http://localhost:3001/public/iconsx64/upload_1.png";
+
 	const [input, setInput] = useState({
 		name: "",
 		stock: "",
@@ -25,6 +29,8 @@ function CreateProduct() {
 	});
 	const [loading, setLoading] = useState(false);
 	const [imagePaths, setImagePaths] = useState([defaultImage]);
+	const [showImage, setShowImage] = useState(defaultUploadImage);
+	const [isFirstUpload, setIsFirstUpload] = useState(false);
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
@@ -79,6 +85,15 @@ function CreateProduct() {
 
 			console.log(`Uploading image...`);
 
+			if (input.images.length >= 10) {
+				return setStatus({
+					error: true,
+					message: "You cannot upload more than 10 images",
+					field: "images",
+					state: "danger",
+				});
+			}
+
 			return setInput((prevInput) => {
 				return {
 					...prevInput,
@@ -99,6 +114,7 @@ function CreateProduct() {
 		if (input && input.images && input.images[0]) {
 			// If it's not loading return
 			if (!loading) return;
+			if (!isFirstUpload) setIsFirstUpload(true);
 
 			console.log(`Images`);
 			console.log(input.images);
@@ -109,10 +125,7 @@ function CreateProduct() {
 			const imageUrls = [defaultImage];
 			console.log(`Inserting image`);
 			for (let i in input.images) {
-				// If the current image is the default image break
-				//if (typeof input.images[i] === "string") continue;
-
-				// If not convert the file to url and push it to the array
+				// Convert the file to url and push it to the begionning of the array
 				imageUrls.unshift(URL.createObjectURL(input.images[i]));
 			}
 			console.log(`Image urls`);
@@ -124,7 +137,13 @@ function CreateProduct() {
 
 			setLoading(false);
 		}
-	}, [input, imagePaths, loading]);
+	}, [input, imagePaths, loading, isFirstUpload]);
+
+	useEffect(() => {
+		if (isFirstUpload) {
+			setShowImage(imagePaths[0]);
+		}
+	}, [isFirstUpload]);
 
 	return (
 		<div className="create-product">
@@ -132,6 +151,8 @@ function CreateProduct() {
 			<form action="submit" className="form">
 				<UploadImage
 					classes="image-input"
+					linkref={showImage}
+					classCondition={isFirstUpload}
 					type="file"
 					name="images"
 					changeFn={handleChange}

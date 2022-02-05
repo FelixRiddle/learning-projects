@@ -12,6 +12,11 @@
 			flex-direction: row;
 			justify-content: center;
 			align-items: center;
+			
+			.image {
+				width: 40vw;
+				height: 40vh;
+			}
 
 			&:hover {
 				cursor: pointer;
@@ -59,6 +64,10 @@
 			.tiny-image {
 				width: 64px;
 				height: 64px;
+			}
+			
+			&:hover {
+				cursor: pointer;
 			}
 		}
 	}

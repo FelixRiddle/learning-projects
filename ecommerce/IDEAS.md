@@ -57,6 +57,7 @@
 | |✅ Form  
 | | |✅ Upload file  
 | | |✅ Icon for upload  
+| | |✅ Fixed image size  
 | | |⬜️ Show images on the left  
 | | | |✅ Show tiny images below  
 | | | |⬜️ The user can select an image  
