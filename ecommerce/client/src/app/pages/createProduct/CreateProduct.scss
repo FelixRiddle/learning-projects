@@ -59,9 +59,19 @@
 		align-items: left;
 		margin: 20px 0px 20px 0px;
 
+		// For the selected image of the tiny images
 		.selected-image {
 			outline-style: solid;
 			outline-color: gray;
+		}
+		
+		// For the last image of the tiny images
+		.last-image {
+			opacity: .5;
+			
+			&:hover {
+				cursor:default;
+			}
 		}
 
 		.images {

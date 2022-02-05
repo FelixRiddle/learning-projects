@@ -59,11 +59,11 @@
 | | |✅ Icon for upload  
 | | |✅ Show big image on the left
 | | | |✅ Fixed image size  
-| | | |✅ Show tiny images below  
-| | | | |✅ Add feedback to the selected image  
 | | | |✅ The user can select an image  
-| | | | |⬜️ The user can change it
-| | | | |⬜️ The user can delete it
+| | | | |⬜️ The user can change it  
+| | |✅ Show tiny images below  
+| | | |✅ Add feedback to the selected image  
+| | | |✅ When it's full of images, the last is disabled.
 
 |Others  
 | |⬜️ Add dark mode, for this, create a gigantic div that covers everything
@@ -90,7 +90,7 @@ and move it accordingly with z-index.
 | |⬜️ iconsx512/upload_1: <a href="https://www.flaticon.com/free-icons/upload" title="upload icons">Upload icons created by Freepik - Flaticon</a>  
 | |⬜️ iconsx64/upload_1: <a href="https://www.flaticon.com/free-icons/file-upload" title="file upload icons">File upload icons created by Ilham Fitrotul Hayat - Flaticon</a>  
 | |⬜️ iconsx64/image_1: <a href="https://www.flaticon.com/free-icons/picture" title="picture icons">Picture icons created by Freepik - Flaticon</a>  
-| |⬜️  
+| |⬜️ iconsx64/disabled_image_1: <a href="https://www.flaticon.com/free-icons/photo" title="photo icons">Photo icons created by apien - Flaticon</a>  
 | |⬜️  
 | |⬜️  
 | |⬜️  

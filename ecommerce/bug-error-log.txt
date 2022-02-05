@@ -135,6 +135,10 @@ Done >
 It was a bug only in ChangeBasicfInfo
 Done >
 02/03/2022
+< Image size on create product page, is being resized
+
+
+02/03/2022
 < On profile, you aren't logged in error is shown for a brief
 time
 

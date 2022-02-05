@@ -3,7 +3,8 @@ import React from "react";
 import { v4 as uuidv4 } from "uuid";
 
 function UploadImage(props) {
-	const { classes, linkref, title, classCondition, changeFn, name } = props;
+	const { classes, linkref, title, classCondition, changeFn, name, onLoadFn } =
+		props;
 
 	const promptInput = (e) => {
 		document.getElementById("file-input").click();
@@ -15,6 +16,7 @@ function UploadImage(props) {
 				className={(classCondition && "image") || ""}
 				src={linkref}
 				alt={title}
+				onLoad={() => onLoadFn()}
 			/>
 			<input
 				id="file-input"

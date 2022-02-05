@@ -10,10 +10,14 @@ import { v4 as uuidv4 } from "uuid";
 
 function CreateProduct() {
 	const { user, token } = useContext(GlobalContext);
-
+	
+	// Constant values
 	const defaultImage = "http://localhost:3001/public/iconsx64/image_1.png";
 	const defaultUploadImage =
 		"http://localhost:3001/public/iconsx64/upload_1.png";
+	const disabledImage =
+		"http://localhost:3001/public/iconsx64/disabled_image_1.png";
+	const maxImages = 5;
 
 	const [input, setInput] = useState({
 		name: "",
@@ -28,9 +32,9 @@ function CreateProduct() {
 		state: "",
 	});
 	const [loading, setLoading] = useState(false);
-	const [imagePaths, setImagePaths] = useState([defaultImage]);
 	const [selectedImage, setSelectedImage] = useState(defaultUploadImage);
 	const [isFirstUpload, setIsFirstUpload] = useState(false);
+	const [images, setImages] = useState([]);
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
@@ -85,7 +89,8 @@ function CreateProduct() {
 
 			console.log(`Uploading image...`);
 
-			if (input.images.length >= 10) {
+			const totalLength = input.images.length + files.length;
+			if (totalLength > maxImages) {
 				return setStatus({
 					error: true,
 					message: "You cannot upload more than 10 images",
@@ -121,35 +126,58 @@ function CreateProduct() {
 		setSelectedImage(imageSrc);
 	};
 
+	const handleLoad = () => {
+		// If the image is smaller than the canvas
+		// do not change its size.
+	};
+
 	useEffect(() => {
 		if (input && input.images) {
 			if (!isFirstUpload) return;
 			// To prevent an infinite loop, only return when the images
 			// length is different
-			if (imagePaths.length - 1 === input.images.length) return;
+			if (images.length - 1 === input.images.length) return;
 
 			// Create a temp array and traverse user images
+			const newImages = [];
 			const imageUrls = [defaultImage];
 			for (let i in input.images) {
+				const imgUrl = URL.createObjectURL(input.images[i]);
+
+				// I'm using images to store more information
+				const img = new Image();
+				img.src = imgUrl;
+				newImages.push(img);
+
 				// Convert the file to url and push it to the begionning of the array
-				imageUrls.unshift(URL.createObjectURL(input.images[i]));
+				imageUrls.unshift(imgUrl);
 			}
 
 			// If there are less than 10 inserted images
-			if (imagePaths.length < 10) {
-				setImagePaths([...imageUrls]);
-				console.log(`Image paths inserted.`);
-			}
+			setImages([...newImages, images[images.length - 1]]);
+			console.log(`Image paths inserted.`);
 
 			setLoading(false);
 		}
-	}, [input, imagePaths, isFirstUpload]);
+	}, [input, isFirstUpload, images]);
 
 	useEffect(() => {
 		if (isFirstUpload) {
-			setSelectedImage(imagePaths[0]);
+			setSelectedImage(images[0].src);
 		}
-	}, [isFirstUpload, imagePaths]);
+	}, [isFirstUpload, images]);
+
+	useEffect(() => {
+		if (selectedImage === defaultImage) {
+			setSelectedImage(defaultUploadImage);
+		}
+	}, [selectedImage]);
+
+	useEffect(() => {
+		const image = new Image();
+		image.src = defaultImage;
+		setImages([image]);
+	}, []);
 
 	return (
 		<div className="create-product">
@@ -163,7 +191,9 @@ function CreateProduct() {
 					name="images"
 					title="Uploaded image"
 					changeFn={handleChange}
+					onLoadFn={handleLoad}
 				/>
+
 				<span className="labels">
 					<label htmlFor="name">Name</label>
 					<label htmlFor="images">Images</label>
@@ -202,28 +232,34 @@ function CreateProduct() {
 				</span>
 				{/* <span className="extra"></span> */}
 			</form>
+
 			{/* One default image is always at the end of the array
 			When default image is the last, disable input, and change it to
 			another icon.*/}
 			<div className="images-container">
-				{imagePaths.map((e, index) => {
-					console.log(e);
-
-					const isSelected = e === selectedImage;
+				{images.map((e, index) => {
+					const isSelected = e.src === selectedImage;
+					// Check if current image is the last image
+					const isLastImage = images.length > maxImages && e.src === defaultImage;
 					return (
 						<ShowTinyImage
 							key={uuidv4()}
-							imageSrc={e}
+							imageSrc={(isLastImage && disabledImage) || e.src}
 							index={index}
 							clickFn={handleTinyImageClick}
 							classes={"images "}
 							imageClasses={
-								"tiny-image " + ((isSelected && "selected-image") || "")
+								// If it isn't the last image, it can be selected by the user
+								"tiny-image " +
+								((!isLastImage && isSelected && "selected-image") ||
+									(isLastImage && "last-image"))
 							}
+							isDisabled={isLastImage}
 						/>
 					);
 				})}
 			</div>
+
 			<span className="button-position">
 				<button className="btn" type="submit" onSubmit={handleSubmit}>
 					Submit product

@@ -52,6 +52,12 @@
   outline-style: solid;
   outline-color: gray;
 }
+.create-product .images-container .last-image {
+  opacity: 0.5;
+}
+.create-product .images-container .last-image:hover {
+  cursor: default;
+}
 .create-product .images-container .images {
   margin-right: 10px;
 }
