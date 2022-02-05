@@ -10,7 +10,6 @@ function IconLink(props) {
 
 	useEffect(() => {
 		if (isImage) return;
-		console.log(`Requesting images`);
 		axios
 			.get(url + iconName)
 			.then((res) => setIsImage(true))

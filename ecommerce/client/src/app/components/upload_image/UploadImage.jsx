@@ -1,27 +1,9 @@
 /* eslint-disable jsx-a11y/alt-text */
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { v4 as uuidv4 } from "uuid";
 
 function UploadImage(props) {
-	const {
-		classes,
-		linkref,
-		title,
-		iconClasses,
-		textClass,
-		classCondition,
-		clickFn,
-		changeFn,
-		name,
-	} = props;
-	const [image, setImage] = useState("");
-	const [file, setFile] = useState("");
-	const url = "http://localhost:3001/public/icons/";
-
-	useEffect(() => {
-		console.log(`Image`);
-		console.log(image);
-	}, [image]);
+	const { classes, linkref, title, classCondition, changeFn, name } = props;
 
 	const promptInput = (e) => {
 		document.getElementById("file-input").click();
@@ -29,7 +11,11 @@ function UploadImage(props) {
 
 	return (
 		<span key={uuidv4()} className={classes} onClick={promptInput}>
-			<img className={classCondition && "image"} src={linkref} />
+			<img
+				className={(classCondition && "image") || ""}
+				src={linkref}
+				alt={title}
+			/>
 			<input
 				id="file-input"
 				name={name}

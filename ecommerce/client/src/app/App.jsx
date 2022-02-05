@@ -25,8 +25,8 @@ function App() {
 	const [currentSite, setCurrentSite] = useState("");
 
 	useEffect(() => {
-		console.log(`User:`);
-		console.log(user);
+		// console.log(`User:`);
+		// console.log(user);
 		// If the user already exists
 		if (user._id) return;
 
@@ -50,7 +50,7 @@ function App() {
 	}, [user]);
 
 	useEffect(() => {
-		console.log(`Token: ${token}`);
+		// console.log(`Token: ${token}`);
 		if (token) return;
 		setToken(localStorage.getItem("token"));
 	}, [token, setToken]);

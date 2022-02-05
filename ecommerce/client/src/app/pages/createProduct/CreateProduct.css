@@ -48,7 +48,7 @@
   align-items: left;
 }
 .create-product .images-container .images {
-  border: 1px solid red;
+  padding-right: 5px;
 }
 .create-product .images-container .images .tiny-image {
   width: 64px;

@@ -29,7 +29,7 @@ function CreateProduct() {
 	});
 	const [loading, setLoading] = useState(false);
 	const [imagePaths, setImagePaths] = useState([defaultImage]);
-	const [showImage, setShowImage] = useState(defaultUploadImage);
+	const [selectedImage, setSelectedImage] = useState(defaultUploadImage);
 	const [isFirstUpload, setIsFirstUpload] = useState(false);
 
 	const handleSubmit = (e) => {
@@ -76,12 +76,12 @@ function CreateProduct() {
 	};
 
 	const handleChange = async (e) => {
+		setLoading(true);
 		const { name, value } = await e.target;
 
 		// If the input were files
-		if (e.target.files && e.target.files[0]) {
+		if (e.target.files) {
 			const files = await e.target.files;
-			setLoading(true);
 
 			console.log(`Uploading image...`);
 
@@ -94,7 +94,14 @@ function CreateProduct() {
 				});
 			}
 
+			if (!isFirstUpload) setIsFirstUpload(true);
 			return setInput((prevInput) => {
+				console.log(`Prev images:`);
+				console.log(prevInput.images);
+				console.log(`New images:`);
+				console.log(files);
+				console.log(`Result:`);
+				console.log([...prevInput.images, ...files]);
 				return {
 					...prevInput,
 					[name]: [...prevInput.images, ...files],
@@ -111,39 +118,34 @@ function CreateProduct() {
 	};
 
 	useEffect(() => {
-		if (input && input.images && input.images[0]) {
-			// If it's not loading return
-			if (!loading) return;
-			if (!isFirstUpload) setIsFirstUpload(true);
-
-			console.log(`Images`);
-			console.log(input.images);
-			console.log(`Image paths`);
-			console.log(imagePaths);
+		if (input && input.images) {
+			if (!isFirstUpload) return;
+			// To prevent an infinite loop, only return when the images
+			// length is different
+			if (imagePaths.length - 1 === input.images.length) return;
 
 			// Create a temp array and traverse user images
 			const imageUrls = [defaultImage];
-			console.log(`Inserting image`);
 			for (let i in input.images) {
 				// Convert the file to url and push it to the begionning of the array
 				imageUrls.unshift(URL.createObjectURL(input.images[i]));
 			}
-			console.log(`Image urls`);
-			console.log(imageUrls);
+			
 			// If there are less than 10 inserted images
 			if (imagePaths.length < 10) {
 				setImagePaths([...imageUrls]);
+				console.log(`Image paths inserted.`);
 			}
-
+			
 			setLoading(false);
 		}
-	}, [input, imagePaths, loading, isFirstUpload]);
+	}, [input, imagePaths, isFirstUpload]);
 
 	useEffect(() => {
 		if (isFirstUpload) {
-			setShowImage(imagePaths[0]);
+			setSelectedImage(imagePaths[0]);
 		}
-	}, [isFirstUpload]);
+	}, [isFirstUpload, imagePaths]);
 
 	return (
 		<div className="create-product">
@@ -151,10 +153,11 @@ function CreateProduct() {
 			<form action="submit" className="form">
 				<UploadImage
 					classes="image-input"
-					linkref={showImage}
+					linkref={selectedImage}
 					classCondition={isFirstUpload}
 					type="file"
 					name="images"
+					title="Uploaded image"
 					changeFn={handleChange}
 				/>
 				<span className="labels">
