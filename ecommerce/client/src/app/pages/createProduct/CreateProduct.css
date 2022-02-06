@@ -23,6 +23,7 @@
 }
 .create-product .form-image .form {
   width: 100%;
+  border: 1px solid violet;
 }
 .create-product .form-image .form .product-details .form-title {
   text-align: left;

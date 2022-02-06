@@ -1,21 +1,45 @@
-import React from "react";
+import React, { useContext } from "react";
+import { v4 as uuidv4 } from "uuid";
+import { CreateProductContext } from "../../CreateProduct";
 
-function Form(props) {
-	const { handleChange, input } = props;
+function Form() {
+	const { input, handleInputChange } = useContext(CreateProductContext);
+
+	// Constants
+	const fields = [
+		{
+			type: "text",
+			name: "name",
+			placeholder: "Name",
+		},
+		{
+			type: "text",
+			name: "stock",
+			placeholder: "Stock",
+		},
+		{
+			type: "number",
+			name: "price",
+			placeholder: "Price",
+		},
+	];
 
 	return (
 		<div>
 			<form action="submit" className="form">
 				<span className="product-details">
+					
 					<div className="form-title">
 						<h4>Product details</h4>
 					</div>
+					
 					<div className="labels-inputs">
 						<span className="labels">
-							<label htmlFor="name">Name</label>
-							<label htmlFor="images">Images</label>
-							<label htmlFor="stock">Stock</label>
-							<label htmlFor="price">Price</label>
+							{fields.map((e) => (
+								<label key={uuidv4()} htmlFor={e.name}>
+									{e.placeholder}
+								</label>
+							))}
 						</span>
 						<span className="inputs">
 							<input
@@ -23,31 +47,25 @@ function Form(props) {
 								name="name"
 								placeholder="Name"
 								value={input.name}
-								onChange={handleChange}
-							/>
-							<input
-								type="file"
-								name="images"
-								accept="image/*"
-								multiple={true}
-								onChange={handleChange}
+								onChange={handleInputChange}
 							/>
 							<input
 								type="text"
 								name="stock"
 								placeholder="Stock"
 								value={input.stock}
-								onChange={handleChange}
+								onChange={handleInputChange}
 							/>
 							<input
-								type="text"
+								type="number"
 								name="price"
 								placeholder="Price"
 								value={input.price}
-								onChange={handleChange}
+								onChange={handleInputChange}
 							/>
 						</span>
 					</div>
+					
 				</span>
 			</form>
 		</div>

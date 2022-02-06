@@ -6,7 +6,7 @@
 	.form-image {
 		display: flex;
 		flex-direction: row;
-		
+
 		// Image
 		.image-input {
 			display: flex;
@@ -15,8 +15,8 @@
 			align-items: center;
 			outline-style: solid;
 			outline-color: blueviolet;
-			
-			width:70%;
+
+			width: 70%;
 
 			.image {
 				width: 40vw;
@@ -31,6 +31,7 @@
 		// Form
 		.form {
 			width: 100%;
+			border: 1px solid violet;
 			
 			.product-details {
 				.form-title {
@@ -62,6 +63,8 @@
 						width: 100%;
 						height: 100%;
 
+						// What I have to do is, dynamiccaly update the input width size
+						// parent.clientWidth - label.clientWidth
 						input {
 							width: 50%;
 						}

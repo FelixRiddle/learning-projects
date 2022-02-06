@@ -9,6 +9,8 @@ import ShowTinyImage from "./components/ShowTinyImage";
 import { v4 as uuidv4 } from "uuid";
 import Form from "./components/form/Form";
 
+export const CreateProductContext = React.createContext();
+
 function CreateProduct() {
 	// Global context(from App.jsx)
 	const { user, token } = useContext(GlobalContext);
@@ -20,6 +22,16 @@ function CreateProduct() {
 	const disabledImage =
 		"http://localhost:3001/public/iconsx64/disabled_image_1.png";
 	const maxImages = 15;
+	const cssDetails = {
+		bigImage: {
+			width: 100,
+			height: 100,
+		},
+		productInputSize: {
+			width: 100,
+			height: 100,
+		},
+	};
 
 	// States
 	const [input, setInput] = useState({
@@ -34,6 +46,7 @@ function CreateProduct() {
 		field: "",
 		state: "",
 	});
+
 	const [loading, setLoading] = useState(false);
 	const [selectedImage, setSelectedImage] = useState(defaultUploadImage);
 	const [isFirstUpload, setIsFirstUpload] = useState(false);
@@ -82,15 +95,13 @@ function CreateProduct() {
 		console.error(err);
 	};
 
-	const handleChange = async (e) => {
+	const handleImageChange = async (e) => {
 		setLoading(true);
-		const { name, value } = await e.target;
+		const { name } = await e.target;
 
 		// If the input were files
 		if (e.target.files) {
 			const files = await e.target.files;
-
-			console.log(`Uploading image...`);
 
 			const totalLength = input.images.length + files.length;
 			if (totalLength > maxImages) {
@@ -113,7 +124,10 @@ function CreateProduct() {
 				};
 			});
 		}
+	};
 
+	const handleInputChange = (e) => {
+		const { name, value } = e.target;
 		return setInput((prevInput) => {
 			return {
 				...prevInput,
@@ -173,54 +187,59 @@ function CreateProduct() {
 
 	return (
 		<div className="create-product">
-			<h2 className="title">Create a product</h2>
-			<div className="form-image">
-				<UploadImage
-					classes={"image-input"}
-					linkref={selectedImage}
-					classCondition={isFirstUpload}
-					key={uuidv4()}
-					type="file"
-					name="images"
-					title="Uploaded image"
-					changeFn={handleChange}
-				/>
-				<Form handleChange={handleChange} input={input} />
-			</div>
+			<CreateProductContext.Provider
+				value={{ input, handleInputChange, cssDetails }}
+			>
+				<h2 className="title">Create a product</h2>
+				<div className="form-image">
+					<UploadImage
+						classes={"image-input"}
+						linkref={selectedImage}
+						classCondition={isFirstUpload}
+						resizeImagePercentage={cssDetails.bigImage}
+						key={uuidv4()}
+						type="file"
+						name="images"
+						title="Uploaded image"
+						changeFn={handleImageChange}
+					/>
+					<Form />
+				</div>
 
-			{/* One default image is always at the end of the array
+				{/* One default image is always at the end of the array
 			When default image is the last, disable input. */}
-			<div className="images-container">
-				{images.map((e, index) => {
-					const isSelected = e.src === selectedImage;
-					// Check if current image is the last image
-					const isLastImage =
-						images.length > maxImages && e.src === defaultImage;
-					return (
-						<ShowTinyImage
-							key={uuidv4()}
-							imageSrc={(isLastImage && disabledImage) || e.src}
-							index={index}
-							clickFn={handleTinyImageClick}
-							classes={"images "}
-							imageClasses={
-								"tiny-image " +
-								// If it is not the last image, it can be selected by the user
-								((!isLastImage && isSelected && "selected-image") ||
-									(isLastImage && "last-image"))
-							}
-							isDisabled={isLastImage}
-							defaultImage={defaultUploadImage}
-						/>
-					);
-				})}
-			</div>
+				<div className="images-container">
+					{images.map((e, index) => {
+						const isSelected = e.src === selectedImage;
+						// Check if current image is the last image
+						const isLastImage =
+							images.length > maxImages && e.src === defaultImage;
+						return (
+							<ShowTinyImage
+								key={uuidv4()}
+								imageSrc={(isLastImage && disabledImage) || e.src}
+								index={index}
+								clickFn={handleTinyImageClick}
+								classes={"images "}
+								imageClasses={
+									"tiny-image " +
+									// If it is not the last image, it can be selected by the user
+									((!isLastImage && isSelected && "selected-image") ||
+										(isLastImage && "last-image"))
+								}
+								isDisabled={isLastImage}
+								defaultImage={defaultUploadImage}
+							/>
+						);
+					})}
+				</div>
 
-			<span className="button-position">
-				<button className="btn" type="submit" onSubmit={handleSubmit}>
-					Submit product
-				</button>
-			</span>
+				<span className="button-position">
+					<button className="btn" type="submit" onSubmit={handleSubmit}>
+						Submit product
+					</button>
+				</span>
+			</CreateProductContext.Provider>
 		</div>
 	);
 }
