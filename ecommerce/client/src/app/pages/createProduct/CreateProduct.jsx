@@ -132,7 +132,7 @@ function CreateProduct() {
 			),
 		});
 	};
-
+	
 	useEffect(() => {
 		if (selectedImage === defaultImage) {
 			setSelectedImage(defaultUploadImage);
@@ -142,13 +142,10 @@ function CreateProduct() {
 	useEffect(() => {
 		const image = new Image();
 		image.src = defaultImage;
+		console.log(`Default image`);
+		console.log(image);
 		setImages([image]);
 	}, []);
-
-	useEffect(() => {
-		console.log("Viewport size");
-		console.log(viewportSize);
-	}, [viewportSize]);
 
 	return (
 		<div className="create-product">
@@ -199,6 +196,7 @@ function CreateProduct() {
 								}
 								isDisabled={isLastImage}
 								defaultImage={defaultUploadImage}
+								selectedImage={selectedImage}
 							/>
 						);
 					})}

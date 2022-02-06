@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import { CreateProductContext } from "../../CreateProduct";
 import { v4 as uuidv4 } from "uuid";
 
-import UploadImage from "../../../../components/upload_image/UploadImage";
+import UploadImage from "../upload_image/UploadImage";
 
 function BigImageWrapper(props) {
 	const {
@@ -85,18 +85,27 @@ function BigImageWrapper(props) {
 		}
 	}, [input, isFirstUpload, images, setImages, setLoading]);
 
+	useEffect(() => {
+		console.log(`Images length`);
+		console.log(images.length);
+	}, [images]);
+
 	return (
 		<div className="big-image-wrapper">
 			<UploadImage
-				classes={"image-input"}
-				linkref={selectedImage}
-				classCondition={isFirstUpload}
-				resizeImagePercentage={cssDetails.bigImage}
-				key={uuidv4()}
-				type="file"
-				name="images"
-				title="Uploaded image"
 				changeFn={handleImageChange}
+				classCondition={isFirstUpload}
+				classes={(images.length <= 1 && "image-input") || ""}
+				/*
+				extraStyling={(!isSelected && { position: "absolute" }) || {}}
+				isHidden={!isSelected}*/
+				images={images}
+				linkref={selectedImage}
+				name="images"
+				resizeImagePercentage={cssDetails.bigImage}
+				stackImages={true}
+				type="file"
+				title="Uploaded image"
 				viewportSize={viewportSize}
 			/>
 		</div>

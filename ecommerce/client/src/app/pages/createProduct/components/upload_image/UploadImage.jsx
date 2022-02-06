@@ -1,8 +1,12 @@
 /* eslint-disable jsx-a11y/alt-text */
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { v4 as uuidv4 } from "uuid";
 
+import { CreateProductContext } from "../../CreateProduct";
+
 function UploadImage(props) {
+	const { selectedImage } = useContext(CreateProductContext);
+
 	// Component properties
 	const {
 		classes,
@@ -19,7 +23,6 @@ function UploadImage(props) {
 		isHidden,
 		stackImages, // Bool, if true, stacks images on top of each other
 		images, // Array of images
-		selectedImage, // Image to show
 	} = props;
 
 	// Constants
@@ -53,7 +56,9 @@ function UploadImage(props) {
 			// console.log(`Current height: ${img.clientHeight}`);
 
 			// The image is smaller than parent width
+			console.log(`Code reached`);
 			if (realImg.width < parentWidth) {
+				console.log(`Changed width`);
 				img.style.width = realImg.width + "px";
 			}
 			// The image is smaller than parent height
@@ -94,22 +99,17 @@ function UploadImage(props) {
 			)) ||
 				(stackImages &&
 					images &&
-					images.map((e) => {
-						// console.log(`Source`);
-						// console.log(e.src);
-						// console.log(`Selected image: ${selectedImage}`);
-						return (
-							<img
-								key={uuidv4()}
-								alt={title}
-								className={(classCondition && "image") || ""}
-								hidden={e.src === selectedImage}
-								id={imgId}
-								src={e.src}
-								style={{ width: "100%", height: "100%", ...extraStyling }}
-							/>
-						);
-					}))}
+					images.map((e, index) => (
+						<img
+							key={uuidv4()}
+							alt={title}
+							className={(classCondition && "image") || ""}
+							hidden={!(e.src === selectedImage)}
+							id={imgId}
+							src={e.src}
+							style={{ width: "100%", height: "100%", ...extraStyling }}
+						/>
+					)))}
 			<input
 				id="file-input"
 				name={name}
