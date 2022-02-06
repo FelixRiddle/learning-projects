@@ -3,10 +3,11 @@
 		text-align: center;
 	}
 
-	.form {
+	.form-image {
 		display: flex;
 		flex-direction: row;
-
+		
+		// Image
 		.image-input {
 			display: flex;
 			flex-direction: row;
@@ -14,6 +15,8 @@
 			align-items: center;
 			outline-style: solid;
 			outline-color: blueviolet;
+			
+			width:70%;
 
 			.image {
 				width: 40vw;
@@ -25,50 +28,55 @@
 			}
 		}
 
-		.product-details {
-			.form-title {
-				text-align: left;
-				margin-left: 20px;
-			}
-
-			.labels-inputs {
-				display: flex;
-				flex-direction: row;
-
-				.labels {
-					display: flex;
-					flex-shrink: 2;
-					flex-direction: column;
-					justify-content: space-evenly;
-					
-					& > * {
-						padding: 10px;
-						margin: 10px;
-					}
+		// Form
+		.form {
+			width: 100%;
+			
+			.product-details {
+				.form-title {
+					text-align: left;
+					margin-left: 20px;
 				}
 
-				.inputs {
+				.labels-inputs {
 					display: flex;
-					flex-direction: column;
-					justify-content: space-evenly;
-					
-					width: 100%;
-					height: 100%;
-					
-					input {
-						width: 50%;
+					flex-direction: row;
+
+					.labels {
+						display: flex;
+						flex-shrink: 2;
+						flex-direction: column;
+						justify-content: space-evenly;
+
+						& > * {
+							padding: 10px;
+							margin: 10px;
+						}
 					}
 
-					& > * {
-						padding: 10px;
-						margin: 10px;
+					.inputs {
+						display: flex;
+						flex-direction: column;
+						justify-content: space-evenly;
+
+						width: 100%;
+						height: 100%;
+
+						input {
+							width: 50%;
+						}
+
+						& > * {
+							padding: 10px;
+							margin: 10px;
+						}
 					}
 				}
 			}
-		}
 
-		& > * {
-			flex: 1 100%;
+			& > * {
+				flex: 1 100%;
+			}
 		}
 	}
 

@@ -1,58 +1,62 @@
 .create-product .title {
   text-align: center;
 }
-.create-product .form {
+.create-product .form-image {
   display: flex;
   flex-direction: row;
 }
-.create-product .form .image-input {
+.create-product .form-image .image-input {
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
   outline-style: solid;
   outline-color: blueviolet;
+  width: 70%;
 }
-.create-product .form .image-input .image {
+.create-product .form-image .image-input .image {
   width: 40vw;
   height: 40vh;
 }
-.create-product .form .image-input:hover {
+.create-product .form-image .image-input:hover {
   cursor: pointer;
 }
-.create-product .form .product-details .form-title {
+.create-product .form-image .form {
+  width: 100%;
+}
+.create-product .form-image .form .product-details .form-title {
   text-align: left;
   margin-left: 20px;
 }
-.create-product .form .product-details .labels-inputs {
+.create-product .form-image .form .product-details .labels-inputs {
   display: flex;
   flex-direction: row;
 }
-.create-product .form .product-details .labels-inputs .labels {
+.create-product .form-image .form .product-details .labels-inputs .labels {
   display: flex;
   flex-shrink: 2;
   flex-direction: column;
   justify-content: space-evenly;
 }
-.create-product .form .product-details .labels-inputs .labels > * {
+.create-product .form-image .form .product-details .labels-inputs .labels > * {
   padding: 10px;
   margin: 10px;
 }
-.create-product .form .product-details .labels-inputs .inputs {
+.create-product .form-image .form .product-details .labels-inputs .inputs {
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
   width: 100%;
   height: 100%;
 }
-.create-product .form .product-details .labels-inputs .inputs input {
+.create-product .form-image .form .product-details .labels-inputs .inputs input {
   width: 50%;
 }
-.create-product .form .product-details .labels-inputs .inputs > * {
+.create-product .form-image .form .product-details .labels-inputs .inputs > * {
   padding: 10px;
   margin: 10px;
 }
-.create-product .form > * {
+.create-product .form-image .form > * {
   flex: 1 100%;
 }
 .create-product .images-container {

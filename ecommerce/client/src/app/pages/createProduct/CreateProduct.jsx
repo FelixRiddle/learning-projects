@@ -7,6 +7,7 @@ import "./CreateProduct.css";
 import UploadImage from "../../components/upload_image/UploadImage";
 import ShowTinyImage from "./components/ShowTinyImage";
 import { v4 as uuidv4 } from "uuid";
+import Form from "./components/form/Form";
 
 function CreateProduct() {
 	// Global context(from App.jsx)
@@ -173,7 +174,7 @@ function CreateProduct() {
 	return (
 		<div className="create-product">
 			<h2 className="title">Create a product</h2>
-			<form action="submit" className="form">
+			<div className="form-image">
 				<UploadImage
 					classes={"image-input"}
 					linkref={selectedImage}
@@ -184,50 +185,8 @@ function CreateProduct() {
 					title="Uploaded image"
 					changeFn={handleChange}
 				/>
-				<span className="product-details">
-					<div className="form-title">
-						<h4>Product details</h4>
-					</div>
-					<div className="labels-inputs">
-						<span className="labels">
-							<label htmlFor="name">Name</label>
-							<label htmlFor="images">Images</label>
-							<label htmlFor="stock">Stock</label>
-							<label htmlFor="price">Price</label>
-						</span>
-						<span className="inputs">
-							<input
-								type="text"
-								name="name"
-								placeholder="Name"
-								value={input.name}
-								onChange={handleChange}
-							/>
-							<input
-								type="file"
-								name="images"
-								accept="image/*"
-								multiple={true}
-								onChange={handleChange}
-							/>
-							<input
-								type="text"
-								name="stock"
-								placeholder="Stock"
-								value={input.stock}
-								onChange={handleChange}
-							/>
-							<input
-								type="text"
-								name="price"
-								placeholder="Price"
-								value={input.price}
-								onChange={handleChange}
-							/>
-						</span>
-					</div>
-				</span>
-			</form>
+				<Form handleChange={handleChange} input={input} />
+			</div>
 
 			{/* One default image is always at the end of the array
 			When default image is the last, disable input. */}
