@@ -57,8 +57,9 @@
 | |✅ Form  
 | | |✅ Upload file  
 | | |✅ Icon for upload  
-| | |✅ Show big image on the left
+| | |✅ Show big image on the left  
 | | | |✅ Fixed image size  
+| | | |✅ The image re-scales when the user resizes the window  
 | | | |✅ The user can select an image  
 | | | | |⬜️ The user can delete the image  
 | | | | |⬜️ The user can change it  

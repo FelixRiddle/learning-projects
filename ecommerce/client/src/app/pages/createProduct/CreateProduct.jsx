@@ -8,6 +8,7 @@ import UploadImage from "../../components/upload_image/UploadImage";
 import ShowTinyImage from "./components/ShowTinyImage";
 import { v4 as uuidv4 } from "uuid";
 import Form from "./components/form/Form";
+import BigImageWrapper from "./components/big-image-wrapper/BigImageWrapper";
 
 export const CreateProductContext = React.createContext();
 
@@ -24,8 +25,8 @@ function CreateProduct() {
 	const maxImages = 15;
 	const cssDetails = {
 		bigImage: {
-			width: 100,
-			height: 100,
+			width: 60,
+			height: 70,
 		},
 		productInputSize: {
 			width: 100,
@@ -49,8 +50,18 @@ function CreateProduct() {
 
 	const [loading, setLoading] = useState(false);
 	const [selectedImage, setSelectedImage] = useState(defaultUploadImage);
-	const [isFirstUpload, setIsFirstUpload] = useState(false);
 	const [images, setImages] = useState([]);
+
+	const [viewportSize, setViewportSize] = useState({
+		width: Math.max(
+			document.documentElement.clientWidth || 0,
+			window.innerWidth || 0
+		),
+		height: Math.max(
+			document.documentElement.clientHeight || 0,
+			window.innerHeight || 0
+		),
+	});
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
@@ -95,37 +106,6 @@ function CreateProduct() {
 		console.error(err);
 	};
 
-	const handleImageChange = async (e) => {
-		setLoading(true);
-		const { name } = await e.target;
-
-		// If the input were files
-		if (e.target.files) {
-			const files = await e.target.files;
-
-			const totalLength = input.images.length + files.length;
-			if (totalLength > maxImages) {
-				return setStatus({
-					error: true,
-					message: "You cannot upload more than 10 images",
-					field: "images",
-					state: "danger",
-				});
-			}
-			console.log(`Files`);
-			console.log(files);
-
-			if (!isFirstUpload) setIsFirstUpload(true);
-			return setInput((prevInput) => {
-				console.log([...prevInput.images, ...files]);
-				return {
-					...prevInput,
-					[name]: [...prevInput.images, ...files],
-				};
-			});
-		}
-	};
-
 	const handleInputChange = (e) => {
 		const { name, value } = e.target;
 		return setInput((prevInput) => {
@@ -140,38 +120,18 @@ function CreateProduct() {
 		setSelectedImage(imageSrc);
 	};
 
-	useEffect(() => {
-		if (input && input.images) {
-			if (!isFirstUpload) return;
-			// To prevent an infinite loop, only return when the images
-			// length is different
-			if (images.length - 1 === input.images.length) return;
-
-			// Create a temp array and traverse user images
-			const newImages = [];
-			for (let i in input.images) {
-				const imgUrl = URL.createObjectURL(input.images[i]);
-
-				// I'm using images to store more information
-				const img = new Image();
-				img.src = imgUrl;
-				newImages.push(img);
-			}
-
-			// If there are less than 10 inserted images
-			setImages([...newImages, images[images.length - 1]]);
-			console.log(`Created image elements.`);
-			console.log([...newImages, images[images.length - 1]]);
-
-			setLoading(false);
-		}
-	}, [input, isFirstUpload, images]);
-
-	useEffect(() => {
-		if (isFirstUpload) {
-			setSelectedImage(images[0].src);
-		}
-	}, [isFirstUpload, images]);
+	window.onresize = () => {
+		setViewportSize({
+			width: Math.max(
+				document.documentElement.clientWidth || 0,
+				window.innerWidth || 0
+			),
+			height: Math.max(
+				document.documentElement.clientHeight || 0,
+				window.innerHeight || 0
+			),
+		});
+	};
 
 	useEffect(() => {
 		if (selectedImage === defaultImage) {
@@ -185,24 +145,34 @@ function CreateProduct() {
 		setImages([image]);
 	}, []);
 
+	useEffect(() => {
+		console.log("Viewport size");
+		console.log(viewportSize);
+	}, [viewportSize]);
+
 	return (
 		<div className="create-product">
 			<CreateProductContext.Provider
-				value={{ input, handleInputChange, cssDetails }}
+				value={{
+					cssDetails,
+					maxImages,
+					handleInputChange,
+					input,
+					setInput,
+					selectedImage,
+					setSelectedImage,
+					images,
+					setImages,
+					loading,
+					setLoading,
+					status,
+					setStatus,
+					viewportSize,
+				}}
 			>
 				<h2 className="title">Create a product</h2>
-				<div className="form-image">
-					<UploadImage
-						classes={"image-input"}
-						linkref={selectedImage}
-						classCondition={isFirstUpload}
-						resizeImagePercentage={cssDetails.bigImage}
-						key={uuidv4()}
-						type="file"
-						name="images"
-						title="Uploaded image"
-						changeFn={handleImageChange}
-					/>
+				<div className="form-and-image">
+					<BigImageWrapper />
 					<Form />
 				</div>
 

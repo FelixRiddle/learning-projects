@@ -14,6 +14,7 @@ function UploadImage(props) {
 		defaultImage,
 		// An object like this {width: 60, height: 40}
 		resizeImagePercentage,
+		viewportSize,
 	} = props;
 
 	// Constants
@@ -24,16 +25,6 @@ function UploadImage(props) {
 	// For a bug where, when you change the image it shows
 	// a resized image for some milliseconds.
 	const [hidden, setHidden] = useState(true);
-	const [viewportSize, setViewportSize] = useState({
-		width: Math.max(
-			document.documentElement.clientWidth || 0,
-			window.innerWidth || 0
-		),
-		height: Math.max(
-			document.documentElement.clientHeight || 0,
-			window.innerHeight || 0
-		),
-	});
 
 	const promptInput = (e) => {
 		document.getElementById("file-input").click();
@@ -74,8 +65,9 @@ function UploadImage(props) {
 
 	useEffect(() => {
 		if (!resizeImagePercentage) return;
-
-		console.log(viewportSize);
+		if (!viewportSize) return;
+		// Resizes the canvas width and height if the user
+		// resizes the window
 		const parentElement = document.getElementById(spanId);
 		if (parentElement) {
 			const newWidth = (resizeImagePercentage.width / 100) * viewportSize.width;
@@ -86,35 +78,24 @@ function UploadImage(props) {
 		}
 	}, [resizeImagePercentage, spanId, viewportSize]);
 
-	window.onresize = () => {
-		setViewportSize({
-			width: Math.max(
-				document.documentElement.clientWidth || 0,
-				window.innerWidth || 0
-			),
-			height: Math.max(
-				document.documentElement.clientHeight || 0,
-				window.innerHeight || 0
-			),
-		});
-	};
-
 	return (
 		<span id={spanId} className={classes} onClick={promptInput}>
 			<img
-				id={imgId}
-				className={(classCondition && "image") || ""}
-				src={(!hidden && linkref) || defaultImage}
 				alt={title}
+				className={(classCondition && "image") || ""}
 				hidden={hidden}
+				id={imgId}
+				src={(!hidden && linkref) || defaultImage}
+				style={{ width: "100%", height: "100%" }}
 			/>
 			<input
 				id="file-input"
 				name={name}
 				hidden={true}
 				multiple={true}
-				type="file"
 				onChange={changeFn}
+				style={{ position: "absolute" }}
+				type="file"
 			/>
 		</span>
 	);

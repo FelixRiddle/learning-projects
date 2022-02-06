@@ -3,36 +3,41 @@
 		text-align: center;
 	}
 
-	.form-image {
+	.form-and-image {
 		display: flex;
 		flex-direction: row;
 
 		// Image
-		.image-input {
+		.big-image-wrapper {
 			display: flex;
 			flex-direction: row;
 			justify-content: center;
 			align-items: center;
 			outline-style: solid;
 			outline-color: blueviolet;
+			
+			.image-input {
+				display: flex;
+				flex-direction: row;
+				justify-content: center;
+				align-items: center;
 
-			width: 70%;
+				.image {
+					outline-style: solid;
+					outline-color: cornflowerblue;
+				}
 
-			.image {
-				width: 40vw;
-				height: 40vh;
-			}
-
-			&:hover {
-				cursor: pointer;
+				&:hover {
+					cursor: pointer;
+				}
 			}
 		}
-
+		
 		// Form
 		.form {
 			width: 100%;
 			border: 1px solid violet;
-			
+
 			.product-details {
 				.form-title {
 					text-align: left;
