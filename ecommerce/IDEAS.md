@@ -60,7 +60,9 @@
 | | |✅ Show big image on the left
 | | | |✅ Fixed image size  
 | | | |✅ The user can select an image  
+| | | | |⬜️ The user can delete the image  
 | | | | |⬜️ The user can change it  
+| | | | |⬜️ The user can move the image  
 | | |✅ Show tiny images below  
 | | | |✅ Add feedback to the selected image  
 | | | |✅ When it's full of images, the last is disabled.

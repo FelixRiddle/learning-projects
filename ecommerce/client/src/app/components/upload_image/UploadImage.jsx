@@ -19,6 +19,8 @@ function UploadImage(props) {
 	const imgId = uuidv4();
 
 	// States
+	// For a bug where, when you change the image it shows
+	// a resized image for some milliseconds.
 	const [hidden, setHidden] = useState(true);
 
 	const promptInput = (e) => {
@@ -52,7 +54,7 @@ function UploadImage(props) {
 				img.style.height = realImg.height + "px";
 			}
 		}
-		
+
 		setHidden(false);
 	}, [imgId, linkref, spanId]);
 

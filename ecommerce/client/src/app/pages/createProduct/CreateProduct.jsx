@@ -100,6 +100,8 @@ function CreateProduct() {
 					state: "danger",
 				});
 			}
+			console.log(`Files`);
+			console.log(files);
 
 			if (!isFirstUpload) setIsFirstUpload(true);
 			return setInput((prevInput) => {
