@@ -95,7 +95,7 @@ function BigImageWrapper(props) {
 			<UploadImage
 				changeFn={handleImageChange}
 				classCondition={isFirstUpload}
-				classes={(images.length <= 1 && "image-input") || ""}
+				classes={"image-input"}
 				/*
 				extraStyling={(!isSelected && { position: "absolute" }) || {}}
 				isHidden={!isSelected}*/
@@ -107,6 +107,7 @@ function BigImageWrapper(props) {
 				type="file"
 				title="Uploaded image"
 				viewportSize={viewportSize}
+				outline={true}
 			/>
 		</div>
 	);

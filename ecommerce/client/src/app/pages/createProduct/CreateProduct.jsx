@@ -4,7 +4,6 @@ import axios from "axios";
 import { GlobalContext } from "../../App";
 import { handleMessageValidationv2 } from "../../../lib/handleMessageValidation";
 import "./CreateProduct.css";
-import UploadImage from "../../components/upload_image/UploadImage";
 import ShowTinyImage from "./components/ShowTinyImage";
 import { v4 as uuidv4 } from "uuid";
 import Form from "./components/form/Form";

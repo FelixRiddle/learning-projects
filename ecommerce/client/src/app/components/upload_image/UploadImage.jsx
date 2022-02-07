@@ -20,6 +20,7 @@ function UploadImage(props) {
 		stackImages, // Bool, if true, stacks images on top of each other
 		images, // Array of images
 		selectedImage, // Image to show
+		outline,
 	} = props;
 
 	// Constants
@@ -85,7 +86,7 @@ function UploadImage(props) {
 			{(!stackImages && (
 				<img
 					alt={title}
-					className={(classCondition && "image") || ""}
+					className={(outline && "image") || ""}
 					hidden={isHidden}
 					id={imgId}
 					src={(!hidden && linkref) || defaultImage}
@@ -102,7 +103,7 @@ function UploadImage(props) {
 							<img
 								key={uuidv4()}
 								alt={title}
-								className={(classCondition && "image") || ""}
+								className={(outline && "image") || ""}
 								hidden={e.src === selectedImage}
 								id={imgId}
 								src={e.src}

@@ -12,7 +12,6 @@ function UploadImage(props) {
 		classes,
 		linkref,
 		title,
-		classCondition,
 		changeFn,
 		name,
 		defaultImage,
@@ -23,6 +22,7 @@ function UploadImage(props) {
 		isHidden,
 		stackImages, // Bool, if true, stacks images on top of each other
 		images, // Array of images
+		outline,
 	} = props;
 
 	// Constants
@@ -36,39 +36,66 @@ function UploadImage(props) {
 	};
 
 	useEffect(() => {
-		const realImg = new Image();
-		if (!linkref) return;
-		realImg.src = linkref;
-
+		setHidden(true);
 		// Use .clientWidth to exclude scrollbars
 		// https://developer.mozilla.org/en-US/docs/Web/API/Element/clientWidth
 		const parentElement = document.getElementById(spanId);
-		const img = document.getElementById(imgId);
+		const parentWidth = parentElement.clientWidth;
+		const parentHeight = parentElement.clientHeight;
+		// console.log(`Parent width: ${parentWidth}`);
+		// console.log(`Parent height: ${parentHeight}`);
 
-		if (parentElement && img) {
-			const parentWidth = parentElement.clientWidth;
-			const parentHeight = parentElement.clientHeight;
+		if (parentElement) {
+			const allImages = parentElement.children;
+			// console.log(`Children elements`);
+			// console.log(allImages);
+			if (allImages) {
+				for (let i in allImages) {
+					if (allImages[i].id && allImages[i].localName !== "input") {
+						const img = allImages[i];
+						// console.log(`Individual Image`);
+						// console.log(img);
+						if (!img) continue;
 
-			// Debug
-			// console.log(`Real width: ${realImg.width}`);
-			// console.log(`Real height: ${realImg.width}`);
-			// console.log(`Current width: ${img.clientWidth}`);
-			// console.log(`Current height: ${img.clientHeight}`);
+						const realImg = new Image();
+						if (!linkref) return;
+						realImg.src = img.src;
+						// Debug
+						// console.log(`Real width: ${realImg.width}`);
+						// console.log(`Real height: ${realImg.width}`);
+						// console.log(`Current width: ${img.clientWidth}`);
+						// console.log(`Current height: ${img.clientHeight}`);
 
-			// The image is smaller than parent width
-			console.log(`Code reached`);
-			if (realImg.width < parentWidth) {
-				console.log(`Changed width`);
-				img.style.width = realImg.width + "px";
-			}
-			// The image is smaller than parent height
-			if (realImg.height < parentHeight) {
-				img.style.height = realImg.height + "px";
+						// The image is smaller than parent width
+						if (realImg.width < parentWidth) {
+							img.style.width = realImg.width + "px";
+							// console.log(`New width`);
+							// console.log(img.style.width);
+						}
+						// The image is smaller than parent height
+						if (realImg.height < parentHeight) {
+							img.style.height = realImg.height + "px";
+							// console.log(`New height`);
+							// console.log(img.style.height);
+						}
+
+						if (realImg.width > parentWidth) {
+							img.style.width = parentWidth + "px";
+							// console.log(`The image is too big, reducing width to canvas:`);
+							// console.log(img.style.width);
+						}
+						if (realImg.height > parentHeight) {
+							img.style.height = parentHeight + "px";
+							// console.log(`The image is too big, reducing height to canvas:`);
+							// console.log(img.style.height);
+						}
+						
+						setHidden(false);
+					}
+				}
 			}
 		}
-
-		setHidden(false);
-	}, [imgId, linkref, spanId, resizeImagePercentage]);
+	}, [imgId, linkref, spanId, resizeImagePercentage, selectedImage]);
 
 	useEffect(() => {
 		if (!resizeImagePercentage) return;
@@ -90,11 +117,11 @@ function UploadImage(props) {
 			{(!stackImages && (
 				<img
 					alt={title}
-					className={(classCondition && "image") || ""}
+					className={(outline && "image") || ""}
 					hidden={isHidden}
 					id={imgId}
 					src={(!hidden && linkref) || defaultImage}
-					style={{ width: "100%", height: "100%", ...extraStyling }}
+					style={{ ...extraStyling }}
 				/>
 			)) ||
 				(stackImages &&
@@ -103,11 +130,11 @@ function UploadImage(props) {
 						<img
 							key={uuidv4()}
 							alt={title}
-							className={(classCondition && "image") || ""}
-							hidden={!(e.src === selectedImage)}
+							className={(outline && "image") || ""}
+							hidden={!(e.src === selectedImage) && !hidden}
 							id={imgId}
 							src={e.src}
-							style={{ width: "100%", height: "100%", ...extraStyling }}
+							style={{ ...extraStyling }}
 						/>
 					)))}
 			<input
