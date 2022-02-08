@@ -8,7 +8,6 @@ function UploadImage(props) {
 		classes,
 		linkref,
 		title,
-		classCondition,
 		changeFn,
 		name,
 		defaultImage,

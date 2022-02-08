@@ -3,8 +3,10 @@ import { CreateProductContext } from "../../CreateProduct";
 import { v4 as uuidv4 } from "uuid";
 
 import UploadImage from "../upload_image/UploadImage";
+import Arrow from "../arrow/Arrow";
 
 function BigImageWrapper(props) {
+	// Context
 	const {
 		maxImages,
 		cssDetails,
@@ -17,9 +19,13 @@ function BigImageWrapper(props) {
 		setLoading,
 		setStatus,
 		viewportSize,
+		arrowIcon,
 	} = useContext(CreateProductContext);
 
+	// States
 	const [isFirstUpload, setIsFirstUpload] = useState(false);
+	const [leftArrowId] = useState(uuidv4());
+	const [rightArrowId] = useState(uuidv4());
 
 	const handleImageChange = async (e) => {
 		setLoading(true);
@@ -49,6 +55,31 @@ function BigImageWrapper(props) {
 					[name]: [...prevInput.images, ...files],
 				};
 			});
+		}
+	};
+
+	const handleArrowClick = (direction) => {
+		// If it's the first image, invalidate the action
+		if (direction === "left" && images[0].src === selectedImage) {
+			setSelectedImage(images[images.length - 2].src);
+			return;
+		}
+		if (
+			direction === "right" &&
+			(images[images.length - 1].src === selectedImage ||
+				images[images.length - 2].src === selectedImage)
+		) {
+			setSelectedImage(images[0].src);
+			return;
+		}
+
+		for (let i in images) {
+			i = parseInt(i);
+			if (selectedImage === images[i].src) {
+				if (direction === "right") setSelectedImage(images[i + 1].src);
+				if (direction === "left") setSelectedImage(images[i - 1].src);
+				return;
+			}
 		}
 	};
 
@@ -91,24 +122,41 @@ function BigImageWrapper(props) {
 	}, [images]);
 
 	return (
-		<div className="big-image-wrapper">
-			<UploadImage
-				changeFn={handleImageChange}
-				classCondition={isFirstUpload}
-				classes={"image-input"}
-				/*
-				extraStyling={(!isSelected && { position: "absolute" }) || {}}
-				isHidden={!isSelected}*/
-				images={images}
-				linkref={selectedImage}
-				name="images"
-				resizeImagePercentage={cssDetails.bigImage}
-				stackImages={true}
-				type="file"
-				title="Uploaded image"
-				viewportSize={viewportSize}
-				outline={true}
+		<div>
+			<Arrow
+				arrowFn={() => handleArrowClick("left")}
+				arrowIcon={arrowIcon}
+				containerClasses={"arrow-container"}
+				direction={"left"}
+				iconClasses={"arrow-icon"}
+				imageId={leftArrowId}
+				setSelectedImage={setSelectedImage}
 			/>
+			<Arrow
+				arrowFn={() => handleArrowClick("right")}
+				arrowIcon={arrowIcon}
+				containerClasses={"arrow-container"}
+				direction={"right"}
+				iconClasses={"arrow-icon"}
+				imageId={rightArrowId}
+				setSelectedImage={setSelectedImage}
+			/>
+			<div className="big-image-wrapper">
+				<UploadImage
+					changeFn={handleImageChange}
+					classCondition={isFirstUpload}
+					classes={"image-input"}
+					images={images}
+					linkref={selectedImage}
+					name="images"
+					resizeImagePercentage={cssDetails.bigImage}
+					stackImages={true}
+					type="file"
+					title="Uploaded image"
+					viewportSize={viewportSize}
+					outline={true}
+				/>
+			</div>
 		</div>
 	);
 }

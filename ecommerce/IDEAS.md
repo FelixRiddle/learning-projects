@@ -50,9 +50,9 @@
 | |✅ Add a search input  
 | | |⬜️ Search for products  
 | |✅ Icon/Links  
-| | |✅ Replace every link with icons
-| | |✅ Show words if icons are not available
-| | |⬜️ Add a small pop-up that tells what the icon is for.
+| | |✅ Replace every link with icons  
+| | |✅ Show words if icons are not available  
+| | |⬜️ Add a small pop-up that tells what the icon is for.  
 |⬜️ Create Product  
 | |✅ Form  
 | | |✅ Upload file  
@@ -60,6 +60,7 @@
 | | |✅ Show big image on the left  
 | | | |✅ Fixed image size  
 | | | |✅ The image re-scales when the user resizes the window  
+| | | |✅ There are arrows to navigate through each image  
 | | | |✅ The user can select an image  
 | | | | |⬜️ The user can delete the image  
 | | | | |⬜️ The user can change it  
@@ -94,7 +95,7 @@ and move it accordingly with z-index.
 | |⬜️ iconsx64/upload_1: <a href="https://www.flaticon.com/free-icons/file-upload" title="file upload icons">File upload icons created by Ilham Fitrotul Hayat - Flaticon</a>  
 | |⬜️ iconsx64/image_1: <a href="https://www.flaticon.com/free-icons/picture" title="picture icons">Picture icons created by Freepik - Flaticon</a>  
 | |⬜️ iconsx64/disabled_image_1: <a href="https://www.flaticon.com/free-icons/photo" title="photo icons">Photo icons created by apien - Flaticon</a>  
-| |⬜️  
+| |⬜️ iconsx64/arrow_right_1: <a href="https://www.flaticon.com/free-icons/next" title="next icons">Next icons created by Kiranshastry - Flaticon</a>  
 | |⬜️  
 | |⬜️  
 | |⬜️

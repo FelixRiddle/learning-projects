@@ -7,6 +7,20 @@
 		display: flex;
 		flex-direction: row;
 
+		.arrow-container {
+			display: inline;
+			position: absolute;
+
+			.arrow-icon {
+				position: relative;
+				z-index: 1;
+				
+				&:hover {
+					cursor: pointer;
+				}
+			}
+		}
+
 		// Image
 		.big-image-wrapper {
 			display: flex;
@@ -15,7 +29,7 @@
 			align-items: center;
 			outline-style: solid;
 			outline-color: blueviolet;
-			
+
 			.image-input {
 				display: flex;
 				flex-direction: row;
@@ -32,11 +46,10 @@
 				}
 			}
 		}
-		
+
 		// Form
 		.form {
 			width: 100%;
-			border: 1px solid violet;
 
 			.product-details {
 				.form-title {

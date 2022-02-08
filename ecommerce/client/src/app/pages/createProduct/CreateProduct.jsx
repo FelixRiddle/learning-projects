@@ -11,29 +11,35 @@ import BigImageWrapper from "./components/big-image-wrapper/BigImageWrapper";
 
 export const CreateProductContext = React.createContext();
 
+// Constant values
+const defaultImage = "http://localhost:3001/public/iconsx64/image_1.png";
+const arrowIcon = "http://localhost:3001/public/iconsx64/arrow_right_1.png";
+const defaultUploadImage = "http://localhost:3001/public/iconsx64/upload_1.png";
+const disabledImage =
+	"http://localhost:3001/public/iconsx64/disabled_image_1.png";
+const maxImages = 15;
+const cssDetails = {
+	bigImage: {
+		width: 60,
+		height: 70,
+	},
+	productInputSize: {
+		width: 40,
+		height: 70,
+	},
+};
+
 function CreateProduct() {
 	// Global context(from App.jsx)
 	const { user, token } = useContext(GlobalContext);
 
-	// Constant values
-	const defaultImage = "http://localhost:3001/public/iconsx64/image_1.png";
-	const defaultUploadImage =
-		"http://localhost:3001/public/iconsx64/upload_1.png";
-	const disabledImage =
-		"http://localhost:3001/public/iconsx64/disabled_image_1.png";
-	const maxImages = 15;
-	const cssDetails = {
-		bigImage: {
-			width: 60,
-			height: 70,
-		},
-		productInputSize: {
-			width: 100,
-			height: 100,
-		},
-	};
-
 	// States
+	const [config, setConfig] = useState({
+		bigImageContainerSize: {
+			width: 0,
+			height: 0,
+		},
+	});
 	const [input, setInput] = useState({
 		name: "",
 		stock: "",
@@ -131,7 +137,7 @@ function CreateProduct() {
 			),
 		});
 	};
-	
+
 	useEffect(() => {
 		if (selectedImage === defaultImage) {
 			setSelectedImage(defaultUploadImage);
@@ -150,19 +156,22 @@ function CreateProduct() {
 		<div className="create-product">
 			<CreateProductContext.Provider
 				value={{
+					arrowIcon,
+					config,
 					cssDetails,
-					maxImages,
 					handleInputChange,
 					input,
-					setInput,
-					selectedImage,
-					setSelectedImage,
 					images,
-					setImages,
 					loading,
+					maxImages,
+					setConfig,
+					selectedImage,
+					setInput,
+					setImages,
 					setLoading,
-					status,
+					setSelectedImage,
 					setStatus,
+					status,
 					viewportSize,
 				}}
 			>

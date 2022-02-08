@@ -5,6 +5,17 @@
   display: flex;
   flex-direction: row;
 }
+.create-product .form-and-image .arrow-container {
+  display: inline;
+  position: absolute;
+}
+.create-product .form-and-image .arrow-container .arrow-icon {
+  position: relative;
+  z-index: 1;
+}
+.create-product .form-and-image .arrow-container .arrow-icon:hover {
+  cursor: pointer;
+}
 .create-product .form-and-image .big-image-wrapper {
   display: flex;
   flex-direction: row;
@@ -28,7 +39,6 @@
 }
 .create-product .form-and-image .form {
   width: 100%;
-  border: 1px solid violet;
 }
 .create-product .form-and-image .form .product-details .form-title {
   text-align: left;
