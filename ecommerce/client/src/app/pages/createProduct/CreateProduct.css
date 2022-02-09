@@ -16,7 +16,7 @@
 .create-product .form-and-image .arrow-container .arrow-icon:hover {
   cursor: pointer;
 }
-.create-product .form-and-image .big-image-wrapper {
+.create-product .form-and-image .big-image .big-image-wrapper {
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -24,18 +24,37 @@
   outline-style: solid;
   outline-color: blueviolet;
 }
-.create-product .form-and-image .big-image-wrapper .image-input {
+.create-product .form-and-image .big-image .big-image-wrapper .image-input {
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
 }
-.create-product .form-and-image .big-image-wrapper .image-input .image {
+.create-product .form-and-image .big-image .big-image-wrapper .image-input .image {
   outline-style: solid;
   outline-color: cornflowerblue;
 }
-.create-product .form-and-image .big-image-wrapper .image-input:hover {
+.create-product .form-and-image .big-image .big-image-wrapper .image-input:hover {
   cursor: pointer;
+}
+.create-product .form-and-image .big-image .control-bar {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+.create-product .form-and-image .big-image .control-bar > * {
+  position: relative;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+.create-product .form-and-image .big-image .control-bar > *:hover {
+  cursor: pointer;
+}
+.create-product .form-and-image .big-image .control-bar .left {
+  position: relative;
+  bottom: 4px;
+  right: 2px;
+  transform: rotate(180deg);
 }
 .create-product .form-and-image .form {
   width: 100%;

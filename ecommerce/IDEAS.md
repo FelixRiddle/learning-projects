@@ -62,9 +62,11 @@
 | | | |✅ The image re-scales when the user resizes the window  
 | | | |✅ There are arrows to navigate through each image  
 | | | |✅ The user can select an image  
-| | | | |⬜️ The user can delete the image  
-| | | | |⬜️ The user can change it  
-| | | | |⬜️ The user can move the image  
+| | | |⬜️ Add a control bar below the big image  
+| | | | |⬜️ Arrows for navigation  
+| | | | |⬜️ Arrows for MOVING the image  
+| | | | |⬜️ Icon for deleting the image  
+| | | | |⬜️ Icon for changing the image  
 | | |✅ Show tiny images below  
 | | | |✅ Add feedback to the selected image  
 | | | |✅ When it's full of images, the last is disabled.
@@ -96,6 +98,12 @@ and move it accordingly with z-index.
 | |⬜️ iconsx64/image_1: <a href="https://www.flaticon.com/free-icons/picture" title="picture icons">Picture icons created by Freepik - Flaticon</a>  
 | |⬜️ iconsx64/disabled_image_1: <a href="https://www.flaticon.com/free-icons/photo" title="photo icons">Photo icons created by apien - Flaticon</a>  
 | |⬜️ iconsx64/arrow_right_1: <a href="https://www.flaticon.com/free-icons/next" title="next icons">Next icons created by Kiranshastry - Flaticon</a>  
+| |⬜️ icons/control_bar_x32/move_right_arrow_1: <a href="https://www.flaticon.com/free-icons/arrow" title="arrow icons">Arrow icons created by Handicon - Flaticon</a>  
+| |⬜️ icons/control_bar_x32/next_arrow_1: <a href="https://www.flaticon.com/free-icons/arrow" title="arrow icons">Arrow icons created by Handicon - Flaticon</a>  
+| |⬜️ icons/control_bar_x32/delete_1: <a href="https://www.flaticon.com/free-icons/trash" title="trash icons">Trash icons created by Freepik - Flaticon</a>  
+| |⬜️ icons/control_bar_x32/edit_1: <a href="https://www.flaticon.com/free-icons/edit" title="edit icons">Edit icons created by Kiranshastry - Flaticon</a>  
+| |⬜️  
+| |⬜️  
 | |⬜️  
 | |⬜️  
 | |⬜️

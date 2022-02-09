@@ -4,6 +4,7 @@ import { v4 as uuidv4 } from "uuid";
 
 import UploadImage from "../upload_image/UploadImage";
 import Arrow from "../arrow/Arrow";
+import ControlBar from "../control_bar/ControlBar";
 
 function BigImageWrapper(props) {
 	// Context
@@ -122,7 +123,7 @@ function BigImageWrapper(props) {
 	}, [images]);
 
 	return (
-		<div>
+		<div className="big-image">
 			<Arrow
 				arrowFn={() => handleArrowClick("left")}
 				arrowIcon={arrowIcon}
@@ -157,6 +158,7 @@ function BigImageWrapper(props) {
 					outline={true}
 				/>
 			</div>
+			<ControlBar />
 		</div>
 	);
 }

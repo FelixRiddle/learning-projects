@@ -18,7 +18,7 @@ function UploadImage(props) {
 		resizeImagePercentage,
 		viewportSize,
 		extraStyling,
-		stackImages, // Bool, if true, stacks images on top of each other
+		stackImages,
 		images, // Array of images
 		outline,
 	} = props;
