@@ -122,9 +122,10 @@ function CreateProduct() {
 	};
 
 	const handleTinyImageClick = (imageSrc) => {
-		setSelectedImage(imageSrc);
+		setSelectedImage(() => imageSrc);
 	};
 
+	// When the user resizes the window
 	window.onresize = () => {
 		setViewportSize({
 			width: Math.max(
@@ -138,6 +139,7 @@ function CreateProduct() {
 		});
 	};
 
+	// If the image is the default one, show an upload icon
 	useEffect(() => {
 		if (selectedImage === defaultImage) {
 			setSelectedImage(defaultUploadImage);
@@ -147,8 +149,6 @@ function CreateProduct() {
 	useEffect(() => {
 		const image = new Image();
 		image.src = defaultImage;
-		console.log(`Default image`);
-		console.log(image);
 		setImages([image]);
 	}, []);
 
@@ -186,6 +186,7 @@ function CreateProduct() {
 				<div className="images-container">
 					{images.map((e, index) => {
 						const isSelected = e.src === selectedImage;
+						if (isSelected) console.log(e.src + " is selected.");
 						// Check if current image is the last image
 						const isLastImage =
 							images.length > maxImages && e.src === defaultImage;

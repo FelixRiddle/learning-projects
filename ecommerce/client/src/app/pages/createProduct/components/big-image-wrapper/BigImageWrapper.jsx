@@ -24,7 +24,6 @@ function BigImageWrapper(props) {
 	} = useContext(CreateProductContext);
 
 	// States
-	const [isFirstUpload, setIsFirstUpload] = useState(false);
 	const [leftArrowId] = useState(uuidv4());
 	const [rightArrowId] = useState(uuidv4());
 
@@ -45,12 +44,38 @@ function BigImageWrapper(props) {
 					state: "danger",
 				});
 			}
-			console.log(`Files`);
-			console.log(files);
 
-			if (!isFirstUpload) setIsFirstUpload(true);
+			// Create a temp array and traverse import images
+			const newImages = [];
+
+			// To get all images
+			const totalFiles = [...input.images, ...files];
+			for (let i in files) {
+				// The two latest elements are index and a function
+				if (typeof files[i] !== "object") continue;
+				const imgUrl = URL.createObjectURL(totalFiles[i]);
+
+				// I'm using images to store more information
+				const img = new Image();
+				img.src = imgUrl;
+				img.id = uuidv4();
+				newImages.push(img);
+			}
+
+			// Insert images in a new array
+			setImages((prevInput) => {
+				const result = [...newImages, prevInput[prevInput.length - 1]];
+				return result;
+			});
+
+			// Set the default image to the first
+			setSelectedImage(() => newImages[0].src);
+
+			// Save the files on the input
 			return setInput((prevInput) => {
+				console.log(`Previous images + new images:`);
 				console.log([...prevInput.images, ...files]);
+				setLoading(false);
 				return {
 					...prevInput,
 					[name]: [...prevInput.images, ...files],
@@ -83,18 +108,12 @@ function BigImageWrapper(props) {
 			}
 		}
 	};
-
-	useEffect(() => {
-		if (isFirstUpload) {
-			setSelectedImage(images[0].src);
-		}
-	}, [isFirstUpload, images, setSelectedImage]);
-
+	/*
 	useEffect(() => {
 		if (input && input.images) {
 			if (!isFirstUpload) return;
 			// To prevent an infinite loop, only return when the images
-			// length is different
+			// length is the same
 			if (images.length - 1 === input.images.length) return;
 
 			// Create a temp array and traverse user images
@@ -105,22 +124,19 @@ function BigImageWrapper(props) {
 				// I'm using images to store more information
 				const img = new Image();
 				img.src = imgUrl;
+				img.id = uuidv4();
 				newImages.push(img);
 			}
 
 			// If there are less than 10 inserted images
-			setImages([...newImages, images[images.length - 1]]);
-			console.log(`Created image elements.`);
-			console.log([...newImages, images[images.length - 1]]);
+			setImages((prevInput) => {
+				const result = [...newImages, prevInput[prevInput.length - 1]];
+				return result;
+			});
 
 			setLoading(false);
 		}
-	}, [input, isFirstUpload, images, setImages, setLoading]);
-
-	useEffect(() => {
-		console.log(`Images length`);
-		console.log(images.length);
-	}, [images]);
+	}, [input, isFirstUpload, images, setImages, setLoading]);*/
 
 	return (
 		<div className="big-image">
@@ -145,7 +161,6 @@ function BigImageWrapper(props) {
 			<div className="big-image-wrapper">
 				<UploadImage
 					changeFn={handleImageChange}
-					classCondition={isFirstUpload}
 					classes={"image-input"}
 					images={images}
 					linkref={selectedImage}

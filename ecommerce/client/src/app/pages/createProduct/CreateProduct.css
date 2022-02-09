@@ -41,6 +41,7 @@
   display: flex;
   flex-direction: row;
   justify-content: center;
+  margin-top: 10px;
 }
 .create-product .form-and-image .big-image .control-bar > * {
   position: relative;
@@ -103,7 +104,7 @@
 }
 .create-product .images-container .selected-image {
   outline-style: solid;
-  outline-color: gray;
+  outline-color: cornflowerblue;
 }
 .create-product .images-container .last-image {
   opacity: 0.5;

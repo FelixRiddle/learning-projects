@@ -5,8 +5,9 @@ import { CreateProductContext } from "../../CreateProduct";
 import Icon from "./components/Icon";
 
 function ControlBar() {
-	const {images, selectedImage, setSelectedImage} = useContext(CreateProductContext)
-	
+	const { images, selectedImage, setImages, setSelectedImage } =
+		useContext(CreateProductContext);
+
 	const [move_arrow] = useState(
 		"http://localhost:3001/public/icons/control_bar_x32/move_right_arrow_1.png"
 	);
@@ -46,11 +47,57 @@ function ControlBar() {
 	};
 
 	const moveImageShown = (direction) => {
-		
+		for (let i in images) {
+			if (images[i].src === selectedImage) {
+				console.log(`The current image is: ${images[i].src}`);
+				console.log(selectedImage);
+				if (direction === "left") {
+					// Move one to the left
+					let test = [...images];
+					console.log(`Test array`);
+					console.log(test);
+					// Remove the current image and store it
+					// (splice returns an array, that's why the 0)
+					const image = test.splice(i, 1)[0];
+					console.log(`Index is: ${i}`);
+					console.log(`The image is:`);
+					console.log(image);
+					// Insert it before the current element
+					test.splice(i - 1, 0, image);
+					console.log(`Image moved to the left`);
+					console.log(`New array:`);
+					console.log(test);
+					
+					// Save the new array
+					setImages(() => {
+						return [...test];
+					});
+
+					// Now set it as selected
+					setSelectedImage(() => {
+						return image.src;
+					});
+
+					/*
+					console.log(`Creating a copy of this array`);
+					console.log(`Splicing at index 0`);
+					let element = test.splice(0, 1);
+					console.log(`It's id: ${element[0].id}`);
+					console.log(`Item:`);
+					console.log(element[0]);
+					console.log(`New array`);
+					console.log(test);
+					console.log(`Inserting it at the end`);
+					test.splice(test.length - 1, 0, element[0]);
+					console.log(test);*/
+				} else if (direction === "right") {
+				}
+			}
+		}
 	};
 
-	const deleteImage = () => { };
-	
+	const deleteImage = () => {};
+
 	const editImage = () => {};
 
 	return (
