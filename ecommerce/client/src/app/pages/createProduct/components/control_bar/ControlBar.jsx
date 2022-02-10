@@ -58,22 +58,16 @@ function ControlBar() {
 				i = parseInt(i);
 
 				// Move one to the left
-				let test = [...images];
+				let imageElements = [...images];
 				let imagesInput = [...input.images];
 
 				// Remove the current image and store it
 				// (splice returns an array, that's why the 0)
-				const image = test.splice(i, 1)[0];
+				const image = imageElements.splice(i, 1)[0];
 				const inputImage = imagesInput.splice(i, 1)[0];
-				console.log(`The image file is:`);
-				console.log(inputImage);
-				console.log(`Index is: ${i}`);
 				if (direction === "left") {
 					// Insert it before the current element
-					test.splice(i - 1, 0, image);
-					// console.log(`Index: ${i}`);
-					// console.log(`Test images:`);
-					// console.log(test);
+					imageElements.splice(i - 1, 0, image);
 
 					// If it's the first image
 					if (i === 0) {
@@ -82,15 +76,9 @@ function ControlBar() {
 						imagesInput.splice(i - 1, 0, inputImage);
 					}
 
-					// console.log(`Image moved to the left`);
-					// console.log(`New array:`);
-					// console.log(test);
-					// console.log(`New files array:`);
-					// console.log(imagesInput);
-
 					// Save the new array
 					setImages(() => {
-						return [...test];
+						return [...imageElements];
 					});
 
 					setInput((prevInput) => {
@@ -105,14 +93,31 @@ function ControlBar() {
 						return image.src;
 					});
 				} else if (direction === "right") {
-					test.splice(i - 1, 0, image);
-					
 					// If it's the last image
-					if (i === 0) {
-						imagesInput.splice(imagesInput.length, 0, inputImage);
+					if (i === imagesInput.length) {
+						imageElements.splice(0, 0, image);
+						imagesInput.splice(0, 0, inputImage);
 					} else {
-						imagesInput.splice(i - 1, 0, inputImage);
+						imageElements.splice(i + 1, 0, image);
+						imagesInput.splice(i + 1, 0, inputImage);
 					}
+
+					// Save the new array
+					setImages(() => {
+						return [...imageElements];
+					});
+
+					setInput((prevInput) => {
+						return {
+							...prevInput,
+							images: [...imagesInput],
+						};
+					});
+
+					// Now set it as selected
+					setSelectedImage(() => {
+						return image.src;
+					});
 				}
 			}
 		}
@@ -128,6 +133,7 @@ function ControlBar() {
 				classes={"left"}
 				clickFn={() => changeImageShown("left")}
 				direction="left"
+				disabled={images.length <= 1}
 				icon={next_arrow}
 				imageId={uuidv4()}
 				name="changeImage"
@@ -136,6 +142,7 @@ function ControlBar() {
 				classes={"left"}
 				clickFn={() => moveImageShown("left")}
 				direction="left"
+				disabled={images.length <= 1}
 				icon={move_arrow}
 				imageId={uuidv4()}
 				name="moveImage"
@@ -143,6 +150,7 @@ function ControlBar() {
 			<Icon
 				classes={""}
 				clickFn={() => editImage()}
+				disabled={images.length <= 1}
 				icon={edit}
 				imageId={uuidv4()}
 				name="editImage"
@@ -150,6 +158,7 @@ function ControlBar() {
 			<Icon
 				classes={""}
 				clickFn={() => deleteImage()}
+				disabled={images.length <= 1}
 				icon={delete_image}
 				imageId={uuidv4()}
 				name="deleteImage"
@@ -158,6 +167,7 @@ function ControlBar() {
 				classes={""}
 				clickFn={() => moveImageShown("right")}
 				direction="right"
+				disabled={images.length <= 1}
 				icon={move_arrow}
 				imageId={uuidv4()}
 				name="moveImage"
@@ -166,6 +176,7 @@ function ControlBar() {
 				classes={""}
 				clickFn={() => changeImageShown("right")}
 				direction="right"
+				disabled={images.length <= 1}
 				icon={next_arrow}
 				imageId={uuidv4()}
 				name="changeImage"
