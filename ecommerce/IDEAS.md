@@ -63,10 +63,10 @@
 | | | |✅ There are arrows to navigate through each image  
 | | | |✅ The user can select an image  
 | | | |⬜️ Add a control bar below the big image  
-| | | | |⬜️ Arrows for navigation  
-| | | | |⬜️ Arrows for MOVING the image  
-| | | | |⬜️ Icon for deleting the image  
-| | | | |⬜️ Icon for changing the image  
+| | | | |✅ Arrows for navigation  
+| | | | |✅ Arrows for MOVING the image  
+| | | | |⬜️ Delete image  
+| | | | |⬜️ Change image  
 | | |✅ Show tiny images below  
 | | | |✅ Add feedback to the selected image  
 | | | |✅ When it's full of images, the last is disabled.

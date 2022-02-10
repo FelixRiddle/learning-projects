@@ -127,6 +127,7 @@ function CreateProduct() {
 
 	// When the user resizes the window
 	window.onresize = () => {
+		console.log(`Resize event`);
 		setViewportSize({
 			width: Math.max(
 				document.documentElement.clientWidth || 0,
@@ -139,23 +140,11 @@ function CreateProduct() {
 		});
 	};
 
-	// If the image is the default one, show an upload icon
-	useEffect(() => {
-		if (selectedImage === defaultImage) {
-			setSelectedImage(defaultUploadImage);
-		}
-	}, [selectedImage]);
-
 	useEffect(() => {
 		const image = new Image();
 		image.src = defaultImage;
 		setImages([image]);
 	}, []);
-
-	useEffect(() => {
-		console.log(`New input`);
-		console.log(input);
-	}, [input]);
 
 	return (
 		<div className="create-product">
@@ -164,6 +153,8 @@ function CreateProduct() {
 					arrowIcon,
 					config,
 					cssDetails,
+					defaultImage,
+					defaultUploadImage,
 					handleInputChange,
 					input,
 					images,

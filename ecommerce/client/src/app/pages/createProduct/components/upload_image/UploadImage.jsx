@@ -5,7 +5,8 @@ import { v4 as uuidv4 } from "uuid";
 import { CreateProductContext } from "../../CreateProduct";
 
 function UploadImage(props) {
-	const { selectedImage, setConfig } = useContext(CreateProductContext);
+	const { config, defaultImage, defaultUploadImage, selectedImage, setConfig } =
+		useContext(CreateProductContext);
 
 	// Component properties
 	const {
@@ -123,26 +124,66 @@ function UploadImage(props) {
 			// Set the new width and height
 			const widthResult = newWidth + "px";
 			const heightResult = newHeight + "px";
+			
 			parentElement.style.width = widthResult;
 			parentElement.style.height = heightResult;
 		}
-	}, [resizeImagePercentage, spanId, viewportSize, setConfig]);
+	}, [resizeImagePercentage, spanId, viewportSize, setConfig, images]);
 
 	return (
 		<span id={spanId} className={classes} onClick={promptInput}>
 			{stackImages &&
 				images &&
-				images.map((e) => (
-					<img
-						key={uuidv4()}
-						alt={title}
-						className={(outline && "image") || ""}
-						hidden={!(e.src === selectedImage) && !hidden}
-						id={imgId}
-						src={e.src}
-						style={{ ...extraStyling }}
-					/>
-				))}
+				images.map((e) => {
+					// Resize the image to the canvas size
+					let widthResult = parseInt(config.bigImageContainerSize.width);
+					let heightResult = parseInt(config.bigImageContainerSize.height);
+
+					if (e.src === selectedImage) {
+						const image = new Image();
+						image.src = e.src;
+						const imageWidth = image.width;
+						const imageHeight = image.height;
+						// console.log(`Image found`);
+						// console.log(`Its width: ${imageWidth}`);
+						// console.log(typeof imageWidth);
+						// console.log(`Its height: ${imageHeight}`);
+						// console.log(`Width result: ${widthResult}`);
+						// console.log(typeof widthResult);
+						// console.log(`Height result: ${heightResult}`);
+
+						if (imageWidth < widthResult) {
+							widthResult = image.width;
+						}
+
+						if (imageHeight < heightResult) {
+							heightResult = image.height;
+						}
+					}
+
+					widthResult += "px";
+					heightResult += "px";
+
+					return (
+						<img
+							key={uuidv4()}
+							alt={title}
+							className={
+								(e.src === defaultImage && "-------") ||
+								(outline && "image") ||
+								""
+							}
+							hidden={!(e.src === selectedImage) && !hidden}
+							id={imgId}
+							src={(e.src === defaultImage && defaultUploadImage) || e.src}
+							style={{
+								...extraStyling,
+								width: widthResult,
+								height: heightResult,
+							}}
+						/>
+					);
+				})}
 			<input
 				id="file-input"
 				name={name}
