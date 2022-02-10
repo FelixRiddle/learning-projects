@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useContext } from "react";
 import { CreateProductContext } from "../../CreateProduct";
 import { v4 as uuidv4 } from "uuid";
 
@@ -50,21 +50,27 @@ function BigImageWrapper(props) {
 
 			// To get all images
 			const totalFiles = [...input.images, ...files];
-			for (let i in files) {
+			for (let i in totalFiles) {
 				// The two latest elements are index and a function
-				if (typeof files[i] !== "object") continue;
+				if (typeof totalFiles[i] !== "object") continue;
+
 				const imgUrl = URL.createObjectURL(totalFiles[i]);
 
 				// I'm using images to store more information
 				const img = new Image();
 				img.src = imgUrl;
 				img.id = uuidv4();
+				
+				// TODO: Set fixed a fixed size to fit the canvas
+				
 				newImages.push(img);
 			}
 
 			// Insert images in a new array
 			setImages((prevInput) => {
 				const result = [...newImages, prevInput[prevInput.length - 1]];
+				console.log(`Image elements`);
+				console.log(result);
 				return result;
 			});
 
@@ -73,8 +79,13 @@ function BigImageWrapper(props) {
 
 			// Save the files on the input
 			return setInput((prevInput) => {
-				console.log(`Previous images + new images:`);
-				console.log([...prevInput.images, ...files]);
+				const newArray = [...prevInput.images, ...files];
+				for (let i in newArray) {
+					if (newArray[i].id) continue;
+					newArray[i].id = uuidv4();
+				}
+				console.log(newArray);
+
 				setLoading(false);
 				return {
 					...prevInput,
@@ -90,6 +101,7 @@ function BigImageWrapper(props) {
 			setSelectedImage(images[images.length - 2].src);
 			return;
 		}
+
 		if (
 			direction === "right" &&
 			(images[images.length - 1].src === selectedImage ||

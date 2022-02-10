@@ -5,8 +5,14 @@ import { CreateProductContext } from "../../CreateProduct";
 import Icon from "./components/Icon";
 
 function ControlBar() {
-	const { images, selectedImage, setImages, setSelectedImage } =
-		useContext(CreateProductContext);
+	const {
+		images,
+		selectedImage,
+		setImages,
+		setSelectedImage,
+		input,
+		setInput,
+	} = useContext(CreateProductContext);
 
 	const [move_arrow] = useState(
 		"http://localhost:3001/public/icons/control_bar_x32/move_right_arrow_1.png"
@@ -49,48 +55,64 @@ function ControlBar() {
 	const moveImageShown = (direction) => {
 		for (let i in images) {
 			if (images[i].src === selectedImage) {
-				console.log(`The current image is: ${images[i].src}`);
-				console.log(selectedImage);
+				i = parseInt(i);
+
+				// Move one to the left
+				let test = [...images];
+				let imagesInput = [...input.images];
+
+				// Remove the current image and store it
+				// (splice returns an array, that's why the 0)
+				const image = test.splice(i, 1)[0];
+				const inputImage = imagesInput.splice(i, 1)[0];
+				console.log(`The image file is:`);
+				console.log(inputImage);
+				console.log(`Index is: ${i}`);
 				if (direction === "left") {
-					// Move one to the left
-					let test = [...images];
-					console.log(`Test array`);
-					console.log(test);
-					// Remove the current image and store it
-					// (splice returns an array, that's why the 0)
-					const image = test.splice(i, 1)[0];
-					console.log(`Index is: ${i}`);
-					console.log(`The image is:`);
-					console.log(image);
 					// Insert it before the current element
 					test.splice(i - 1, 0, image);
-					console.log(`Image moved to the left`);
-					console.log(`New array:`);
-					console.log(test);
-					
+					// console.log(`Index: ${i}`);
+					// console.log(`Test images:`);
+					// console.log(test);
+
+					// If it's the first image
+					if (i === 0) {
+						imagesInput.splice(imagesInput.length, 0, inputImage);
+					} else {
+						imagesInput.splice(i - 1, 0, inputImage);
+					}
+
+					// console.log(`Image moved to the left`);
+					// console.log(`New array:`);
+					// console.log(test);
+					// console.log(`New files array:`);
+					// console.log(imagesInput);
+
 					// Save the new array
 					setImages(() => {
 						return [...test];
+					});
+
+					setInput((prevInput) => {
+						return {
+							...prevInput,
+							images: [...imagesInput],
+						};
 					});
 
 					// Now set it as selected
 					setSelectedImage(() => {
 						return image.src;
 					});
-
-					/*
-					console.log(`Creating a copy of this array`);
-					console.log(`Splicing at index 0`);
-					let element = test.splice(0, 1);
-					console.log(`It's id: ${element[0].id}`);
-					console.log(`Item:`);
-					console.log(element[0]);
-					console.log(`New array`);
-					console.log(test);
-					console.log(`Inserting it at the end`);
-					test.splice(test.length - 1, 0, element[0]);
-					console.log(test);*/
 				} else if (direction === "right") {
+					test.splice(i - 1, 0, image);
+					
+					// If it's the last image
+					if (i === 0) {
+						imagesInput.splice(imagesInput.length, 0, inputImage);
+					} else {
+						imagesInput.splice(i - 1, 0, inputImage);
+					}
 				}
 			}
 		}

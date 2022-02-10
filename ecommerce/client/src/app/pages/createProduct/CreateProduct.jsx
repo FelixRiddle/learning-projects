@@ -152,6 +152,11 @@ function CreateProduct() {
 		setImages([image]);
 	}, []);
 
+	useEffect(() => {
+		console.log(`New input`);
+		console.log(input);
+	}, [input]);
+
 	return (
 		<div className="create-product">
 			<CreateProductContext.Provider
@@ -186,7 +191,6 @@ function CreateProduct() {
 				<div className="images-container">
 					{images.map((e, index) => {
 						const isSelected = e.src === selectedImage;
-						if (isSelected) console.log(e.src + " is selected.");
 						// Check if current image is the last image
 						const isLastImage =
 							images.length > maxImages && e.src === defaultImage;
