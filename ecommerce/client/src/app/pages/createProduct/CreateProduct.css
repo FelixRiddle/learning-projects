@@ -16,6 +16,12 @@
 .create-product .form-and-image .arrow-container .arrow-icon:hover {
   cursor: pointer;
 }
+.create-product .form-and-image .big-image .icon-disabled {
+  filter: invert(50%);
+}
+.create-product .form-and-image .big-image .icon-disabled:hover {
+  cursor: default;
+}
 .create-product .form-and-image .big-image .big-image-wrapper {
   display: flex;
   flex-direction: row;
@@ -43,13 +49,19 @@
   justify-content: center;
   margin-top: 10px;
 }
-.create-product .form-and-image .big-image .control-bar > * {
+.create-product .form-and-image .big-image .control-bar > div > img {
   position: relative;
   padding-left: 5px;
   padding-right: 5px;
 }
-.create-product .form-and-image .big-image .control-bar > *:hover {
+.create-product .form-and-image .big-image .control-bar > div > img:hover {
   cursor: pointer;
+}
+.create-product .form-and-image .big-image .control-bar .icon-disabled {
+  filter: invert(50%);
+}
+.create-product .form-and-image .big-image .control-bar .icon-disabled:hover {
+  cursor: default;
 }
 .create-product .form-and-image .big-image .control-bar .left {
   position: relative;

@@ -60,9 +60,9 @@ function BigImageWrapper(props) {
 				const img = new Image();
 				img.src = imgUrl;
 				img.id = uuidv4();
-				
+
 				// TODO: Set fixed a fixed size to fit the canvas
-				
+
 				newImages.push(img);
 			}
 
@@ -120,53 +120,32 @@ function BigImageWrapper(props) {
 			}
 		}
 	};
-	/*
-	useEffect(() => {
-		if (input && input.images) {
-			if (!isFirstUpload) return;
-			// To prevent an infinite loop, only return when the images
-			// length is the same
-			if (images.length - 1 === input.images.length) return;
-
-			// Create a temp array and traverse user images
-			const newImages = [];
-			for (let i in input.images) {
-				const imgUrl = URL.createObjectURL(input.images[i]);
-
-				// I'm using images to store more information
-				const img = new Image();
-				img.src = imgUrl;
-				img.id = uuidv4();
-				newImages.push(img);
-			}
-
-			// If there are less than 10 inserted images
-			setImages((prevInput) => {
-				const result = [...newImages, prevInput[prevInput.length - 1]];
-				return result;
-			});
-
-			setLoading(false);
-		}
-	}, [input, isFirstUpload, images, setImages, setLoading]);*/
 
 	return (
 		<div className="big-image">
 			<Arrow
-				arrowFn={() => handleArrowClick("left")}
+				arrowFn={
+					(images.length > 1 && (() => handleArrowClick("left"))) || (() => {})
+				}
 				arrowIcon={arrowIcon}
 				containerClasses={"arrow-container"}
 				direction={"left"}
-				iconClasses={"arrow-icon"}
+				iconClasses={
+					((images.length <= 1 && "arrow-icon icon-disabled ") || "arrow-icon")
+				}
 				imageId={leftArrowId}
 				setSelectedImage={setSelectedImage}
 			/>
 			<Arrow
-				arrowFn={() => handleArrowClick("right")}
+				arrowFn={
+					(images.length > 1 && (() => handleArrowClick("right"))) || (() => {})
+				}
 				arrowIcon={arrowIcon}
 				containerClasses={"arrow-container"}
 				direction={"right"}
-				iconClasses={"arrow-icon"}
+				iconClasses={
+					(images.length <= 1 && "arrow-icon icon-disabled ") || "arrow-icon "
+				}
 				imageId={rightArrowId}
 				setSelectedImage={setSelectedImage}
 			/>

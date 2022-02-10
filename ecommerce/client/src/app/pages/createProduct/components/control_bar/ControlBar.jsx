@@ -131,53 +131,67 @@ function ControlBar() {
 		<div className="control-bar">
 			<Icon
 				classes={"left"}
-				clickFn={() => changeImageShown("left")}
+				clickFn={
+					(images.length > 1 && (() => changeImageShown("left"))) ||
+					(() => {})
+				}
 				direction="left"
-				disabled={images.length <= 1}
 				icon={next_arrow}
+				imageClasses={(images.length <= 1 && "icon-disabled") || ""}
 				imageId={uuidv4()}
 				name="changeImage"
 			/>
 			<Icon
 				classes={"left"}
-				clickFn={() => moveImageShown("left")}
+				clickFn={
+					(images.length > 1 && (() => moveImageShown("left"))) ||
+					(() => {})
+				}
 				direction="left"
-				disabled={images.length <= 1}
 				icon={move_arrow}
+				imageClasses={(images.length <= 1 && "icon-disabled") || ""}
 				imageId={uuidv4()}
 				name="moveImage"
 			/>
 			<Icon
 				classes={""}
-				clickFn={() => editImage()}
-				disabled={images.length <= 1}
+				clickFn={(images.length > 1 && (() => editImage())) || (() => {})}
 				icon={edit}
+				imageClasses={(images.length <= 1 && "icon-disabled") || ""}
 				imageId={uuidv4()}
 				name="editImage"
 			/>
 			<Icon
 				classes={""}
-				clickFn={() => deleteImage()}
-				disabled={images.length <= 1}
+				clickFn={
+					(images.length > 1 && (() => deleteImage())) || (() => {})
+				}
 				icon={delete_image}
+				imageClasses={(images.length <= 1 && "icon-disabled") || ""}
 				imageId={uuidv4()}
 				name="deleteImage"
 			/>
 			<Icon
 				classes={""}
-				clickFn={() => moveImageShown("right")}
+				clickFn={
+					(images.length > 1 && (() => moveImageShown("right"))) ||
+					(() => {})
+				}
 				direction="right"
-				disabled={images.length <= 1}
 				icon={move_arrow}
+				imageClasses={(images.length <= 1 && "icon-disabled") || ""}
 				imageId={uuidv4()}
 				name="moveImage"
 			/>
 			<Icon
 				classes={""}
-				clickFn={() => changeImageShown("right")}
+				clickFn={
+					(images.length > 1 && (() => changeImageShown("right"))) ||
+					(() => {})
+				}
 				direction="right"
-				disabled={images.length <= 1}
 				icon={next_arrow}
+				imageClasses={(images.length <= 1 && "icon-disabled") || ""}
 				imageId={uuidv4()}
 				name="changeImage"
 			/>
