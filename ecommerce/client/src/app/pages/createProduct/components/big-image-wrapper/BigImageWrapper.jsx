@@ -61,8 +61,6 @@ function BigImageWrapper(props) {
 				img.src = imgUrl;
 				img.id = uuidv4();
 
-				// TODO: Set fixed a fixed size to fit the canvas
-
 				newImages.push(img);
 			}
 
@@ -131,7 +129,7 @@ function BigImageWrapper(props) {
 				containerClasses={"arrow-container"}
 				direction={"left"}
 				iconClasses={
-					((images.length <= 1 && "arrow-icon icon-disabled ") || "arrow-icon")
+					(images.length <= 1 && "arrow-icon icon-disabled ") || "arrow-icon"
 				}
 				imageId={leftArrowId}
 				setSelectedImage={setSelectedImage}

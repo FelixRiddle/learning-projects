@@ -68,6 +68,7 @@
 | | | | |✅ Arrows for MOVING the image  
 | | | | |⬜️ Delete image  
 | | | | |⬜️ Change image  
+| | | | |⬜️ Add image  
 | | |✅ Show tiny images below  
 | | | |✅ Add feedback to the selected image  
 | | | |✅ When it's full of images, the last is disabled.

@@ -6,11 +6,13 @@ import Icon from "./components/Icon";
 
 function ControlBar() {
 	const {
+		defaultImage,
+		defaultUploadImage,
 		images,
+		input,
 		selectedImage,
 		setImages,
 		setSelectedImage,
-		input,
 		setInput,
 	} = useContext(CreateProductContext);
 
@@ -123,17 +125,56 @@ function ControlBar() {
 		}
 	};
 
-	const deleteImage = () => {};
+	const editImage = async (e) => {
+		const { name, files } = await e.target;
+		
+		files[0].id = uuidv4();
+		
+		for (let i in images) {
+			i = parseInt(i);
 
-	const editImage = () => {};
+			if (
+				images[i].src === selectedImage &&
+				selectedImage !== defaultUploadImage &&
+				selectedImage !== defaultImage
+			) {
+
+				const newImage = new Image();
+				newImage.src = URL.createObjectURL(files[0]);
+				newImage.id = uuidv4();
+				setImages((prevInput) => {
+					prevInput.splice(i, 1, newImage);
+					const newArray = prevInput;
+					setSelectedImage(newArray[i].src);
+					return [...newArray];
+				});
+
+				setInput((prevInput) => {
+					const newArray = [...prevInput.images];
+					newArray.splice(i, 1, files[0]);
+					return {
+						...prevInput,
+						[name]: [...newArray],
+					};
+				});
+
+				const inputForm = document.getElementById("change-file-form");
+				if (inputForm) {
+					console.log(inputForm);
+					inputForm.reset();
+				}
+			}
+		}
+	};
+
+	const deleteImage = () => {};
 
 	return (
 		<div className="control-bar">
 			<Icon
 				classes={"left"}
 				clickFn={
-					(images.length > 1 && (() => changeImageShown("left"))) ||
-					(() => {})
+					(images.length > 1 && (() => changeImageShown("left"))) || (() => {})
 				}
 				direction="left"
 				icon={next_arrow}
@@ -141,11 +182,11 @@ function ControlBar() {
 				imageId={uuidv4()}
 				name="changeImage"
 			/>
+			{/* // TODO: Disable editing, deleting, or moving the default image */}
 			<Icon
 				classes={"left"}
 				clickFn={
-					(images.length > 1 && (() => moveImageShown("left"))) ||
-					(() => {})
+					(images.length > 1 && (() => moveImageShown("left"))) || (() => {})
 				}
 				direction="left"
 				icon={move_arrow}
@@ -155,7 +196,11 @@ function ControlBar() {
 			/>
 			<Icon
 				classes={""}
-				clickFn={(images.length > 1 && (() => editImage())) || (() => {})}
+				clickFn={
+					(images.length > 1 &&
+						(() => document.getElementById("change-file").click())) ||
+					(() => {})
+				}
 				icon={edit}
 				imageClasses={(images.length <= 1 && "icon-disabled") || ""}
 				imageId={uuidv4()}
@@ -163,9 +208,7 @@ function ControlBar() {
 			/>
 			<Icon
 				classes={""}
-				clickFn={
-					(images.length > 1 && (() => deleteImage())) || (() => {})
-				}
+				clickFn={(images.length > 1 && (() => deleteImage())) || (() => {})}
 				icon={delete_image}
 				imageClasses={(images.length <= 1 && "icon-disabled") || ""}
 				imageId={uuidv4()}
@@ -174,8 +217,7 @@ function ControlBar() {
 			<Icon
 				classes={""}
 				clickFn={
-					(images.length > 1 && (() => moveImageShown("right"))) ||
-					(() => {})
+					(images.length > 1 && (() => moveImageShown("right"))) || (() => {})
 				}
 				direction="right"
 				icon={move_arrow}
@@ -186,8 +228,7 @@ function ControlBar() {
 			<Icon
 				classes={""}
 				clickFn={
-					(images.length > 1 && (() => changeImageShown("right"))) ||
-					(() => {})
+					(images.length > 1 && (() => changeImageShown("right"))) || (() => {})
 				}
 				direction="right"
 				icon={next_arrow}
@@ -195,6 +236,15 @@ function ControlBar() {
 				imageId={uuidv4()}
 				name="changeImage"
 			/>
+			<form action="" id="change-file-form">
+				<input
+					hidden={true}
+					id="change-file"
+					name="images"
+					onChange={editImage}
+					type="file"
+				/>
+			</form>
 		</div>
 	);
 }
