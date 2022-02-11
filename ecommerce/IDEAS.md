@@ -6,6 +6,7 @@
 |✅ Show "You are already logged in" alert
 
 ✅ Profile  
+|⬜️ Search bar for settings  
 |✅ If the user is not logged in, show 401  
 |✅ ChangeBasicInfo part  
 | |✅ Ask for password before submitting a request  
@@ -74,6 +75,9 @@
 |Others  
 | |⬜️ Add dark mode, for this, create a gigantic div that covers everything
 and move it accordingly with z-index.
+
+|Hardmode  
+| |⬜️ Drag and drop with the small image.
 
 ⬜️ Licenses  
 |⬜️ Add the following attributions  

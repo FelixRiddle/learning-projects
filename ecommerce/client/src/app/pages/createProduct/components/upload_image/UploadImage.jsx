@@ -124,7 +124,7 @@ function UploadImage(props) {
 			// Set the new width and height
 			const widthResult = newWidth + "px";
 			const heightResult = newHeight + "px";
-			
+
 			parentElement.style.width = widthResult;
 			parentElement.style.height = heightResult;
 		}
@@ -142,15 +142,23 @@ function UploadImage(props) {
 					if (e.src === selectedImage) {
 						const image = new Image();
 						image.src = e.src;
+
 						const imageWidth = image.width;
 						const imageHeight = image.height;
-						// console.log(`Image found`);
-						// console.log(`Its width: ${imageWidth}`);
-						// console.log(typeof imageWidth);
-						// console.log(`Its height: ${imageHeight}`);
-						// console.log(`Width result: ${widthResult}`);
-						// console.log(typeof widthResult);
-						// console.log(`Height result: ${heightResult}`);
+
+						if (imageWidth < widthResult) {
+							widthResult = image.width;
+						}
+
+						if (imageHeight < heightResult) {
+							heightResult = image.height;
+						}
+					} else if (e.src === defaultImage) {
+						const image = new Image();
+						image.src = defaultUploadImage;
+
+						const imageWidth = image.width;
+						const imageHeight = image.height;
 
 						if (imageWidth < widthResult) {
 							widthResult = image.width;
