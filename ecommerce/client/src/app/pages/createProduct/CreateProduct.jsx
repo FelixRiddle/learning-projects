@@ -146,7 +146,22 @@ function CreateProduct() {
 		setImages([image]);
 	}, []);
 
-	useEffect(() => {}, []);
+	useEffect(() => {
+		// If there is no image selected, set the selected image as
+		// the first image
+		if (typeof images !== "undefined") {
+			let setImageAt0 = true;
+			for (let i in images) {
+				i = parseInt(i);
+				if (images[i].src === selectedImage) {
+					setImageAt0 = false;
+					break;
+				}
+			}
+
+			if (setImageAt0) setSelectedImage(images[0].src);
+		}
+	}, [images, selectedImage]);
 
 	return (
 		<div className="create-product">

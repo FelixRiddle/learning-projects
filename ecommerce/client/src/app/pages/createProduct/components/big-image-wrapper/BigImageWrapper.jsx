@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { CreateProductContext } from "../../CreateProduct";
 import { v4 as uuidv4 } from "uuid";
 
@@ -6,7 +6,7 @@ import UploadImage from "../upload_image/UploadImage";
 import Arrow from "../arrow/Arrow";
 import ControlBar from "../control_bar/ControlBar";
 
-function BigImageWrapper(props) {
+function BigImageWrapper() {
 	// Context
 	const {
 		maxImages,
