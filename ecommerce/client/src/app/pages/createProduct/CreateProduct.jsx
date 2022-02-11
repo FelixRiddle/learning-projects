@@ -146,6 +146,8 @@ function CreateProduct() {
 		setImages([image]);
 	}, []);
 
+	useEffect(() => {}, []);
+
 	return (
 		<div className="create-product">
 			<CreateProductContext.Provider

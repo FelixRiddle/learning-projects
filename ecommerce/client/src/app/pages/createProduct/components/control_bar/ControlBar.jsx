@@ -127,9 +127,9 @@ function ControlBar() {
 
 	const editImage = async (e) => {
 		const { name, files } = await e.target;
-		
+
 		files[0].id = uuidv4();
-		
+
 		for (let i in images) {
 			i = parseInt(i);
 
@@ -138,7 +138,6 @@ function ControlBar() {
 				selectedImage !== defaultUploadImage &&
 				selectedImage !== defaultImage
 			) {
-
 				const newImage = new Image();
 				newImage.src = URL.createObjectURL(files[0]);
 				newImage.id = uuidv4();
@@ -158,16 +157,45 @@ function ControlBar() {
 					};
 				});
 
+				// Reset the input, if you want the user to be able to select
+				// the same image over and over.
 				const inputForm = document.getElementById("change-file-form");
 				if (inputForm) {
-					console.log(inputForm);
 					inputForm.reset();
 				}
+
+				break;
 			}
 		}
 	};
 
-	const deleteImage = () => {};
+	const deleteImage = () => {
+		for (let i in images) {
+			i = parseInt(i);
+			if (
+				images[i].src === selectedImage &&
+				selectedImage !== defaultImage &&
+				selectedImage !== defaultUploadImage
+			) {
+				setImages((prevInput) => {
+					const newArray = [...prevInput];
+					newArray.splice(i, 1);
+					return [...newArray];
+				});
+
+				setInput((prevInput) => {
+					const newImages = [...prevInput.images];
+					newImages.splice(i, 1);
+					return {
+						...prevInput,
+						images: [...newImages],
+					};
+				});
+
+				break;
+			}
+		}
+	};
 
 	return (
 		<div className="control-bar">
@@ -186,42 +214,83 @@ function ControlBar() {
 			<Icon
 				classes={"left"}
 				clickFn={
-					(images.length > 1 && (() => moveImageShown("left"))) || (() => {})
+					((selectedImage === defaultImage ||
+						selectedImage === defaultUploadImage) &&
+						(() => {})) ||
+					(images.length > 1 && (() => moveImageShown("left"))) ||
+					(() => {})
 				}
 				direction="left"
 				icon={move_arrow}
-				imageClasses={(images.length <= 1 && "icon-disabled") || ""}
+				imageClasses={
+					((selectedImage === defaultImage ||
+						selectedImage === defaultUploadImage) &&
+						"icon-disabled") ||
+					(images.length <= 1 && "icon-disabled") ||
+					""
+				}
 				imageId={uuidv4()}
 				name="moveImage"
 			/>
 			<Icon
 				classes={""}
 				clickFn={
+					((selectedImage === defaultImage ||
+						selectedImage === defaultUploadImage) &&
+						(() => {})) ||
 					(images.length > 1 &&
 						(() => document.getElementById("change-file").click())) ||
 					(() => {})
 				}
 				icon={edit}
-				imageClasses={(images.length <= 1 && "icon-disabled") || ""}
+				imageClasses={
+					((selectedImage === defaultImage ||
+						selectedImage === defaultUploadImage) &&
+						"icon-disabled") ||
+					(images.length <= 1 && "icon-disabled") ||
+					""
+				}
 				imageId={uuidv4()}
 				name="editImage"
 			/>
 			<Icon
 				classes={""}
-				clickFn={(images.length > 1 && (() => deleteImage())) || (() => {})}
+				clickFn={
+					((selectedImage === defaultImage ||
+						selectedImage === defaultUploadImage) &&
+						(() => {})) ||
+					(images.length > 1 && (() => deleteImage())) ||
+					(() => {})
+				}
 				icon={delete_image}
-				imageClasses={(images.length <= 1 && "icon-disabled") || ""}
+				imageClasses={
+					((selectedImage === defaultImage ||
+						selectedImage === defaultUploadImage) &&
+						"icon-disabled") ||
+					(images.length <= 1 && "icon-disabled") ||
+					""
+				}
 				imageId={uuidv4()}
 				name="deleteImage"
 			/>
 			<Icon
 				classes={""}
 				clickFn={
-					(images.length > 1 && (() => moveImageShown("right"))) || (() => {})
+					((selectedImage === defaultImage ||
+						selectedImage === defaultUploadImage) &&
+						(() => {})) ||
+					(images.length > 1 && (() => moveImageShown("right"))) ||
+					(() => {})
 				}
 				direction="right"
 				icon={move_arrow}
-				imageClasses={(images.length <= 1 && "icon-disabled") || ""}
+				imageClasses={
+					((selectedImage === defaultImage ||
+						selectedImage === defaultUploadImage) &&
+						"icon-disabled") ||
+					(images.length <= 1 && "icon-disabled") ||
+					""
+				}
 				imageId={uuidv4()}
 				name="moveImage"
 			/>
