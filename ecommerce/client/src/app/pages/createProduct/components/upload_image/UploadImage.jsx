@@ -27,6 +27,7 @@ function UploadImage(props) {
 	const [hidden, setHidden] = useState(true);
 	const [spanId] = useState(uuidv4());
 	const [imgId] = useState(uuidv4());
+	const [reRender, setReRender] = useState(false);
 
 	const promptInput = (e) => {
 		document.getElementById("file-input").click();
@@ -100,6 +101,7 @@ function UploadImage(props) {
 	useEffect(() => {
 		if (!resizeImagePercentage) return;
 		if (!viewportSize) return;
+
 		// Resizes the canvas width and height if the user
 		// resizes the window
 		const parentElement = document.getElementById(spanId);
@@ -130,6 +132,11 @@ function UploadImage(props) {
 		}
 	}, [resizeImagePercentage, spanId, viewportSize, setConfig, images]);
 
+	useEffect(() => {
+		if (!reRender) return;
+		setReRender(false);
+	}, [reRender]);
+
 	return (
 		<span id={spanId} className={classes} onClick={promptInput}>
 			{stackImages &&
@@ -143,16 +150,54 @@ function UploadImage(props) {
 						const image = new Image();
 						image.src = e.src;
 
-						const imageWidth = image.width;
-						const imageHeight = image.height;
+						image.onload = () => {
+							const imageWidth = image.width;
+							const imageHeight = image.height;
+							const canvasWidth = parseInt(config.bigImageContainerSize.height);
+							const canvasHeight = parseInt(
+								config.bigImageContainerSize.height
+							);
+							console.log(`Image width: ${imageWidth}`);
+							console.log(`Image height: ${imageHeight}`);
+							console.log(`Typeof: ${typeof imageWidth}`);
+							console.log(`Big image width container size: ${canvasWidth}`);
+							console.log(`Big image height container size: ${canvasHeight}`);
+							console.log(`Typeof: ${typeof canvasWidth}`);
 
-						if (imageWidth < widthResult) {
-							widthResult = image.width;
-						}
+							if (imageWidth < canvasWidth) {
+								console.log(`Rezising image to original size: ${image.width}`);
+								widthResult = image.width;
+							}
 
-						if (imageHeight < heightResult) {
-							heightResult = image.height;
-						}
+							if (imageHeight < canvasHeight) {
+								heightResult = image.height;
+							}
+
+							widthResult += "px";
+							heightResult += "px";
+							console.log(`Image width resized to: ${widthResult}`);
+							console.log(`Image height resized to: ${heightResult}`);
+
+							return (
+								<img
+									key={uuidv4()}
+									alt={title}
+									className={
+										(e.src === defaultImage && "-------") ||
+										(outline && "image") ||
+										""
+									}
+									hidden={!(e.src === selectedImage) && !hidden}
+									id={imgId}
+									src={(e.src === defaultImage && defaultUploadImage) || e.src}
+									style={{
+										...extraStyling,
+										width: widthResult,
+										height: heightResult,
+									}}
+								/>
+							);
+						};
 					} else if (e.src === defaultImage) {
 						const image = new Image();
 						image.src = defaultUploadImage;
@@ -171,6 +216,8 @@ function UploadImage(props) {
 
 					widthResult += "px";
 					heightResult += "px";
+					console.log(`Image width resized to: ${widthResult}`);
+					console.log(`Image height resized to: ${heightResult}`);
 
 					return (
 						<img
@@ -192,15 +239,17 @@ function UploadImage(props) {
 						/>
 					);
 				})}
-			<input
-				id="file-input"
-				name={name}
-				hidden={true}
-				multiple={true}
-				onChange={changeFn}
-				style={{ position: "absolute" }}
-				type="file"
-			/>
+			<form id="image-input">
+				<input
+					id="file-input"
+					name={name}
+					hidden={true}
+					multiple={true}
+					onChange={changeFn}
+					style={{ position: "absolute" }}
+					type="file"
+				/>
+			</form>
 		</span>
 	);
 }

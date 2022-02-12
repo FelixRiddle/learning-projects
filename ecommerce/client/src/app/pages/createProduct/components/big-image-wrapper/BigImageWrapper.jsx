@@ -27,16 +27,28 @@ function BigImageWrapper() {
 	const [leftArrowId] = useState(uuidv4());
 	const [rightArrowId] = useState(uuidv4());
 
+	const resetImageInput = () => {
+		// Reset the input, if you want the user to be able to select
+		// the same image over and over(use just before the returns).
+		const inputForm = document.getElementById("image-input");
+		if (inputForm) {
+			inputForm.reset();
+		}
+	};
+
 	const handleImageChange = async (e) => {
 		setLoading(true);
 		const { name } = await e.target;
 
 		// If the input were files
 		if (e.target.files) {
-			const files = await e.target.files;
+			const files = [...(await e.target.files)];
 
 			const totalLength = input.images.length + files.length;
 			if (totalLength > maxImages) {
+				// Reset the image input
+				resetImageInput();
+
 				return setStatus({
 					error: true,
 					message: "You cannot upload more than 10 images",
@@ -67,13 +79,16 @@ function BigImageWrapper() {
 			// Insert images in a new array
 			setImages((prevInput) => {
 				const result = [...newImages, prevInput[prevInput.length - 1]];
-				console.log(`Image elements`);
-				console.log(result);
+				// console.log(`Image elements`);
+				// console.log(result);
 				return result;
 			});
 
 			// Set the default image to the first
 			setSelectedImage(() => newImages[0].src);
+
+			// Reset the image input
+			resetImageInput();
 
 			// Save the files on the input
 			return setInput((prevInput) => {
@@ -82,7 +97,7 @@ function BigImageWrapper() {
 					if (newArray[i].id) continue;
 					newArray[i].id = uuidv4();
 				}
-				console.log(newArray);
+				//console.log(newArray);
 
 				setLoading(false);
 				return {

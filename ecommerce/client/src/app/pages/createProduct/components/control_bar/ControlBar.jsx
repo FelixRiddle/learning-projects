@@ -141,6 +141,7 @@ function ControlBar() {
 				const newImage = new Image();
 				newImage.src = URL.createObjectURL(files[0]);
 				newImage.id = uuidv4();
+				
 				setImages((prevInput) => {
 					prevInput.splice(i, 1, newImage);
 					const newArray = prevInput;
