@@ -27,7 +27,7 @@ function UploadImage(props) {
 	const [hidden, setHidden] = useState(true);
 	const [spanId] = useState(uuidv4());
 	const [imgId] = useState(uuidv4());
-	const [reRender, setReRender] = useState(false);
+	const [imageComponents, setImageComponents] = useState([]);
 
 	const promptInput = (e) => {
 		document.getElementById("file-input").click();
@@ -133,9 +133,51 @@ function UploadImage(props) {
 	}, [resizeImagePercentage, spanId, viewportSize, setConfig, images]);
 
 	useEffect(() => {
-		if (!reRender) return;
-		setReRender(false);
-	}, [reRender]);
+		// Resize the image to the canvas size
+		let widthResult = parseInt(config.bigImageContainerSize.width);
+		let heightResult = parseInt(config.bigImageContainerSize.height);
+
+		setImageComponents((prevInput) => {
+			const newComponentArray = [];
+			for (let i in images) {
+				i = parseInt(i);
+				const image = new Image();
+				image.src = images[i].src;
+
+				const imageWidth = image.width;
+				const imageHeight = image.height;
+				const canvasWidth = parseInt(config.bigImageContainerSize.height);
+				const canvasHeight = parseInt(config.bigImageContainerSize.height);
+				
+				if (imageWidth < canvasWidth) {
+					console.log(`Rezising image to original size: ${image.width}`);
+					widthResult = image.width;
+				}
+
+				if (imageHeight < canvasHeight) {
+					heightResult = image.height;
+				}
+
+				newComponentArray.push(<img />);
+			}
+
+			return [...prevInput];
+		});
+		// const newComponent = <div className="test"></div>;
+		// console.log(newComponent.key);
+		// console.log(newComponent.props);
+		// console.log(newComponent.props.className);
+		// console.log(Object.entries(newComponent.props));
+		// console.log(newComponent.type);
+	}, [images, config]);
+
+	/*
+	Posible options to solve the first image not being resized problem:
+	1) Create an useState with the selected image as a component, and render it directly
+	resized, when it loads(onload event) within an useEffect.
+	2) Create an array with every image as a component, and resize those images
+	when the user resizes the website.
+	*/
 
 	return (
 		<span id={spanId} className={classes} onClick={promptInput}>
@@ -145,59 +187,35 @@ function UploadImage(props) {
 					// Resize the image to the canvas size
 					let widthResult = parseInt(config.bigImageContainerSize.width);
 					let heightResult = parseInt(config.bigImageContainerSize.height);
+					// console.log(`Element`);
+					// console.log(e);
 
 					if (e.src === selectedImage) {
 						const image = new Image();
 						image.src = e.src;
 
-						image.onload = () => {
-							const imageWidth = image.width;
-							const imageHeight = image.height;
-							const canvasWidth = parseInt(config.bigImageContainerSize.height);
-							const canvasHeight = parseInt(
-								config.bigImageContainerSize.height
-							);
-							console.log(`Image width: ${imageWidth}`);
-							console.log(`Image height: ${imageHeight}`);
-							console.log(`Typeof: ${typeof imageWidth}`);
-							console.log(`Big image width container size: ${canvasWidth}`);
-							console.log(`Big image height container size: ${canvasHeight}`);
-							console.log(`Typeof: ${typeof canvasWidth}`);
+						const imageWidth = image.width;
+						const imageHeight = image.height;
+						const canvasWidth = parseInt(config.bigImageContainerSize.height);
+						const canvasHeight = parseInt(config.bigImageContainerSize.height);
+						// console.log(`Image width: ${imageWidth}`);
+						// console.log(`Image height: ${imageHeight}`);
+						// console.log(`Typeof: ${typeof imageWidth}`);
+						// console.log(`Big image width container size: ${canvasWidth}`);
+						// console.log(`Big image height container size: ${canvasHeight}`);
+						// console.log(`Typeof: ${typeof canvasWidth}`);
 
-							if (imageWidth < canvasWidth) {
-								console.log(`Rezising image to original size: ${image.width}`);
-								widthResult = image.width;
-							}
+						if (imageWidth < canvasWidth) {
+							// console.log(`Rezising image to original size: ${image.width}`);
+							widthResult = image.width;
+						}
 
-							if (imageHeight < canvasHeight) {
-								heightResult = image.height;
-							}
+						if (imageHeight < canvasHeight) {
+							heightResult = image.height;
+						}
 
-							widthResult += "px";
-							heightResult += "px";
-							console.log(`Image width resized to: ${widthResult}`);
-							console.log(`Image height resized to: ${heightResult}`);
-
-							return (
-								<img
-									key={uuidv4()}
-									alt={title}
-									className={
-										(e.src === defaultImage && "-------") ||
-										(outline && "image") ||
-										""
-									}
-									hidden={!(e.src === selectedImage) && !hidden}
-									id={imgId}
-									src={(e.src === defaultImage && defaultUploadImage) || e.src}
-									style={{
-										...extraStyling,
-										width: widthResult,
-										height: heightResult,
-									}}
-								/>
-							);
-						};
+						// console.log(`Image width resized to: ${widthResult}`);
+						// console.log(`Image height resized to: ${heightResult}`);
 					} else if (e.src === defaultImage) {
 						const image = new Image();
 						image.src = defaultUploadImage;
@@ -216,9 +234,6 @@ function UploadImage(props) {
 
 					widthResult += "px";
 					heightResult += "px";
-					console.log(`Image width resized to: ${widthResult}`);
-					console.log(`Image height resized to: ${heightResult}`);
-
 					return (
 						<img
 							key={uuidv4()}
