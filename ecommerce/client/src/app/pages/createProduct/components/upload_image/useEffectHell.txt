@@ -1,0 +1,155 @@
+
+	// Yes, I did this.
+	/*
+	The problem: When the user uploads an image for the first time, it is
+	not being shown.
+	*/
+	// Get the image components of the span element and resize those
+	// to fit the canvas.
+	useEffect(() => {
+		// Get the span element
+		/*
+		const spanElement = document.getElementById(spanId);
+
+		change_child_elements(spanElement, (e, index) => {
+			// We check the type of the tag, we only want the images
+			// so we convert it to lowercase and check if its an image.
+			if (e.tagName.toLowerCase() === "img") {
+				// Get the current image
+				// This image is already resized.
+				const image = e;
+
+				// When the image loads
+				image.onload = () => {
+					// If the image is smaller than the canvas, resize it
+					// to its original size.
+					const imageWidth = images[index].width;
+					const imageHeight = images[index].height;
+
+					// Get the width and height of the canvas
+					const canvasWidth = parseInt(config.bigImageContainerSize.width);
+					const canvasHeight = parseInt(config.bigImageContainerSize.height);
+
+					// Get the name error-proof
+					if (
+						index < images.length &&
+						input &&
+						input.images &&
+						input.images[index] &&
+						input.images[index]["name"]
+					) {
+						console.log(`Its name`);
+						console.log(input.images[index]["name"]);
+					}
+
+					console.log(`Image width: ${imageWidth}`);
+					console.log(`Image height: ${imageHeight}`);
+					// If the image width is greater than the canvas width
+					if (imageWidth > canvasWidth) {
+						console.log(`The image is bigger, setting it to the canvas size.`);
+						image.style.width = canvasWidth + "px";
+						console.log(`New size: ${image.style.width}`);
+					} else {
+						console.log(`The image is smaller, setting the default size.`);
+						image.style.width = imageWidth + "px";
+						console.log(`New size: ${image.style.width}`);
+					}
+
+					if (imageHeight > canvasHeight) {
+						image.style.height = canvasHeight + "px";
+					} else {
+						image.style.height = imageHeight + "px";
+					}
+				};
+			}
+		});*/
+
+		// If span element exists
+		/*
+		if (spanElement) {
+			// console.log(`Every children`);
+			// console.log(spanElement.children);
+			const elements = spanElement.children;
+			const indexes = Object.entries(elements);
+			// console.log(`Object entries`);
+			// console.log(indexes);
+
+			// Traverse keys and elements, but we are only going to use
+			// the keys.
+			for (let i in indexes) {
+				// i is a string, so we convert it to a number
+				i = parseInt(i);
+
+				// .children collection, returns weird things, so we filter only
+				// the elements that we need, for that we check if the key of
+				// the element can be of type number.
+				if (typeof parseInt(indexes[i][0]) === "number") {
+					// console.log(`Element type: ${elements[i].tagName}`);
+
+					// We check the type of the tag, we only want the images
+					// so we convert it to lowercase and check if its an image.
+					if (elements[i].tagName.toLowerCase() === "img") {
+						// Get the current image
+						// This image is already resized.
+						const image = elements[i];
+						if (image.src === selectedImage) {
+							image.hidden = false;
+						} else {
+							image.hidden = true;
+						}
+						// console.log(`Image element`);
+						// console.log(image);
+						// console.log(`The image, in the image state`);
+						// console.log(images[i]);
+
+						// When the image loads
+						image.onload = () => {
+							// If the image is smaller than the canvas, resize it
+							// to its original size.
+							const imageWidth = images[i].width;
+							const imageHeight = images[i].height;
+
+							// Get the width and height of the canvas
+							const canvasWidth = parseInt(config.bigImageContainerSize.width);
+							const canvasHeight = parseInt(
+								config.bigImageContainerSize.height
+							);
+
+							// Get the name error-proof
+							if (
+								i < images.length &&
+								input &&
+								input.images &&
+								input.images[i] &&
+								input.images[i]["name"]
+							) {
+								console.log(`Its name`);
+								console.log(input.images[i]["name"]);
+							}
+
+							console.log(`Image width: ${imageWidth}`);
+							console.log(`Image height: ${imageHeight}`);
+							// If the image width is greater than the canvas width
+							if (imageWidth > canvasWidth) {
+								console.log(
+									`The image is bigger, setting it to the canvas size.`
+								);
+								image.style.width = canvasWidth + "px";
+								console.log(`New size: ${image.style.width}`);
+							} else {
+								console.log(`The image is smaller, setting the default size.`);
+								image.style.width = imageWidth + "px";
+								console.log(`New size: ${image.style.width}`);
+							}
+
+							if (imageHeight > canvasHeight) {
+								image.style.height = canvasHeight + "px";
+							} else {
+								image.style.height = imageHeight + "px";
+							}
+						};
+					}
+				}
+			}
+		}*/
+	}, [spanId, imageComponents, config, images, input, selectedImage]);
