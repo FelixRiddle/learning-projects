@@ -56,6 +56,13 @@ function CreateProduct() {
 	const [loading, setLoading] = useState(false);
 	const [selectedImage, setSelectedImage] = useState(defaultUploadImage);
 	const [images, setImages] = useState([]);
+	const [imgSizes, setImgSizes] = useState([
+		{
+			width: 0,
+			height: 0,
+			index: 0,
+		},
+	]);
 
 	const [viewportSize, setViewportSize] = useState({
 		width: Math.max(
@@ -127,7 +134,6 @@ function CreateProduct() {
 
 	// When the user resizes the window
 	window.onresize = () => {
-		console.log(`Resize event`);
 		setViewportSize({
 			width: Math.max(
 				document.documentElement.clientWidth || 0,
@@ -162,14 +168,14 @@ function CreateProduct() {
 					break;
 				}
 			}
-			
+
 			if (setImageAt0) setSelectedImage(images[0].src);
 		}
 	}, [images, selectedImage]);
 
-	useEffect(() => {
-		console.log(`Selected image changed to: ${selectedImage}`);
-	}, [selectedImage]);
+	// useEffect(() => {
+	// 	console.log(`Selected image changed to: ${selectedImage}`);
+	// }, [selectedImage]);
 
 	return (
 		<div className="create-product">
@@ -183,12 +189,14 @@ function CreateProduct() {
 					handleInputChange,
 					input,
 					images,
+					imgSizes,
 					loading,
 					maxImages,
 					setConfig,
 					selectedImage,
 					setInput,
 					setImages,
+					setImgSizes,
 					setLoading,
 					setSelectedImage,
 					setStatus,

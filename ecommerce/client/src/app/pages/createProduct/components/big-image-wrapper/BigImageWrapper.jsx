@@ -9,18 +9,20 @@ import ControlBar from "../control_bar/ControlBar";
 function BigImageWrapper() {
 	// Context
 	const {
-		maxImages,
+		arrowIcon,
 		cssDetails,
+		defaultImage,
+		images,
 		input,
+		maxImages,
 		setInput,
 		selectedImage,
 		setSelectedImage,
-		images,
 		setImages,
+		setImgSizes,
 		setLoading,
 		setStatus,
 		viewportSize,
-		arrowIcon,
 	} = useContext(CreateProductContext);
 
 	// States
@@ -57,11 +59,11 @@ function BigImageWrapper() {
 				});
 			}
 
-			// Create a temp array and traverse import images
+			// Create a temp array and traverse imported images
 			const newImages = [];
 
 			// To get all images
-			const totalFiles = [...input.images, ...files];
+			const totalFiles = [...(await input.images), ...files];
 			for (let i in totalFiles) {
 				// The two latest elements are index and a function
 				if (typeof totalFiles[i] !== "object") continue;
@@ -72,13 +74,32 @@ function BigImageWrapper() {
 				const img = new Image();
 				img.src = imgUrl;
 				img.id = uuidv4();
+				//await img.onload = () => console.log(`Image loaded!`);
 
 				newImages.push(img);
 			}
 
+			// Add at last the default image
+			const newDefaultImage = new Image();
+			newDefaultImage.src = defaultImage;
+			newDefaultImage.id = uuidv4();
+			newImages.push(newDefaultImage);
+			// console.log(newImages[0].width);
+
+			// setImgSizes(() => {
+			// 	const everyImage = newImages.map((e, index) => {
+			// 		return { width: e.width, height: e.height, index };
+			// 	});
+
+			// 	console.log(`Every image:`);
+			// 	console.log(everyImage);
+
+			// 	return [...everyImage];
+			// });
+
 			// Insert images in a new array
-			setImages((prevInput) => {
-				const result = [...newImages, prevInput[prevInput.length - 1]];
+			setImages(() => {
+				const result = [...newImages /*, prevInput[prevInput.length - 1]*/];
 				// console.log(`Image elements`);
 				// console.log(result);
 				return result;
