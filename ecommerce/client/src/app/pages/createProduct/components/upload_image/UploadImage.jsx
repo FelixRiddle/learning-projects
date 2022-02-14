@@ -75,44 +75,52 @@ function UploadImage(props) {
 	useEffect(() => {
 		// Get the motherf**ing files
 		const totalFiles = [...input.images];
+		console.log(`Image typeof: ${typeof defaultUploadImage}`);
+		totalFiles.push(defaultUploadImage);
 
 		const newComponentArray = [];
 		for (let i in totalFiles) {
 			i = parseInt(i);
 
-			// The two latest elements are index and a function
-			if (typeof totalFiles[i] !== "object") continue;
+			// Just in case
+			if (
+				!(
+					typeof totalFiles[i] === "object" || typeof totalFiles[i] === "string"
+				)
+			) {
+				continue;
+			}
+
+			const image = {};
 
 			// To create an image url from a file
-			const imgUrl = URL.createObjectURL(totalFiles[i]);
+			if (typeof totalFiles[i] === "object")
+				image.src = URL.createObjectURL(totalFiles[i]);
+			else image.src = totalFiles[i];
 
 			// I'm using images to store more information
 			const img = new Image();
 
 			// Wait till the image loads
 			img.onload = () => {
-				console.log(`Image width: ${img.width}`);
 				const imageName = totalFiles[i]["name"];
+				const currentImage = images[i];
 
 				// Resize images to fit the canvas
 				image_resizer(img, config, (width, height) => {
-					console.log(`Width: ${width}`);
-					console.log(`Height: ${height}`);
 					img.style.width = width + "px";
 					img.style.height = height + "px";
-					console.log(`Image style: ${img.style.width}`);
 				});
-				console.log(`Image style: ${img.style.width}`);
 
 				newComponentArray.push(
 					<img
 						alt={(imageName && imageName) || title}
 						className={
-							(img.src === defaultImage && "-------") ||
+							(selectedImage === defaultImage && "-------") ||
 							(outline && "image") ||
 							""
 						}
-						hidden={!(images[i].src === selectedImage)}
+						hidden={!(currentImage && currentImage.src === selectedImage)}
 						id={uuidv4()}
 						key={uuidv4()}
 						src={(img.src === defaultImage && defaultUploadImage) || img.src}
@@ -128,11 +136,7 @@ function UploadImage(props) {
 					return [...newComponentArray];
 				});
 			};
-			img.src = imgUrl;
-			// img.id = uuidv4();
-			// img.alt = totalFiles[i]["name"];
-
-			// newImages.push(img);
+			img.src = image.src;
 		}
 	}, [
 		config,

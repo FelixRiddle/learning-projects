@@ -16,19 +16,15 @@ export const image_resizer = (image, config, callback) => {
 	// Get the width and height of the canvas
 	const canvasWidth = parseInt(config.bigImageContainerSize.width);
 	const canvasHeight = parseInt(config.bigImageContainerSize.height);
-
-	console.log(`Image width: ${imageWidth}`);
-	console.log(`Image height: ${imageHeight}`);
+	
 	const newSize = [0, 0];
 	// If the image width is greater than the canvas width
 	if (imageWidth > canvasWidth) {
 		// console.log(`The image is bigger, setting it to the canvas size.`);
 		newSize[0] = canvasWidth;
-		console.log(`New size: ${newSize[0]}`);
 	} else {
 		// console.log(`The image is smaller, setting the default size.`);
 		newSize[0] = imageWidth;
-		console.log(`New size: ${newSize[0]}`);
 	}
 
 	if (imageHeight > canvasHeight) {
