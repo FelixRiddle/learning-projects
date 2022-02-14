@@ -2,8 +2,8 @@
 import React, { useEffect, useState, useContext } from "react";
 import { v4 as uuidv4 } from "uuid";
 
-import { CreateProductContext } from "../../CreateProduct";
-import { image_resizer } from "../../lib/image_resizer";
+import { CreateProductContext } from "../../../CreateProduct";
+import { image_resizer } from "../../../lib/image_resizer";
 
 function UploadImage(props) {
 	const {
@@ -75,7 +75,6 @@ function UploadImage(props) {
 	useEffect(() => {
 		// Get the motherf**ing files
 		const totalFiles = [...input.images];
-		console.log(`Image typeof: ${typeof defaultUploadImage}`);
 		totalFiles.push(defaultUploadImage);
 
 		const newComponentArray = [];
@@ -156,12 +155,13 @@ function UploadImage(props) {
 
 			{/* This has to be the last element, if not, the resize functionality
 			will break */}
-			<form id="image-input">
+			<form id="image-input" method="post" enctype="multipart/form-data">
 				<input
 					id="file-input"
 					name={name}
 					hidden={true}
 					multiple={true}
+					value={input.images}
 					onChange={changeFn}
 					style={{ position: "absolute" }}
 					type="file"

@@ -1,6 +1,6 @@
 import React, { useState, useContext } from "react";
 import { v4 as uuidv4 } from "uuid";
-import { CreateProductContext } from "../../CreateProduct";
+import { CreateProductContext } from "../../../CreateProduct";
 
 import Icon from "./components/Icon";
 
@@ -141,7 +141,7 @@ function ControlBar() {
 				const newImage = new Image();
 				newImage.src = URL.createObjectURL(files[0]);
 				newImage.id = uuidv4();
-				
+
 				setImages((prevInput) => {
 					prevInput.splice(i, 1, newImage);
 					const newArray = prevInput;

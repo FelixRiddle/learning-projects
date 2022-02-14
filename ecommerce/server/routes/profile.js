@@ -8,14 +8,12 @@ const {
 	changeAddressValidation,
 } = require("../validation");
 const verify = require("../verifyToken");
+const { get_time } = require("../lib/debug_info");
 
 router.post("/changeBasicInfo", verify, async (req, res) => {
-	// For debugging
-	const time = new Date().getTime();
-	const currentDate = new Date(time);
-	console.log(`Date: ${currentDate.toString()}`);
-	console.log("/changeBasicInfo");
-
+	get_time();
+	console.log(`/changeBasicInfo`)
+	
 	try {
 		// Validate data
 		const { error } = basicInfoValidation(req.body);
@@ -93,10 +91,7 @@ router.post("/changeBasicInfo", verify, async (req, res) => {
 });
 
 router.post("/changePassword", verify, async (req, res) => {
-	// For debugging
-	const time = new Date().getTime();
-	const currentDate = new Date(time);
-	console.log(`Date: ${currentDate.toString()}`);
+	get_time();
 	console.log("/changePassword");
 
 	try {
@@ -165,9 +160,7 @@ router.post("/changePassword", verify, async (req, res) => {
 
 // For the change address part
 router.post("/changeAddress", verify, async (req, res) => {
-	const time = new Date().getTime();
-	const currentDate = new Date(time);
-	console.log(`Date: ${currentDate.toString()}`);
+	get_time();
 	console.log("/changePassword");
 
 	try {

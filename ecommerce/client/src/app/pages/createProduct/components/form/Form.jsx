@@ -67,7 +67,7 @@ function Form() {
 								onChange={handleInputChange}
 							/>
 							<input
-								type="text"
+								type="number"
 								name="stock"
 								placeholder="Stock"
 								value={input.stock}

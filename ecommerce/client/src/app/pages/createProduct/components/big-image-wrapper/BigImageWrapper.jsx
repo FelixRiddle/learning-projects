@@ -2,9 +2,10 @@ import React, { useState, useContext } from "react";
 import { CreateProductContext } from "../../CreateProduct";
 import { v4 as uuidv4 } from "uuid";
 
-import UploadImage from "../upload_image/UploadImage";
-import Arrow from "../arrow/Arrow";
-import ControlBar from "../control_bar/ControlBar";
+import UploadImage from "./upload_image/UploadImage";
+import Arrow from "./arrow/Arrow";
+import ControlBar from "./control_bar/ControlBar";
+
 import { files_to_images } from "../../../../../lib/files/images/files_to_images";
 
 function BigImageWrapper() {
@@ -20,7 +21,6 @@ function BigImageWrapper() {
 		selectedImage,
 		setSelectedImage,
 		setImages,
-		setImgSizes,
 		setLoading,
 		setStatus,
 		viewportSize,

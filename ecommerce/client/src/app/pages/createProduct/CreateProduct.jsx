@@ -75,13 +75,19 @@ function CreateProduct() {
 		),
 	});
 
-	const handleSubmit = (e) => {
+	// Image array buffers for testing
+	const [testImages, setTestImages] = useState([]);
+
+	const handleSubmit = async (e) => {
 		e.preventDefault();
 
-		axios
+		console.log(`Data submitted:`);
+		console.log(input);
+
+		axios //http://localhost:3001/api/users/login
 			.post("http://localhost:3001/api/products/createProduct", {
-				_id: user._id,
 				token,
+				_id: user._id,
 				...input,
 			})
 			.then((res) => handleResponse(res, res.data))
@@ -173,10 +179,6 @@ function CreateProduct() {
 		}
 	}, [images, selectedImage]);
 
-	// useEffect(() => {
-	// 	console.log(`Selected image changed to: ${selectedImage}`);
-	// }, [selectedImage]);
-
 	return (
 		<div className="create-product">
 			<CreateProductContext.Provider
@@ -210,8 +212,7 @@ function CreateProduct() {
 					<Form />
 				</div>
 
-				{/* One default image is always at the end of the array
-			When default image is the last, disable input. */}
+				{/* One default image is always at the end of the array. */}
 				<div className="images-container">
 					{images.map((e, index) => {
 						const isSelected = e.src === selectedImage;
@@ -240,7 +241,7 @@ function CreateProduct() {
 				</div>
 
 				<span className="button-position">
-					<button className="btn" type="submit" onSubmit={handleSubmit}>
+					<button className="btn" type="submit" onClick={handleSubmit}>
 						Submit product
 					</button>
 				</span>
