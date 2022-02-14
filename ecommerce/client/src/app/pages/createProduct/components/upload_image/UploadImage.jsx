@@ -2,10 +2,13 @@
 import React, { useEffect, useState, useContext } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { files_to_images } from "../../../../../lib/files/images/files_to_images";
-import { change_child_elements } from "../../../../../lib/html/change_child_elements";
 
 import { CreateProductContext } from "../../CreateProduct";
-import { print_sizes, resize_all } from "../../lib/image_resizer";
+import {
+	get_resized_images,
+	print_sizes,
+	resize_all,
+} from "../../lib/image_resizer";
 
 function UploadImage(props) {
 	const {
@@ -31,7 +34,7 @@ function UploadImage(props) {
 		images, // Array of images
 		outline,
 	} = props;
-	
+
 	const [spanId] = useState(uuidv4());
 	const [resizedImages, setResizedImages] = useState([]);
 	// imageComponents depends on resized images.
@@ -77,63 +80,129 @@ function UploadImage(props) {
 	}, [resizeImagePercentage, spanId, viewportSize, setConfig, images]);
 
 	// Create a new array of images, this images, will be shown.
-	useEffect(() => {
-		const newArray = files_to_images(input.images);
-		console.log(`New array`);
-		console.log(newArray);
-		
-		console.log(`New images`);
-		const newImages = [...resize_all(newArray, config)];
-		print_sizes(newImages);
+	// useEffect(() => {
+	// 	const newArray = get_resized_images(input.images);
 
-		setResizedImages(() => newImages);
-	}, [input.images, config]);
+	// 	const newArray = files_to_images(input.images);
+	// 	console.log(`New array`);
+	// 	console.log(newArray);
+
+	// 	(async () => {
+	// 		console.log(`New images`);
+	// 		const newImages = [...await resize_all(newArray, config)];
+	// 		print_sizes(newImages);
+
+	// 		setResizedImages(() => newImages);
+	// 	})();
+	// }, [input.images, selectedImage, config]);
 
 	useEffect(() => {
+		// Get the motherf**ing files
+		const newImages = [];
+		const totalFiles = [...input.images];
+
 		const newComponentsId = [];
 		const newComponentArray = [];
-
-		for (let i in resizedImages) {
+		for (let i in totalFiles) {
 			i = parseInt(i);
-			
-			const newId = uuidv4();
-			newComponentsId.push(newId);
 
-			newComponentArray.push(
-				<img
-					alt={(resizedImages[i].alt && resizedImages[i].alt) || title}
-					className={
-						(resizedImages[i].src === defaultImage && "-------") ||
-						(outline && "image") ||
-						""
-					}
-					hidden={!(images[i].src === selectedImage)}
-					id={newId}
-					key={uuidv4()}
-					src={
-						(resizedImages[i].src === defaultImage && defaultUploadImage) ||
-						resizedImages[i].src
-					}
-					style={{
-						...extraStyling,
-						width: resizedImages[i].width,
-						height: resizedImages[i].height,
-					}}
-				/>
-			);
+			// The two latest elements are index and a function
+			if (typeof totalFiles[i] !== "object") continue;
+
+			// To create an image url from a file
+			const imgUrl = URL.createObjectURL(totalFiles[i]);
+
+			// I'm using images to store more information
+			const img = new Image();
+
+			// For some reason you can't wait till this function ends,
+			// you can't use it elsewhere, and of course the only f*ing way
+			// to get the image width is with this aberration of function.
+			// (this took me over three days to figure out, where was the
+			// bug hiding).
+			img.onload = () => {
+				console.log(`Image width: ${img.width}`);
+				const imageName = totalFiles[i]["name"];
+				
+				newComponentArray.push(
+					<img
+						alt={(imageName && imageName) || title}
+						className={
+							(img.src === defaultImage && "-------") ||
+							(outline && "image") ||
+							""
+						}
+						hidden={!(img.src === selectedImage)}
+						id={uuidv4()}
+						key={uuidv4()}
+						src={
+							(img.src === defaultImage && defaultUploadImage) ||
+							img.src
+						}
+						style={{
+							...extraStyling,
+							width: img.width,
+							height: img.height,
+						}}
+					/>
+				);
+			};
+			img.src = imgUrl;
+			// img.id = uuidv4();
+			// img.alt = totalFiles[i]["name"];
+
+			// newImages.push(img);
 		}
 
-		setImgIds(() => [...newComponentsId]);
+		// for (let i in resizedImages) {
+		// 	i = parseInt(i);
 
-		setImageComponents(() => {
-			return [...newComponentArray];
-		});
+		// 	const newId = uuidv4();
+		// 	newComponentsId.push(newId);
+
+		// 	if (images[i].src === selectedImage)
+		// 		console.log({
+		// 			...extraStyling,
+		// 			width: resizedImages[i].width,
+		// 			height: resizedImages[i].height,
+		// 		});
+
+		// 	newComponentArray.push(
+		// 		<img
+		// 			alt={(resizedImages[i].alt && resizedImages[i].alt) || title}
+		// 			className={
+		// 				(resizedImages[i].src === defaultImage && "-------") ||
+		// 				(outline && "image") ||
+		// 				""
+		// 			}
+		// 			hidden={!(images[i].src === selectedImage)}
+		// 			id={newId}
+		// 			key={uuidv4()}
+		// 			src={
+		// 				(resizedImages[i].src === defaultImage && defaultUploadImage) ||
+		// 				resizedImages[i].src
+		// 			}
+		// 			style={{
+		// 				...extraStyling,
+		// 				width: resizedImages[i].width,
+		// 				height: resizedImages[i].height,
+		// 			}}
+		// 		/>
+		// 	);
+		// }
+
+		// setImgIds(() => [...newComponentsId]);
+
+		// setImageComponents(() => {
+		// 	return [...newComponentArray];
+		// });
 	}, [
 		resizedImages,
 		defaultImage,
 		defaultUploadImage,
 		extraStyling,
 		images,
+		input.images,
 		outline,
 		selectedImage,
 		title,
