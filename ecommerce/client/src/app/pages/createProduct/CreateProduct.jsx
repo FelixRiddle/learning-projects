@@ -87,8 +87,8 @@ function CreateProduct() {
 			formData.append("images", input.images[key]);
 		}
 
-		axios
-			.post("http://localhost:3001/api/products/createProduct", formData, {
+		await axios
+			.post("http://localhost:3001/api/products/createProduct", {
 				token,
 				_id: user._id,
 				...newInput,

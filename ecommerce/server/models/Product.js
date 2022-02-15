@@ -15,7 +15,6 @@ const product = new mongoose.Schema({
 		type: Array,
 		required: true,
 		min: 1,
-		max: 10,
 	},
 	stock: {
 		type: Number,

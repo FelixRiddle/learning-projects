@@ -93,7 +93,6 @@ module.exports.changeAddressValidation = changeAddressValidation = (data) => {
 };
 
 /** Validate product data
- * 
  */
 module.exports.createProductValidation = createProductValidation = (data) => {
 	const schema = Joi.object({

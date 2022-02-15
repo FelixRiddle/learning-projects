@@ -1,13 +1,13 @@
+const fs = require("fs");
+const multer = require("multer");
 const router = require("express").Router();
 const verify = require("../verifyToken");
-const multer = require("multer");
 
 const User = require("../models/User");
-const validateCreateProduct = require("../validation");
+const { createProductValidation } = require("../validation");
 const { get_time } = require("../lib/debug_info");
-const store = multer({ dest: "/" });
 
-const DIR = "./uploads/";
+const DIR = "./uploads";
 
 const storage = multer.diskStorage({
 	destination: (req, file, cb) => {
@@ -39,32 +39,30 @@ const upload = multer({
 	},
 });
 
-router.post("/createProduct", upload.array("images", 15), async (req, res) => {
+router.post("/uploadImages", upload.array("images", 15), (req, res) => {
+	get_time();
+	console.log("/createProduct");
+});
+
+router.post("/createProduct", verify, async (req, res) => {
 	get_time();
 	console.log("/createProduct");
 
 	try {
-		const { token, _id, name, images, stock, price } = await req.body;
+		const { token, _id, name, stock, price } = await req.body;
 
-		console.log(`Data:`);
-		console.log(req.body);
+		// console.log(`Data:`);
+		// console.log(req.body);
 
-		const { error } = await validateCreateProduct({ name, stock, price });
-		if (error)
+		const { error } = createProductValidation({ name, stock, price });
+		if (error) {
 			return res.send({
 				state: "danger",
 				error: true,
 				field: "",
 				joiMessage: error.details[0].message,
 			});
-
-		if (!images)
-			return res.send({
-				state: "danger",
-				error: true,
-				field: "",
-				message: "No images provided.",
-			});
+		}
 
 		// Get the user
 		const user = await User.findOne({ _id });
@@ -78,6 +76,13 @@ router.post("/createProduct", upload.array("images", 15), async (req, res) => {
 					"\nIf the error persists please contact us.",
 			});
 		} else {
+			// Create the folder with the id as a name
+			// Check if folder exists and create it synchronously.
+			const folderName = `${DIR}/${_id}`;
+			if (!fs.existsSync(folderName)) {
+				fs.mkdirSync(folderName);
+			}
+
 			return res.send({
 				error: false,
 				field: "",

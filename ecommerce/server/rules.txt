@@ -1,0 +1,32 @@
+* The user can't have more than 10 products.
+* The images are stored in productId.images as the image uuid and its name
+{
+	name: "User name",
+	...The other fields,
+	products: {
+		"dsfj9i3ejf93j9fj9fj934r59349j": {
+			name: "afasdfasd",
+			id: "f92j934j9f34j9f3",
+			stock: "999999",
+			price: "999",
+			images: [
+				"93jr932r923j23rj923923jr",
+				"9fj9uirjf934jfj93j9f43j",
+			]
+		},
+		"dsfj9i3ejf93j9fj9fj934r5934sdfasfd": {
+			name: "afasasdfafdsdfasd",
+			id: "f92j934fsdfasdfj9f34j9f3",
+			stock: "9997999",
+			price: "999",
+			images: [
+				"93jr932r923j23rj923923jasdfar",
+				"9fj9uirjf934jfj93j9f4asdfasdf3j",
+				"9fj9uirjf934jfj93j9f4asdfasdf3j",
+				"9fj9uirjf934jfj93j9f4aasfsdasdafsdfasdf3j",
+				"9fj9uirjf934jfj93jasdfa9f4asdfasdf3j",
+			]
+		},
+		...,
+	}
+}
