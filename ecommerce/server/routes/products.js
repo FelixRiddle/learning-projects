@@ -7,7 +7,39 @@ const validateCreateProduct = require("../validation");
 const { get_time } = require("../lib/debug_info");
 const store = multer({ dest: "/" });
 
-router.post("/createProduct", verify, store, async (req, res) => {
+const DIR = "./uploads/";
+
+const storage = multer.diskStorage({
+	destination: (req, file, cb) => {
+		cb(null, DIR);
+	},
+	filename: (req, file, cb) => {
+		const fileName = file.originalname.toLowerCase().replaceAll(" ", "-");
+		cb(null, uuidv4() + "-" + fileName);
+	},
+});
+
+const upload = multer({
+	storage: storage,
+	fileFilter: (req, file, cb) => {
+		if (
+			file.mimetype === "image/png" ||
+			file.mimetype === "image/jpg" ||
+			file.mimetype === "image/jpeg"
+		) {
+			cb(null, true);
+		} else {
+			cb(null, false);
+			return cb(
+				new Error(
+					"File type not accepted (.png, .jpg, .jpeg are the accepted types)"
+				)
+			);
+		}
+	},
+});
+
+router.post("/createProduct", upload.array("images", 15), async (req, res) => {
 	get_time();
 	console.log("/createProduct");
 

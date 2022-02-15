@@ -29,7 +29,7 @@ export default class UploadComponent extends Component {
 			console.log(`Data:`, this.state.imagesArray[key]);
 			formData.append("imagesArray", this.state.imagesArray[key]);
 		}
-		
+
 		console.log(`The form data:`, formData);
 		axios
 			.post("http://localhost:3003/endpoint/multi-images-upload", formData, {})

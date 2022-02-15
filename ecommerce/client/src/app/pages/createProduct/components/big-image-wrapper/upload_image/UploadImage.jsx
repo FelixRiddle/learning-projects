@@ -155,13 +155,13 @@ function UploadImage(props) {
 
 			{/* This has to be the last element, if not, the resize functionality
 			will break */}
-			<form id="image-input" method="post" enctype="multipart/form-data">
+			<form id="image-input">
 				<input
 					id="file-input"
 					name={name}
 					hidden={true}
 					multiple={true}
-					value={input.images}
+					// value={input.images}
 					onChange={changeFn}
 					style={{ position: "absolute" }}
 					type="file"

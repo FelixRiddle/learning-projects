@@ -8,6 +8,7 @@ import ShowTinyImage from "./components/ShowTinyImage";
 import { v4 as uuidv4 } from "uuid";
 import Form from "./components/form/Form";
 import BigImageWrapper from "./components/big-image-wrapper/BigImageWrapper";
+import { remove_images } from "./lib/transform_input";
 
 export const CreateProductContext = React.createContext();
 
@@ -52,7 +53,6 @@ function CreateProduct() {
 		field: "",
 		state: "",
 	});
-
 	const [loading, setLoading] = useState(false);
 	const [selectedImage, setSelectedImage] = useState(defaultUploadImage);
 	const [images, setImages] = useState([]);
@@ -63,7 +63,6 @@ function CreateProduct() {
 			index: 0,
 		},
 	]);
-
 	const [viewportSize, setViewportSize] = useState({
 		width: Math.max(
 			document.documentElement.clientWidth || 0,
@@ -75,20 +74,24 @@ function CreateProduct() {
 		),
 	});
 
-	// Image array buffers for testing
-	const [testImages, setTestImages] = useState([]);
-
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 
-		console.log(`Data submitted:`);
-		console.log(input);
+		const newInput = remove_images(input);
+		console.log(`Input:`, newInput);
+		console.log(`Images:`, input.images);
+		const formData = new FormData();
+		for (const key in Object.entries(input.images)) {
+			console.log(`Key: ${key}`);
+			console.log(`Appending:`, input.images[key]);
+			formData.append("images", input.images[key]);
+		}
 
-		axios //http://localhost:3001/api/users/login
-			.post("http://localhost:3001/api/products/createProduct", {
+		axios
+			.post("http://localhost:3001/api/products/createProduct", formData, {
 				token,
 				_id: user._id,
-				...input,
+				...newInput,
 			})
 			.then((res) => handleResponse(res, res.data))
 			.catch((err) => handleError(err));
