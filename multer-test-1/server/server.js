@@ -1,34 +1,43 @@
 const express = require("express");
+const mongoose = require("mongoose");
 require("dotenv").config();
 const cors = require("cors");
 const multer = require("multer");
 
-const app = express();
 const upload = multer({ dest: "./uploads/" });
+const mongo = require("./db/database");
 
+mongoose.Promise = global.Promise;
+mongoose
+	.connect(mongo.db, {
+		useUnifiedTopology: true,
+		useNewUrlParser: true,
+	})
+	.then(
+		() => {
+			console.log(`Database connected!`);
+		},
+		(err) => {
+			console.error(err);
+		}
+	);
+
+const app = express();
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 
-app.post("/images", upload.array("images", 5), (req, res, next) => {
-	// req.files is array of `images` files
-	// req.body will contain the text fields, if there were any
-	console.log(`Files:`, req.files, `\nBody:`, req.body);
-});
+app.use("/public", express.static("public"));	
+app.use("/uploads", express.static("uploads"));
 
-const cpUpload = upload.fields([
-	{ name: "avatar", maxCount: 1 },
-	{ name: "gallery", maxCount: 8 },
-]);
-app.post("/cool-profile", cpUpload, function (req, res, next) {
-	// req.files is an object (String -> Array) where fieldname is the key, and the value is array of files
-	//
-	// e.g.
-	//  req.files['avatar'][0] -> File
-	//  req.files['gallery'] -> Array
-	//
-	// req.body will contain the text fields, if there were any
-});
+app.use("/endpoint", require("./routes/file.route"));
 
 app.listen(process.env.SERVER_PORT, () => {
 	console.log(`Server listening on port ${process.env.SERVER_PORT}!`);
 });
+
+app.use((req, res, next) => {
+	setImmediate(() => {
+		next(new Error("Error ocurred"));
+	})
+})
