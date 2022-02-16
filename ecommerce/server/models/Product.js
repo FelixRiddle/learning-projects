@@ -13,7 +13,6 @@ const product = new mongoose.Schema({
 	},
 	images: {
 		type: Array,
-		required: true,
 		min: 1,
 	},
 	stock: {
@@ -31,7 +30,7 @@ const product = new mongoose.Schema({
 	},
 	lastUpdated: {
 		type: Date,
-		defualt: Date.now,
+		default: Date.now,
 	},
 });
 

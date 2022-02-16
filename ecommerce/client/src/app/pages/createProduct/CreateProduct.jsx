@@ -87,17 +87,25 @@ function CreateProduct() {
 			formData.append("images", input.images[key]);
 		}
 
+		for (const key of Object.keys(input)) {
+			if (key === "images") continue;
+			formData.append(key, input[key]);
+		}
+		formData.append("_id", user._id);
+
 		await axios
-			.post("http://localhost:3001/api/products/createProduct", {
-				token,
-				_id: user._id,
-				...newInput,
+			.post("http://localhost:3001/api/products/createProduct", formData, {
+				headers: {
+					"Content-Type": "multipart/form-data",
+					"X-Content-Type-Options": "nosniff",
+				},
 			})
-			.then((res) => handleResponse(res, res.data))
+			.then((res) => handleResponse(res, res.data, formData))
 			.catch((err) => handleError(err));
 	};
 
-	const handleResponse = (res, data) => {
+	const handleResponse = async (res, data, formData) => {
+		console.log(`Res status:`, res.status);
 		if (data.joiMessage && data.error) {
 			const newMessage = handleMessageValidationv2(input, res, [
 				"Name",
@@ -121,6 +129,17 @@ function CreateProduct() {
 				state: data.state,
 			});
 		}
+
+		// if (!data.error && data.state === "success") {
+		// 	await axios
+		// 		.post("http://localhost:3001/api/products/uploadImages", formData)
+		// 		.then((res) => {
+		// 			console.log(res);
+		// 		})
+		// 		.catch((err) => {
+		// 			console.error(err);
+		// 		});
+		// }
 	};
 
 	const handleError = (err) => {
