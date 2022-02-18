@@ -1,0 +1,21 @@
+.alertV2 {
+  position: absolute;
+}
+.alertV2 .text {
+  border-radius: 5px;
+  padding: 0px 20px 0px 20px;
+}
+.alertV2 .text .closeIcon {
+  position: absolute;
+}
+.alertV2 .danger {
+  background-color: rgba(255, 0, 0, 0.85);
+}
+.alertV2 .headerText {
+  text-align: center;
+}
+.alertV2:hover {
+  cursor: pointer;
+}
+
+/*# sourceMappingURL=AlertV2.css.map */

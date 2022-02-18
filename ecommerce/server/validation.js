@@ -96,10 +96,11 @@ module.exports.changeAddressValidation = changeAddressValidation = (data) => {
  */
 module.exports.createProductValidation = createProductValidation = (data) => {
 	const schema = Joi.object({
+		description: Joi.string().max(5000),
 		name: Joi.string().max(max).required(),
 		stock: Joi.number().required(),
 		price: Joi.number().required(),
 	});
-	
+
 	return schema.validate(data);
 };

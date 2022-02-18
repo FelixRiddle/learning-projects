@@ -5,6 +5,36 @@
 |✅ Add show password icon  
 |✅ Show "You are already logged in" alert
 
+⬜️ Navbar  
+|✅ Add a search input  
+| |⬜️ Search for products  
+|✅ Icon/Links  
+| |✅ Replace every link with icons  
+| |✅ Show words if icons are not available  
+| |⬜️ Add a small pop-up that tells what the icon is for.
+
+⬜️ Create Product  
+|✅ Form  
+| |✅ Upload file  
+| |✅ Icon for upload  
+| |✅ Show big image on the left  
+| | |✅ Fixed image size  
+| | |✅ The image re-scales when the user resizes the window  
+| | |✅ There are arrows to navigate through each image  
+| | |✅ The user can select an image  
+| | |✅ Add a control bar below the big image  
+| | | |✅ Arrows for navigation  
+| | | |✅ Arrows for MOVING the image  
+| | | |✅ Delete image  
+| | | |✅ Change image  
+| | | |✅ Add image  
+| |✅ Show tiny images below  
+| | |✅ Add feedback to the selected image  
+| | |✅ When it's full of images, the last is disabled.
+|⬜️ Feedback  
+| |⬜️ Status alerts  
+| |⬜️ 
+
 ✅ Profile  
 |⬜️ Search bar for settings  
 |✅ If the user is not logged in, show 401  
@@ -46,39 +76,14 @@
 | |✅ Backend functionality  
 | | |✅ Validate data with joi  
 | | |✅ Error handling  
-| | |✅ Update data  
-|⬜️ Navbar  
-| |✅ Add a search input  
-| | |⬜️ Search for products  
-| |✅ Icon/Links  
-| | |✅ Replace every link with icons  
-| | |✅ Show words if icons are not available  
-| | |⬜️ Add a small pop-up that tells what the icon is for.  
-|⬜️ Create Product  
-| |✅ Form  
-| | |✅ Upload file  
-| | |✅ Icon for upload  
-| | |✅ Show big image on the left  
-| | | |✅ Fixed image size  
-| | | |✅ The image re-scales when the user resizes the window  
-| | | |✅ There are arrows to navigate through each image  
-| | | |✅ The user can select an image  
-| | | |⬜️ Add a control bar below the big image  
-| | | | |✅ Arrows for navigation  
-| | | | |✅ Arrows for MOVING the image  
-| | | | |⬜️ Delete image  
-| | | | |⬜️ Change image  
-| | | | |⬜️ Add image  
-| | |✅ Show tiny images below  
-| | | |✅ Add feedback to the selected image  
-| | | |✅ When it's full of images, the last is disabled.
+| | |✅ Update data
 
 |Others  
 | |⬜️ Add dark mode, for this, create a gigantic div that covers everything
 and move it accordingly with z-index.
 
 |Hardmode  
-| |⬜️ Drag and drop with the small image.
+| |⬜️ Drag and drop with the small images.
 
 ⬜️ Licenses  
 |⬜️ Add the following attributions  
@@ -107,7 +112,7 @@ and move it accordingly with z-index.
 | |⬜️ icons/control_bar_x32/next_arrow_1: <a href="https://www.flaticon.com/free-icons/arrow" title="arrow icons">Arrow icons created by Handicon - Flaticon</a>  
 | |⬜️ icons/control_bar_x32/delete_1: <a href="https://www.flaticon.com/free-icons/trash" title="trash icons">Trash icons created by Freepik - Flaticon</a>  
 | |⬜️ icons/control_bar_x32/edit_1: <a href="https://www.flaticon.com/free-icons/edit" title="edit icons">Edit icons created by Kiranshastry - Flaticon</a>  
-| |⬜️  
+| |⬜️ icons/close_1: <a href="https://www.flaticon.com/free-icons/close" title="close icons">Close icons created by Fuzzee - Flaticon</a>  
 | |⬜️  
 | |⬜️  
 | |⬜️  

@@ -15,17 +15,9 @@ const DIR = "uploads";
 const storage = multer.diskStorage({
 	destination: (req, file, cb) => {
 		get_time();
-		console.log("multer.diskStorage");
-		console.log(`Req body:`, req.body);
-		console.log(`Req files:`, req.files);
-		console.log(`File:`, file);
 		cb(null, DIR);
 	},
 	filename: (req, file, cb) => {
-		console.log("multer.filename");
-		console.log(`Req body:`, req.body);
-		console.log(`Req files:`, req.files);
-		console.log(`File:`, file);
 		const fileName = file.originalname.toLowerCase().replaceAll(" ", "-");
 		cb(null, uuidv4() + "-" + fileName);
 	},
@@ -80,10 +72,17 @@ router.post("/createProduct", upload.array("images", 15), async (req, res) => {
 	console.log("/createProduct");
 
 	try {
-		const { _id, name, stock, price } = req.body;
+		const { _id, description, name, stock, price } = req.body;
 		const files = req.files;
 
-		const { error } = createProductValidation({ name, stock, price });
+		const { error } = createProductValidation({
+			description,
+			name,
+			stock,
+			price,
+			description,
+		});
+		console.log(`Description:`, description);
 		if (error) {
 			deleteFilesSync(files);
 			console.log(`Error:`, error.details[0].message);
@@ -127,7 +126,7 @@ router.post("/createProduct", upload.array("images", 15), async (req, res) => {
 					});
 				}
 			}
-			
+
 			// If the user has 10 or more products
 			if (userProducts.length >= 10) {
 				deleteFilesSync(files);
@@ -166,6 +165,7 @@ router.post("/createProduct", upload.array("images", 15), async (req, res) => {
 			// Insert product
 			const product = new Product({
 				ownerId: _id,
+				description,
 				images: imagePaths,
 				name,
 				stock,

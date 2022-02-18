@@ -10,6 +10,7 @@ import Form from "./components/form/Form";
 import BigImageWrapper from "./components/big-image-wrapper/BigImageWrapper";
 import { remove_images } from "./lib/transform_input";
 import Description from "./components/description/Description";
+import AlertV2 from "../../components/alertv2/AlertV2";
 
 export const CreateProductContext = React.createContext();
 
@@ -42,21 +43,6 @@ function CreateProduct() {
 			height: 0,
 		},
 	});
-	const [input, setInput] = useState({
-		description: "",
-		images: [],
-		name: "",
-		price: "",
-		stock: "",
-	});
-	const [status, setStatus] = useState({
-		message: "",
-		error: false,
-		field: "",
-		state: "",
-	});
-	const [loading, setLoading] = useState(false);
-	const [selectedImage, setSelectedImage] = useState(defaultUploadImage);
 	const [images, setImages] = useState([]);
 	const [imgSizes, setImgSizes] = useState([
 		{
@@ -65,6 +51,22 @@ function CreateProduct() {
 			index: 0,
 		},
 	]);
+	const [input, setInput] = useState({
+		description: "",
+		images: [],
+		name: "",
+		price: "",
+		stock: "",
+	});
+	const [loading, setLoading] = useState(false);
+	const [selectedImage, setSelectedImage] = useState(defaultUploadImage);
+	const [showAlert, setShowAlert] = useState(true);
+	const [status, setStatus] = useState({
+		message: "",
+		error: false,
+		field: "",
+		state: "",
+	});
 	const [viewportSize, setViewportSize] = useState({
 		width: Math.max(
 			document.documentElement.clientWidth || 0,
@@ -75,6 +77,10 @@ function CreateProduct() {
 			window.innerHeight || 0
 		),
 	});
+
+	const alertClick = () => {
+		setShowAlert(!showAlert);
+	};
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
@@ -219,6 +225,14 @@ function CreateProduct() {
 					viewportSize,
 				}}
 			>
+				<AlertV2
+					state="danger"
+					center={true}
+					clickFn={() => alertClick()}
+					hidden={showAlert}
+					viewportSize={viewportSize}
+				/>
+
 				<h2 className="title">Create a product</h2>
 				<div className="form-and-image">
 					<BigImageWrapper />
