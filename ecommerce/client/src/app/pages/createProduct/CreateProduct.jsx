@@ -9,6 +9,7 @@ import { v4 as uuidv4 } from "uuid";
 import Form from "./components/form/Form";
 import BigImageWrapper from "./components/big-image-wrapper/BigImageWrapper";
 import { remove_images } from "./lib/transform_input";
+import Description from "./components/description/Description";
 
 export const CreateProductContext = React.createContext();
 
@@ -32,7 +33,7 @@ const cssDetails = {
 
 function CreateProduct() {
 	// Global context(from App.jsx)
-	const { user, token } = useContext(GlobalContext);
+	const { user } = useContext(GlobalContext);
 
 	// States
 	const [config, setConfig] = useState({
@@ -42,10 +43,11 @@ function CreateProduct() {
 		},
 	});
 	const [input, setInput] = useState({
-		name: "",
-		stock: "",
+		description: "",
 		images: [],
+		name: "",
 		price: "",
+		stock: "",
 	});
 	const [status, setStatus] = useState({
 		message: "",
@@ -129,17 +131,6 @@ function CreateProduct() {
 				state: data.state,
 			});
 		}
-
-		// if (!data.error && data.state === "success") {
-		// 	await axios
-		// 		.post("http://localhost:3001/api/products/uploadImages", formData)
-		// 		.then((res) => {
-		// 			console.log(res);
-		// 		})
-		// 		.catch((err) => {
-		// 			console.error(err);
-		// 		});
-		// }
 	};
 
 	const handleError = (err) => {
@@ -261,6 +252,9 @@ function CreateProduct() {
 						);
 					})}
 				</div>
+
+				{/* Product description */}
+				<Description />
 
 				<span className="button-position">
 					<button className="btn" type="submit" onClick={handleSubmit}>
