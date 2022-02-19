@@ -19,6 +19,7 @@ const ChangeAddress = (props) => {
 		state: "",
 		field: "",
 	});
+	const [dataLoaded, setDataLoaded] = useState(false);
 
 	const handleChange = (e) => {
 		const { name, value } = e.target;
@@ -32,6 +33,7 @@ const ChangeAddress = (props) => {
 		axios
 			.post("http://localhost:3001/api/profile/changeAddress", {
 				...input,
+				_id: user._id,
 				token,
 				...location,
 			})
@@ -80,15 +82,24 @@ const ChangeAddress = (props) => {
 			location.province ||
 			location.city ||
 			location.postalCode ||
-			location.address
+			location.address ||
+			dataLoaded
 		)
 			return;
 
 		if (user._id) {
-			const { country, province, city, postalCode, address } = user;
+			let { country, province, city, postalCode, address } = user;
+			
+			if (!country) country = "";
+			if (!province) province = "";
+			if (!city) city = "";
+			if (!postalCode) postalCode = "";
+			if (!address) address = "";
+			
 			setLocation({ country, province, city, postalCode, address });
+			setDataLoaded((prevInput) => !prevInput);
 		}
-	}, [location, user]);
+	}, [location, user, dataLoaded]);
 
 	return (
 		<div className="changeAddress">

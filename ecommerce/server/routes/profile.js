@@ -12,8 +12,8 @@ const { get_time } = require("../lib/debug_info");
 
 router.post("/changeBasicInfo", verify, async (req, res) => {
 	get_time();
-	console.log(`/changeBasicInfo`)
-	
+	console.log(`/changeBasicInfo`);
+
 	try {
 		// Validate data
 		const { error } = basicInfoValidation(req.body);
@@ -161,10 +161,11 @@ router.post("/changePassword", verify, async (req, res) => {
 // For the change address part
 router.post("/changeAddress", verify, async (req, res) => {
 	get_time();
-	console.log("/changePassword");
+	console.log("/changeAddress");
 
 	try {
 		const { token, _id } = req.body;
+		console.log(`Id:`, _id)
 		const data = {
 			country: req.body.country,
 			province: req.body.province,
@@ -175,12 +176,13 @@ router.post("/changeAddress", verify, async (req, res) => {
 
 		// Validate data
 		const { error } = changeAddressValidation(data);
-		if (error)
+		if (error) {
 			return res.send({
 				state: "danger",
 				error: true,
 				joiMessage: error.details[0].message,
 			});
+		}
 
 		// If no token was provided
 		if (!token) {

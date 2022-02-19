@@ -60,7 +60,7 @@ function CreateProduct() {
 	});
 	const [loading, setLoading] = useState(false);
 	const [selectedImage, setSelectedImage] = useState(defaultUploadImage);
-	const [showAlert, setShowAlert] = useState(true);
+	const [showAlert, setShowAlert] = useState(false);
 	const [status, setStatus] = useState({
 		message: "",
 		error: false,
@@ -86,12 +86,12 @@ function CreateProduct() {
 		e.preventDefault();
 
 		const newInput = remove_images(input);
-		console.log(`Input:`, newInput);
-		console.log(`Images:`, input.images);
+		// console.log(`Input:`, newInput);
+		// console.log(`Images:`, input.images);
 		const formData = new FormData();
 		for (const key in Object.entries(input.images)) {
-			console.log(`Key: ${key}`);
-			console.log(`Appending:`, input.images[key]);
+			// console.log(`Key: ${key}`);
+			// console.log(`Appending:`, input.images[key]);
 			formData.append("images", input.images[key]);
 		}
 
@@ -226,10 +226,12 @@ function CreateProduct() {
 				}}
 			>
 				<AlertV2
-					state="danger"
+					state={(status.error && "danger") || (!status.error && "success")}
+					description={status.message}
 					center={true}
 					clickFn={() => alertClick()}
 					hidden={showAlert}
+					title={status.error && "Error"}
 					viewportSize={viewportSize}
 				/>
 

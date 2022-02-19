@@ -29,6 +29,7 @@ function App() {
 		// console.log(user);
 		// If the user already exists
 		if (user._id) return;
+		console.log(`Here`)
 
 		// Token management
 		const token = localStorage.getItem("token");

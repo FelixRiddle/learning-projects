@@ -77,8 +77,8 @@ function AlertV2(props) {
 					style={{ left: boxOffset.width - iconSize.width, marginTop: 5 }}
 					width={"20px"}
 				/>
-				<h4 className="headerText">Error</h4>
-				<p>A field is incorrect or is bad formatted.</p>
+				<h4 className="headerText">{title}</h4>
+				<p>{description}</p>
 			</div>
 		</div>
 	);
