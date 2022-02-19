@@ -20,18 +20,15 @@ function AlertV2(props) {
 	const [boxId] = useState(uuidv4());
 	const [boxStyle, setBoxStyle] = useState({});
 	const [boxOffset, setBoxOffset] = useState({});
+	const [descriptionId] = useState(uuidv4());
+	const [descriptionSize, setDescriptionSize] = useState({});
 	const [iconSize, setIconSize] = useState({});
 
 	useEffect(() => {
-		// console.log(`Center`, center, "Viewport Size", viewportSize);
 		if (center && viewportSize) {
 			const box = document.getElementById(boxId);
 			if (!box) return;
-			// console.log(`Box element:`, box);
-			// console.log(`Offset width:`, box.offsetWidth);
-			// Offset width includes element width + padding + border
 			const boxWidth = box.offsetWidth;
-			// console.log(`Result`, viewportSize.width * 0.5 - boxWidth * 0.5 + "px");
 			setBoxStyle((prevInput) => {
 				return {
 					...prevInput,
@@ -42,7 +39,7 @@ function AlertV2(props) {
 	}, [boxId, center, viewportSize, hidden]);
 
 	useEffect(() => {
-		if (boxOffset.width) return;
+		// if (boxOffset.width) return;
 		if (hidden) return;
 		const box = document.getElementById(boxId);
 		if (box) {
@@ -54,10 +51,9 @@ function AlertV2(props) {
 				};
 			});
 		}
-	}, [boxId, boxOffset, hidden]);
+	}, [boxId, hidden, description, title]);
 
 	useEffect(() => {
-		console.log(`Icon size:`, iconSize);
 		if (iconSize.width) return;
 		const icon = new Image();
 		icon.onload = () => {
@@ -89,7 +85,7 @@ function AlertV2(props) {
 					width={"20px"}
 				/>
 				<h4 className="headerText">{title}</h4>
-				<p>{description}</p>
+				<p id={descriptionId}>{description}</p>
 			</div>
 		</div>
 	);
