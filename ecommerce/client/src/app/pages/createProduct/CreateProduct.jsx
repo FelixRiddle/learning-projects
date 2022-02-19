@@ -60,12 +60,12 @@ function CreateProduct() {
 	});
 	const [loading, setLoading] = useState(false);
 	const [selectedImage, setSelectedImage] = useState(defaultUploadImage);
-	const [showAlert, setShowAlert] = useState(false);
 	const [status, setStatus] = useState({
 		message: "",
 		error: false,
 		field: "",
 		state: "",
+		show: false,
 	});
 	const [viewportSize, setViewportSize] = useState({
 		width: Math.max(
@@ -79,15 +79,17 @@ function CreateProduct() {
 	});
 
 	const alertClick = () => {
-		setShowAlert(!showAlert);
+		setStatus((prevInput) => {
+			return {
+				...prevInput,
+				show: !prevInput.show,
+			};
+		});
 	};
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 
-		const newInput = remove_images(input);
-		// console.log(`Input:`, newInput);
-		// console.log(`Images:`, input.images);
 		const formData = new FormData();
 		for (const key in Object.entries(input.images)) {
 			// console.log(`Key: ${key}`);
@@ -95,8 +97,11 @@ function CreateProduct() {
 			formData.append("images", input.images[key]);
 		}
 
-		for (const key of Object.keys(input)) {
-			if (key === "images") continue;
+		const newInput = remove_images(input);
+		// console.log(`New Input:`, newInput);
+		// console.log(`Images:`, input.images);
+		for (const key of Object.keys(newInput)) {
+			// if (key === "images") continue;
 			formData.append(key, input[key]);
 		}
 		formData.append("_id", user._id);
@@ -114,19 +119,25 @@ function CreateProduct() {
 
 	const handleResponse = async (res, data, formData) => {
 		console.log(`Res status:`, res.status);
+		console.log(`Data:`, data);
+		console.log(`Joi message:`, data.joiMessage);
+		console.log(`Message`, data.message);
 		if (data.joiMessage && data.error) {
 			const newMessage = handleMessageValidationv2(input, res, [
-				"Name",
+				"Description",
 				"Images",
-				"Stock",
+				"Name",
 				"Price",
+				"Stock",
 			]);
+			console.log(`New message:`, newMessage);
 			setStatus({
 				...status,
 				message: newMessage,
 				error: data.error,
 				field: data.field,
 				state: data.state,
+				show: true,
 			});
 		} else if (data.message) {
 			setStatus({
@@ -135,6 +146,7 @@ function CreateProduct() {
 				error: data.error,
 				field: data.field,
 				state: data.state,
+				show: true,
 			});
 		}
 	};
@@ -230,9 +242,10 @@ function CreateProduct() {
 					description={status.message}
 					center={true}
 					clickFn={() => alertClick()}
-					hidden={showAlert}
+					hidden={!status.show}
 					title={status.error && "Error"}
 					viewportSize={viewportSize}
+					extraStyle={{ position: "fixed" }}
 				/>
 
 				<h2 className="title">Create a product</h2>

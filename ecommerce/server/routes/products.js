@@ -75,6 +75,8 @@ router.post("/createProduct", upload.array("images", 15), async (req, res) => {
 		const { _id, description, name, stock, price } = req.body;
 		const files = req.files;
 
+		console.log(`Body:`, req.body);
+
 		const { error } = createProductValidation({
 			description,
 			name,
@@ -85,6 +87,7 @@ router.post("/createProduct", upload.array("images", 15), async (req, res) => {
 		console.log(`Description:`, description);
 		if (error) {
 			deleteFilesSync(files);
+			console.log(`Full error:`, error);
 			console.log(`Error:`, error.details[0].message);
 			return res.send({
 				state: "danger",

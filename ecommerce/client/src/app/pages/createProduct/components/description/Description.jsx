@@ -1,4 +1,4 @@
-import React, { useEffect, useContext } from "react";
+import React, { useContext } from "react";
 import { CreateProductContext } from "../../CreateProduct";
 import "./Description.css";
 
@@ -6,9 +6,6 @@ function Description() {
 	const { input, viewportSize, handleInputChange } =
 		useContext(CreateProductContext);
 
-	useEffect(() => {
-		console.log(`Input`, input);
-	}, [input]);
 	return (
 		<div className="description">
 			<form className="form">
