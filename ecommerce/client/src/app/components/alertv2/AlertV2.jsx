@@ -21,7 +21,6 @@ function AlertV2(props) {
 	const [boxStyle, setBoxStyle] = useState({});
 	const [boxOffset, setBoxOffset] = useState({});
 	const [descriptionId] = useState(uuidv4());
-	const [descriptionSize, setDescriptionSize] = useState({});
 	const [iconSize, setIconSize] = useState({});
 
 	useEffect(() => {

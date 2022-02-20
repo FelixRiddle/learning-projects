@@ -107,7 +107,7 @@ function CreateProduct() {
 		formData.append("_id", user._id);
 
 		await axios
-			.post("http://localhost:3001/api/products/createProduct", formData, {
+			.post("http://localhost:3001/api/products/create", formData, {
 				headers: {
 					"Content-Type": "multipart/form-data",
 					"X-Content-Type-Options": "nosniff",
