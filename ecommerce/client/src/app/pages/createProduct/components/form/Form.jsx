@@ -70,6 +70,7 @@ function Form() {
 								type="number"
 								name="stock"
 								placeholder="Stock"
+								pattern="^\d*(\.\d{0,2})?$"
 								value={input.stock}
 								onChange={handleInputChange}
 							/>
@@ -77,6 +78,7 @@ function Form() {
 								type="number"
 								name="price"
 								placeholder="Price"
+								pattern="^\d*(\.\d{0,2})?$"
 								value={input.price}
 								onChange={handleInputChange}
 							/>

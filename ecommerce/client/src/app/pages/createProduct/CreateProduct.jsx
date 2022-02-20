@@ -1,3 +1,4 @@
+/* eslint-disable no-new-wrappers */
 import React, { useEffect, useState, useContext } from "react";
 import axios from "axios";
 
@@ -156,11 +157,20 @@ function CreateProduct() {
 	};
 
 	const handleInputChange = (e) => {
-		const { name, value } = e.target;
+		const { name, value, type } = e.target;
+		const maxNumberOfDecimals = 4;
+		const val = {};
+
+		// If the user input is for example: 3.9999999999999999999999999999
+		// Limit it to the specified amount in "maxNumberOfDecimals"
+		if (type === "number") {
+			val.result = new Number(parseFloat(value).toFixed(maxNumberOfDecimals));
+		}
+		
 		return setInput((prevInput) => {
 			return {
 				...prevInput,
-				[name]: value,
+				[name]: val.result || value,
 			};
 		});
 	};

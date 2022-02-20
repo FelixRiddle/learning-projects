@@ -1,8 +1,10 @@
 .DefaultPanelProduct {
-  border: 3px solid green;
+  padding: 5px;
+  border-radius: 5px;
 }
 .DefaultPanelProduct:hover {
   cursor: pointer;
+  box-shadow: 3px 3px 20px #b9b9b9;
 }
 .DefaultPanelProduct p {
   margin: 0;

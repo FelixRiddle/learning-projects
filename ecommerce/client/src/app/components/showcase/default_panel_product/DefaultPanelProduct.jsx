@@ -4,7 +4,7 @@ import { v4 as uuidv4 } from "uuid";
 import "./DefaultPanelProduct.css";
 
 function DefaultPanelProduct(props) {
-	const { description, id, image, price, title, size } = props;
+	const { id, image, price, title, size } = props;
 
 	const [boxOffsetSize, setBoxOffsetSize] = useState({});
 	const [imageId] = useState(uuidv4());
