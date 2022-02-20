@@ -1,5 +1,10 @@
 .DefaultPanelView {
-  border: 1px solid red;
+  margin-bottom: 20px;
+}
+.DefaultPanelView .items {
+  display: flex;
+  flex-direction: row;
+  justify-content: left;
 }
 
 /*# sourceMappingURL=DefaultPanelView.css.map */

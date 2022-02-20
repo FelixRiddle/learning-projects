@@ -67,15 +67,24 @@ const moveFilesSync = (files, moveTo) => {
 	}
 };
 
-router.post("/createProduct", upload.array("images", 15), async (req, res) => {
+router.post("/create", upload.array("images", 15), async (req, res) => {
 	get_time();
-	console.log("/createProduct");
+	console.log("/api/products/create");
 
 	try {
 		const { _id, description, name, stock, price } = req.body;
 		const files = req.files;
 
 		console.log(`Body:`, req.body);
+		// If there's at least one file continue
+		if (!files[0]) {
+			return res.send({
+				state: "danger",
+				error: true,
+				field: "",
+				message: "You have to upload at least 1 image.",
+			});
+		}
 
 		const { error } = createProductValidation({
 			description,
@@ -190,6 +199,25 @@ router.post("/createProduct", upload.array("images", 15), async (req, res) => {
 			state: "danger",
 			error: true,
 			message: "Internal server error.",
+		});
+	}
+});
+
+router.get("/getAll", async (req, res) => {
+	get_time();
+	console.log("/api/products/getAll");
+
+	try {
+		const products = await Product.find();
+		console.log(`Products:`, products);
+		return res.send(products);
+	} catch (err) {
+		console.error(err);
+		return res.send({
+			state: "danger",
+			error: true,
+			field: "",
+			message: "Internal server error please try again later.",
 		});
 	}
 });

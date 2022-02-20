@@ -5,6 +5,10 @@
 |✅ Add show password icon  
 |✅ Show "You are already logged in" alert
 
+⬜️ Home  
+| ⬜️ Products panel-like view  
+| | ⬜️
+
 ⬜️ Navbar  
 |✅ Add a search input  
 | |⬜️ Search for products  
@@ -13,7 +17,7 @@
 | |✅ Show words if icons are not available  
 | |⬜️ Add a small pop-up that tells what the icon is for.
 
-⬜️ Create Product  
+✅ Create Product  
 |✅ Form  
 | |✅ Upload file  
 | |✅ Icon for upload  
@@ -31,9 +35,8 @@
 | |✅ Show tiny images below  
 | | |✅ Add feedback to the selected image  
 | | |✅ When it's full of images, the last is disabled.
-|⬜️ Feedback  
-| |⬜️ Status alerts  
-| |⬜️ 
+|✅ Feedback  
+| |✅ Status alerts  
 
 ✅ Profile  
 |⬜️ Search bar for settings  

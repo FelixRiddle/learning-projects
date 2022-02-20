@@ -1,5 +1,11 @@
 .DefaultPanelProduct {
-  border: 1px solid green;
+  border: 3px solid green;
+}
+.DefaultPanelProduct:hover {
+  cursor: pointer;
+}
+.DefaultPanelProduct p {
+  margin: 0;
 }
 
 /*# sourceMappingURL=DefaultPanelProduct.css.map */

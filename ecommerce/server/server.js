@@ -16,6 +16,7 @@ app.get("/test", (req, res) => {
 	return res.status(200).send({ status: "success", msg: "Server online" });
 });
 app.use("/public", express.static("public"));
+app.use("/uploads", express.static("uploads"));
 
 app.use("/api/products", require("./routes/products"));
 app.use("/api/users", require("./routes/auth"));
