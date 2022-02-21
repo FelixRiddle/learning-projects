@@ -12,6 +12,15 @@ function DefaultPanelView(props) {
 		height: 200,
 	});
 
+	const handleItemClick = (e) => {
+		const url = `http://localhost:3000/app/${e._id}/${e.name.replaceAll(
+			" ",
+			"-"
+		)}`;
+		// window.location.href = url;
+		window.open(url, "_blank").focus();
+	};
+
 	return (
 		<div className="DefaultPanelView">
 			<p>DefaultPanelView</p>
@@ -31,6 +40,7 @@ function DefaultPanelView(props) {
 								price={e.price}
 								title={e.name}
 								size={itemSize}
+								clickFn={() => handleItemClick(e)}
 							/>
 						);
 					})}

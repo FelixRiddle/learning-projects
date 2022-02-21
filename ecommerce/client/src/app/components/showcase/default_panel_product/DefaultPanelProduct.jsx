@@ -4,7 +4,7 @@ import { v4 as uuidv4 } from "uuid";
 import "./DefaultPanelProduct.css";
 
 function DefaultPanelProduct(props) {
-	const { id, image, price, title, size } = props;
+	const { clickFn, id, image, price, title, size } = props;
 
 	const [boxOffsetSize, setBoxOffsetSize] = useState({});
 	const [imageId] = useState(uuidv4());
@@ -61,6 +61,7 @@ function DefaultPanelProduct(props) {
 		<div
 			id={id}
 			className={"DefaultPanelProduct"}
+			onClick={clickFn}
 			style={{ width: size.width, height: size.height, marginRight: "10px" }}
 		>
 			<p id={titleId}>{title}</p>
