@@ -2,6 +2,7 @@ import "./App.css";
 import Navbar from "./components/navbar/Navbar";
 import React, { useState, useEffect } from "react";
 import jwt_decode from "jwt-decode";
+import { getAll } from "../lib/products/getProducts";
 
 export const GlobalContext = React.createContext();
 
@@ -23,6 +24,13 @@ function App() {
 	});
 	const [token, setToken] = useState("");
 	const [currentSite, setCurrentSite] = useState("");
+	const [products, setProducts] = useState([]);
+
+	useEffect(() => {
+		getAll("http://localhost:3001/api/products/getAll").then((data) => {
+			setProducts([...data]);
+		});
+	}, []);
 
 	useEffect(() => {
 		// If the user already exists
@@ -56,7 +64,16 @@ function App() {
 	return (
 		<div className="App">
 			<GlobalContext.Provider
-				value={{ user, setUser, token, setToken, currentSite, setCurrentSite }}
+				value={{
+					user,
+					token,
+					setToken,
+					currentSite,
+					products,
+					setCurrentSite,
+					setProducts,
+					setUser,
+				}}
 			>
 				<Navbar />
 			</GlobalContext.Provider>

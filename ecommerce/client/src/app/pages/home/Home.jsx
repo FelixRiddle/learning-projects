@@ -1,17 +1,11 @@
-import { useState, useEffect } from "react";
-import { getAll } from "../../../lib/products/getProducts";
+import { useContext } from "react";
 
+import { GlobalContext } from "../../App";
 import DefaultPanelView from "../../components/showcase/default_panel_view/DefaultPanelView";
 import "./Home.css";
 
 const Home = () => {
-	const [products, setProducts] = useState([]);
-
-	useEffect(() => {
-		getAll("http://localhost:3001/api/products/getAll").then((data) => {
-			setProducts([...data]);
-		});
-	}, []);
+	const { products } = useContext(GlobalContext);
 
 	return (
 		<div>
