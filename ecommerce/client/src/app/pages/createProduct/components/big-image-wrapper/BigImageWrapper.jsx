@@ -5,14 +5,15 @@ import { v4 as uuidv4 } from "uuid";
 import UploadImage from "./upload_image/UploadImage";
 import Arrow from "./arrow/Arrow";
 import ControlBar from "./control_bar/ControlBar";
-
 import { files_to_images } from "../../../../../lib/files/images/files_to_images";
+import { GlobalContext } from "../../../../App";
 
 function BigImageWrapper() {
-	// Context
+	// Contexts
+	const { cssDetails } = useContext(GlobalContext);
+
 	const {
 		arrowIcon,
-		cssDetails,
 		defaultImage,
 		images,
 		input,

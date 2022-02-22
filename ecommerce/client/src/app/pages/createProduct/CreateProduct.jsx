@@ -22,16 +22,6 @@ const defaultUploadImage = "http://localhost:3001/public/iconsx64/upload_1.png";
 const disabledImage =
 	"http://localhost:3001/public/iconsx64/disabled_image_1.png";
 const maxImages = 15;
-const cssDetails = {
-	bigImage: {
-		width: 60,
-		height: 70,
-	},
-	productInputSize: {
-		width: 40,
-		height: 70,
-	},
-};
 
 function CreateProduct() {
 	// Global context(from App.jsx)
@@ -226,7 +216,6 @@ function CreateProduct() {
 				value={{
 					arrowIcon,
 					config,
-					cssDetails,
 					defaultImage,
 					defaultUploadImage,
 					handleInputChange,

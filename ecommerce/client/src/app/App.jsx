@@ -25,6 +25,16 @@ function App() {
 	const [token, setToken] = useState("");
 	const [currentSite, setCurrentSite] = useState("");
 	const [products, setProducts] = useState([]);
+	const [cssDetails] = useState({
+		bigImage: {
+			width: 60,
+			height: 70,
+		},
+		productInputSize: {
+			width: 40,
+			height: 70,
+		},
+	});
 
 	useEffect(() => {
 		getAll("http://localhost:3001/api/products/getAll").then((data) => {
@@ -65,14 +75,15 @@ function App() {
 		<div className="App">
 			<GlobalContext.Provider
 				value={{
-					user,
-					token,
-					setToken,
+					cssDetails,
 					currentSite,
 					products,
 					setCurrentSite,
 					setProducts,
 					setUser,
+					setToken,
+					token,
+					user,
 				}}
 			>
 				<Navbar />

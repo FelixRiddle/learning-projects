@@ -1,5 +1,6 @@
 import { BrowserRouter, Route, Routes as Routes1 } from "react-router-dom";
 import { useContext } from "react";
+import { v4 as uuidv4 } from "uuid";
 
 import Home from "../../../../pages/home/Home";
 import About from "../../../../pages/about/About";
@@ -32,6 +33,7 @@ const Routes = (props) => {
 					console.log(`Product:`, e);
 					return (
 						<Route
+							key={uuidv4()}
 							path={`/app/${e._id}/${e.name.replaceAll(" ", "-")}`}
 							element={<ProductView {...e} />}
 						/>
