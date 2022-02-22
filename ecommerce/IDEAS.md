@@ -37,6 +37,7 @@
 | | |✅ When it's full of images, the last is disabled.
 |✅ Feedback  
 | |✅ Status alerts  
+| |⬜️ Show an error when the maximum amount of images has been reached
 
 ✅ Profile  
 |⬜️ Search bar for settings  

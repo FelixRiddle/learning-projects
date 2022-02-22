@@ -1,17 +1,23 @@
 /* eslint-disable no-new-wrappers */
 import React, { useEffect, useState, useContext } from "react";
 import axios from "axios";
-
-import { GlobalContext } from "../../App";
-import { handleMessageValidationv2 } from "../../../lib/handleMessageValidation";
-import "./CreateProduct.css";
-import ShowTinyImage from "./components/ShowTinyImage";
 import { v4 as uuidv4 } from "uuid";
-import Form from "./components/form/Form";
-import BigImageWrapper from "./components/big-image-wrapper/BigImageWrapper";
-import { remove_images } from "./lib/transform_input";
-import Description from "./components/description/Description";
+
+// Css
+import "./CreateProduct.css";
+
+// Components
 import AlertV2 from "../../components/alertv2/AlertV2";
+import BigImageWrapper from "./components/big-image-wrapper/BigImageWrapper";
+import Description from "./components/description/Description";
+import Form from "./components/form/Form";
+import ImageSelector from "../../components/images/image_selector/ImageSelector";
+import ShowTinyImage from "./components/ShowTinyImage";
+
+// Others
+import { handleMessageValidationv2 } from "../../../lib/handleMessageValidation";
+import { remove_images } from "./lib/transform_input";
+import { GlobalContext } from "../../App";
 
 export const CreateProductContext = React.createContext();
 
@@ -21,7 +27,7 @@ const arrowIcon = "http://localhost:3001/public/iconsx64/arrow_right_1.png";
 const defaultUploadImage = "http://localhost:3001/public/iconsx64/upload_1.png";
 const disabledImage =
 	"http://localhost:3001/public/iconsx64/disabled_image_1.png";
-const maxImages = 15;
+const maxImages = 10;
 
 function CreateProduct() {
 	// Global context(from App.jsx)
@@ -156,7 +162,7 @@ function CreateProduct() {
 		if (type === "number") {
 			val.result = new Number(parseFloat(value).toFixed(maxNumberOfDecimals));
 		}
-		
+
 		return setInput((prevInput) => {
 			return {
 				...prevInput,
@@ -254,7 +260,42 @@ function CreateProduct() {
 				</div>
 
 				{/* One default image is always at the end of the array. */}
-				<div className="images-container">
+				{/* <div className="images-container"> */}
+					<ImageSelector
+						cbDisabled={(settings) => {
+							// Check if current image is the last image
+							return (
+								images.length > maxImages && settings.imageSrc === defaultImage
+							);
+						}}
+						cbImageClasses={(settings) => {
+							const isLastImage =
+								images.length > maxImages && settings.imageSrc === defaultImage;
+							const isSelected = settings.isSelected;
+
+							const conditionHellResult =
+								"tiny-image " +
+								// If it is not the last image, it can be selected by the user
+								((!isLastImage && isSelected && "selected-image") ||
+									(isLastImage && "last-image") ||
+									"");
+
+							return conditionHellResult;
+						}}
+						cbImageSrc={(settings) => {
+							// Check if current image is the last image
+							const isLastImage =
+								images.length > maxImages && settings.imageSrc === defaultImage;
+							return (isLastImage && disabledImage) || settings.imageSrc;
+						}}
+						divClasses={"images-container"}
+						handleTinyImageClick={handleTinyImageClick}
+						images={images}
+						selectedImage={selectedImage}
+						tinyImageDivClasses={"images"}
+					/>
+					
+					{/* Original
 					{images.map((e, index) => {
 						const isSelected = e.src === selectedImage;
 						// Check if current image is the last image
@@ -274,12 +315,11 @@ function CreateProduct() {
 										(isLastImage && "last-image"))
 								}
 								isDisabled={isLastImage}
-								defaultImage={defaultUploadImage}
 								selectedImage={selectedImage}
 							/>
 						);
-					})}
-				</div>
+					})} */}
+				{/* </div> */}
 
 				{/* Product description */}
 				<Description />

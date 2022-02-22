@@ -30,7 +30,7 @@ const Routes = (props) => {
 				/>
 				<Route path="/createProduct" element={<CreateProduct />} />
 				{products.map((e) => {
-					console.log(`Product:`, e);
+					// console.log(`Product:`, e);
 					return (
 						<Route
 							key={uuidv4()}
