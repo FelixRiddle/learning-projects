@@ -2,6 +2,7 @@
 import React, { useEffect, useState, useContext } from "react";
 import { v4 as uuidv4 } from "uuid";
 
+import { resizeByPercentage } from "../../../../../../lib/images/resizer";
 import { CreateProductContext } from "../../../CreateProduct";
 import { image_resizer } from "../../../lib/image_resizer";
 
@@ -46,29 +47,29 @@ function UploadImage(props) {
 		// resizes the window
 		const parentElement = document.getElementById(spanId);
 		if (parentElement) {
-			// Get the new width and height, by dividing the percentage and multiplying it
-			// by width.
-			const newWidth = (resizeImagePercentage.width / 100) * viewportSize.width;
-			const newHeight =
-				(resizeImagePercentage.height / 100) * viewportSize.height;
+			resizeByPercentage(
+				resizeImagePercentage,
+				viewportSize,
+				(newWidth, newHeight) => {
+					// This will be used for the arrows
+					setConfig((prevInput) => {
+						return {
+							...prevInput,
+							bigImageContainerSize: {
+								width: newWidth,
+								height: newHeight,
+							},
+						};
+					});
 
-			// This will be used for the arrows
-			setConfig((prevInput) => {
-				return {
-					...prevInput,
-					bigImageContainerSize: {
-						width: newWidth,
-						height: newHeight,
-					},
-				};
-			});
+					// Set the new width and height
+					const widthResult = newWidth + "px";
+					const heightResult = newHeight + "px";
 
-			// Set the new width and height
-			const widthResult = newWidth + "px";
-			const heightResult = newHeight + "px";
-
-			parentElement.style.width = widthResult;
-			parentElement.style.height = heightResult;
+					parentElement.style.width = widthResult;
+					parentElement.style.height = heightResult;
+				}
+			);
 		}
 	}, [resizeImagePercentage, spanId, viewportSize, setConfig, images]);
 
