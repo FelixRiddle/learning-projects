@@ -25,7 +25,7 @@ const arrowIcon = "http://localhost:3001/public/iconsx64/arrow_right_1.png";
 const defaultUploadImage = "http://localhost:3001/public/iconsx64/upload_1.png";
 const disabledImage =
 	"http://localhost:3001/public/iconsx64/disabled_image_1.png";
-const maxImages = 10;
+const maxImages = 100;
 
 function CreateProduct() {
 	// Global context(from App.jsx)
@@ -221,8 +221,8 @@ function CreateProduct() {
 	}, []);
 
 	useEffect(() => {
-		// If there is no image selected, set the selected image as
-		// the first image
+		// If there is no image selected, set the first image as
+		// the selected image.
 		if (
 			typeof images !== "undefined" &&
 			typeof images[0] !== "undefined" &&
@@ -289,7 +289,7 @@ function CreateProduct() {
 					cbDisabled={(settings) => cbImageSelectorDisabled(settings)}
 					cbImageClasses={(settings) => cbImageSelectorClasses(settings)}
 					cbImageSrc={(settings) => cbImageSelectorImageSrc(settings)}
-					divClasses={"images-container"}
+					divClasses={"image-selector"}
 					handleTinyImageClick={handleTinyImageClick}
 					images={images}
 					selectedImage={selectedImage}

@@ -30,7 +30,11 @@ function ProductView(props) {
 	return (
 		<div>
 			<p>{name}</p>
-			<BigImage name={name} selectedImage={selectedImage} />
+			<BigImage
+				name={name}
+				imageClasses={"product-image"}
+				selectedImage={selectedImage}
+			/>
 
 			{/* For selecting the image with point and click */}
 			<ImageSelector
@@ -38,30 +42,9 @@ function ProductView(props) {
 				handleTinyImageClick={handleTinyImageClick}
 				images={fullImageUrls}
 				selectedImage={selectedImage}
-				tinyImageClasses={"tiny-image"}
+				imageClasses={"tiny-image"}
 				tinyImageDivClasses={"image-element"}
 			/>
-			{/* 
-			<ImageSelector
-				cbDisabled={(settings) => cbImageSelectorDisabled(settings)}
-				cbImageClasses={(settings) => cbImageSelectorClasses(settings)}
-				cbImageSrc={(settings) => cbImageSelectorImageSrc(settings)}
-				divClasses={"images-container"}
-				handleTinyImageClick={handleTinyImageClick}
-				images={images}
-				selectedImage={selectedImage}
-				tinyImageDivClasses={"images"}
-			/>
-			cbImageClasses,
-			cbImageSrc,
-			cbDisabled,
-
-			divClasses,
-			tinyImageDivClasses,
-			handleTinyImageClick,
-			images,
-			selectedImage, 
-			*/}
 			<p>{description}</p>
 		</div>
 	);

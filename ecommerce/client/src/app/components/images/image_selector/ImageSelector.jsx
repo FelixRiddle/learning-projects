@@ -12,7 +12,7 @@ function ImageSelector(props) {
 
 		divClasses,
 		tinyImageDivClasses,
-		tinyImageClasses,
+		imageClasses,
 		handleTinyImageClick,
 		images,
 		selectedImage,
@@ -65,11 +65,9 @@ function ImageSelector(props) {
 					if (cbImageSrc) settings.cbImageSrcResult = cbImageSrc(settings);
 					if (cbDisabled) settings.isDisabled = cbDisabled(settings);
 
-					console.log(`Last settings update:`, settings);
+					console.log(`Last settings update:`);
+					console.log(settings);
 
-					// TODO:
-					// (X) imageSrc
-					// (X) isDisabled
 					return (
 						<TinyImage
 							key={uuidv4()}
@@ -77,7 +75,7 @@ function ImageSelector(props) {
 							index={index}
 							clickFn={handleTinyImageClick}
 							classes={tinyImageDivClasses}
-							imageClasses={settings.cbImageClassesResult || tinyImageClasses}
+							imageClasses={settings.cbImageClassesResult || imageClasses}
 							isDisabled={settings.isDisabled}
 							selectedImage={selectedImage}
 						/>

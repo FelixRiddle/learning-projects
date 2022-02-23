@@ -40,7 +40,7 @@
 | |⬜️ Show an error when the maximum amount of images has been reached
 
 ⬜️ Product view  
-| ⬜️ Image selector  
+| ⬜️ Image selector
 
 ✅ Profile  
 |⬜️ Search bar for settings  

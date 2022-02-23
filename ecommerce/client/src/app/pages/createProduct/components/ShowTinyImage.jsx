@@ -1,5 +1,6 @@
 /* eslint-disable jsx-a11y/img-redundant-alt */
-import React from "react";
+
+/*import React from "react";
 
 function ShowTinyImage(props) {
 	const {
@@ -22,3 +23,4 @@ function ShowTinyImage(props) {
 }
 
 export default ShowTinyImage;
+*/
