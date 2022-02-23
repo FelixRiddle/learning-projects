@@ -1,14 +1,14 @@
 import React from "react";
 
 function BigImage(props) {
-	const { name, serverUrl, selectedImage } = props;
+	const { name, selectedImage } = props;
 
 	return (
 		<div>
 			<img
 				alt={name}
 				className={"product-image"}
-				src={serverUrl + selectedImage}
+				src={selectedImage}
 			/>
 		</div>
 	);

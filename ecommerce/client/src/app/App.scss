@@ -1,0 +1,27 @@
+.image-selector {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: left;
+	margin: 20px 0px 20px 0px;
+	// border: 1px solid red;
+	
+	// For the selected image of the tiny images
+	.selected-image {
+		outline-style: solid;
+		outline-color: cornflowerblue;
+	}
+
+	.image-element {
+		margin-right: 10px;
+		
+		.tiny-image {
+			width: 64px;
+			height: 64px;
+		}
+
+		&:hover {
+			cursor: pointer;
+		}
+	}
+}

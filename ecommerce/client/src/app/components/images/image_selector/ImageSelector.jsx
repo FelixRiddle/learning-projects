@@ -12,6 +12,7 @@ function ImageSelector(props) {
 
 		divClasses,
 		tinyImageDivClasses,
+		tinyImageClasses,
 		handleTinyImageClick,
 		images,
 		selectedImage,
@@ -67,7 +68,7 @@ function ImageSelector(props) {
 					console.log(`Last settings update:`, settings);
 
 					// TODO:
-					// () imageSrc
+					// (X) imageSrc
 					// (X) isDisabled
 					return (
 						<TinyImage
@@ -76,36 +77,12 @@ function ImageSelector(props) {
 							index={index}
 							clickFn={handleTinyImageClick}
 							classes={tinyImageDivClasses}
-							imageClasses={settings.cbImageClassesResult}
+							imageClasses={settings.cbImageClassesResult || tinyImageClasses}
 							isDisabled={settings.isDisabled}
 							selectedImage={selectedImage}
 						/>
 					);
 				})}
-
-			{/* {images.map((e, index) => {
-				const isSelected = e.src === selectedImage;
-				// Check if current image is the last image
-				const isLastImage = images.length > maxImages && e.src === defaultImage;
-				return (
-					<TinyImage
-						key={uuidv4()}
-						imageSrc={(isLastImage && disabledImage) || e.src}
-						index={index}
-						clickFn={handleTinyImageClick}
-						classes={"images "}
-						imageClasses={
-							"tiny-image " +
-							// If it is not the last image, it can be selected by the user
-							((!isLastImage && isSelected && "selected-image") ||
-								(isLastImage && "last-image"))
-						}
-						isDisabled={isLastImage}
-						defaultImage={defaultUploadImage}
-						selectedImage={selectedImage}
-					/>
-				);
-			})} */}
 		</div>
 	);
 }

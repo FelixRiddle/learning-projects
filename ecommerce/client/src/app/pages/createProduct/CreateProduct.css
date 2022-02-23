@@ -107,32 +107,11 @@
 .create-product .form-and-image .form > * {
   flex: 1 100%;
 }
-.create-product .images-container {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: left;
-  margin: 20px 0px 20px 0px;
-}
-.create-product .images-container .selected-image {
-  outline-style: solid;
-  outline-color: cornflowerblue;
-}
 .create-product .images-container .last-image {
   opacity: 0.5;
 }
 .create-product .images-container .last-image:hover {
   cursor: default;
-}
-.create-product .images-container .images {
-  margin-right: 10px;
-}
-.create-product .images-container .images .tiny-image {
-  width: 64px;
-  height: 64px;
-}
-.create-product .images-container .images:hover {
-  cursor: pointer;
 }
 .create-product .button-position {
   display: flex;

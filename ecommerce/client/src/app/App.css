@@ -1,3 +1,23 @@
-
+.image-selector {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: left;
+  margin: 20px 0px 20px 0px;
+}
+.image-selector .selected-image {
+  outline-style: solid;
+  outline-color: cornflowerblue;
+}
+.image-selector .image-element {
+  margin-right: 10px;
+}
+.image-selector .image-element .tiny-image {
+  width: 64px;
+  height: 64px;
+}
+.image-selector .image-element:hover {
+  cursor: pointer;
+}
 
 /*# sourceMappingURL=App.css.map */

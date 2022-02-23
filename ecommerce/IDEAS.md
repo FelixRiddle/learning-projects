@@ -39,6 +39,9 @@
 | |✅ Status alerts  
 | |⬜️ Show an error when the maximum amount of images has been reached
 
+⬜️ Product view  
+| ⬜️ Image selector  
+
 ✅ Profile  
 |⬜️ Search bar for settings  
 |✅ If the user is not logged in, show 401  

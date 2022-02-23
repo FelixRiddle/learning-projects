@@ -1,7 +1,6 @@
 /* eslint-disable no-new-wrappers */
 import React, { useEffect, useState, useContext } from "react";
 import axios from "axios";
-import { v4 as uuidv4 } from "uuid";
 
 // Css
 import "./CreateProduct.css";
@@ -12,7 +11,6 @@ import BigImageWrapper from "./components/big-image-wrapper/BigImageWrapper";
 import Description from "./components/description/Description";
 import Form from "./components/form/Form";
 import ImageSelector from "../../components/images/image_selector/ImageSelector";
-import ShowTinyImage from "./components/ShowTinyImage";
 
 // Others
 import { handleMessageValidationv2 } from "../../../lib/handleMessageValidation";
@@ -175,6 +173,33 @@ function CreateProduct() {
 		setSelectedImage(() => imageSrc);
 	};
 
+	const cbImageSelectorDisabled = (settings) => {
+		// Check if current image is the last image
+		return images.length > maxImages && settings.imageSrc === defaultImage;
+	};
+
+	const cbImageSelectorClasses = (settings) => {
+		const isLastImage =
+			images.length > maxImages && settings.imageSrc === defaultImage;
+		const isSelected = settings.isSelected;
+
+		const conditionHellResult =
+			"tiny-image " +
+			// If it is not the last image, it can be selected by the user
+			((!isLastImage && isSelected && "selected-image") ||
+				(isLastImage && "last-image") ||
+				"");
+
+		return conditionHellResult;
+	};
+
+	const cbImageSelectorImageSrc = (settings) => {
+		// Check if current image is the last image
+		const isLastImage =
+			images.length > maxImages && settings.imageSrc === defaultImage;
+		return (isLastImage && disabledImage) || settings.imageSrc;
+	};
+
 	// When the user resizes the window
 	window.onresize = () => {
 		setViewportSize({
@@ -259,43 +284,21 @@ function CreateProduct() {
 					<Form />
 				</div>
 
-				{/* One default image is always at the end of the array. */}
-				{/* <div className="images-container"> */}
-					<ImageSelector
-						cbDisabled={(settings) => {
-							// Check if current image is the last image
-							return (
-								images.length > maxImages && settings.imageSrc === defaultImage
-							);
-						}}
-						cbImageClasses={(settings) => {
-							const isLastImage =
-								images.length > maxImages && settings.imageSrc === defaultImage;
-							const isSelected = settings.isSelected;
+				{/* For selecting the image with point and click */}
+				<ImageSelector
+					cbDisabled={(settings) => cbImageSelectorDisabled(settings)}
+					cbImageClasses={(settings) => cbImageSelectorClasses(settings)}
+					cbImageSrc={(settings) => cbImageSelectorImageSrc(settings)}
+					divClasses={"images-container"}
+					handleTinyImageClick={handleTinyImageClick}
+					images={images}
+					selectedImage={selectedImage}
+					tinyImageDivClasses={"image-element"}
+				/>
 
-							const conditionHellResult =
-								"tiny-image " +
-								// If it is not the last image, it can be selected by the user
-								((!isLastImage && isSelected && "selected-image") ||
-									(isLastImage && "last-image") ||
-									"");
-
-							return conditionHellResult;
-						}}
-						cbImageSrc={(settings) => {
-							// Check if current image is the last image
-							const isLastImage =
-								images.length > maxImages && settings.imageSrc === defaultImage;
-							return (isLastImage && disabledImage) || settings.imageSrc;
-						}}
-						divClasses={"images-container"}
-						handleTinyImageClick={handleTinyImageClick}
-						images={images}
-						selectedImage={selectedImage}
-						tinyImageDivClasses={"images"}
-					/>
-					
-					{/* Original
+				{/* The original */}
+				{/* One default image is always at the end of the array.*/}
+				{/* <div className="images-container">
 					{images.map((e, index) => {
 						const isSelected = e.src === selectedImage;
 						// Check if current image is the last image
@@ -318,8 +321,8 @@ function CreateProduct() {
 								selectedImage={selectedImage}
 							/>
 						);
-					})} */}
-				{/* </div> */}
+					})}
+				</div> */}
 
 				{/* Product description */}
 				<Description />

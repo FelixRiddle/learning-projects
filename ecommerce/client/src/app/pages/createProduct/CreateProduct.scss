@@ -145,37 +145,12 @@
 	}
 
 	.images-container {
-		display: flex;
-		flex-direction: row;
-		justify-content: center;
-		align-items: left;
-		margin: 20px 0px 20px 0px;
-
-		// For the selected image of the tiny images
-		.selected-image {
-			outline-style: solid;
-			outline-color: cornflowerblue;
-		}
-
 		// For the last image of the tiny images
 		.last-image {
 			opacity: 0.5;
 
 			&:hover {
 				cursor: default;
-			}
-		}
-
-		.images {
-			margin-right: 10px;
-
-			.tiny-image {
-				width: 64px;
-				height: 64px;
-			}
-
-			&:hover {
-				cursor: pointer;
 			}
 		}
 	}
