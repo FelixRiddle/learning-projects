@@ -16,8 +16,6 @@ import ImageSelector from "../../components/images/image_selector/ImageSelector"
 import { handleMessageValidationv2 } from "../../../lib/handleMessageValidation";
 import { remove_images } from "./lib/transform_input";
 import { GlobalContext } from "../../App";
-import { useViewportSize } from "../../../lib/viewport/useViewportSize";
-import { updateViewportSize } from "../../../lib/viewport/updateViewportSize";
 
 export const CreateProductContext = React.createContext();
 
@@ -64,7 +62,6 @@ function CreateProduct() {
 		state: "",
 		show: false,
 	});
-	const { viewportSize, setViewportSize } = useViewportSize();
 
 	// Functions
 
@@ -195,10 +192,6 @@ function CreateProduct() {
 		return (isLastImage && disabledImage) || settings.imageSrc;
 	};
 	
-	// For updating the viewport size, every time the user resizes
-	// the window.
-	updateViewportSize(setViewportSize);
-
 	useEffect(() => {
 		const image = new Image();
 		image.src = defaultImage;
@@ -249,7 +242,6 @@ function CreateProduct() {
 					setSelectedImage,
 					setStatus,
 					status,
-					viewportSize,
 				}}
 			>
 				<AlertV2
@@ -259,7 +251,6 @@ function CreateProduct() {
 					clickFn={() => alertClick()}
 					hidden={!status.show}
 					title={status.error && "Error"}
-					viewportSize={viewportSize}
 					extraStyle={{ position: "fixed" }}
 				/>
 

@@ -1,10 +1,12 @@
 import React, { useContext } from "react";
+import { useViewportSize } from "../../../../../lib/viewport/useViewportSize";
 import { CreateProductContext } from "../../CreateProduct";
 import "./Description.css";
 
 function Description() {
-	const { input, viewportSize, handleInputChange } =
+	const { input, handleInputChange } =
 		useContext(CreateProductContext);
+	const { viewportSize } = useViewportSize();
 
 	return (
 		<div className="description">

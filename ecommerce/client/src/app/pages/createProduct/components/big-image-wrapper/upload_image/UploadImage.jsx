@@ -3,6 +3,7 @@ import React, { useEffect, useState, useContext } from "react";
 import { v4 as uuidv4 } from "uuid";
 
 import { resizeByPercentage } from "../../../../../../lib/images/resizer";
+import { useViewportSize } from "../../../../../../lib/viewport/useViewportSize";
 import { CreateProductContext } from "../../../CreateProduct";
 import { image_resizer } from "../../../lib/image_resizer";
 
@@ -24,13 +25,12 @@ function UploadImage(props) {
 		name,
 		// An object like this {width: 60, height: 40}
 		resizeImagePercentage,
-		viewportSize,
 		extraStyling,
 		stackImages,
 		images, // Array of images
 		outline,
 	} = props;
-
+	const { viewportSize } = useViewportSize();
 	const [spanId] = useState(uuidv4());
 	// imageComponents depends on resized images.
 	const [imageComponents, setImageComponents] = useState([]);
@@ -74,7 +74,6 @@ function UploadImage(props) {
 	}, [resizeImagePercentage, spanId, viewportSize, setConfig, images]);
 
 	useEffect(() => {
-		// Get the motherf**ing files
 		const totalFiles = [...input.images];
 		totalFiles.push(defaultUploadImage);
 

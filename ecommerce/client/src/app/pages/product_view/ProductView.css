@@ -1,6 +1,18 @@
-.product-image {
+.ProductView {
+  border: 1px solid red;
+}
+.ProductView .product {
+  display: flex;
+}
+.ProductView .product .images .product-image {
   outline-color: blueviolet;
   outline-style: solid;
+}
+.ProductView .product .info {
+  margin-left: 20px;
+}
+.ProductView .product .info .title {
+  border: 1px solid green;
 }
 
 /*# sourceMappingURL=ProductView.css.map */

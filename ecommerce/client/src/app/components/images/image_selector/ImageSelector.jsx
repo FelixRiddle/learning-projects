@@ -65,8 +65,8 @@ function ImageSelector(props) {
 					if (cbImageSrc) settings.cbImageSrcResult = cbImageSrc(settings);
 					if (cbDisabled) settings.isDisabled = cbDisabled(settings);
 
-					console.log(`Last settings update:`);
-					console.log(settings);
+					// console.log(`Last settings update:`);
+					// console.log(settings);
 
 					return (
 						<TinyImage

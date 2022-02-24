@@ -17,14 +17,12 @@ function Navbar() {
 	return (
 		<div className="rootnavbar">
 			{/* Links */}
-			<Links></Links>
+			<div className="links">
+				<Links></Links>
+			</div>
 
 			{/* Go to routes */}
-			<Routes
-				setReRender={setReRender}
-				token={token}
-				setToken={setToken}
-			/>
+			<Routes setReRender={setReRender} token={token} setToken={setToken} />
 
 			{/* Footer */}
 			<Footer></Footer>

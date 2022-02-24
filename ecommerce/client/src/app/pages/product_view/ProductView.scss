@@ -1,6 +1,22 @@
-.product-image {
-	// width: 60vw;
-	// height: 40vw;
-	outline-color: blueviolet;
-	outline-style: solid;
+.ProductView {
+	border: 1px solid red;
+	.product {
+		display: flex;
+		
+		.images {
+			.product-image {
+				// width: 60vw;
+				// height: 40vw;
+				outline-color: blueviolet;
+				outline-style: solid;
+			}
+		}
+		.info {
+			margin-left: 20px;
+			
+			.title {
+				border: 1px solid green;
+			}
+		}
+	}
 }

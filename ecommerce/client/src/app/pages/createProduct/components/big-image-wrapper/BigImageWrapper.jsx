@@ -6,11 +6,11 @@ import UploadImage from "./upload_image/UploadImage";
 import Arrow from "./arrow/Arrow";
 import ControlBar from "./control_bar/ControlBar";
 import { files_to_images } from "../../../../../lib/files/images/files_to_images";
-import { GlobalContext } from "../../../../App";
+import { useCssDetails } from "../../../../../lib/misc/useCssDetails";
 
 function BigImageWrapper() {
 	// Contexts
-	const { cssDetails } = useContext(GlobalContext);
+	const { cssDetails } = useCssDetails();
 
 	const {
 		arrowIcon,
