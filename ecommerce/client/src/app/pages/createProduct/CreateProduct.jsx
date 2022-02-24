@@ -16,6 +16,8 @@ import ImageSelector from "../../components/images/image_selector/ImageSelector"
 import { handleMessageValidationv2 } from "../../../lib/handleMessageValidation";
 import { remove_images } from "./lib/transform_input";
 import { GlobalContext } from "../../App";
+import { useViewportSize } from "../../../lib/viewport/useViewportSize";
+import { updateViewportSize } from "../../../lib/viewport/updateViewportSize";
 
 export const CreateProductContext = React.createContext();
 
@@ -62,16 +64,9 @@ function CreateProduct() {
 		state: "",
 		show: false,
 	});
-	const [viewportSize, setViewportSize] = useState({
-		width: Math.max(
-			document.documentElement.clientWidth || 0,
-			window.innerWidth || 0
-		),
-		height: Math.max(
-			document.documentElement.clientHeight || 0,
-			window.innerHeight || 0
-		),
-	});
+	const { viewportSize, setViewportSize } = useViewportSize();
+
+	// Functions
 
 	const alertClick = () => {
 		setStatus((prevInput) => {
@@ -199,20 +194,10 @@ function CreateProduct() {
 			images.length > maxImages && settings.imageSrc === defaultImage;
 		return (isLastImage && disabledImage) || settings.imageSrc;
 	};
-
-	// When the user resizes the window
-	window.onresize = () => {
-		setViewportSize({
-			width: Math.max(
-				document.documentElement.clientWidth || 0,
-				window.innerWidth || 0
-			),
-			height: Math.max(
-				document.documentElement.clientHeight || 0,
-				window.innerHeight || 0
-			),
-		});
-	};
+	
+	// For updating the viewport size, every time the user resizes
+	// the window.
+	updateViewportSize(setViewportSize);
 
 	useEffect(() => {
 		const image = new Image();
