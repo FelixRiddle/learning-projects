@@ -18,10 +18,21 @@ function ProductView(props) {
 		setSelectedImage(imageSrc);
 	};
 
+	const cbImageSelectorClasses = (settings) => {
+		const isSelected = settings.isSelected;
+
+		const conditionHellResult =
+			"tiny-image " + (isSelected && "selected-image");
+
+		return conditionHellResult;
+	};
+
 	useEffect(() => {
 		images.map((e) => {
 			setFullImageUrls((prevInput) => {
-				return [...prevInput, serverUrl + e];
+				const result = [...prevInput, serverUrl + e];
+				setSelectedImage(result[0]);
+				return result;
 			});
 			return e;
 		});
@@ -38,6 +49,7 @@ function ProductView(props) {
 
 			{/* For selecting the image with point and click */}
 			<ImageSelector
+				cbImageClasses={(settings) => cbImageSelectorClasses(settings)}
 				divClasses={"image-selector"}
 				handleTinyImageClick={handleTinyImageClick}
 				images={fullImageUrls}
