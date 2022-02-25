@@ -11,11 +11,9 @@ const serverUrl = "http://localhost:3001/";
 function ProductView(props) {
 	const { description, name, images } = props;
 
-	const [selectedImage, setSelectedImage] = useState(
-		serverUrl + images[0]
-	);
+	const [selectedImage, setSelectedImage] = useState(serverUrl + images[0]);
 	const { fullImageUrls } = useFullImageUrls(images);
-	
+
 	const handleTinyImageClick = (imageSrc) => {
 		setSelectedImage(imageSrc);
 	};
@@ -34,7 +32,8 @@ function ProductView(props) {
 			<div className="product">
 				<div className="images">
 					<BigImage
-						name={name}
+						divClasses={"big-image"}
+						images={fullImageUrls}
 						imageClasses={"product-image"}
 						selectedImage={selectedImage}
 					/>
@@ -51,7 +50,7 @@ function ProductView(props) {
 					/>
 				</div>
 				<div className="info">
-					<Title classes={"title"} title={name} width={560} height={50}/>
+					<Title classes={"title"} title={name} width={560} height={50} />
 				</div>
 			</div>
 			<h3>Description</h3>

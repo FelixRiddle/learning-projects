@@ -64,7 +64,6 @@ function CreateProduct() {
 	});
 
 	// Functions
-
 	const alertClick = () => {
 		setStatus((prevInput) => {
 			return {
@@ -271,34 +270,6 @@ function CreateProduct() {
 					selectedImage={selectedImage}
 					tinyImageDivClasses={"image-element"}
 				/>
-
-				{/* The original */}
-				{/* One default image is always at the end of the array.*/}
-				{/* <div className="images-container">
-					{images.map((e, index) => {
-						const isSelected = e.src === selectedImage;
-						// Check if current image is the last image
-						const isLastImage =
-							images.length > maxImages && e.src === defaultImage;
-						return (
-							<ShowTinyImage
-								key={uuidv4()}
-								imageSrc={(isLastImage && disabledImage) || e.src}
-								index={index}
-								clickFn={handleTinyImageClick}
-								classes={"images "}
-								imageClasses={
-									"tiny-image " +
-									// If it is not the last image, it can be selected by the user
-									((!isLastImage && isSelected && "selected-image") ||
-										(isLastImage && "last-image"))
-								}
-								isDisabled={isLastImage}
-								selectedImage={selectedImage}
-							/>
-						);
-					})}
-				</div> */}
 
 				{/* Product description */}
 				<Description />

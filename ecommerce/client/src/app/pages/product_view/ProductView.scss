@@ -1,19 +1,22 @@
 .ProductView {
 	border: 1px solid red;
+
 	.product {
 		display: flex;
-		
+
 		.images {
-			.product-image {
-				// width: 60vw;
-				// height: 40vw;
+			border: 1px solid violet;
+			
+			.big-image {
 				outline-color: blueviolet;
 				outline-style: solid;
+				display: flex;
 			}
 		}
+		
 		.info {
 			margin-left: 20px;
-			
+
 			.title {
 				border: 1px solid green;
 			}

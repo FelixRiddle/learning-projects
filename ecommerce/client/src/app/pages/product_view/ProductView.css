@@ -4,9 +4,13 @@
 .ProductView .product {
   display: flex;
 }
-.ProductView .product .images .product-image {
+.ProductView .product .images {
+  border: 1px solid violet;
+}
+.ProductView .product .images .big-image {
   outline-color: blueviolet;
   outline-style: solid;
+  display: flex;
 }
 .ProductView .product .info {
   margin-left: 20px;

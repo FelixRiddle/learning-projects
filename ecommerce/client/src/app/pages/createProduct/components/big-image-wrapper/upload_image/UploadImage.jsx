@@ -30,7 +30,7 @@ function UploadImage(props) {
 		images, // Array of images
 		outline,
 	} = props;
-	const { viewportSize } = useViewportSize();
+	const { viewportSize } = useViewportSize(true);
 	const [spanId] = useState(uuidv4());
 	// imageComponents depends on resized images.
 	const [imageComponents, setImageComponents] = useState([]);
@@ -39,6 +39,7 @@ function UploadImage(props) {
 		document.getElementById("file-input").click();
 	};
 
+	// For resizing the parent element
 	useEffect(() => {
 		if (!resizeImagePercentage) return;
 		if (!viewportSize) return;
