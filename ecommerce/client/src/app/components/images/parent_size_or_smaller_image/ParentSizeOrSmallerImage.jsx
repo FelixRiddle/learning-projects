@@ -13,19 +13,31 @@ function ParentSizeOrSmallerImage(props) {
 	const [imageHeight, setImageHeight] = useState();
 
 	useEffect(() => {
+		let isMounted = true;
 		const image = new Image();
-		image.onload = () => {
-			// Resize images to fit the canvas
-			image_resizer(image, config, (width, height) => {
-				// image.style.width = width + "px";
-				// image.style.height = height + "px";
-				setImageWidth(width);
-				setImageHeight(height);
-			});
+		
+		new Promise((resolve, reject) => {
+			image.onload = () => resolve();
+			image.onerror = reject;
+			image.src = imageUrl;
+		}).then(() => {
+			if (isMounted) {
+				// Resize images to fit the canvas
+				image_resizer(image, config, (width, height) => {
+					// image.style.width = width + "px";
+					// image.style.height = height + "px";
+					setImageWidth(width);
+					setImageHeight(height);
+				});
 
-			setShowImage(true);
+				setShowImage(true);
+			}
+		});
+		
+		// To prevent state updates when the component is not mounted)?
+		return () => {
+			isMounted = false;
 		};
-		image.src = imageUrl;
 	}, [config, imageUrl, viewportSize]);
 
 	return (

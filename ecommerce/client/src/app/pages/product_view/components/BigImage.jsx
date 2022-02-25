@@ -100,13 +100,11 @@ function BigImage(props) {
 		viewportSize,
 	]);
 
-	// TODO: Load every image, and show only one.
 	return (
 		<div className={divClasses} id={divId}>
 			{imageComponents.map((e) => {
 				return e;
 			})}
-			{/* <img alt={name} className={imageClasses} src={selectedImage} /> */}
 		</div>
 	);
 }
