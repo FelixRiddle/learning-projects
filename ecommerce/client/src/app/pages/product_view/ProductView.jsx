@@ -5,14 +5,16 @@ import "./ProductView.css";
 import ImageSelector from "../../components/images/image_selector/ImageSelector";
 import Title from "../../components/text/title/Title";
 import { useFullImageUrls } from "../../../lib/images/useFullImageUrls";
+import { useCssDetails } from "../../../lib/misc/useCssDetails";
 
 const serverUrl = "http://localhost:3001/";
 
 function ProductView(props) {
 	const { description, name, images } = props;
 
-	const [selectedImage, setSelectedImage] = useState(serverUrl + images[0]);
+	const { cssDetails } = useCssDetails();
 	const { fullImageUrls } = useFullImageUrls(images);
+	const [selectedImage, setSelectedImage] = useState(serverUrl + images[0]);
 
 	const handleTinyImageClick = (imageSrc) => {
 		setSelectedImage(imageSrc);
@@ -42,6 +44,11 @@ function ProductView(props) {
 					<ImageSelector
 						cbImageClasses={(settings) => cbImageSelectorClasses(settings)}
 						divClasses={"image-selector"}
+						// extraStyling={{ width: "200px" }}
+						resize={{
+							width:
+								cssDetails && cssDetails.bigImage && cssDetails.bigImage.width,
+						}}
 						handleTinyImageClick={handleTinyImageClick}
 						images={fullImageUrls}
 						selectedImage={selectedImage}

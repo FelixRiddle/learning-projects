@@ -5,14 +5,14 @@ export const resizeByPercentage = (resizeImagePercentage, viewportSize, cb) => {
 		!resizeImagePercentage.width ||
 		!resizeImagePercentage.height
 	) {
-		console.log(
+		console.warn(
 			`Error: On lib/resizer/resizeByPercentage: First argument, ` +
 				`\n'resizeImagePercentage' was not given, or is bad formatted.`
 		);
 		return;
 	}
 	if (!viewportSize || !viewportSize.width || !viewportSize.height) {
-		console.log(
+		console.warn(
 			`Error: On lib/resizer/resizeByPercentage: First argument, ` +
 				`\n'resizeImagePercentage' was not given, or is bad formatted.`
 		);

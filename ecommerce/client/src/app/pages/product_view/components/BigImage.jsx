@@ -71,8 +71,12 @@ function BigImage(props) {
 		if (parentElement) {
 			const tempImageElements = [];
 
+			// console.log(`Selected image:`, selectedImage);
 			for (let i in images) {
 				i = parseInt(i);
+
+				// console.log(`Current image:`, images[i]);
+				// console.log(`Eval result:`, images[i] === selectedImage);
 
 				tempImageElements.push(
 					<ParentSizeOrSmallerImage

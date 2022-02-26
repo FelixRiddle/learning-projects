@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 
 import TinyImage from "./tiny_image/TinyImage";
@@ -11,12 +11,15 @@ function ImageSelector(props) {
 		cbDisabled,
 
 		divClasses,
-		tinyImageDivClasses,
-		imageClasses,
+		extraStyling,
 		handleTinyImageClick,
 		images,
+		imageClasses,
 		selectedImage,
+		tinyImageDivClasses,
 	} = props;
+
+	const [divId] = useState(uuidv4());
 
 	useEffect(() => {
 		if (!images)
@@ -34,7 +37,7 @@ function ImageSelector(props) {
 	}, [selectedImage]);
 
 	return (
-		<div className={divClasses}>
+		<div className={divClasses} id={divId} style={{ ...extraStyling }}>
 			{images &&
 				images.map((e, index) => {
 					const settings = {

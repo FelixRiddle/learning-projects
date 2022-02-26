@@ -15,7 +15,7 @@ function ParentSizeOrSmallerImage(props) {
 	useEffect(() => {
 		let isMounted = true;
 		const image = new Image();
-		
+
 		new Promise((resolve, reject) => {
 			image.onload = () => resolve();
 			image.onerror = reject;
@@ -29,16 +29,22 @@ function ParentSizeOrSmallerImage(props) {
 					setImageWidth(width);
 					setImageHeight(height);
 				});
-
 				setShowImage(true);
 			}
 		});
-		
+
 		// To prevent state updates when the component is not mounted)?
 		return () => {
 			isMounted = false;
 		};
 	}, [config, imageUrl, viewportSize]);
+
+	useEffect(() => {
+		// console.log(`For: ${imageUrl}`);
+		// console.log(`Show image:`, showImage);
+		// console.log(`Hidden:`, hidden);
+		// console.log(`Eval:`, !hidden && !showImage);
+	}, [showImage, hidden, imageUrl]);
 
 	return (
 		<div>
@@ -46,7 +52,7 @@ function ParentSizeOrSmallerImage(props) {
 				<img
 					alt={imageAlt}
 					className={imageClasses}
-					hidden={!hidden && !showImage}
+					hidden={!hidden || !showImage}
 					src={imageUrl}
 					style={{ ...extraStyling, width: imageWidth, height: imageHeight }}
 				/>
