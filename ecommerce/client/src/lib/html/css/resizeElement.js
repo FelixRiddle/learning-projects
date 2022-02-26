@@ -1,6 +1,6 @@
 import { resizeByPercentage } from "../../images/resizer";
 
-export const useElementResize = (elementId, percentages, viewportSize) => {
+export const resizeElement = (elementId, percentages, viewportSize) => {
 	// For resizing the parent element
 	if (!percentages) return;
 	if (!viewportSize) return;

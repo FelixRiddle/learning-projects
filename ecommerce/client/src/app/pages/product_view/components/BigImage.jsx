@@ -3,21 +3,16 @@ import { v4 as uuidv4 } from "uuid";
 
 import { resizeByPercentage } from "../../../../lib/images/resizer";
 import { useCssDetails } from "../../../../lib/misc/useCssDetails";
-import { updateViewportSize } from "../../../../lib/viewport/updateViewportSize";
-import { useViewportSize } from "../../../../lib/viewport/useViewportSize";
 import ParentSizeOrSmallerImage from "../../../components/images/parent_size_or_smaller_image/ParentSizeOrSmallerImage";
 
 function BigImage(props) {
-	const { divClasses, images, imageClasses, selectedImage } = props;
+	const { divClasses, images, imageClasses, selectedImage, viewportSize } = props;
 
 	// States
 	const { cssDetails } = useCssDetails();
 	const [config, setConfig] = useState();
 	const [divId] = useState(uuidv4());
 	const [imageComponents, setImageComponents] = useState([]);
-	const { viewportSize, setViewportSize } = useViewportSize();
-
-	updateViewportSize(setViewportSize);
 
 	// For resizing the parent element
 	useEffect(() => {

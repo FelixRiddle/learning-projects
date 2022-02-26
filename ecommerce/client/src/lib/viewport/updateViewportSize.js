@@ -1,4 +1,4 @@
-export const updateViewportSize = (cbSetViewportSize) => {
+export const updateViewportSize = (cbSetViewportSize, from) => {
 	// When the user resizes the window
 	window.onresize = () => {
 		cbSetViewportSize({

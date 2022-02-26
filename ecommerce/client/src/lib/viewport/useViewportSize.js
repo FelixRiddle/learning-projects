@@ -15,7 +15,7 @@ export const useViewportSize = (update) => {
 	// When the user resizes the window
 	if (update) {
 		window.onresize = () => {
-			console.log(`useViewoprtSize, Viewport size:`, viewportSize);
+			// console.log(`useViewoprtSize, Viewport size:`, viewportSize);
 			setViewportSize({
 				width: Math.max(
 					document.documentElement.clientWidth || 0,
