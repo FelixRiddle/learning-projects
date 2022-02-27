@@ -36,7 +36,10 @@ function ProductView(props) {
 	};
 
 	return (
-		<div className="ProductView">
+		<div
+			className="ProductView"
+			style={{ height: viewportSize.height + paragraphHeight + 10 }}
+		>
 			<div className="product">
 				<div className="images">
 					<BigImage

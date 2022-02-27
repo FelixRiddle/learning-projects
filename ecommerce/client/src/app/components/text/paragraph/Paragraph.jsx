@@ -32,12 +32,15 @@ function Paragraph(props) {
 
 		const paragraph = document.getElementById(alternativeParagraphId);
 		if (!paragraph) return;
-		
+
 		getParagraphHeight(paragraph.clientHeight);
 	}, [alternativeParagraphId, getParagraphHeight, viewportSize]);
 
 	return (
-		<div className={classes} id={alternativeDivId}>
+		<div
+			className={classes}
+			id={alternativeDivId}
+		>
 			<p className={paragraphClasses} id={alternativeParagraphId}>
 				{content}
 			</p>
