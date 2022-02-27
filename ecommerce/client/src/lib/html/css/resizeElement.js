@@ -1,6 +1,6 @@
 import { resizeByPercentage } from "../../images/resizer";
 
-export const resizeElement = (elementId, percentages, viewportSize) => {
+export const resizeElement = (elementId, percentages, viewportSize, cb) => {
 	// For resizing the parent element
 	if (!percentages) return;
 	if (!viewportSize) return;
@@ -23,6 +23,8 @@ export const resizeElement = (elementId, percentages, viewportSize) => {
 
 			if (percentages.width) element.style.width = widthResult;
 			if (percentages.height) element.style.height = heightResult;
+
+			if (cb) cb(newWidth, newHeight);
 		});
 	}
 };

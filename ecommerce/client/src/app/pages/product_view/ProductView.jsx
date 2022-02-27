@@ -9,13 +9,15 @@ import { useFullImageUrls } from "../../../lib/images/useFullImageUrls";
 import { useCssDetails } from "../../../lib/misc/useCssDetails";
 import { useViewportSize } from "../../../lib/viewport/useViewportSize";
 import Paragraph from "../../components/text/paragraph/Paragraph";
+import Price from "../../components/text/price/Price";
 
 const serverUrl = "http://localhost:3001/";
 
 function ProductView(props) {
-	const { description, name, images } = props;
+	const { description, images, name, price } = props;
 
 	const { cssDetails } = useCssDetails();
+	const [config, setConfig] = useState({});
 	const [divId] = useState(uuidv4());
 	const { fullImageUrls } = useFullImageUrls(images);
 	const [paragraphHeight, setParagraphHeight] = useState();
@@ -38,15 +40,22 @@ function ProductView(props) {
 	return (
 		<div
 			className="ProductView"
-			style={{ height: viewportSize.height + paragraphHeight + 10 }}
+			style={{
+				height:
+					viewportSize.height &&
+					paragraphHeight &&
+					viewportSize.height + paragraphHeight + 10,
+			}}
 		>
 			<div className="product">
-				<div className="images">
+				<div className="left">
 					<BigImage
+						config={config}
 						divClasses={"big-image"}
 						images={fullImageUrls}
 						imageClasses={"product-image"}
 						selectedImage={selectedImage}
+						setConfig={setConfig}
 						viewportSize={viewportSize}
 					/>
 
@@ -67,18 +76,23 @@ function ProductView(props) {
 						imageClasses={"tiny-image"}
 						tinyImageDivClasses={"image-element"}
 					/>
+					<div>
+						<h3>Description</h3>
+						<Paragraph
+							content={description}
+							resize={cssDetails.bigImage}
+							viewportSize={viewportSize}
+							getParagraphHeight={setParagraphHeight}
+						/>
+					</div>
 				</div>
-				<div className="info">
-					<Title classes={"title"} title={name} width={560} height={80} />
+				<div className="right">
+					<Title classes={"title"} title={name} />
+					<div>
+						<Price paragraphClasses={"price"} price={price && price} />
+					</div>
 				</div>
 			</div>
-			<h3>Description</h3>
-			<Paragraph
-				content={description}
-				resize={cssDetails.bigImage}
-				viewportSize={viewportSize}
-				getParagraphHeight={setParagraphHeight}
-			/>
 		</div>
 	);
 }

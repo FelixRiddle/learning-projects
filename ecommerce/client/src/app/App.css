@@ -21,4 +21,9 @@
   cursor: pointer;
 }
 
+.price {
+  font-size: 40px;
+  font-family: "Quicksand", sans-serif;
+}
+
 /*# sourceMappingURL=App.css.map */

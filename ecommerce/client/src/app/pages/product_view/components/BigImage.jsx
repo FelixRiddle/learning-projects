@@ -1,16 +1,25 @@
 import React, { useState, useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
+import { resizeElement } from "../../../../lib/html/css/resizeElement";
 
-import { resizeByPercentage } from "../../../../lib/images/resizer";
+// import { resizeByPercentage } from "../../../../lib/images/resizer";
 import { useCssDetails } from "../../../../lib/misc/useCssDetails";
 import ParentSizeOrSmallerImage from "../../../components/images/parent_size_or_smaller_image/ParentSizeOrSmallerImage";
 
 function BigImage(props) {
-	const { divClasses, images, imageClasses, selectedImage, viewportSize } = props;
+	const {
+		config,
+		divClasses,
+		images,
+		imageClasses,
+		selectedImage,
+		setConfig,
+		viewportSize,
+	} = props;
 
 	// States
 	const { cssDetails } = useCssDetails();
-	const [config, setConfig] = useState();
+	// const [config, setConfig] = useState();
 	const [divId] = useState(uuidv4());
 	const [imageComponents, setImageComponents] = useState([]);
 
@@ -21,35 +30,19 @@ function BigImage(props) {
 
 		// Resizes the canvas width and height if the user
 		// resizes the window
-		const parentElement = document.getElementById(divId);
-		if (parentElement) {
-			const resizeImagePercentage = cssDetails.bigImage;
-
-			resizeByPercentage(
-				resizeImagePercentage,
-				viewportSize,
-				(newWidth, newHeight) => {
-					// This will be used for the arrows
-					setConfig((prevInput) => {
-						return {
-							...prevInput,
-							bigImageContainerSize: {
-								width: newWidth,
-								height: newHeight,
-							},
-						};
-					});
-
-					// Set the new width and height
-					const widthResult = newWidth + "px";
-					const heightResult = newHeight + "px";
-
-					parentElement.style.width = widthResult;
-					parentElement.style.height = heightResult;
-				}
-			);
-		}
-	}, [cssDetails, divId, viewportSize]);
+		resizeElement(divId, cssDetails.bigImage, viewportSize, (width, height) => {
+			// This will be used for the arrows
+			setConfig((prevInput) => {
+				return {
+					...prevInput,
+					bigImageContainerSize: {
+						width,
+						height,
+					},
+				};
+			});
+		});
+	}, [cssDetails, divId, setConfig, viewportSize]);
 
 	// Create the image components
 	useEffect(() => {

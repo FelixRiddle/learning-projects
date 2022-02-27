@@ -16,21 +16,26 @@ export const image_resizer = (image, config, callback) => {
 	// Get the width and height of the canvas
 	const canvasWidth = parseInt(config.bigImageContainerSize.width);
 	const canvasHeight = parseInt(config.bigImageContainerSize.height);
-	
+
 	const newSize = [0, 0];
-	// If the image width is greater than the canvas width
-	if (imageWidth > canvasWidth) {
-		// console.log(`The image is bigger, setting it to the canvas size.`);
-		newSize[0] = canvasWidth;
-	} else {
-		// console.log(`The image is smaller, setting the default size.`);
-		newSize[0] = imageWidth;
+
+	if (!isNaN(canvasWidth)) {
+		// If the image width is greater than the canvas width
+		if (imageWidth > canvasWidth) {
+			// console.log(`The image is bigger, setting it to the canvas size.`);
+			newSize[0] = canvasWidth;
+		} else {
+			// console.log(`The image is smaller, setting the default size.`);
+			newSize[0] = imageWidth;
+		}
 	}
 
-	if (imageHeight > canvasHeight) {
-		newSize[1] = canvasHeight;
-	} else {
-		newSize[1] = imageHeight;
+	if (!isNaN(canvasHeight)) {
+		if (imageHeight > canvasHeight) {
+			newSize[1] = canvasHeight;
+		} else {
+			newSize[1] = imageHeight;
+		}
 	}
 
 	return callback(newSize[0], newSize[1]);
@@ -115,8 +120,8 @@ export const get_resized_images = async (totalFiles) => {
 
 		newImages.push(img);
 	}
-	
-	console.log(`New images`)
+
+	console.log(`New images`);
 	console.log(newImages);
 	return [...newImages];
 };

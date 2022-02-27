@@ -4,7 +4,7 @@
 	.product {
 		display: flex;
 
-		.images {
+		.left {
 			.big-image {
 				outline-color: blueviolet;
 				outline-style: solid;
@@ -12,12 +12,12 @@
 			}
 		}
 		
-		.info {
+		.right {
 			margin-left: 20px;
 
-			.title {
-				border: 1px solid green;
-			}
+			// .title {
+			// 	// border: 1px solid green;
+			// }
 		}
 	}
 }

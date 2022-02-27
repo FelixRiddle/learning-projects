@@ -1,12 +1,10 @@
 import React from "react";
-import { useViewportSize } from "../../../../lib/viewport/useViewportSize";
 
 function Title(props) {
-	const { classes, height, title, width } = props;
-	const { viewportSize } = useViewportSize();
+	const { classes, extraStyling, height, title, width } = props;
 
 	return (
-		<h1 className={classes} style={{ width, height }}>
+		<h1 className={classes} style={{ ...extraStyling, width, height }}>
 			{title}
 		</h1>
 	);

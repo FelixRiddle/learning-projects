@@ -4,16 +4,13 @@
 .ProductView .product {
   display: flex;
 }
-.ProductView .product .images .big-image {
+.ProductView .product .left .big-image {
   outline-color: blueviolet;
   outline-style: solid;
   display: flex;
 }
-.ProductView .product .info {
+.ProductView .product .right {
   margin-left: 20px;
-}
-.ProductView .product .info .title {
-  border: 1px solid green;
 }
 
 /*# sourceMappingURL=ProductView.css.map */

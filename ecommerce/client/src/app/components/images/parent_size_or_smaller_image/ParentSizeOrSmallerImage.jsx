@@ -47,7 +47,11 @@ function ParentSizeOrSmallerImage(props) {
 					className={imageClasses}
 					hidden={!hidden || !showImage}
 					src={imageUrl}
-					style={{ ...extraStyling, width: imageWidth, height: imageHeight }}
+					style={{
+						...extraStyling,
+						width: (imageWidth && imageWidth) || 0,
+						height: (imageHeight && imageHeight) || 0,
+					}}
 				/>
 			)}
 		</div>
