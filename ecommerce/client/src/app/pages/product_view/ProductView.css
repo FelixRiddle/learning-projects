@@ -4,9 +4,6 @@
 .ProductView .product {
   display: flex;
 }
-.ProductView .product .images {
-  border: 1px solid violet;
-}
 .ProductView .product .images .big-image {
   outline-color: blueviolet;
   outline-style: solid;

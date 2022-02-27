@@ -8,6 +8,7 @@ import Title from "../../components/text/title/Title";
 import { useFullImageUrls } from "../../../lib/images/useFullImageUrls";
 import { useCssDetails } from "../../../lib/misc/useCssDetails";
 import { useViewportSize } from "../../../lib/viewport/useViewportSize";
+import Paragraph from "../../components/text/paragraph/Paragraph";
 
 const serverUrl = "http://localhost:3001/";
 
@@ -17,6 +18,7 @@ function ProductView(props) {
 	const { cssDetails } = useCssDetails();
 	const [divId] = useState(uuidv4());
 	const { fullImageUrls } = useFullImageUrls(images);
+	const [paragraphHeight, setParagraphHeight] = useState();
 	const [selectedImage, setSelectedImage] = useState(serverUrl + images[0]);
 	const { viewportSize } = useViewportSize(true);
 
@@ -32,10 +34,6 @@ function ProductView(props) {
 
 		return conditionHellResult;
 	};
-
-	// useEffect(() => {
-	// 	console.log(`Product view, viewportSize:`, viewportSize);
-	// }, [viewportSize]);
 
 	return (
 		<div className="ProductView">
@@ -68,11 +66,16 @@ function ProductView(props) {
 					/>
 				</div>
 				<div className="info">
-					<Title classes={"title"} title={name} width={560} height={50} />
+					<Title classes={"title"} title={name} width={560} height={80} />
 				</div>
 			</div>
 			<h3>Description</h3>
-			<p>{description}</p>
+			<Paragraph
+				content={description}
+				resize={cssDetails.bigImage}
+				viewportSize={viewportSize}
+				getParagraphHeight={setParagraphHeight}
+			/>
 		</div>
 	);
 }

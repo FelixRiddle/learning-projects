@@ -39,13 +39,6 @@ function ParentSizeOrSmallerImage(props) {
 		};
 	}, [config, imageUrl, viewportSize]);
 
-	useEffect(() => {
-		// console.log(`For: ${imageUrl}`);
-		// console.log(`Show image:`, showImage);
-		// console.log(`Hidden:`, hidden);
-		// console.log(`Eval:`, !hidden && !showImage);
-	}, [showImage, hidden, imageUrl]);
-
 	return (
 		<div>
 			{showImage && (
