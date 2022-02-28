@@ -1,6 +1,3 @@
-.ProductView {
-  border: 1px solid red;
-}
 .ProductView .product {
   display: flex;
 }
@@ -10,7 +7,15 @@
   display: flex;
 }
 .ProductView .product .right {
+  display: flex;
+  flex-direction: column;
   margin-left: 20px;
+}
+.ProductView .product .right .small {
+  font-size: 12px;
+}
+.ProductView .product .right .separation {
+  margin-top: 20px;
 }
 
 /*# sourceMappingURL=ProductView.css.map */

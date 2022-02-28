@@ -89,8 +89,14 @@ function ProductView(props) {
 				<div className="right">
 					<Title classes={"title"} title={name} />
 					<div>
+						<p className="small">
+							Note: Depending on the payment method, the price may vary.
+						</p>
 						<Price paragraphClasses={"price"} price={price && price} />
 					</div>
+					<button className="btn">Buy now</button>
+					<div className="separation"></div>
+					<button className="btn-1">Add to the cart</button>
 				</div>
 			</div>
 		</div>

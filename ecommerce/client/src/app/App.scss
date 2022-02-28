@@ -1,3 +1,21 @@
+.btn,
+.btn-1 {
+	padding: 15px;
+	background-color: #4287f5;
+	border: none;
+	border-radius: 5px;
+	color: white;
+	font-weight: bold;
+
+	&:hover {
+		cursor: pointer;
+	}
+}
+
+.btn-1 {
+	background-color: #37d43a;
+}
+
 .image-selector {
 	display: flex;
 	flex-direction: row;
@@ -32,6 +50,12 @@
 	font-family: "Quicksand", sans-serif;
 }
 
-p, h1, h2, h3, h4, h5, h6 {
-	font-family: 'Open Sans', sans-serif;
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	font-family: "Open Sans", sans-serif;
 }

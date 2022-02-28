@@ -1,5 +1,5 @@
 .ProductView {
-	border: 1px solid red;
+	// border: 1px solid red;
 
 	.product {
 		display: flex;
@@ -11,13 +11,22 @@
 				display: flex;
 			}
 		}
-		
+
 		.right {
+			display: flex;
+			flex-direction: column;
 			margin-left: 20px;
+			
+			.small {
+				font-size: 12px;
+			}
 
 			// .title {
 			// 	// border: 1px solid green;
 			// }
+			.separation {
+				margin-top: 20px;
+			}
 		}
 	}
 }

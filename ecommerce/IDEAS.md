@@ -40,7 +40,15 @@
 | |⬜️ Show an error when the maximum amount of images has been reached
 
 ⬜️ Product view  
-| ⬜️ Image selector
+| ✅ Price component  
+| ✅ Buy/Add to cart buttons  
+| | ⬜️ Functionality to buy  
+| ✅ Dynamic  
+| ✅ Image selector  
+
+⬜️ Consumer help  
+| ⬜️ Page on price variations  
+| ⬜️ Tutorials on how to use the website
 
 ✅ Profile  
 |⬜️ Search bar for settings  
