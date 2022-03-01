@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import Links from "./components/links/Links";
 import Footer from "./components/footer/Footer";
 import Routes from "./components/routes/Routes";
+import { useMasterCardGateway } from "../../../lib/payment/gateway/useMastercardGateway";
 
 function Navbar() {
 	const [reRender, setReRender] = useState(false);
@@ -13,6 +14,8 @@ function Navbar() {
 		console.log(`Triggering re render.`);
 		if (reRender) setReRender(false);
 	}, [reRender]);
+	
+	useMasterCardGateway();
 
 	return (
 		<div className="rootnavbar">

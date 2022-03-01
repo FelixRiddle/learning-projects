@@ -18,7 +18,7 @@ function ParentSizeOrSmallerImage(props) {
 
 		new Promise((resolve, reject) => {
 			image.onload = () => resolve();
-			image.onerror = reject;
+			image.onerror = reject();
 			image.src = imageUrl;
 		}).then(() => {
 			if (isMounted) {
