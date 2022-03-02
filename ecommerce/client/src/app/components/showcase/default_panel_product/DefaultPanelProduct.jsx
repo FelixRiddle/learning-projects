@@ -43,19 +43,19 @@ function DefaultPanelProduct(props) {
 	}, [id, priceId, titleId]);
 
 	useEffect(() => {
-		console.log(`Image:`, image);
-		console.log(`Box offset size:`, boxOffsetSize);
-		console.log(`Title offset size:`, titleOffsetSize);
-		console.log(`Price offset size:`, priceOffsetSize);
+		// console.log(`Image:`, image);
+		// console.log(`Box offset size:`, boxOffsetSize);
+		// console.log(`Title offset size:`, titleOffsetSize);
+		// console.log(`Price offset size:`, priceOffsetSize);
 	}, [boxOffsetSize, titleOffsetSize, priceOffsetSize, image]);
 
-	window.onresize = () => {
-		const currentImage = document.getElementById(imageId);
-		console.log(`Image size:`, {
-			width: currentImage.offsetWidth,
-			height: currentImage.offsetHeight,
-		});
-	};
+	// window.onresize = () => {
+	// 	const currentImage = document.getElementById(imageId);
+	// 	// console.log(`Image size:`, {
+	// 	// 	width: currentImage.offsetWidth,
+	// 	// 	height: currentImage.offsetHeight,
+	// 	// });
+	// };
 
 	return (
 		<div

@@ -31,14 +31,17 @@ const Routes = (props) => {
 				<Route path="/createProduct" element={<CreateProduct />} />
 				{products.map((e) => {
 					// console.log(`Product:`, e);
+					const productUrl = `app/${e._id}/${e.name.replaceAll(" ", "-")}`;
 					return (
 						<Route
 							key={uuidv4()}
-							path={`/app/${e._id}/${e.name.replaceAll(" ", "-")}`}
+							path={productUrl}
 							element={<ProductView {...e} />}
 						/>
 					);
 				})}
+
+				<Route path="*" element={<h1>404: Page not found.</h1>} />
 			</Routes1>
 		</BrowserRouter>
 	);

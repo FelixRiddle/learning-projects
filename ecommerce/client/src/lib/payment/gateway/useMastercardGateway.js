@@ -7,6 +7,10 @@ export const useMasterCardGateway = () => {
 	// Initialize it
 	useEffect(() => {
 		let isMounted = true;
+		const api = window.SRCSDK_MASTERCARD;
+
+		if (!api) return;
+		console.log(`Api:`, typeof api);
 
 		const dpaTransactionOptions = {
 			dpaLocale: "en_US",
@@ -34,17 +38,30 @@ export const useMasterCardGateway = () => {
 			// will override the DpaTransactionOptions provided to init
 		};
 
-		new Promise((resolve, reject) => {
-			resolve(window.SRCSDK_MASTERCARD.init(sampleInitParams));
-		})
-			.then(() => {
-				if (isMounted) {
-					console.log(`Mastercard initialized`);
-				}
+		try {
+			new Promise((resolve, reject) => {
+				api
+					.init(sampleInitParams)
+					.then(() => {
+						console.log(`Success`);
+						resolve();
+					})
+					.catch((err) => {
+						console.error(err);
+						reject();
+					});
 			})
-			.catch((err) => {
-				console.error("Error:", err);
-			});
+				.then(() => {
+					if (isMounted) {
+						console.log(`Mastercard initialized`);
+					}
+				})
+				.catch((err) => {
+					console.error("Error:", err);
+				});
+		} catch (err) {
+			console.error(err);
+		}
 
 		// To prevent state updates when the component is not mounted)?
 		return () => {

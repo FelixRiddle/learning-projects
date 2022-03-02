@@ -18,20 +18,24 @@ function ParentSizeOrSmallerImage(props) {
 
 		new Promise((resolve, reject) => {
 			image.onload = () => resolve();
-			image.onerror = reject();
+			// image.onerror = reject("Image not found");
 			image.src = imageUrl;
-		}).then(() => {
-			if (isMounted) {
-				// Resize images to fit the canvas
-				image_resizer(image, config, (width, height) => {
-					// image.style.width = width + "px";
-					// image.style.height = height + "px";
-					setImageWidth(width);
-					setImageHeight(height);
-				});
-				setShowImage(true);
-			}
-		});
+		})
+			.then(() => {
+				if (isMounted) {
+					// Resize images to fit the canvas
+					image_resizer(image, config, (width, height) => {
+						// image.style.width = width + "px";
+						// image.style.height = height + "px";
+						setImageWidth(width);
+						setImageHeight(height);
+					});
+					setShowImage(true);
+				}
+			})
+			.catch((err) => {
+				console.warn(err);
+			});
 
 		// To prevent state updates when the component is not mounted)?
 		return () => {

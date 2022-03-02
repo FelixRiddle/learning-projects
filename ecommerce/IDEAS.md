@@ -1,21 +1,16 @@
 # Objectives
 
 (This looks better on VSCode)
+⬜️ Consumer help  
+| ⬜️ Page on price variations  
+| ⬜️ Tutorials on how to use the website
+
 ✅ Login  
 |✅ Add show password icon  
 |✅ Show "You are already logged in" alert
 
 ⬜️ Home  
-| ⬜️ Products panel-like view  
-| | ⬜️
-
-⬜️ Navbar  
-|✅ Add a search input  
-| |⬜️ Search for products  
-|✅ Icon/Links  
-| |✅ Replace every link with icons  
-| |✅ Show words if icons are not available  
-| |⬜️ Add a small pop-up that tells what the icon is for.
+| ⬜️ Products panel-like view
 
 ✅ Create Product  
 |✅ Form  
@@ -34,10 +29,24 @@
 | | | |✅ Add image  
 | |✅ Show tiny images below  
 | | |✅ Add feedback to the selected image  
-| | |✅ When it's full of images, the last is disabled.
+| | |✅ When it's full of images, the last is disabled.  
 |✅ Feedback  
 | |✅ Status alerts  
 | |⬜️ Show an error when the maximum amount of images has been reached
+
+⬜️ Navbar  
+| ✅ Add a search input  
+| | ⬜️ Search for products  
+| ✅ Icon/Links  
+| | ⬜️ Notifications  
+| | | ⬜️ When hovered should open a small window containing notifications  
+| | | ⬜️ Notifications to implement  
+| | | | ⬜️ When the purchase was successful or when it failed  
+| | | | ⬜️ Comment mentions  
+| | | | ⬜️ Comments on their products  
+| | ✅ Replace every link with icons  
+| | ✅ Show words if icons are not available  
+| | ⬜️ Add a small pop-up that tells what the icon is for.
 
 ⬜️ Product view  
 | ✅ Price component  
@@ -45,10 +54,15 @@
 | | ⬜️ Functionality to buy  
 | ✅ Dynamic  
 | ✅ Image selector  
-
-⬜️ Consumer help  
-| ⬜️ Page on price variations  
-| ⬜️ Tutorials on how to use the website
+| ⬜️ Edit product button/icon(only for the owner)
+| ⬜️ Delete product button/icon(only for the owner)
+| ⬜️ Comments
+| | ⬜️ Report comment
+| | ⬜️ Like comment
+| | ⬜️ Dislike comment
+| | | ⬜️ Disliked comments should be hidded(like, moved to
+the last index of the array).
+| ⬜️ Reviews
 
 ✅ Profile  
 |⬜️ Search bar for settings  
