@@ -1,6 +1,11 @@
 const mongoose = require("mongoose");
 
 const product = new mongoose.Schema({
+	// To prevent spammers, only allow the user to upload
+	// up to X messages for each product.
+	comments: {
+		type: Array,
+	},
 	ownerId: {
 		type: String,
 		required: true,
@@ -18,6 +23,7 @@ const product = new mongoose.Schema({
 	images: {
 		type: Array,
 		min: 1,
+		max: 100,
 	},
 	stock: {
 		type: Number,

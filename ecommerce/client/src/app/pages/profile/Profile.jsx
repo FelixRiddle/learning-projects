@@ -1,22 +1,28 @@
 import React, { useState, useEffect, useContext } from "react";
+
 import "./Profile.css";
 import ChangeBasicInfo from "./components/ChangeBasicInfo";
 import ChangePasswords from "./components/ChangePasswords";
 import ChangeAddress from "./components/ChangeAddress";
 import axios from "axios";
 import { GlobalContext } from "../../App";
+import { get_year_month_day } from "../../../lib/misc/transformDate";
+import { useUserData } from "../../../lib/user/useUserData";
 
 function Profile(props) {
 	const { token, setToken, user } = useContext(GlobalContext);
+
+	// Hooks
+	const { handleChange, userData, setUserData } = useUserData();
 	const { setReRender } = props;
-	const [input, setInput] = useState({
-		firstName: "",
-		lastName: "",
-		email: "",
-		age: "",
-		password: "",
-		phoneNumber: "",
-	});
+	// const [input, setInput] = useState({
+	// 	firstName: "",
+	// 	lastName: "",
+	// 	email: "",
+	// 	age: "",
+	// 	password: "",
+	// 	phoneNumber: "",
+	// });
 	const [error, setError] = useState({
 		state: "",
 		message: "",
@@ -32,15 +38,15 @@ function Profile(props) {
 		show: false,
 	});
 
-	const handleChange = (e) => {
-		const { name, value } = e.target;
-		setInput((prevInput) => {
-			return {
-				...prevInput,
-				[name]: value,
-			};
-		});
-	};
+	// const handleChange = (e) => {
+	// 	const { name, value } = e.target;
+	// 	setInput((prevInput) => {
+	// 		return {
+	// 			...prevInput,
+	// 			[name]: value,
+	// 		};
+	// 	});
+	// };
 
 	useEffect(() => {
 		// If the error already exists
@@ -60,16 +66,11 @@ function Profile(props) {
 			if (user && user._id) {
 				setIsLoggedIn(true);
 
-				// All this just for a date xD
-				const tempAge = new Date(Date.parse(user.age));
-				const newAge = [
-					tempAge.getUTCFullYear(),
-					("0" + (tempAge.getMonth() + 1)).slice(-2),
-					("0" + tempAge.getDate()).slice(-2),
-				].join("-");
+				// Utc to YYYY-MM-DD
+				const newAge = get_year_month_day(user.age);
 
 				const { firstName, lastName, email, phoneNumber } = user;
-				setInput(() => {
+				setUserData((prevInput) => {
 					return {
 						firstName,
 						lastName,
@@ -108,7 +109,7 @@ function Profile(props) {
 			console.error(err);
 			return;
 		}
-	}, [user, isLoggedIn, input]);
+	}, [user, isLoggedIn, setUserData]);
 
 	return (
 		<div>
@@ -128,8 +129,8 @@ function Profile(props) {
 						{/* Basic information */}
 						<ChangeBasicInfo
 							handleChange={handleChange}
-							input={input}
-							setInput={setInput}
+							input={userData}
+							setInput={setUserData}
 							passwordInfo={passwordInfo}
 							setPasswordInfo={setPasswordInfo}
 							setError={setError}
@@ -139,14 +140,14 @@ function Profile(props) {
 						{/* Change password */}
 						<ChangePasswords
 							handleChange={handleChange}
-							input={input}
+							input={userData}
 							setReRender={setReRender}
 							token={token}
 							setToken={setToken}
 						/>
 
 						{/* Change address */}
-						<ChangeAddress handleChange={handleChange} input={input} />
+						<ChangeAddress handleChange={handleChange} input={userData} />
 					</div>
 				)}
 			</div>

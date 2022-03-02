@@ -65,47 +65,48 @@ the last index of the array).
 | ⬜️ Reviews
 
 ✅ Profile  
-|⬜️ Search bar for settings  
-|✅ If the user is not logged in, show 401  
-|✅ ChangeBasicInfo part  
-| |✅ Ask for password before submitting a request  
-| | |✅ show-hide password functionality  
-| | |✅ Show a warning when it's empty  
-| | | |⬜️ The warning must disappear after x seconds(I don't know how to do this, for now)  
-| | | |✅ The warning can also disappear if the user clicks on the field  
-| | | |✅ The red border doesn't disappear till the user clicks on the field  
-| | | |✅ The warning should disappear when the user clicks on it  
-| |✅ Validate email  
-| |✅ Update data  
-| |✅ Show messages  
-| | |✅ Server offline  
-| | |✅ Other errors  
-| | | |✅ Email is already in use  
-| | | |✅ The password is incorrect  
-| | | |✅ If the server is offline/bad request  
-| | |✅ Joi validation errors  
-| | |✅ Success message  
-| | | |✅ Popup is removed when the user clicks it  
-| |✅ Save token locally  
-| |✅ Verify password through bcrypt  
-|✅ Change password  
-| |✅ Refresh token  
-| |✅ show-hide password for the three fields  
-| |✅ Messages  
-| | |✅ Password length must be at least 8 characters long  
-| | |✅ New password and repeat must be the same  
-| | |✅ Joi validation(the password cannot be very large)  
-| | |✅ Current password isn't correct  
-| | |✅ Password updated successfully  
-|✅ Address  
-| |✅ Messages  
-| | |✅ Joi validation  
-| | |✅ Success  
-| |✅ Refresh token  
-| |✅ Backend functionality  
-| | |✅ Validate data with joi  
-| | |✅ Error handling  
-| | |✅ Update data
+| ⬜️ Search bar for settings  
+| ✅ If the user is not logged in, show 401  
+| ✅ ChangeBasicInfo part  
+| | ✅ Ask for password before submitting a request  
+| | | ✅ show-hide password functionality  
+| | | ✅ Show a warning when it's empty  
+| | | | ⬜️ The warning must disappear after x seconds(I don't know how to do this, for now)  
+| | | | ✅ The warning can also disappear if the user clicks on the field  
+| | | | ✅ The red border doesn't disappear till the user clicks on the field  
+| | | | ✅ The warning should disappear when the user clicks on it  
+| | ✅ Validate email  
+| | ✅ Update data  
+| | ✅ Show messages  
+| | | ✅ Server offline  
+| | | ✅ Other errors  
+| | | | ✅ Email is already in use  
+| | | | ✅ The password is incorrect  
+| | | | ✅ If the server is offline/bad request  
+| | | ✅ Joi validation errors  
+| | | ✅ Success message  
+| | | | ✅ Popup is removed when the user clicks it  
+| | ✅ Save token locally  
+| | ✅ Verify password through bcrypt  
+| ✅ Change password  
+| | ✅ Refresh token  
+| | ✅ show-hide password for the three fields  
+| | ✅ Messages  
+| | | ✅ Password length must be at least 8 characters long  
+| | | ✅ New password and repeat must be the same  
+| | | ✅ Joi validation(the password cannot be very large)  
+| | | ✅ Current password isn't correct  
+| | | ✅ Password updated successfully  
+| ✅ Address  
+| | ✅ Messages  
+| | | ✅ Joi validation  
+| | | ✅ Success  
+| | ✅ Refresh token  
+| | ✅ Backend functionality  
+| | | ✅ Validate data with joi  
+| | | ✅ Error handling  
+| | | ✅ Update data  
+| ⬜️ Fix Styling
 
 |Others  
 | |⬜️ Add dark mode, for this, create a gigantic div that covers everything
