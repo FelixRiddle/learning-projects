@@ -11,6 +11,7 @@ import Profile from "../../../../pages/profile/Profile";
 import CreateProduct from "../../../../pages/createProduct/CreateProduct";
 import { GlobalContext } from "../../../../App";
 import ProductView from "../../../../pages/product_view/ProductView";
+import Test from "../../../../pages/test/Test";
 
 const Routes = (props) => {
 	const { products } = useContext(GlobalContext);
@@ -40,7 +41,8 @@ const Routes = (props) => {
 						/>
 					);
 				})}
-
+				
+				<Route path="/test" element={<Test />} />
 				<Route path="*" element={<h1>404: Page not found.</h1>} />
 			</Routes1>
 		</BrowserRouter>

@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useContext } from "react";
+
 import axios from "axios";
 import { handleMessageValidationv2 } from "../../../../lib/handleMessageValidation";
 import { GlobalContext } from "../../../App";
@@ -20,7 +21,6 @@ const ChangeBasicInfo = (props) => {
 		state: "",
 		message: "",
 	});
-	//const [token, setToken] = useState("");
 
 	const handleBasicInfoSubmit = async (e) => {
 		e.preventDefault();
@@ -198,6 +198,7 @@ const ChangeBasicInfo = (props) => {
 
 			<h6>Basic info</h6>
 			<form>
+				{/* <PasswordInput /> */}
 				<div className="profileLabels">
 					<label htmlFor="firstName">First name</label>
 					<label htmlFor="lastName">Last name</label>
