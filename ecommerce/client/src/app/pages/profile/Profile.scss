@@ -1,256 +1,265 @@
-.profile {
-	h6 {
-		font-size: 25px;
-		margin-left: 40%;
-		text-align: left;
-		grid-area: titles;
-	}
+// .input {
+// 	display: block;
+// 	font-size: 25px;
+// 	padding: 20px;
+// 	margin: 20px;
+// 	display: block;
+// 	border: none;
+// }
 
-	.error {
-		position: absolute;
-		width: 400px;
-		top: 70px;
-		left: 355px;
-		text-align: center;
-		background-color: rgb(223, 21, 21, 0.8);
-		border-radius: 10px;
-		padding: 10px;
-	}
-	
-	.success {
-		border: none;
-	}
-	
-	.danger {
-		width: 400px;
-		text-align: center;
-		background-color: rgb(223, 21, 21, 0.8);
-		border-radius: 10px;
-		padding: 10px;
-	}
+// .profile {
+// 	h6 {
+// 		font-size: 25px;
+// 		margin-left: 40%;
+// 		text-align: left;
+// 		grid-area: titles;
+// 	}
 
-	.changeBasicInfo {
-		.emailErrorPopup {
-			position: absolute;
-			top: 510px;
-			left: 800px;
-			width: 400px;
-			height: 50px;
-			background-color: rgb(223, 21, 21, 0.8);
-			border-radius: 10px;
-			padding: 10px;
-			text-align: center;
+// 	.error {
+// 		position: absolute;
+// 		width: 400px;
+// 		top: 70px;
+// 		left: 355px;
+// 		text-align: center;
+// 		background-color: rgb(223, 21, 21, 0.8);
+// 		border-radius: 10px;
+// 		padding: 10px;
+// 	}
 
-			&:hover {
-				cursor: pointer;
-			}
-		}
+// 	.success {
+// 		border: none;
+// 	}
 
-		.basicInfoMessage {
-			position: absolute;
-			top: 780px;
-			left: 350px;
-			width: 400px;
-			height: 30px;
-			border-radius: 10px;
-			padding: 10px;
-			text-align: center;
-			border-radius: 10px;
-			padding: 20px;
-			z-index: 1;
+// 	.danger {
+// 		width: 400px;
+// 		text-align: center;
+// 		background-color: rgb(223, 21, 21, 0.8);
+// 		border-radius: 10px;
+// 		padding: 10px;
+// 	}
 
-			&:hover {
-				cursor: pointer;
-			}
-		}
+// 	.changeBasicInfo {
+// 		.emailErrorPopup {
+// 			position: absolute;
+// 			top: 510px;
+// 			left: 800px;
+// 			width: 400px;
+// 			height: 50px;
+// 			background-color: rgb(223, 21, 21, 0.8);
+// 			border-radius: 10px;
+// 			padding: 10px;
+// 			text-align: center;
 
-		.submitSuccessful {
-			position: absolute;
-			top: 800px;
-			left: 350px;
-			width: 400px;
-			height: 30px;
-			border-radius: 10px;
-			padding: 10px;
-			text-align: center;
-			border-radius: 10px;
-			padding: 10px;
+// 			&:hover {
+// 				cursor: pointer;
+// 			}
+// 		}
 
-			&:hover {
-				cursor: pointer;
-			}
-		}
-	}
+// 		.basicInfoMessage {
+// 			position: absolute;
+// 			top: 780px;
+// 			left: 350px;
+// 			width: 400px;
+// 			height: 30px;
+// 			border-radius: 10px;
+// 			padding: 10px;
+// 			text-align: center;
+// 			border-radius: 10px;
+// 			padding: 20px;
+// 			z-index: 1;
 
-	.changePasswords {
-		.messages {
-			position: absolute;
-			top: 1320px;
-			left: 420px;
-			padding: 20px;
-			border: none;
-			border-radius: 5px;
-			
-			&:hover {
-				cursor: pointer;
-			}
-		}
+// 			&:hover {
+// 				cursor: pointer;
+// 			}
+// 		}
 
-		.show-hide-passwords {
-			.show-hide-current-password {
-				position: absolute;
-				left: 780px;
-				top: 1127px;
+// 		.submitSuccessful {
+// 			position: absolute;
+// 			top: 800px;
+// 			left: 350px;
+// 			width: 400px;
+// 			height: 30px;
+// 			border-radius: 10px;
+// 			padding: 10px;
+// 			text-align: center;
+// 			border-radius: 10px;
+// 			padding: 10px;
 
-				&:hover {
-					cursor: pointer;
-				}
-			}
-			.show-hide-new-password {
-				position: absolute;
-				left: 780px;
-				top: 1219px;
+// 			&:hover {
+// 				cursor: pointer;
+// 			}
+// 		}
+// 	}
 
-				&:hover {
-					cursor: pointer;
-				}
-			}
-			.show-hide-repeat-new-password {
-				position: absolute;
-				left: 780px;
-				top: 1309px;
+// 	.changePasswords {
+// 		.messages {
+// 			position: absolute;
+// 			top: 1320px;
+// 			left: 420px;
+// 			padding: 20px;
+// 			border: none;
+// 			border-radius: 5px;
 
-				&:hover {
-					cursor: pointer;
-				}
-			}
+// 			&:hover {
+// 				cursor: pointer;
+// 			}
+// 		}
 
-			.offset-text {
-				left: 840px;
-			}
-		}
-	}
-	
-	.changeAddress {
-		.message {
-			position: absolute;
-			position: absolute;
-			top: 2000px;
-			left: 320px;
-			padding: 20px;
-			border: none;
-			border-radius: 5px;
-			
-			&:hover {
-				cursor: pointer;
-			}
-		}
-	}
+// 		.show-hide-passwords {
+// 			.show-hide-current-password {
+// 				position: absolute;
+// 				left: 780px;
+// 				top: 1127px;
 
-	.changeBasicInfo,
-	.changePasswords,
-	.changeAddress {
-		.errorPopup {
-			position: absolute;
-			width: 400px;
-			height: 50px;
-			background-color: rgb(223, 21, 21, 0.8);
-			border-radius: 10px;
-			padding: 10px;
-			top: 768px;
-			right: 50px;
-			border: 1px solid red;
+// 				&:hover {
+// 					cursor: pointer;
+// 				}
+// 			}
+// 			.show-hide-new-password {
+// 				position: absolute;
+// 				left: 780px;
+// 				top: 1219px;
 
-			&:hover {
-				cursor: pointer;
-			}
-		}
+// 				&:hover {
+// 					cursor: pointer;
+// 				}
+// 			}
+// 			.show-hide-repeat-new-password {
+// 				position: absolute;
+// 				left: 780px;
+// 				top: 1309px;
 
-		// For the password icon
-		.passwordIcon {
-			position: relative;
-			top: 680px;
-			left: 710px;
+// 				&:hover {
+// 					cursor: pointer;
+// 				}
+// 			}
 
-			&:hover {
-				cursor: pointer;
-			}
-		}
+// 			.offset-text {
+// 				left: 840px;
+// 			}
+// 		}
+// 	}
 
-		.passwordIconOffset {
-			left: 770px;
-			top: 670px;
-		}
-	}
+// 	.changeAddress {
+// 		.message {
+// 			position: absolute;
+// 			position: absolute;
+// 			top: 2000px;
+// 			left: 320px;
+// 			padding: 20px;
+// 			border: none;
+// 			border-radius: 5px;
 
-	.changeBasicInfo > form,
-	.changePasswords > form,
-	.changeAddress > form {
-		.profileLabels > label,
-		.profileInputs > input,
-		.changePasswordsLabels > label,
-		.changePasswordsInputs > input,
-		.changeAddressLabels > label,
-		.changeAddressInputs > input {
-			display: block;
-			font-size: 25px;
-			padding: 20px;
-			margin: 20px;
-			display: block;
-			border: none;
-		}
+// 			&:hover {
+// 				cursor: pointer;
+// 			}
+// 		}
+// 	}
 
-		.profileLabels > label,
-		.changePasswordsLabels > label,
-		.changeAddressLabels > label {
-			grid-area: labels;
-		}
+// 	.changeBasicInfo,
+// 	.changePasswords,
+// 	.changeAddress {
+// 		.errorPopup {
+// 			position: absolute;
+// 			width: 400px;
+// 			height: 50px;
+// 			background-color: rgb(223, 21, 21, 0.8);
+// 			border-radius: 10px;
+// 			padding: 10px;
+// 			top: 768px;
+// 			right: 50px;
+// 			border: 1px solid red;
 
-		.profileInputs > input,
-		.changePasswordsInputs > input,
-		.changeAddressInputs > input {
-			grid-area: inputs;
-			border-bottom: 1px solid gray;
-			outline: none;
+// 			&:hover {
+// 				cursor: pointer;
+// 			}
+// 		}
 
-			&.danger {
-				border-radius: 5px;
-				border: 3px solid rgba(228, 63, 13, 0.8);
-				background-color: white;
-			}
+// 		// For the password icon
+// 		.passwordIcon {
+// 			position: relative;
+// 			top: 680px;
+// 			left: 710px;
 
-			&:focus {
-				border-radius: 5px;
-				border: 3px solid rgba(115, 250, 255, 0.8);
-			}
-		}
+// 			&:hover {
+// 				cursor: pointer;
+// 			}
+// 		}
 
-		button {
-			grid-area: buttons;
-			background-color: black;
-			padding: 10px;
-			margin: 10px;
-			width: 250px;
-			font-size: 25px;
-			background-color: rgba(17, 143, 228, 0.6);
-			border: none;
-			border-radius: 5px;
-			color: #333;
+// 		.passwordIconOffset {
+// 			left: 770px;
+// 			top: 670px;
+// 		}
+// 	}
 
-			&:active,
-			&:focus {
-				border-color: 2px solid blue;
-			}
+// 	.changeBasicInfo > form,
+// 	.changePasswords > form,
+// 	.changeAddress > form {
+// 		// .profileLabels > label,
+// 		// .profileInputs > input,
+// 		// .changePasswordsLabels > label,
+// 		// .changePasswordsInputs > input,
+// 		// .changeAddressLabels > label,
+// 		// .changeAddressInputs > input {
+// 		// 	display: block;
+// 		// 	font-size: 25px;
+// 		// 	padding: 20px;
+// 		// 	margin: 20px;
+// 		// 	display: block;
+// 		// 	border: none;
+// 		// }
 
-			&:hover {
-				cursor: pointer;
-				background-color: rgba(50, 143, 255, 0.6);
-			}
-		}
+// 		.profileLabels > label,
+// 		.changePasswordsLabels > label,
+// 		.changeAddressLabels > label {
+// 			grid-area: labels;
+// 		}
 
-		display: grid;
-		grid-template-areas:
-			". labels inputs ."
-			". buttons buttons .";
-	}
-}
+// 		.profileInputs > input,
+// 		.changePasswordsInputs > input,
+// 		.changeAddressInputs > input {
+// 			grid-area: inputs;
+// 			border-bottom: 1px solid gray;
+// 			outline: none;
+
+// 			&.danger {
+// 				border-radius: 5px;
+// 				border: 3px solid rgba(228, 63, 13, 0.8);
+// 				background-color: white;
+// 			}
+
+// 			&:focus {
+// 				border-radius: 5px;
+// 				border: 3px solid rgba(115, 250, 255, 0.8);
+// 			}
+// 		}
+
+// 		button {
+// 			grid-area: buttons;
+// 			background-color: black;
+// 			padding: 10px;
+// 			margin: 10px;
+// 			width: 250px;
+// 			font-size: 25px;
+// 			background-color: rgba(17, 143, 228, 0.6);
+// 			border: none;
+// 			border-radius: 5px;
+// 			color: #333;
+
+// 			&:active,
+// 			&:focus {
+// 				border-color: 2px solid blue;
+// 			}
+
+// 			&:hover {
+// 				cursor: pointer;
+// 				background-color: rgba(50, 143, 255, 0.6);
+// 			}
+// 		}
+
+// 		display: grid;
+// 		grid-template-areas:
+// 			". labels inputs ."
+// 			". buttons buttons .";
+// 	}
+// }

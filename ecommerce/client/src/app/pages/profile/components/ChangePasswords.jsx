@@ -220,7 +220,7 @@ const ChangePasswords = (props) => {
 						value={passwordInput.repeatNewPassword}
 					/>
 				</div>
-				<button type="submit" onClick={handleChangePasswordsSubmit}>
+				<button className="btn" type="submit" onClick={handleChangePasswordsSubmit}>
 					Change password
 				</button>
 			</form>

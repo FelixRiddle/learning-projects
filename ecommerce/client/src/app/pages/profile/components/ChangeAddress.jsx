@@ -89,13 +89,13 @@ const ChangeAddress = (props) => {
 
 		if (user._id) {
 			let { country, province, city, postalCode, address } = user;
-			
+
 			if (!country) country = "";
 			if (!province) province = "";
 			if (!city) city = "";
 			if (!postalCode) postalCode = "";
 			if (!address) address = "";
-			
+
 			setLocation({ country, province, city, postalCode, address });
 			setDataLoaded((prevInput) => !prevInput);
 		}
@@ -151,7 +151,11 @@ const ChangeAddress = (props) => {
 						value={location.address}
 					/>
 				</div>
-				<button type="submit" onClick={handleChangeAddressSubmit}>
+				<button
+					className="btn"
+					type="submit"
+					onClick={handleChangeAddressSubmit}
+				>
 					Save address
 				</button>
 			</form>

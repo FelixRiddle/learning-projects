@@ -3,6 +3,7 @@ import React, { useEffect, useState, useContext } from "react";
 import axios from "axios";
 import { handleMessageValidationv2 } from "../../../../lib/handleMessageValidation";
 import { GlobalContext } from "../../../App";
+import PasswordInput from "../../../components/inputs/password_input/PasswordInput";
 
 const ChangeBasicInfo = (props) => {
 	const { token, user, setToken } = useContext(GlobalContext);
@@ -171,7 +172,7 @@ const ChangeBasicInfo = (props) => {
 			)}
 
 			{/* Show or hide the password */}
-			{(!passwordInfo.show && (
+			{/* {(!passwordInfo.show && (
 				<img
 					className={
 						"passwordIcon " + (!showHidePasswordIcon && "passwordIconOffset")
@@ -194,10 +195,10 @@ const ChangeBasicInfo = (props) => {
 							setPasswordInfo({ ...passwordInfo, show: !passwordInfo.show })
 						}
 					/>
-				))}
+				))} */}
 
 			<h6>Basic info</h6>
-			<form>
+			<form className="changeBasicInfo">
 				{/* <PasswordInput /> */}
 				<div className="profileLabels">
 					<label htmlFor="firstName">First name</label>
@@ -210,6 +211,7 @@ const ChangeBasicInfo = (props) => {
 				<div className="profileInputs">
 					{/* Basic information */}
 					<input
+						className="input"
 						type="text"
 						name="firstName"
 						placeholder="First name"
@@ -217,6 +219,7 @@ const ChangeBasicInfo = (props) => {
 						value={input.firstName}
 					/>
 					<input
+						className="input"
 						type="text"
 						name="lastName"
 						placeholder="Last name"
@@ -225,7 +228,8 @@ const ChangeBasicInfo = (props) => {
 					/>
 					<input
 						className={
-							(resData.field === "email" && resData.error && "danger") || ""
+							"input" +
+							((resData.field === "email" && resData.error && "danger") || "")
 						}
 						type="email"
 						name="email"
@@ -235,6 +239,7 @@ const ChangeBasicInfo = (props) => {
 						onClick={(e) => setResData({ ...resData, error: false })}
 					/>
 					<input
+						className="input"
 						type="date"
 						name="age"
 						placeholder="Age"
@@ -242,23 +247,34 @@ const ChangeBasicInfo = (props) => {
 						value={input.age}
 					/>
 					<input
+						className="input"
 						type="text"
 						name="phoneNumber"
 						placeholder="Phone number"
 						onChange={handleChange}
 						value={input.phoneNumber}
 					/>
-					<input
-						className={passwordInfo.error ? "danger" : ""}
+					{/* <input
+						className={"input" + (passwordInfo.error ? "danger" : "")}
 						type={passwordInfo.show ? "text" : "password"}
 						name="password"
 						placeholder="Password"
 						onChange={handleChange}
 						value={input.password}
 						onClick={(e) => setPasswordInfo({ ...passwordInfo, error: false })}
+					/> */}
+					<PasswordInput
+						inputClasses={"input" + (passwordInfo.error ? "danger" : "")}
+						inputName="password"
+						inputOnChange={handleChange}
+						inputOnClick={(e) =>
+							setPasswordInfo({ ...passwordInfo, error: false })
+						}
+						inputPlaceholder="Password"
+						inputValue={input.password}
 					/>
 				</div>
-				<button type="submit" onClick={handleBasicInfoSubmit}>
+				<button className="btn" type="submit" onClick={handleBasicInfoSubmit}>
 					Save
 				</button>
 			</form>

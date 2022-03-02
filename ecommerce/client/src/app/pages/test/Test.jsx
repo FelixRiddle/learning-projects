@@ -1,5 +1,5 @@
 import React from "react";
-import PasswordInput from "../../components/password_input/PasswordInput";
+import PasswordInput from "../../components/inputs/password_input/PasswordInput";
 
 function Test() {
 	return (

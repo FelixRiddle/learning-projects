@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 
-import { get_icon } from "../../../lib/images/icons/icons";
+import { get_icon } from "../../../../lib/images/icons/icons";
 
 function PasswordInput(props) {
 	const {
@@ -11,12 +11,16 @@ function PasswordInput(props) {
 		inputHeight,
 		inputId,
 		inputName,
+		inputOnChange,
+		inputOnClick,
+		inputPlaceholder,
+		inputValue,
 		inputWidth,
 	} = props;
 
 	const [altAttribute] = useState({
-		hide: "Hide new password",
-		show: "Show new password",
+		hide: "Hide password",
+		show: "Show password",
 	});
 	const [hideIcon] = useState(get_icon("hide"));
 	const [hover, setHover] = useState(false);
@@ -56,12 +60,12 @@ function PasswordInput(props) {
 		<div className={divClasses}>
 			<div style={{ display: "flex" }}>
 				<img
-					alt={(!switchIcon && altAttribute.hide) || altAttribute.show || ""}
+					alt={(switchIcon && altAttribute.hide) || altAttribute.show || ""}
 					className={imageClasses}
 					onClick={() => handleIconClick()}
 					onMouseEnter={() => handleIconMouseEnter()}
 					onMouseLeave={() => handleIconMouseLeave()}
-					src={(!switchIcon && hideIcon) || showIcon || ""}
+					src={(switchIcon && hideIcon) || showIcon || ""}
 					style={{
 						...((hover && { cursor: "pointer" }) || { cursor: "default" }),
 						display: "inline",
@@ -72,8 +76,12 @@ function PasswordInput(props) {
 					className={inputClasses}
 					id={newInputId}
 					name={inputName}
+					onChange={inputOnChange}
+					onClick={inputOnClick}
+					placeholder={inputPlaceholder}
 					style={inputStyles}
-					type="password"
+					type={(switchIcon && "password") || "text"}
+					value={inputValue}
 				/>
 			</div>
 		</div>
