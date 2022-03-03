@@ -1,13 +1,15 @@
 import React, { useState, useEffect, useContext } from "react";
+import { Route, Routes } from "react-router-dom";
 
 import "./Profile.css";
-import ChangeBasicInfo from "./components/ChangeBasicInfo";
-import ChangePasswords from "./components/ChangePasswords";
-import ChangeAddress from "./components/ChangeAddress";
 import axios from "axios";
 import { GlobalContext } from "../../App";
 import { get_year_month_day } from "../../../lib/misc/transformDate";
 import { useUserData } from "../../../lib/user/useUserData";
+import ChangeBasicInfo from "./components/change_basic_info/ChangeBasicInfo";
+import ChangePassword from "./components/change_password/ChangePasswords";
+import ChangeAddress from "./components/change_address/ChangeAddress";
+import ProfileRoutes from "./components/profile_routes/ProfileRoutes";
 
 function Profile(props) {
 	const { token, setToken, user } = useContext(GlobalContext);
@@ -15,14 +17,6 @@ function Profile(props) {
 	// Hooks
 	const { handleChange, userData, setUserData } = useUserData();
 	const { setReRender } = props;
-	// const [input, setInput] = useState({
-	// 	firstName: "",
-	// 	lastName: "",
-	// 	email: "",
-	// 	age: "",
-	// 	password: "",
-	// 	phoneNumber: "",
-	// });
 	const [error, setError] = useState({
 		state: "",
 		message: "",
@@ -37,16 +31,6 @@ function Profile(props) {
 		duration: 10000,
 		show: false,
 	});
-
-	// const handleChange = (e) => {
-	// 	const { name, value } = e.target;
-	// 	setInput((prevInput) => {
-	// 		return {
-	// 			...prevInput,
-	// 			[name]: value,
-	// 		};
-	// 	});
-	// };
 
 	useEffect(() => {
 		// If the error already exists
@@ -123,31 +107,23 @@ function Profile(props) {
 						<div className="errorMessage">{error.message}</div>
 					</div>
 				)}
-
 				{isLoggedIn && (
 					<div>
-						{/* Basic information */}
-						<ChangeBasicInfo
-							handleChange={handleChange}
-							input={userData}
-							setInput={setUserData}
-							passwordInfo={passwordInfo}
-							setPasswordInfo={setPasswordInfo}
-							setError={setError}
+						{/* Routes to profile settings */}
+						<ProfileRoutes
 							error={error}
-						/>
-
-						{/* Change password */}
-						<ChangePasswords
 							handleChange={handleChange}
 							input={userData}
+							passwordInfo={passwordInfo}
+							setError={setError}
+							setInput={setUserData}
+							setPasswordInfo={setPasswordInfo}
 							setReRender={setReRender}
-							token={token}
 							setToken={setToken}
+							token={token}
 						/>
-
-						{/* Change address */}
-						<ChangeAddress handleChange={handleChange} input={userData} />
+						
+						{/* Navigation bar */}
 					</div>
 				)}
 			</div>

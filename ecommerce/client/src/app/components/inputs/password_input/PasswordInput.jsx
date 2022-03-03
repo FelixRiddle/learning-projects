@@ -16,6 +16,7 @@ function PasswordInput(props) {
 		inputPlaceholder,
 		inputValue,
 		inputWidth,
+		parent,
 	} = props;
 
 	const [altAttribute] = useState({
@@ -57,7 +58,15 @@ function PasswordInput(props) {
 	}, [inputHeight, inputWidth]);
 
 	return (
-		<div className={divClasses}>
+		<div
+			className={divClasses}
+			style={{
+				...(parent === "Field" && {
+					display: "inline-block",
+				}),
+				marginLeft: "10px",
+			}}
+		>
 			<div style={{ display: "flex" }}>
 				<img
 					alt={(switchIcon && altAttribute.hide) || altAttribute.show || ""}
@@ -68,7 +77,6 @@ function PasswordInput(props) {
 					src={(switchIcon && hideIcon) || showIcon || ""}
 					style={{
 						...((hover && { cursor: "pointer" }) || { cursor: "default" }),
-						display: "inline",
 						marginRight: "5px",
 					}}
 				/>

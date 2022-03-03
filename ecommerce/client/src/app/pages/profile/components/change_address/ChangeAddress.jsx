@@ -1,7 +1,8 @@
 import { useEffect, useState, useContext } from "react";
 import axios from "axios";
-import { handleMessageValidationv2 } from "../../../../lib/handleMessageValidation";
-import { GlobalContext } from "../../../App";
+
+import { handleMessageValidationv2 } from "../../../../../lib/handleMessageValidation";
+import { GlobalContext } from "../../../../App";
 
 const ChangeAddress = (props) => {
 	const { token, user } = useContext(GlobalContext);

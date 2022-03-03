@@ -14,6 +14,7 @@ function Input(props) {
 		inputType,
 		inputValue,
 		inputWidth,
+		parent,
 	} = props;
 
 	const [newInputId] = useState(inputId || uuidv4());
@@ -33,7 +34,15 @@ function Input(props) {
 	}, [inputHeight, inputWidth]);
 
 	return (
-		<div className={divClasses}>
+		<div
+			className={divClasses}
+			style={{
+				...(parent === "Field" && {
+					display: "inline-block",
+				}),
+				marginLeft: "10px",
+			}}
+		>
 			<input
 				className={inputClasses}
 				id={newInputId}

@@ -19,16 +19,15 @@ const Routes = (props) => {
 	return (
 		<BrowserRouter>
 			<Routes1>
+				{/* Navbar */}
 				<Route path="/" element={<Home />} />
 				<Route path="/home" element={<Home />} />
 				<Route path="/about" element={<About />} />
 				<Route path="/login" element={<Login user={props.user} />} />
 				<Route path="/register" element={<Register />} />
 				<Route path="/search" element={<Search />} />
-				<Route
-					path="/profile"
-					element={<Profile setReRender={props.setReRender} />}
-				/>
+
+				{/* Products */}
 				<Route path="/createProduct" element={<CreateProduct />} />
 				{products.map((e) => {
 					// console.log(`Product:`, e);
@@ -41,7 +40,13 @@ const Routes = (props) => {
 						/>
 					);
 				})}
-				
+
+				{/* Profile */}
+				<Route
+					path="/profile/*"
+					element={<Profile setReRender={props.setReRender} />}
+				></Route>
+
 				<Route path="/test" element={<Test />} />
 				<Route path="*" element={<h1>404: Page not found.</h1>} />
 			</Routes1>

@@ -1,9 +1,10 @@
-import React, { useEffect, useState, useContext } from "react";
-
+import React, { useState, useContext } from "react";
 import axios from "axios";
-import { handleMessageValidationv2 } from "../../../../lib/handleMessageValidation";
-import { GlobalContext } from "../../../App";
-import PasswordInput from "../../../components/inputs/password_input/PasswordInput";
+
+import { handleMessageValidationv2 } from "../../../../../lib/handleMessageValidation";
+import { GlobalContext } from "../../../../App";
+import Field from "../../../../components/inputs/field/Field";
+import "./ChangeBasicInfo.css";
 
 const ChangeBasicInfo = (props) => {
 	const { token, user, setToken } = useContext(GlobalContext);
@@ -16,7 +17,6 @@ const ChangeBasicInfo = (props) => {
 		error,
 	} = props;
 	const [resData, setResData] = useState({});
-	const [showHidePasswordIcon, setShowHidePasswordIcon] = useState(true);
 	const [showPasswordMessage, setShowPasswordMessage] = useState(false);
 	const [emailError, setEmailError] = useState({
 		state: "",
@@ -133,13 +133,6 @@ const ChangeBasicInfo = (props) => {
 		}
 	};
 
-	// When the page starts
-	useEffect(() => {
-		axios
-			.get("http://localhost:3001/public/icons/Show.png")
-			.catch((err) => setShowHidePasswordIcon(false));
-	}, []);
-
 	return (
 		<div className="changeBasicInfo">
 			{/* Show or hide repeated email error message */}
@@ -171,109 +164,76 @@ const ChangeBasicInfo = (props) => {
 				</div>
 			)}
 
-			{/* Show or hide the password */}
-			{/* {(!passwordInfo.show && (
-				<img
-					className={
-						"passwordIcon " + (!showHidePasswordIcon && "passwordIconOffset")
-					}
-					src="http://localhost:3001/public/icons/Show.png"
-					alt="Show password"
-					onClick={() =>
-						setPasswordInfo({ ...passwordInfo, show: !passwordInfo.show })
-					}
-				/>
-			)) ||
-				(passwordInfo.show && (
-					<img
-						className={
-							"passwordIcon " + (!showHidePasswordIcon && "passwordIconOffset")
-						}
-						src="http://localhost:3001/public/icons/Hide.png"
-						alt="Hide password"
-						onClick={() =>
-							setPasswordInfo({ ...passwordInfo, show: !passwordInfo.show })
-						}
-					/>
-				))} */}
-
 			<h6>Basic info</h6>
 			<form className="changeBasicInfo">
-				{/* <PasswordInput /> */}
-				<div className="profileLabels">
-					<label htmlFor="firstName">First name</label>
-					<label htmlFor="lastName">Last name</label>
-					<label htmlFor="email">Email</label>
-					<label htmlFor="age">Age</label>
-					<label htmlFor="phoneNumber">Phone number</label>
-					<label htmlFor="password">Password</label>
-				</div>
-				<div className="profileInputs">
-					{/* Basic information */}
-					<input
-						className="input"
-						type="text"
-						name="firstName"
-						placeholder="First name"
-						onChange={handleChange}
-						value={input.firstName}
-					/>
-					<input
-						className="input"
-						type="text"
-						name="lastName"
-						placeholder="Last name"
-						onChange={handleChange}
-						value={input.lastName}
-					/>
-					<input
-						className={
-							"input" +
-							((resData.field === "email" && resData.error && "danger") || "")
-						}
-						type="email"
-						name="email"
-						placeholder="Email"
-						onChange={handleChange}
-						value={input.email}
-						onClick={(e) => setResData({ ...resData, error: false })}
-					/>
-					<input
-						className="input"
-						type="date"
-						name="age"
-						placeholder="Age"
-						onChange={handleChange}
-						value={input.age}
-					/>
-					<input
-						className="input"
-						type="text"
-						name="phoneNumber"
-						placeholder="Phone number"
-						onChange={handleChange}
-						value={input.phoneNumber}
-					/>
-					{/* <input
-						className={"input" + (passwordInfo.error ? "danger" : "")}
-						type={passwordInfo.show ? "text" : "password"}
-						name="password"
-						placeholder="Password"
-						onChange={handleChange}
-						value={input.password}
-						onClick={(e) => setPasswordInfo({ ...passwordInfo, error: false })}
-					/> */}
-					<PasswordInput
-						inputClasses={"input" + (passwordInfo.error ? "danger" : "")}
-						inputName="password"
-						inputOnChange={handleChange}
-						inputOnClick={(e) =>
-							setPasswordInfo({ ...passwordInfo, error: false })
-						}
-						inputPlaceholder="Password"
-						inputValue={input.password}
-					/>
-				</div>
+				<Field
+					content="First name"
+					htmlFor="firstName"
+					inputClasses="input"
+					inputName="firstName"
+					inputOnChange={handleChange}
+					inputPlaceholder="First name"
+					inputType="text"
+					inputValue={input && input.firstName}
+				/>
+				<Field
+					content="Last name"
+					htmlFor="lastName"
+					inputClasses="input"
+					inputName="lastName"
+					inputOnChange={handleChange}
+					inputPlaceholder="Last name"
+					inputType="text"
+					inputValue={input && input.lastName}
+				/>
+				<Field
+					content="Email"
+					htmlFor="email"
+					inputClasses={
+						"input" +
+						((resData.field === "email" && resData.error && "danger") || "")
+					}
+					inputName="email"
+					inputOnChange={handleChange}
+					inputPlaceholder="Email"
+					inputType="text"
+					inputValue={input && input.email}
+				/>
+				<Field
+					content="Age"
+					htmlFor="age"
+					inputClasses="input"
+					inputName="age"
+					inputOnChange={handleChange}
+					inputPlaceholder="Age"
+					inputType="date"
+					inputValue={input && input.age}
+				/>
+				<Field
+					content="Phone number"
+					htmlFor="phoneNumber"
+					inputClasses="input"
+					inputName="phoneNumber"
+					inputOnChange={handleChange}
+					inputPlaceholder="Phone number"
+					inputType="text"
+					inputValue={input && input.phoneNumber}
+				/>
+				<Field
+					content="Password"
+					htmlFor="password"
+					inputClasses={
+						"input" + (passwordInfo && passwordInfo.error ? "danger" : "")
+					}
+					inputName="password"
+					inputOnChange={handleChange}
+					inputOnClick={(e) =>
+						setPasswordInfo({ ...passwordInfo, error: false })
+					}
+					inputPlaceholder="Password"
+					inputType="password"
+					inputValue={input && input.password}
+				/>
 				<button className="btn" type="submit" onClick={handleBasicInfoSubmit}>
 					Save
 				</button>

@@ -5,13 +5,13 @@ import PasswordInput from "../password_input/PasswordInput";
 
 function Field(props) {
 	const { inputType } = props;
-	
+
 	return (
 		<div>
-			<Label {...props} />
-			{(inputType === "password" && <PasswordInput {...props} />) || (
-				<Input {...props} />
-			)}
+			<Label {...props} parent="Field" />
+			{(inputType === "password" && (
+				<PasswordInput {...props} parent="Field" />
+			)) || <Input {...props} parent="Field" />}
 		</div>
 	);
 }

@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { handleMessageValidationv2 } from "../../../../lib/handleMessageValidation";
+import { handleMessageValidationv2 } from "../../../../../lib/handleMessageValidation";
 
-const ChangePasswords = (props) => {
+const ChangePassword = (props) => {
 	const { input } = props;
 	const [passwordInfo, setPasswordInfo] = useState({
 		icon: false,
@@ -141,17 +141,6 @@ const ChangePasswords = (props) => {
 		// Get token
 		setUpdate({ ...update, token: localStorage.getItem("token"), updated: true, });
 	}, [update]);
-
-	/*
-	useEffect(() => {
-		// Update token state
-		if (update.updated)
-			setUpdate({
-				...update,
-				token: localStorage.getItem("token"),
-				updated: false,
-			});
-	}, [update]);*/
 
 	return (
 		<div className="changePasswords">
@@ -355,4 +344,4 @@ const ShowHidePasswords = (props) => {
 	);
 };
 
-export default ChangePasswords;
+export default ChangePassword;
