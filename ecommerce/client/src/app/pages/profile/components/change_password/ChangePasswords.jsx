@@ -1,9 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import axios from "axios";
+
 import { handleMessageValidationv2 } from "../../../../../lib/handleMessageValidation";
+import Field from "../../../../components/inputs/field/Field";
+import { GlobalContext } from "../../../../App";
 
 const ChangePassword = (props) => {
-	const { input } = props;
+	const { user } = useContext(GlobalContext);
+
+	const { input, setIsInChildComponent } = props;
+
 	const [passwordInfo, setPasswordInfo] = useState({
 		icon: false,
 		showCurrentPassword: false,
@@ -34,12 +40,16 @@ const ChangePassword = (props) => {
 	const handleChangePasswordsSubmit = (e) => {
 		e.preventDefault();
 		if (!passwordValidation()) return;
+		console.log(`Input:`, input);
+		console.log(`Input id:`, input._id);
+		console.log(`User id: ${user._id}`);
+		console.log(`Password info:`, passwordInfo);
 
 		axios
 			.post("http://localhost:3001/api/profile/changePassword", {
 				newPassword: passwordInput.newPassword,
 				currentPassword: passwordInput.currentPassword,
-				_id: input._id,
+				_id: user._id,
 				token: update.token,
 			})
 			.then((res) => {
@@ -119,18 +129,6 @@ const ChangePassword = (props) => {
 
 		return true;
 	};
-	
-	useEffect(() => {
-		// Test if the icons exist/are online
-		axios
-			.get("http://localhost:3001/public/icons/Show.png")
-			.then((res) => {
-				setPasswordInfo({ ...passwordInfo, icon: true });
-			})
-			.catch((err) => {
-				setPasswordInfo({ ...passwordInfo, icon: false });
-			});
-	}, [passwordInfo]);
 
 	useEffect(() => {
 		// If the token already exists return
@@ -139,8 +137,16 @@ const ChangePassword = (props) => {
 		console.log(`Updating password...`);
 
 		// Get token
-		setUpdate({ ...update, token: localStorage.getItem("token"), updated: true, });
+		setUpdate({
+			...update,
+			token: localStorage.getItem("token"),
+			updated: true,
+		});
 	}, [update]);
+
+	useEffect(() => {
+		setIsInChildComponent(true);
+	}, [setIsInChildComponent]);
 
 	return (
 		<div className="changePasswords">
@@ -154,62 +160,60 @@ const ChangePassword = (props) => {
 				setResData={setResData}
 			/>
 
-			{/* For show-hide password icons */}
-			<ShowHidePasswords
-				passwordInfo={passwordInfo}
-				setPasswordInfo={setPasswordInfo}
-			/>
-
 			<form action="submit">
-				<div className="changePasswordsLabels">
-					<label htmlFor="password">Current password</label>
-					<label htmlFor="newPassword">New password</label>
-					<label htmlFor="repeatNewPassword">Repeat new password</label>
-				</div>
-				<div className="changePasswordsInputs">
-					{/* Change passwords */}
-					<input
-						onClick={() =>
-							passwordInfo.field === "currentPassword" &&
-							setPasswordInfo({ ...passwordInfo, field: "" })
-						}
-						className={
-							(passwordInfo.field === "currentPassword" && "danger") || ""
-						}
-						type={passwordInfo.showCurrentPassword ? "text" : "password"}
-						name="currentPassword"
-						placeholder="Current password"
-						onChange={handlePasswordChange}
-						value={passwordInput.currentPassword}
-					/>
-					<input
-						onClick={() =>
-							passwordInfo.field === "newPassword" &&
-							setPasswordInfo({ ...passwordInfo, field: "" })
-						}
-						className={(passwordInfo.field === "newPassword" && "danger") || ""}
-						type={passwordInfo.showNewPassword ? "text" : "password"}
-						name="newPassword"
-						placeholder="New password"
-						onChange={handlePasswordChange}
-						value={passwordInput.newPassword}
-					/>
-					<input
-						onClick={() =>
-							passwordInfo.field === "repeatNewPassword" &&
-							setPasswordInfo({ ...passwordInfo, field: "" })
-						}
-						className={
-							(passwordInfo.field === "repeatNewPassword" && "danger") || ""
-						}
-						type={passwordInfo.showRepeatNewPassword ? "text" : "password"}
-						name="repeatNewPassword"
-						placeholder="Repeat new password"
-						onChange={handlePasswordChange}
-						value={passwordInput.repeatNewPassword}
-					/>
-				</div>
-				<button className="btn" type="submit" onClick={handleChangePasswordsSubmit}>
+				<Field
+					content="Current password"
+					htmlFor="password"
+					inputClasses={
+						"input" + (passwordInfo && passwordInfo.error ? "danger" : "")
+					}
+					inputName="currentPassword"
+					inputOnChange={handlePasswordChange}
+					inputOnClick={() =>
+						passwordInfo.field === "currentPassword" &&
+						setPasswordInfo({ ...passwordInfo, field: "" })
+					}
+					inputPlaceholder="Password"
+					inputType="password"
+					inputValue={passwordInput && passwordInput.currentPassword}
+				/>
+				<Field
+					content="New password"
+					htmlFor="password"
+					inputClasses={
+						"input" + (passwordInfo && passwordInfo.error ? "danger" : "")
+					}
+					inputName="newPassword"
+					inputOnChange={handlePasswordChange}
+					inputOnClick={() =>
+						passwordInfo.field === "currentPassword" &&
+						setPasswordInfo({ ...passwordInfo, field: "" })
+					}
+					inputPlaceholder="Password"
+					inputType="password"
+					inputValue={passwordInput && passwordInput.newPassword}
+				/>
+				<Field
+					content="Repeat new password"
+					htmlFor="password"
+					inputClasses={
+						"input" + (passwordInfo && passwordInfo.error ? "danger" : "")
+					}
+					inputName="repeatNewPassword"
+					inputOnChange={handlePasswordChange}
+					inputOnClick={() =>
+						passwordInfo.field === "currentPassword" &&
+						setPasswordInfo({ ...passwordInfo, field: "" })
+					}
+					inputPlaceholder="Password"
+					inputType="password"
+					inputValue={passwordInput && passwordInput.repeatNewPassword}
+				/>
+				<button
+					className="btn"
+					type="submit"
+					onClick={handleChangePasswordsSubmit}
+				>
 					Change password
 				</button>
 			</form>
@@ -232,114 +236,6 @@ const Messages = (props) => {
 			hidden={!passwordInfo.message && !resData.message && true}
 		>
 			<div>{passwordInfo.message || resData.message}</div>
-		</div>
-	);
-};
-
-const ShowHidePasswords = (props) => {
-	const { passwordInfo, setPasswordInfo } = props;
-
-	return (
-		<div className="show-hide-passwords">
-			{/* show-hide current password */}
-			{(!passwordInfo.showCurrentPassword && (
-				<img
-					onClick={() =>
-						setPasswordInfo({
-							...passwordInfo,
-							showCurrentPassword: !passwordInfo.showCurrentPassword,
-						})
-					}
-					className={
-						`show-hide-current-password ` +
-						(!passwordInfo.icon && "offset-text")
-					}
-					src="http://localhost:3001/public/icons/Show.png"
-					alt="Show password"
-				/>
-			)) ||
-				(passwordInfo.showCurrentPassword && (
-					<img
-						onClick={() =>
-							setPasswordInfo({
-								...passwordInfo,
-								showCurrentPassword: !passwordInfo.showCurrentPassword,
-							})
-						}
-						className={
-							`show-hide-current-password ` +
-							(!passwordInfo.icon && "offset-text")
-						}
-						src="http://localhost:3001/public/icons/Hide.png"
-						alt="Hide password"
-					/>
-				))}
-
-			{/* show-hide new password */}
-			{(!passwordInfo.showNewPassword && (
-				<img
-					onClick={() =>
-						setPasswordInfo({
-							...passwordInfo,
-							showNewPassword: !passwordInfo.showNewPassword,
-						})
-					}
-					className={
-						`show-hide-new-password ` + (!passwordInfo.icon && "offset-text")
-					}
-					src="http://localhost:3001/public/icons/Show.png"
-					alt="Show new password"
-				/>
-			)) ||
-				(passwordInfo.showNewPassword && (
-					<img
-						onClick={() =>
-							setPasswordInfo({
-								...passwordInfo,
-								showNewPassword: !passwordInfo.showNewPassword,
-							})
-						}
-						className={
-							`show-hide-new-password ` + (!passwordInfo.icon && "offset-text")
-						}
-						src="http://localhost:3001/public/icons/Hide.png"
-						alt="Hide new password"
-					/>
-				))}
-
-			{/* show-hide repeat new password */}
-			{(!passwordInfo.showRepeatNewPassword && (
-				<img
-					onClick={() =>
-						setPasswordInfo({
-							...passwordInfo,
-							showRepeatNewPassword: !passwordInfo.showRepeatNewPassword,
-						})
-					}
-					className={
-						`show-hide-repeat-new-password ` +
-						(!passwordInfo.icon && "offset-text")
-					}
-					src="http://localhost:3001/public/icons/Show.png"
-					alt="Show repeat new password"
-				/>
-			)) ||
-				(passwordInfo.showRepeatNewPassword && (
-					<img
-						onClick={() =>
-							setPasswordInfo({
-								...passwordInfo,
-								showRepeatNewPassword: !passwordInfo.showRepeatNewPassword,
-							})
-						}
-						className={
-							`show-hide-repeat-new-password ` +
-							(!passwordInfo.icon && "offset-text")
-						}
-						src="http://localhost:3001/public/icons/Hide.png"
-						alt="Hide repeat new password"
-					/>
-				))}
 		</div>
 	);
 };

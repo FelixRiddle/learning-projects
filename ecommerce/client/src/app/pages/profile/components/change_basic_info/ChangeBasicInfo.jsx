@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import axios from "axios";
 
 import { handleMessageValidationv2 } from "../../../../../lib/handleMessageValidation";
@@ -13,6 +13,7 @@ const ChangeBasicInfo = (props) => {
 		passwordInfo,
 		setPasswordInfo,
 		input,
+		setIsInChildComponent,
 		setError,
 		error,
 	} = props;
@@ -132,6 +133,10 @@ const ChangeBasicInfo = (props) => {
 			}
 		}
 	};
+	
+	useEffect(() => {
+		setIsInChildComponent(true);
+	}, [setIsInChildComponent])
 
 	return (
 		<div className="changeBasicInfo">
@@ -164,7 +169,7 @@ const ChangeBasicInfo = (props) => {
 				</div>
 			)}
 
-			<h6>Basic info</h6>
+			<h1>Basic info</h1>
 			<form className="changeBasicInfo">
 				<Field
 					content="First name"

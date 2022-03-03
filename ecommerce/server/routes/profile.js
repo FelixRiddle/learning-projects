@@ -96,6 +96,8 @@ router.post("/changePassword", verify, async (req, res) => {
 
 	try {
 		const { _id, repeatNewPassword, token, ...data } = req.body;
+		console.log(`Req body:`, req.body);
+		console.log(`Id:`, _id);
 
 		// Validate data
 		const { error } = changePasswordValidation(data);
@@ -165,7 +167,7 @@ router.post("/changeAddress", verify, async (req, res) => {
 
 	try {
 		const { token, _id } = req.body;
-		console.log(`Id:`, _id)
+		console.log(`Id:`, _id);
 		const data = {
 			country: req.body.country,
 			province: req.body.province,

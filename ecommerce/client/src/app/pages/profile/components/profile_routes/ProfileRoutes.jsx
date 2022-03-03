@@ -9,14 +9,12 @@ function ProfileRoutes(props) {
 	return (
 		<div>
 			<Routes>
+				<Route path="/" element={<ChangeBasicInfo {...props} />} />
 				<Route
 					path="/changeBasicInfo"
 					element={<ChangeBasicInfo {...props} />}
 				/>
-				<Route
-					path="/profile/changePassword"
-					element={<ChangePassword {...props} />}
-				/>
+				<Route path="/changePassword" element={<ChangePassword {...props} />} />
 				<Route path="/changeAddress" element={<ChangeAddress {...props} />} />
 			</Routes>
 		</div>

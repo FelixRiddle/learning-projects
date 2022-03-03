@@ -21,6 +21,7 @@ function Profile(props) {
 		superiorError: false,
 		joiMessage: "",
 	});
+	const [isInChildComponent, setIsInChildComponent] = useState(true);
 	const [isLoggedIn, setIsLoggedIn] = useState(false);
 	const navigate = useNavigate();
 	const [passwordInfo, setPasswordInfo] = useState({
@@ -95,8 +96,9 @@ function Profile(props) {
 	}, [user, isLoggedIn, setUserData]);
 
 	useEffect(() => {
-		navigate("/profile/changeBasicInfo");
-	}, [navigate]);
+		console.log(`Is in child component?: ${isInChildComponent}`);
+		if (!isInChildComponent) navigate("/profile/changeBasicInfo");
+	}, [isInChildComponent, navigate]);
 
 	return (
 		<div>
@@ -113,12 +115,12 @@ function Profile(props) {
 						{/* Navigation bar */}
 						<div className="links">
 							<a href="http://localhost:3000/profile/changeBasicInfo">
-								Basic info
+								Info
 							</a>
 							<a href="http://localhost:3000/profile/changePassword">
 								Change password
 							</a>
-							<a href="http://localhost:3000/profile/change address">Address</a>
+							<a href="http://localhost:3000/profile/changeAddress">Address</a>
 						</div>
 
 						{/* Routes to profile settings */}
@@ -129,6 +131,7 @@ function Profile(props) {
 							passwordInfo={passwordInfo}
 							setError={setError}
 							setInput={setUserData}
+							setIsInChildComponent={setIsInChildComponent}
 							setPasswordInfo={setPasswordInfo}
 							setReRender={setReRender}
 							setToken={setToken}

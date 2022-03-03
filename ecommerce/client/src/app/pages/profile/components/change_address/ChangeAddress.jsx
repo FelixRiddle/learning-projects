@@ -6,7 +6,9 @@ import { GlobalContext } from "../../../../App";
 
 const ChangeAddress = (props) => {
 	const { token, user } = useContext(GlobalContext);
-	const { input } = props;
+
+	const { input, setIsInChildComponent } = props;
+
 	const [location, setLocation] = useState({
 		country: "",
 		province: "",
@@ -101,6 +103,10 @@ const ChangeAddress = (props) => {
 			setDataLoaded((prevInput) => !prevInput);
 		}
 	}, [location, user, dataLoaded]);
+
+	useEffect(() => {
+		setIsInChildComponent(true);
+	}, [setIsInChildComponent]);
 
 	return (
 		<div className="changeAddress">
