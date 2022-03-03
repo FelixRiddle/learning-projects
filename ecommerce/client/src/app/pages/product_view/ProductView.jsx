@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 
-import BigImage from "./components/BigImage";
+import BigImage from "../../components/images/big_image/BigImage";
 import "./ProductView.css";
 import ImageSelector from "../../components/images/image_selector/ImageSelector";
 import Title from "../../components/text/title/Title";
@@ -54,6 +54,7 @@ function ProductView(props) {
 						divClasses={"big-image"}
 						images={fullImageUrls}
 						imageClasses={"product-image"}
+						imageParentDivClasses={"dynamic-image"}
 						selectedImage={selectedImage}
 						setConfig={setConfig}
 						viewportSize={viewportSize}

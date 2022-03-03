@@ -2,7 +2,14 @@
   display: flex;
 }
 .ProductView .product .left .big-image {
+  outline: 1px solid blueviolet;
   display: flex;
+  justify-content: center;
+}
+.ProductView .product .left .big-image .dynamic-image {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .ProductView .product .right {
   display: flex;

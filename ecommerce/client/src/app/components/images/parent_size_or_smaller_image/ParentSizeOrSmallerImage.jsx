@@ -4,8 +4,15 @@ import { useViewportSize } from "../../../../lib/viewport/useViewportSize";
 import { image_resizer } from "../../../pages/createProduct/lib/image_resizer";
 
 function ParentSizeOrSmallerImage(props) {
-	const { config, extraStyling, hidden, imageClasses, imageUrl, imageAlt } =
-		props;
+	const {
+		config,
+		extraStyling,
+		hidden,
+		imageClasses,
+		imageParentDivClasses,
+		imageUrl,
+		imageAlt,
+	} = props;
 
 	const { viewportSize } = useViewportSize;
 	const [showImage, setShowImage] = useState(false);
@@ -44,7 +51,7 @@ function ParentSizeOrSmallerImage(props) {
 	}, [config, imageUrl, viewportSize]);
 
 	return (
-		<div>
+		<div className={imageParentDivClasses}>
 			{showImage && (
 				<img
 					alt={imageAlt}

@@ -4,7 +4,7 @@ import { resizeElement } from "../../../../lib/html/css/resizeElement";
 
 // import { resizeByPercentage } from "../../../../lib/images/resizer";
 import { useCssDetails } from "../../../../lib/misc/useCssDetails";
-import ParentSizeOrSmallerImage from "../../../components/images/parent_size_or_smaller_image/ParentSizeOrSmallerImage";
+import ParentSizeOrSmallerImage from "../parent_size_or_smaller_image/ParentSizeOrSmallerImage";
 
 function BigImage(props) {
 	const {
@@ -68,12 +68,11 @@ function BigImage(props) {
 
 				tempImageElements.push(
 					<ParentSizeOrSmallerImage
-						config={config}
+						{...props}
 						extraStyling={{ position: "absolute" }}
 						hidden={images[i] === selectedImage}
 						id={uuidv4()}
 						imageAlt={""}
-						imageClasses={imageClasses}
 						imageUrl={images[i]}
 						key={uuidv4()}
 					/>
@@ -88,6 +87,7 @@ function BigImage(props) {
 		divId,
 		images,
 		imageClasses,
+		props,
 		selectedImage,
 		viewportSize,
 	]);
