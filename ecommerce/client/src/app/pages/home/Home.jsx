@@ -1,7 +1,7 @@
 import { useContext } from "react";
 
 import { GlobalContext } from "../../App";
-import DefaultPanelView from "../../components/showcase/default_panel_view/DefaultPanelView";
+import DefaultPanelView from "../../components/showcase/default_panel/default_panel_view/DefaultPanelView";
 import "./Home.css";
 
 const Home = () => {

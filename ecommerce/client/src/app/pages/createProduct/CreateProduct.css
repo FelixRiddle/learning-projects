@@ -114,17 +114,7 @@
   flex-direction: row;
   justify-content: center;
   align-items: center;
-}
-.create-product .button-position .btn {
-  background-color: lightblue;
-  border: none;
-  outline: none;
-  border-radius: 5px;
-  padding: 10px;
-  margin: 5px;
-}
-.create-product .button-position .btn:hover {
-  cursor: pointer;
+  margin: 30px;
 }
 
 /*# sourceMappingURL=CreateProduct.css.map */

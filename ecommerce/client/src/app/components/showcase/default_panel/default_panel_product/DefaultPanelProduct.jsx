@@ -24,6 +24,14 @@ function DefaultPanelProduct(props) {
 		});
 
 		const titleElement = document.getElementById(titleId);
+		// const newTitle = document.createElement("div");
+		// newTitle.innerHTML = title;
+		// console.log(`Paragraph element:`, newTitle);
+		// console.log(`Its width: ${newTitle.width}`);
+		// console.log(`Its style width: ${newTitle.style.width}`);
+		// console.log(`Its offset width: ${newTitle.offsetWidth}`);
+		// console.log(`Its client width: ${newTitle.clientWidth}`);
+		// console.log(`Its scroll width: ${newTitle.scrollWidth}`);
 		setTitleOffsetSize((prevInput) => {
 			return {
 				...prevInput,
@@ -49,14 +57,6 @@ function DefaultPanelProduct(props) {
 		// console.log(`Price offset size:`, priceOffsetSize);
 	}, [boxOffsetSize, titleOffsetSize, priceOffsetSize, image]);
 
-	// window.onresize = () => {
-	// 	const currentImage = document.getElementById(imageId);
-	// 	// console.log(`Image size:`, {
-	// 	// 	width: currentImage.offsetWidth,
-	// 	// 	height: currentImage.offsetHeight,
-	// 	// });
-	// };
-
 	return (
 		<div
 			id={id}
@@ -64,7 +64,16 @@ function DefaultPanelProduct(props) {
 			onClick={clickFn}
 			style={{ width: size.width, height: size.height, marginRight: "10px" }}
 		>
-			<p id={titleId}>{title}</p>
+			<p
+				id={titleId}
+				style={{
+					overflow: "hidden",
+					whiteSpace: "nowrap",
+					textOverflow: "ellipsis",
+				}}
+			>
+				{title}
+			</p>
 			<img
 				alt={title}
 				id={imageId}
@@ -77,7 +86,16 @@ function DefaultPanelProduct(props) {
 				src={image}
 				width={size.width}
 			/>
-			<p id={priceId}>${price}</p>
+			<p
+				id={priceId}
+				style={{
+					overflow: "hidden",
+					whiteSpace: "nowrap",
+					textOverflow: "ellipsis",
+				}}
+			>
+				${price}
+			</p>
 		</div>
 	);
 }

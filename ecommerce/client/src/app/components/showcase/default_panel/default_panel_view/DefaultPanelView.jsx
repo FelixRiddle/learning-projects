@@ -25,6 +25,7 @@ function DefaultPanelView(props) {
 		<div className="DefaultPanelView">
 			<p>DefaultPanelView</p>
 			<div className="items">
+				{/* To prevent any kind of errors */}
 				{items &&
 					items[0] &&
 					typeof items[0] === "object" &&
@@ -32,6 +33,7 @@ function DefaultPanelView(props) {
 					items.map((e, index) => {
 						const id = uuidv4();
 						return (
+							// Show a product
 							<DefaultPanelProduct
 								description={e.description}
 								id={id}
