@@ -1,22 +1,20 @@
 import React, { useState, useEffect, useContext } from "react";
-import { Route, Routes } from "react-router-dom";
 
 import "./Profile.css";
 import axios from "axios";
 import { GlobalContext } from "../../App";
 import { get_year_month_day } from "../../../lib/misc/transformDate";
 import { useUserData } from "../../../lib/user/useUserData";
-import ChangeBasicInfo from "./components/change_basic_info/ChangeBasicInfo";
-import ChangePassword from "./components/change_password/ChangePasswords";
-import ChangeAddress from "./components/change_address/ChangeAddress";
 import ProfileRoutes from "./components/profile_routes/ProfileRoutes";
+import { useNavigate } from "react-router-dom";
 
 function Profile(props) {
 	const { token, setToken, user } = useContext(GlobalContext);
 
 	// Hooks
-	const { handleChange, userData, setUserData } = useUserData();
 	const { setReRender } = props;
+
+	const { handleChange, userData, setUserData } = useUserData();
 	const [error, setError] = useState({
 		state: "",
 		message: "",
@@ -24,6 +22,7 @@ function Profile(props) {
 		joiMessage: "",
 	});
 	const [isLoggedIn, setIsLoggedIn] = useState(false);
+	const navigate = useNavigate();
 	const [passwordInfo, setPasswordInfo] = useState({
 		error: false,
 		errorMessage: "",
@@ -95,11 +94,13 @@ function Profile(props) {
 		}
 	}, [user, isLoggedIn, setUserData]);
 
+	useEffect(() => {
+		navigate("/profile/changeBasicInfo");
+	}, [navigate]);
+
 	return (
 		<div>
-			<title>Profile</title>
 			<h2>Profile</h2>
-
 			<div className="profile">
 				{/* Bad request/internal server error/not logged in */}
 				{error.state === "danger" && error.message && (
@@ -108,7 +109,18 @@ function Profile(props) {
 					</div>
 				)}
 				{isLoggedIn && (
-					<div>
+					<div className="profile-navbar">
+						{/* Navigation bar */}
+						<div className="links">
+							<a href="http://localhost:3000/profile/changeBasicInfo">
+								Basic info
+							</a>
+							<a href="http://localhost:3000/profile/changePassword">
+								Change password
+							</a>
+							<a href="http://localhost:3000/profile/change address">Address</a>
+						</div>
+
 						{/* Routes to profile settings */}
 						<ProfileRoutes
 							error={error}
@@ -122,8 +134,6 @@ function Profile(props) {
 							setToken={setToken}
 							token={token}
 						/>
-						
-						{/* Navigation bar */}
 					</div>
 				)}
 			</div>

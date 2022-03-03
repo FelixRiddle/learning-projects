@@ -6,14 +6,18 @@ import ChangeBasicInfo from "../change_basic_info/ChangeBasicInfo";
 import ChangePassword from "../change_password/ChangePasswords";
 
 function ProfileRoutes(props) {
-	
-	
 	return (
 		<div>
 			<Routes>
-				<Route path="/changeBasicInfo" element={<ChangeBasicInfo />} />
-				<Route path="/profile/changePassword" element={<ChangePassword />} />
-				<Route path="/changeAddress" element={<ChangeAddress />} />
+				<Route
+					path="/changeBasicInfo"
+					element={<ChangeBasicInfo {...props} />}
+				/>
+				<Route
+					path="/profile/changePassword"
+					element={<ChangePassword {...props} />}
+				/>
+				<Route path="/changeAddress" element={<ChangeAddress {...props} />} />
 			</Routes>
 		</div>
 	);
