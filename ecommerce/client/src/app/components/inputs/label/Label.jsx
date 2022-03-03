@@ -1,11 +1,11 @@
 import React from "react";
 
 function Label(props) {
-	const { content, htmlFor, labelClasses } = props;
+	const { inputLabel, inputName, labelClasses, labelStyle } = props;
 
 	return (
-		<label className={labelClasses} htmlFor={htmlFor}>
-			{content}
+		<label className={labelClasses} htmlFor={inputName} style={labelStyle}>
+			{inputLabel}
 		</label>
 	);
 }

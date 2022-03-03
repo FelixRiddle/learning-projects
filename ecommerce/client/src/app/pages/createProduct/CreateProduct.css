@@ -76,10 +76,6 @@
   text-align: left;
   margin-left: 20px;
 }
-.create-product .form-and-image .form .product-details .labels-inputs {
-  display: flex;
-  flex-direction: row;
-}
 .create-product .form-and-image .form .product-details .labels-inputs .labels {
   display: flex;
   flex-shrink: 2;

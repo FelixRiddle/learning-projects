@@ -45,6 +45,34 @@
 	}
 }
 
+.input {
+	border: none;
+	border-bottom: 1px solid black;
+	outline-offset: 3px;
+	border-radius: 1px;
+
+	&:hover {
+		border-bottom: 1px solid gray;
+		outline: 2px solid gray;
+	}
+
+	&:focus {
+		border-bottom: 1px solid cornflowerblue;
+		outline: 2px solid cornflowerblue;
+	}
+}
+
+.input-field {
+	margin: 10px;
+
+	.input-parent {
+		.input-aesthetic {
+			margin-left: 5px;
+			padding: 5px;
+		}
+	}
+}
+
 .price {
 	font-size: 40px;
 	font-family: "Quicksand", sans-serif;

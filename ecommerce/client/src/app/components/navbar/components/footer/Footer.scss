@@ -2,10 +2,11 @@
 	display: flex;
 	flex-direction: row;
 	justify-content: left;
+	margin-top: 20px;
 	
 	& > * {
 		text-decoration: none;
 		color: black;
-		padding-right: 70px;
+		margin-right: 70px;
 	}
 }

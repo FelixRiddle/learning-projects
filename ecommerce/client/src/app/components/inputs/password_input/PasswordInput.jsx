@@ -5,15 +5,16 @@ import { get_icon } from "../../../../lib/images/icons/icons";
 
 function PasswordInput(props) {
 	const {
-		divClasses,
 		imageClasses,
 		inputClasses,
 		inputHeight,
 		inputId,
+		inputLabel,
 		inputName,
 		inputOnChange,
 		inputOnClick,
-		inputPlaceholder,
+		inputParentDivClasses,
+		inputStyle,
 		inputValue,
 		inputWidth,
 		parent,
@@ -59,7 +60,7 @@ function PasswordInput(props) {
 
 	return (
 		<div
-			className={divClasses}
+			className={inputParentDivClasses}
 			style={{
 				...(parent === "Field" && {
 					display: "inline-block",
@@ -86,8 +87,8 @@ function PasswordInput(props) {
 					name={inputName}
 					onChange={inputOnChange}
 					onClick={inputOnClick}
-					placeholder={inputPlaceholder}
-					style={inputStyles}
+					placeholder={inputLabel}
+					style={{ ...inputStyles, ...inputStyle }}
 					type={(switchIcon && "password") || "text"}
 					value={inputValue}
 				/>

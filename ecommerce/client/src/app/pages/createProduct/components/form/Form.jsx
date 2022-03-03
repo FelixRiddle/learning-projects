@@ -1,30 +1,13 @@
-import React, { useEffect, useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
+import Field from "../../../../components/inputs/field/Field";
 import { CreateProductContext } from "../../CreateProduct";
 
 function Form() {
 	const { input, handleInputChange, cssDetails, viewportSize } =
 		useContext(CreateProductContext);
 
-	// Constants
-	const fields = [
-		{
-			type: "text",
-			name: "name",
-			placeholder: "Name",
-		},
-		{
-			type: "text",
-			name: "stock",
-			placeholder: "Stock",
-		},
-		{
-			type: "number",
-			name: "price",
-			placeholder: "Price",
-		},
-	];
-	const formId = uuidv4();
+	const [formId] = useState(uuidv4());
 
 	useEffect(() => {
 		if (!cssDetails) return;
@@ -51,7 +34,31 @@ function Form() {
 					</div>
 
 					<div className="labels-inputs">
-						<span className="labels">
+						<Field
+							fieldParentDivClasses={"input-field"}
+							inputLabel="Name"
+							inputName="name"
+							inputOnChange={handleInputChange}
+							inputType="text"
+							inputValue={input && input.name}
+						/>
+						<Field
+							fieldParentDivClasses={"input-field"}
+							inputLabel="Stock"
+							inputName="stock"
+							inputOnChange={handleInputChange}
+							inputType="number"
+							inputValue={input && input.stock}
+						/>
+						<Field
+							fieldParentDivClasses={"input-field"}
+							inputLabel="Price"
+							inputName="price"
+							inputOnChange={handleInputChange}
+							inputType="number"
+							inputValue={input && input.price}
+						/>
+						{/* <span className="labels">
 							{fields.map((e) => (
 								<label key={uuidv4()} htmlFor={e.name}>
 									{e.placeholder}
@@ -70,7 +77,7 @@ function Form() {
 								type="number"
 								name="stock"
 								placeholder="Stock"
-								pattern="^\d*(\.\d{0,2})?$"
+								// pattern="^\d*(\.\d{0,2})?$"
 								value={input.stock}
 								onChange={handleInputChange}
 							/>
@@ -78,11 +85,11 @@ function Form() {
 								type="number"
 								name="price"
 								placeholder="Price"
-								pattern="^\d*(\.\d{0,2})?$"
+								// pattern="^\d*(\.\d{0,2})?$"
 								value={input.price}
 								onChange={handleInputChange}
 							/>
-						</span>
+						</span> */}
 					</div>
 				</span>
 			</form>

@@ -162,50 +162,47 @@ const ChangePassword = (props) => {
 
 			<form action="submit">
 				<Field
-					content="Current password"
-					htmlFor="password"
+					fieldParentDivClasses="input-field"
 					inputClasses={
 						"input" + (passwordInfo && passwordInfo.error ? "danger" : "")
 					}
+					inputLabel="Current password"
 					inputName="currentPassword"
 					inputOnChange={handlePasswordChange}
 					inputOnClick={() =>
 						passwordInfo.field === "currentPassword" &&
 						setPasswordInfo({ ...passwordInfo, field: "" })
 					}
-					inputPlaceholder="Password"
 					inputType="password"
 					inputValue={passwordInput && passwordInput.currentPassword}
 				/>
 				<Field
-					content="New password"
-					htmlFor="password"
+					fieldParentDivClasses="input-field"
 					inputClasses={
 						"input" + (passwordInfo && passwordInfo.error ? "danger" : "")
 					}
+					inputLabel="New password"
 					inputName="newPassword"
 					inputOnChange={handlePasswordChange}
 					inputOnClick={() =>
 						passwordInfo.field === "currentPassword" &&
 						setPasswordInfo({ ...passwordInfo, field: "" })
 					}
-					inputPlaceholder="Password"
 					inputType="password"
 					inputValue={passwordInput && passwordInput.newPassword}
 				/>
 				<Field
-					content="Repeat new password"
-					htmlFor="password"
+					fieldParentDivClasses="input-field"
 					inputClasses={
 						"input" + (passwordInfo && passwordInfo.error ? "danger" : "")
 					}
+					inputLabel="Repeat new password"
 					inputName="repeatNewPassword"
 					inputOnChange={handlePasswordChange}
 					inputOnClick={() =>
 						passwordInfo.field === "currentPassword" &&
 						setPasswordInfo({ ...passwordInfo, field: "" })
 					}
-					inputPlaceholder="Password"
 					inputType="password"
 					inputValue={passwordInput && passwordInput.repeatNewPassword}
 				/>

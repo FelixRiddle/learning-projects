@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 
-function Input(props) {
+function TextArea(props) {
 	const {
 		inputClasses,
 		inputHeight,
@@ -16,6 +16,8 @@ function Input(props) {
 		inputValue,
 		inputWidth,
 		parent,
+		textAreaColumns,
+		textAreaRows,
 	} = props;
 
 	const [newInputId] = useState(inputId || uuidv4());
@@ -40,17 +42,19 @@ function Input(props) {
 			style={{
 				...(parent === "Field" && {
 					display: "inline-block",
+					marginLeft: "10px",
 				}),
-				marginLeft: "10px",
 			}}
 		>
-			<input
+			<textarea
 				className={inputClasses}
+				cols={textAreaColumns}
 				id={newInputId}
 				name={inputName}
 				onChange={inputOnChange}
 				onClick={inputOnClick}
 				placeholder={inputLabel}
+				rows={textAreaRows}
 				style={{ ...inputStyles, ...inputStyle }}
 				type={inputType}
 				value={inputValue}
@@ -59,4 +63,4 @@ function Input(props) {
 	);
 }
 
-export default Input;
+export default TextArea;

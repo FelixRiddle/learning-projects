@@ -3,6 +3,7 @@ import axios from "axios";
 
 import { handleMessageValidationv2 } from "../../../../../lib/handleMessageValidation";
 import { GlobalContext } from "../../../../App";
+import Field from "../../../../components/inputs/field/Field";
 
 const ChangeAddress = (props) => {
 	const { token, user } = useContext(GlobalContext);
@@ -114,50 +115,46 @@ const ChangeAddress = (props) => {
 			<Message message={message} setMessage={setMessage} />
 
 			<form action="submit">
-				<div className="changeAddressLabels">
-					<label htmlFor="country">Country</label>
-					<label htmlFor="province">Province/State</label>
-					<label htmlFor="city">City</label>
-					<label htmlFor="postalCode">Postal code</label>
-					<label htmlFor="address">Address</label>
-				</div>
-				<div className="changeAddressInputs">
-					<input
-						type="text"
-						name="country"
-						placeholder="Country"
-						onChange={handleChange}
-						value={location.country}
-					/>
-					<input
-						type="text"
-						name="province"
-						placeholder="Province/State"
-						onChange={handleChange}
-						value={location.province}
-					/>
-					<input
-						type="text"
-						name="city"
-						placeholder="City"
-						onChange={handleChange}
-						value={location.city}
-					/>
-					<input
-						type="text"
-						name="postalCode"
-						placeholder="Postal code"
-						onChange={handleChange}
-						value={location.postalCode}
-					/>
-					<input
-						type="text"
-						name="address"
-						placeholder="Address"
-						onChange={handleChange}
-						value={location.address}
-					/>
-				</div>
+				<Field
+					fieldParentDivClasses="input-field"
+					inputLabel="Country"
+					inputName="country"
+					inputOnChange={handleChange}
+					inputType="text"
+					inputValue={location && location.country}
+				/>
+				<Field
+					fieldParentDivClasses="input-field"
+					inputLabel="Province/State"
+					inputName="province"
+					inputOnChange={handleChange}
+					inputType="text"
+					inputValue={location && location.province}
+				/>
+				<Field
+					fieldParentDivClasses="input-field"
+					inputLabel="City"
+					inputName="city"
+					inputOnChange={handleChange}
+					inputType="text"
+					inputValue={location && location.city}
+				/>
+				<Field
+					fieldParentDivClasses="input-field"
+					inputLabel="Street address"
+					inputName="address"
+					inputOnChange={handleChange}
+					inputType="text"
+					inputValue={location && location.address}
+				/>
+				<Field
+					fieldParentDivClasses="input-field"
+					inputLabel="Postal code"
+					inputName="postalCode"
+					inputOnChange={handleChange}
+					inputType="text"
+					inputValue={location && location.postalCode}
+				/>
 				<button
 					className="btn"
 					type="submit"

@@ -133,10 +133,10 @@ const ChangeBasicInfo = (props) => {
 			}
 		}
 	};
-	
+
 	useEffect(() => {
 		setIsInChildComponent(true);
-	}, [setIsInChildComponent])
+	}, [setIsInChildComponent]);
 
 	return (
 		<div className="changeBasicInfo">
@@ -172,70 +172,57 @@ const ChangeBasicInfo = (props) => {
 			<h1>Basic info</h1>
 			<form className="changeBasicInfo">
 				<Field
-					content="First name"
-					htmlFor="firstName"
-					inputClasses="input"
+					fieldParentDivClasses="input-field"
+					inputLabel="First name"
 					inputName="firstName"
 					inputOnChange={handleChange}
-					inputPlaceholder="First name"
 					inputType="text"
 					inputValue={input && input.firstName}
 				/>
 				<Field
-					content="Last name"
-					htmlFor="lastName"
-					inputClasses="input"
+					fieldParentDivClasses="input-field"
+					inputLabel="Last name"
 					inputName="lastName"
 					inputOnChange={handleChange}
-					inputPlaceholder="Last name"
 					inputType="text"
 					inputValue={input && input.lastName}
 				/>
 				<Field
-					content="Email"
-					htmlFor="email"
+					fieldParentDivClasses="input-field"
 					inputClasses={
-						"input" +
-						((resData.field === "email" && resData.error && "danger") || "")
+						(resData.field === "email" && resData.error && "danger") || ""
 					}
+					inputLabel="Email"
 					inputName="email"
 					inputOnChange={handleChange}
-					inputPlaceholder="Email"
-					inputType="text"
+					inputType="email"
 					inputValue={input && input.email}
 				/>
 				<Field
-					content="Age"
-					htmlFor="age"
-					inputClasses="input"
+					fieldParentDivClasses="input-field"
+					inputLabel="Birthday"
 					inputName="age"
 					inputOnChange={handleChange}
-					inputPlaceholder="Age"
 					inputType="date"
 					inputValue={input && input.age}
 				/>
 				<Field
-					content="Phone number"
-					htmlFor="phoneNumber"
-					inputClasses="input"
+					fieldParentDivClasses="input-field"
+					inputLabel="Phone number"
 					inputName="phoneNumber"
 					inputOnChange={handleChange}
-					inputPlaceholder="Phone number"
 					inputType="text"
 					inputValue={input && input.phoneNumber}
 				/>
 				<Field
-					content="Password"
-					htmlFor="password"
-					inputClasses={
-						"input" + (passwordInfo && passwordInfo.error ? "danger" : "")
-					}
+					fieldParentDivClasses="input-field"
+					inputClasses={passwordInfo && passwordInfo.error ? "danger" : ""}
+					inputLabel="Password"
 					inputName="password"
 					inputOnChange={handleChange}
 					inputOnClick={(e) =>
 						setPasswordInfo({ ...passwordInfo, error: false })
 					}
-					inputPlaceholder="Password"
 					inputType="password"
 					inputValue={input && input.password}
 				/>

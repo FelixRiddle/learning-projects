@@ -2,8 +2,6 @@
   display: flex;
 }
 .ProductView .product .left .big-image {
-  outline-color: blueviolet;
-  outline-style: solid;
   display: flex;
 }
 .ProductView .product .right {
