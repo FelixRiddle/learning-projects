@@ -24,8 +24,12 @@ router.post("/changeBasicInfo", verify, async (req, res) => {
 				joiMessage: error.details[0].message,
 			});
 
-		const { _id, date, iat, token, password, ...data } = req.body;
-		let user = await User.findOne({ _id });
+		let user = {};
+		{
+			const { _id, date, iat, token, password } = req.body;
+			user = { ...(await User.findOne({ _id })) };
+		}
+		const data = req.body;
 
 		console.log(`User document:`);
 		console.log(user);
@@ -67,13 +71,15 @@ router.post("/changeBasicInfo", verify, async (req, res) => {
 		// Find and update
 		const query = { _id };
 		const update = { ...data };
-		user = await User.findOneAndUpdate(query, update, {
+		const userUpdated = await User.findOneAndUpdate(query, update, {
 			new: true, // For returning the document
 		});
-		console.log(`User updated!`);
-		console.log(user._doc);
+		const { password, ...newUser } = userUpdated._doc;
 
-		const newToken = jwt.sign({ ...user._doc }, process.env.TOKEN_SECRET);
+		console.log(`User updated!`);
+		console.log(newUser);
+
+		const newToken = jwt.sign({ ...newUser }, process.env.TOKEN_SECRET);
 		return res.header("auth-token", newToken).status(200).send({
 			token: newToken,
 			error: false,
@@ -134,12 +140,13 @@ router.post("/changePassword", verify, async (req, res) => {
 					password: newPassword,
 					lastUpdated: Date.now(),
 				};
-				let newUser = await User.findOneAndUpdate(query, update, { new: true });
 
-				const newToken = jwt.sign(
-					{ ...newUser._doc },
-					process.env.TOKEN_SECRET
-				);
+				const userUpdated = await User.findOneAndUpdate(query, update, {
+					new: true,
+				});
+				const { password, ...newUser } = userUpdated._doc;
+
+				const newToken = jwt.sign({ ...newUser }, process.env.TOKEN_SECRET);
 				return res.header("auth-token", newToken).status(200).send({
 					token: newToken,
 					error: false,
@@ -224,11 +231,14 @@ router.post("/changeAddress", verify, async (req, res) => {
 				postalCode: data.postalCode,
 				address: data.address,
 			};
-			const newUser = await User.findOneAndUpdate(query, update, { new: true });
+			const userUpdated = await User.findOneAndUpdate(query, update, {
+				new: true,
+			});
+			const { password, ...newUser } = userUpdated._doc;
 			console.log(`New user`);
-			console.log({ ...newUser._doc });
+			console.log({ ...newUser });
 
-			const newToken = jwt.sign({ ...newUser._doc }, process.env.TOKEN_SECRET);
+			const newToken = jwt.sign({ ...newUser }, process.env.TOKEN_SECRET);
 
 			return res.status(200).send({
 				token: newToken,

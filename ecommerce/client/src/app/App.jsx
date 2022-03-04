@@ -1,8 +1,12 @@
-import "./App.css";
-import Navbar from "./components/navbar/Navbar";
 import React, { useState, useEffect } from "react";
 import jwt_decode from "jwt-decode";
+
+import "./App.css";
+import Navbar from "./components/navbar/Navbar";
 import { getAll } from "../lib/products/getProducts";
+import { counterSlice } from "../lib/redux/actions/counterSlice";
+import { productsSlice } from "../lib/redux/actions/productsSlice";
+import { userSlice } from "../lib/redux/actions/userSlice";
 
 export const GlobalContext = React.createContext();
 
@@ -29,7 +33,23 @@ function App() {
 	useEffect(() => {
 		getAll("http://localhost:3001/api/products/getAll").then((data) => {
 			setProducts([...data]);
+			const products = productsSlice.reducer(
+				{
+					value: [...data],
+				},
+				productsSlice.actions.insertProducts()
+			);
+
+			console.log(`Products:`, products);
 		});
+
+		const newState = counterSlice.reducer(
+			{
+				value: 0,
+			},
+			counterSlice.actions.increment()
+		);
+		console.log(`State:`, newState);
 	}, []);
 
 	useEffect(() => {
@@ -39,17 +59,25 @@ function App() {
 		// Token management
 		const token = localStorage.getItem("token");
 		setToken(token);
-		if (token && user && !user._id) {
+		if (token && user) {
 			Promise.resolve(jwt_decode(token))
 				.then((prevSession) => {
 					console.log(`Previous session found`);
 					setUser({ ...prevSession });
+
+					// Save user on redux reducer
+					userSlice.reducer(
+						{
+							value: { ...prevSession },
+						},
+						userSlice.actions.insertUser()
+					);
 				})
 				.catch((err) => {
 					console.log(`No previous session found`);
 					localStorage.removeItem("token");
 				});
-		} else {
+		} else if (!token) {
 			console.log(`No previous session found.`);
 			localStorage.removeItem("token");
 		}
