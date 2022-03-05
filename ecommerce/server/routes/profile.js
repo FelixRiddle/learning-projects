@@ -26,7 +26,7 @@ router.post("/changeBasicInfo", verify, async (req, res) => {
 
 		let user = {};
 		{
-			const { _id, date, iat, token, password } = req.body;
+			const { _id, date, iat, password } = req.body;
 			user = { ...(await User.findOne({ _id })) };
 		}
 		const data = req.body;
@@ -101,7 +101,7 @@ router.post("/changePassword", verify, async (req, res) => {
 	console.log("/changePassword");
 
 	try {
-		const { _id, repeatNewPassword, token, ...data } = req.body;
+		const { _id, repeatNewPassword, ...data } = req.body;
 		console.log(`Req body:`, req.body);
 		console.log(`Id:`, _id);
 
@@ -173,7 +173,7 @@ router.post("/changeAddress", verify, async (req, res) => {
 	console.log("/changeAddress");
 
 	try {
-		const { token, _id } = req.body;
+		const { _id } = req.body;
 		console.log(`Id:`, _id);
 		const data = {
 			country: req.body.country,
@@ -190,16 +190,6 @@ router.post("/changeAddress", verify, async (req, res) => {
 				state: "danger",
 				error: true,
 				joiMessage: error.details[0].message,
-			});
-		}
-
-		// If no token was provided
-		if (!token) {
-			return res.send({
-				error: true,
-				field: "token",
-				state: "danger",
-				message: "Session terminated, please logout and login again.",
 			});
 		}
 

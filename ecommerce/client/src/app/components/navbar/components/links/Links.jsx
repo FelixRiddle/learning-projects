@@ -1,11 +1,12 @@
-import React, { useState, useEffect, useContext } from "react";
-import { GlobalContext } from "../../../../App";
+import React, { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
 
 import "./Links.css";
 import IconLink from "../../../iconLink/IconLink";
 
 const Links = (props) => {
-	const { user } = useContext(GlobalContext);
+	const user = useSelector((state) => state.user.user.value);
+
 	const [showProfile, setShowProfile] = useState(false);
 	const [input, setInput] = useState("");
 
@@ -24,6 +25,7 @@ const Links = (props) => {
 	};
 
 	useEffect(() => {
+		console.log(`User:`, user);
 		if (user) {
 			if (user._id) {
 				setShowProfile(true);

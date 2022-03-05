@@ -1,12 +1,12 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 
 import { handleMessageValidationv2 } from "../../../../../lib/handleMessageValidation";
 import Field from "../../../../components/inputs/field/Field";
-import { GlobalContext } from "../../../../App";
+import { useSelector } from "react-redux";
 
 const ChangePassword = (props) => {
-	const { user } = useContext(GlobalContext);
+	const user = useSelector((state) => state.user.user.value);
 
 	const { input, setIsInChildComponent } = props;
 

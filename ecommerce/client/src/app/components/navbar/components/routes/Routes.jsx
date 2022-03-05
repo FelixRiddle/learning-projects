@@ -1,5 +1,5 @@
 import { BrowserRouter, Route, Routes as Routes1 } from "react-router-dom";
-import { useContext } from "react";
+import { useSelector } from "react-redux";
 import { v4 as uuidv4 } from "uuid";
 
 import Home from "../../../../pages/home/Home";
@@ -9,12 +9,11 @@ import Register from "../../../../pages/register/Register";
 import Search from "../../../../pages/search/Search";
 import Profile from "../../../../pages/profile/Profile";
 import CreateProduct from "../../../../pages/createProduct/CreateProduct";
-import { GlobalContext } from "../../../../App";
 import ProductView from "../../../../pages/product_view/ProductView";
 import Test from "../../../../pages/test/Test";
 
 const Routes = (props) => {
-	const { products } = useContext(GlobalContext);
+	const products = useSelector((state) => state.products.products.value);
 
 	return (
 		<BrowserRouter>
@@ -29,17 +28,18 @@ const Routes = (props) => {
 
 				{/* Products */}
 				<Route path="/createProduct" element={<CreateProduct />} />
-				{products.map((e) => {
-					// console.log(`Product:`, e);
-					const productUrl = `app/${e._id}/${e.name.replaceAll(" ", "-")}`;
-					return (
-						<Route
-							key={uuidv4()}
-							path={productUrl}
-							element={<ProductView {...e} />}
-						/>
-					);
-				})}
+				{products &&
+					products.map((e) => {
+						// console.log(`Product:`, e);
+						const productUrl = `app/${e._id}/${e.name.replaceAll(" ", "-")}`;
+						return (
+							<Route
+								key={uuidv4()}
+								path={productUrl}
+								element={<ProductView {...e} />}
+							/>
+						);
+					})}
 
 				{/* Profile */}
 				<Route

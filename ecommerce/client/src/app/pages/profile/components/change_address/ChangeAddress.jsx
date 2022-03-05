@@ -1,12 +1,12 @@
-import { useEffect, useState, useContext } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 
 import { handleMessageValidationv2 } from "../../../../../lib/handleMessageValidation";
-import { GlobalContext } from "../../../../App";
 import Field from "../../../../components/inputs/field/Field";
+import { useSelector } from "react-redux";
 
 const ChangeAddress = (props) => {
-	const { token, user } = useContext(GlobalContext);
+	const user = useSelector((state) => state.user.user.value);
 
 	const { input, setIsInChildComponent } = props;
 
@@ -38,7 +38,6 @@ const ChangeAddress = (props) => {
 			.post("http://localhost:3001/api/profile/changeAddress", {
 				...input,
 				_id: user._id,
-				token,
 				...location,
 			})
 			.then((res) => {

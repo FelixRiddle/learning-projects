@@ -1,13 +1,14 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 
 import { handleMessageValidationv2 } from "../../../../../lib/handleMessageValidation";
-import { GlobalContext } from "../../../../App";
 import Field from "../../../../components/inputs/field/Field";
 import "./ChangeBasicInfo.css";
+import { useSelector } from "react-redux";
 
 const ChangeBasicInfo = (props) => {
-	const { token, user, setToken } = useContext(GlobalContext);
+	const user = useSelector((state) => state.user.user.value);
+
 	const {
 		handleChange,
 		passwordInfo,
@@ -17,6 +18,7 @@ const ChangeBasicInfo = (props) => {
 		setError,
 		error,
 	} = props;
+	
 	const [resData, setResData] = useState({});
 	const [showPasswordMessage, setShowPasswordMessage] = useState(false);
 	const [emailError, setEmailError] = useState({
@@ -31,7 +33,6 @@ const ChangeBasicInfo = (props) => {
 
 		await axios
 			.post("http://localhost:3001/api/profile/changeBasicInfo", {
-				token,
 				_id: user._id,
 				...input,
 			})
@@ -129,7 +130,6 @@ const ChangeBasicInfo = (props) => {
 			} // Set the response token on the local storage
 			else if (!data.error && data.token && data.token !== "undefined") {
 				localStorage.setItem("token", data.token);
-				return setToken(data.token);
 			}
 		}
 	};

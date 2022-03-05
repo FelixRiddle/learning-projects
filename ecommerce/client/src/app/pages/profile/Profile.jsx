@@ -1,15 +1,15 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect } from "react";
 
 import "./Profile.css";
 import axios from "axios";
-import { GlobalContext } from "../../App";
 import { get_year_month_day } from "../../../lib/misc/transformDate";
 import { useUserData } from "../../../lib/user/useUserData";
 import ProfileRoutes from "./components/profile_routes/ProfileRoutes";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 function Profile(props) {
-	const { token, setToken, user } = useContext(GlobalContext);
+	const user = useSelector((state) => state.user.user.value);
 
 	// Hooks
 	const { setReRender } = props;
@@ -114,9 +114,7 @@ function Profile(props) {
 					<div className="profile-navbar">
 						{/* Navigation bar */}
 						<div className="links">
-							<a href="http://localhost:3000/profile/changeBasicInfo">
-								Info
-							</a>
+							<a href="http://localhost:3000/profile/changeBasicInfo">Info</a>
 							<a href="http://localhost:3000/profile/changePassword">
 								Change password
 							</a>
@@ -134,8 +132,6 @@ function Profile(props) {
 							setIsInChildComponent={setIsInChildComponent}
 							setPasswordInfo={setPasswordInfo}
 							setReRender={setReRender}
-							setToken={setToken}
-							token={token}
 						/>
 					</div>
 				)}

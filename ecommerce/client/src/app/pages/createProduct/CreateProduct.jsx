@@ -1,5 +1,5 @@
 /* eslint-disable no-new-wrappers */
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 
 // Css
@@ -15,7 +15,7 @@ import ImageSelector from "../../components/images/image_selector/ImageSelector"
 // Others
 import { handleMessageValidationv2 } from "../../../lib/handleMessageValidation";
 import { remove_images } from "./lib/transform_input";
-import { GlobalContext } from "../../App";
+import { useSelector } from "react-redux";
 
 export const CreateProductContext = React.createContext();
 
@@ -28,8 +28,7 @@ const disabledImage =
 const maxImages = 100;
 
 function CreateProduct() {
-	// Global context(from App.jsx)
-	const { user } = useContext(GlobalContext);
+	const user = useSelector((state) => state.user.user.value);
 
 	// States
 	const [config, setConfig] = useState({
@@ -190,7 +189,7 @@ function CreateProduct() {
 			images.length > maxImages && settings.imageSrc === defaultImage;
 		return (isLastImage && disabledImage) || settings.imageSrc;
 	};
-	
+
 	useEffect(() => {
 		const image = new Image();
 		image.src = defaultImage;
