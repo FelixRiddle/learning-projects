@@ -21,27 +21,24 @@ module.exports = changeBasicInfo = async (req, res) => {
 				joiMessage: error.details[0].message,
 			});
 
-		const { _id } = req.body;
-		{
-			const { password, email } = req.body;
-			const foundUser = await User.findOne({ _id });
+		const { _id, firstName, lastName, email, age, password, phoneNumber } =
+			req.body;
+		const foundUser = await User.findOne({ _id });
 
-			const resultMessage = await validateUserPasswordEmailAsync(foundUser, {
-				password,
-				email,
-			});
-			if (resultMessage) return res.send(resultMessage);
-		}
+		const resultMessage = await validateUserPasswordEmailAsync(foundUser, {
+			password,
+			email,
+		});
+		if (resultMessage) return res.send(resultMessage);
 
 		// Find and update
 		const query = { _id };
 
 		// Update
-		const { firstName, lastName, email, age, phoneNumber } = req.body;
 		const update = { firstName, lastName, email, age, phoneNumber };
 
 		// Update the user
-		const newToken = updateUserAsync(query, update);
+		const newToken = await updateUserAsync(query, update);
 		if (newToken)
 			return res.header("auth-token", newToken).status(200).send({
 				token: newToken,
@@ -49,6 +46,13 @@ module.exports = changeBasicInfo = async (req, res) => {
 				state: "success",
 				message: `User updated!`,
 			});
+
+		return res.status(400).send({
+			error: true,
+			state: "error",
+			message:
+				"Unspecified error or user not found, try logging out and login again.",
+		});
 	} catch (err) {
 		console.error(err);
 		return res.send({

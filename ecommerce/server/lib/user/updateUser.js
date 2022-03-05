@@ -13,9 +13,11 @@ exports.updateUserAsync = async (query, update) => {
 		console.warn(`User not found.`);
 	}
 
+	// If the user couldn't be updated
 	if (userUpdated.value === null) return null;
 	const { password, ...newUser } = userUpdated.value._doc;
 
+	// Sign the updated user
 	const newToken = jwt.sign({ ...newUser }, process.env.TOKEN_SECRET);
 
 	return newToken;

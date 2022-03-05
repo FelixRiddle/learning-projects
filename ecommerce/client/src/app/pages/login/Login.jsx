@@ -48,13 +48,11 @@ function Login(props) {
 					localStorage.setItem("token", res.data.token);
 
 					setState("success");
-					setMessage(
-						"Successfully logged in, going to the home page in 5 seconds..."
-					);
+					setMessage("Successfully logged in, going to the home page...");
 
-					setTimeout(() => {
-						window.location.href = "/home";
-					}, 5000);
+					// setTimeout(() => {
+					window.location.href = "/home";
+					// }, 5000);
 				}
 			})
 			.catch((err) => {
