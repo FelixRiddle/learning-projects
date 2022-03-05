@@ -84,8 +84,8 @@ const ChangeBasicInfo = (props) => {
 
 		// Save the response for later use
 		setResData({ ...data });
-		console.log(`On ChangeBasicInfo, response:`);
-		console.log(data);
+		// console.log(`On ChangeBasicInfo, response:`);
+		// console.log(data);
 
 		// If there was an error
 		if (data.message || data.joiMessage) {

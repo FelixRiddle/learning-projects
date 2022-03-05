@@ -2,6 +2,7 @@ const User = require("../../../models/User");
 const { changePasswordValidation } = require("../../../validation");
 const bcrypt = require("bcrypt");
 const { get_time } = require("../../../lib/debug_info");
+const { updateUserAsync } = require("../../../lib/user/updateUser");
 
 // Change password
 module.exports = changePassword = async (req, res) => {
@@ -9,12 +10,15 @@ module.exports = changePassword = async (req, res) => {
 	console.log("/changePassword");
 
 	try {
-		const { _id, repeatNewPassword, ...data } = req.body;
-		console.log(`Req body:`, req.body);
-		console.log(`Id:`, _id);
+		const { _id, ...data } = req.body;
+		// console.log(`Req body:`, req.body);
+		// console.log(`Id:`, _id);
 
 		// Validate data
-		const { error } = changePasswordValidation(data);
+		const { error } = changePasswordValidation({
+			currentPassword: data.currentPassword,
+			newPassword: data.newPassword,
+		});
 		if (error)
 			return res.send({
 				state: "danger",
@@ -23,13 +27,14 @@ module.exports = changePassword = async (req, res) => {
 			});
 
 		let user = await User.findOne({ _id });
-		console.log(`User found:`);
-		console.log(user);
+		// console.log(`User found:`);
+		// console.log(user);
 
 		// KSDrjioejroiasiorjsodjfasfdojs;fpdj
 		if (data.currentPassword !== undefined && user) {
 			const result = await bcrypt.compare(data.currentPassword, user.password);
-			console.log(`Comparison result: ${result}`);
+			// console.log(`Comparison result: ${result}`);
+			
 			if (!result) {
 				// Passwords are not the same
 				return res.send({
@@ -48,26 +53,23 @@ module.exports = changePassword = async (req, res) => {
 					password: newPassword,
 					lastUpdated: Date.now(),
 				};
-
-				const userUpdated = await User.findOneAndUpdate(query, update, {
-					new: true,
-				});
-				const { password, ...newUser } = userUpdated._doc;
-
-				const newToken = jwt.sign({ ...newUser }, process.env.TOKEN_SECRET);
-				return res.header("auth-token", newToken).status(200).send({
-					token: newToken,
-					error: false,
-					state: "success",
-					message: "Password updated successfully.",
-				});
+				
+				const newToken = await updateUserAsync(query, update);
+				// console.log(`User updated?: ${newToken}`);
+				if (newToken)
+					return res.header("auth-token", newToken).status(200).send({
+						token: newToken,
+						error: false,
+						state: "success",
+						message: "Password updated successfully.",
+					});
 			}
 		}
 
 		return res.send({
 			error: true,
 			state: "danger",
-			message: "The user coulnd't be found.",
+			message: "The user couldn't be found.",
 		});
 	} catch (err) {
 		console.error(err);

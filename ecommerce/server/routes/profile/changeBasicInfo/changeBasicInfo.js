@@ -35,7 +35,14 @@ module.exports = changeBasicInfo = async (req, res) => {
 		const query = { _id };
 
 		// Update
-		const update = { firstName, lastName, email, age, phoneNumber };
+		const update = {
+			firstName,
+			lastName,
+			lastUpdated: Date.now(),
+			email,
+			age,
+			phoneNumber,
+		};
 
 		// Update the user
 		const newToken = await updateUserAsync(query, update);
