@@ -1,4 +1,9 @@
 const { get_time } = require("../../../lib/debug_info");
+const { updateUserAsync } = require("../../../lib/user/updateUser");
+const {
+	validateDataExists,
+	validateUserAndPasswordAsync,
+} = require("../../../lib/user/validateUser");
 const User = require("../../../models/User");
 const { changeAddressValidation } = require("../../../validation");
 
@@ -8,7 +13,7 @@ module.exports = changeAddress = async (req, res) => {
 	console.log("/changeAddress");
 
 	try {
-		const { _id } = req.body;
+		const { _id, password } = req.body;
 		console.log(`Id:`, _id);
 		const data = {
 			country: req.body.country,
@@ -29,58 +34,52 @@ module.exports = changeAddress = async (req, res) => {
 		}
 
 		// If the user provided at least 1 field with information
-		if (
-			data.country ||
-			data.province ||
-			data.city ||
-			data.postalCode ||
-			data.address
-		) {
-			// If for some reason there is no _id field
-			if (!_id)
-				return res.send({
-					state: "danger",
-					message:
-						"Sorry there was an internal error, try to logout and login again.",
-				});
+		const validationResult = validateDataExists(data);
+		if (validationResult.error) return res.send(validationResult);
 
-			const foundUser = await User.findOne({ _id });
-			console.log(foundUser);
-
-			// Update the user
-			const query = { _id };
-			const update = {
-				country: data.country,
-				province: data.province,
-				city: data.city,
-				postalCode: data.postalCode,
-				address: data.address,
-			};
-			const userUpdated = await User.findOneAndUpdate(query, update, {
-				new: true,
+		// If for some reason there is no _id field
+		if (!_id)
+			return res.send({
+				state: "danger",
+				message:
+					"Sorry there was an internal error, try to logout and login again.",
 			});
-			const { password, ...newUser } = userUpdated._doc;
-			console.log(`New user`);
-			console.log({ ...newUser });
 
-			const newToken = jwt.sign({ ...newUser }, process.env.TOKEN_SECRET);
+		const foundUser = await User.findOne({ _id });
+		console.log(foundUser);
 
+		const userValidation = await validateUserAndPasswordAsync(foundUser, {
+			password,
+		});
+		if (userValidation) return res.send(userValidation);
+
+		// Update the user
+		const query = { _id };
+		const update = {
+			country: data.country,
+			province: data.province,
+			city: data.city,
+			postalCode: data.postalCode,
+			address: data.address,
+		};
+
+		const newToken = await updateUserAsync(query, update);
+		if (newToken)
 			return res.status(200).send({
 				token: newToken,
 				error: false,
 				state: "success",
-				message: "Information updated.",
+				message: "Address updated.",
 			});
-		} else {
-			return res.send({
-				state: "danger",
-				error: true,
-				message: "No data provided.",
-			});
-		}
+		return res.status(400).send({
+			error: true,
+			state: "danger",
+			message:
+				"Unspecified error or user not found, try logging out and log in again.",
+		});
 	} catch (err) {
 		console.error(err);
-		res.send({
+		res.status(400).send({
 			state: "danger",
 			message: "Internal server error.",
 			error: "true",

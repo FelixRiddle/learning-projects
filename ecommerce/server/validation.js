@@ -74,7 +74,7 @@ module.exports.basicInfoValidation = basicInfoValidation = (data) => {
 
 module.exports.changePasswordValidation = changePasswordValidation = (data) => {
 	const schema = Joi.object({
-		currentPassword: Joi.string().min(8).max(max).required(),
+		password: Joi.string().min(8).max(max).required(),
 		newPassword: Joi.string().min(8).max(max).required(),
 	});
 

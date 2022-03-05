@@ -9,7 +9,7 @@ import { getToken } from "../../../../../lib/misc/getToken";
 const ChangeAddress = (props) => {
 	const user = useSelector((state) => state.user.user.value);
 
-	const { input, setIsInChildComponent } = props;
+	const { handleChange, input, setIsInChildComponent } = props;
 
 	const [location, setLocation] = useState({
 		country: "",
@@ -26,16 +26,18 @@ const ChangeAddress = (props) => {
 	});
 	const [dataLoaded, setDataLoaded] = useState(false);
 
-	const handleChange = (e) => {
+	const handleAddressChange = (e) => {
 		const { name, value } = e.target;
 		setLocation((prevInput) => {
 			return { ...prevInput, [name]: value };
 		});
 	};
 
-	const handleChangeAddressSubmit = (e) => {
+	const handleAddressSubmit = (e) => {
 		e.preventDefault();
-		
+
+		if (!handlePasswordValidation()) return;
+
 		// Token for jwt authentication
 		const token = getToken();
 		axios
@@ -84,6 +86,20 @@ const ChangeAddress = (props) => {
 			});
 	};
 
+	const handlePasswordValidation = () => {
+		if (input.password.length < 8) {
+			setMessage({
+				error: true,
+				field: "password",
+				message: "The password must be at least 8 characters long.",
+				state: "danger",
+			});
+			return false;
+		}
+
+		return true;
+	};
+
 	useEffect(() => {
 		if (
 			location.country ||
@@ -123,7 +139,7 @@ const ChangeAddress = (props) => {
 					fieldParentDivClasses="input-field"
 					inputLabel="Country"
 					inputName="country"
-					inputOnChange={handleChange}
+					inputOnChange={handleAddressChange}
 					inputType="text"
 					inputValue={location && location.country}
 				/>
@@ -131,7 +147,7 @@ const ChangeAddress = (props) => {
 					fieldParentDivClasses="input-field"
 					inputLabel="Province/State"
 					inputName="province"
-					inputOnChange={handleChange}
+					inputOnChange={handleAddressChange}
 					inputType="text"
 					inputValue={location && location.province}
 				/>
@@ -139,7 +155,7 @@ const ChangeAddress = (props) => {
 					fieldParentDivClasses="input-field"
 					inputLabel="City"
 					inputName="city"
-					inputOnChange={handleChange}
+					inputOnChange={handleAddressChange}
 					inputType="text"
 					inputValue={location && location.city}
 				/>
@@ -147,7 +163,7 @@ const ChangeAddress = (props) => {
 					fieldParentDivClasses="input-field"
 					inputLabel="Street address"
 					inputName="address"
-					inputOnChange={handleChange}
+					inputOnChange={handleAddressChange}
 					inputType="text"
 					inputValue={location && location.address}
 				/>
@@ -155,15 +171,21 @@ const ChangeAddress = (props) => {
 					fieldParentDivClasses="input-field"
 					inputLabel="Postal code"
 					inputName="postalCode"
-					inputOnChange={handleChange}
+					inputOnChange={handleAddressChange}
 					inputType="text"
 					inputValue={location && location.postalCode}
 				/>
-				<button
-					className="btn"
-					type="submit"
-					onClick={handleChangeAddressSubmit}
-				>
+				<Field
+					fieldParentDivClasses="input-field"
+					inputClasses={(message && message.error ? "danger" : "") || ""}
+					inputLabel="Password"
+					inputName="password"
+					inputOnChange={handleChange}
+					inputOnClick={(e) => setMessage({ ...message, error: false })}
+					inputType="password"
+					inputValue={input && input.password}
+				/>
+				<button className="btn" type="submit" onClick={handleAddressSubmit}>
 					Save address
 				</button>
 			</form>

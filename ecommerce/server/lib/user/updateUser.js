@@ -14,7 +14,7 @@ exports.updateUserAsync = async (query, update) => {
 	}
 
 	// If the user couldn't be updated
-	if (userUpdated.value === null) return null;
+	if (userUpdated.value === null) return false;
 	const { password, ...newUser } = userUpdated.value._doc;
 
 	// Sign the updated user

@@ -21,7 +21,7 @@ const ChangePassword = (props) => {
 		field: "",
 	});
 	const [passwordInput, setPasswordInput] = useState({
-		currentPassword: "",
+		password: "",
 		newPassword: "",
 		repeatNewPassword: "",
 	});
@@ -50,8 +50,7 @@ const ChangePassword = (props) => {
 		const token = getToken();
 		axios
 			.post("http://localhost:3001/api/profile/changePassword", {
-				newPassword: passwordInput.newPassword,
-				currentPassword: passwordInput.currentPassword,
+				...passwordInput,
 				_id: user._id,
 				token,
 			})
@@ -60,7 +59,7 @@ const ChangePassword = (props) => {
 				if (res.data.joiMessage !== undefined) {
 					const responseMessage = handleMessageValidationv2(
 						{
-							currentPassword: passwordInput.currentPassword,
+							password: passwordInput.password,
 							newPassword: passwordInput.newPassword,
 							repeatNewPassword: passwordInput.repeatNewPassword,
 						},
@@ -92,11 +91,11 @@ const ChangePassword = (props) => {
 
 	const passwordValidation = () => {
 		// Validation
-		if (passwordInput.currentPassword.length < 8) {
+		if (passwordInput.password.length < 8) {
 			setPasswordInfo({
 				...passwordInfo,
 				state: "danger",
-				field: "currentPassword",
+				field: "password",
 				message: "The password must be 8 characters long.",
 			});
 			return false;
@@ -170,14 +169,14 @@ const ChangePassword = (props) => {
 						"input" + (passwordInfo && passwordInfo.error ? "danger" : "")
 					}
 					inputLabel="Current password"
-					inputName="currentPassword"
+					inputName="password"
 					inputOnChange={handlePasswordChange}
 					inputOnClick={() =>
-						passwordInfo.field === "currentPassword" &&
+						passwordInfo.field === "password" &&
 						setPasswordInfo({ ...passwordInfo, field: "" })
 					}
 					inputType="password"
-					inputValue={passwordInput && passwordInput.currentPassword}
+					inputValue={passwordInput && passwordInput.password}
 				/>
 				<Field
 					fieldParentDivClasses="input-field"
@@ -188,7 +187,7 @@ const ChangePassword = (props) => {
 					inputName="newPassword"
 					inputOnChange={handlePasswordChange}
 					inputOnClick={() =>
-						passwordInfo.field === "currentPassword" &&
+						passwordInfo.field === "password" &&
 						setPasswordInfo({ ...passwordInfo, field: "" })
 					}
 					inputType="password"
@@ -203,7 +202,7 @@ const ChangePassword = (props) => {
 					inputName="repeatNewPassword"
 					inputOnChange={handlePasswordChange}
 					inputOnClick={() =>
-						passwordInfo.field === "currentPassword" &&
+						passwordInfo.field === "password" &&
 						setPasswordInfo({ ...passwordInfo, field: "" })
 					}
 					inputType="password"
