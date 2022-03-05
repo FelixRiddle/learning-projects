@@ -5,6 +5,7 @@ import { handleMessageValidationv2 } from "../../../../../lib/handleMessageValid
 import Field from "../../../../components/inputs/field/Field";
 import "./ChangeBasicInfo.css";
 import { useSelector } from "react-redux";
+import { getToken } from "../../../../../lib/misc/getToken";
 
 const ChangeBasicInfo = (props) => {
 	const user = useSelector((state) => state.user.user.value);
@@ -18,7 +19,7 @@ const ChangeBasicInfo = (props) => {
 		setError,
 		error,
 	} = props;
-	
+
 	const [resData, setResData] = useState({});
 	const [showPasswordMessage, setShowPasswordMessage] = useState(false);
 	const [emailError, setEmailError] = useState({
@@ -31,9 +32,12 @@ const ChangeBasicInfo = (props) => {
 
 		dataValidation();
 
+		// Token for jwt authentication
+		const token = getToken();
 		await axios
 			.post("http://localhost:3001/api/profile/changeBasicInfo", {
 				_id: user._id,
+				token,
 				...input,
 			})
 			.then((res) => handleResponse(res))

@@ -4,6 +4,7 @@ import axios from "axios";
 import { handleMessageValidationv2 } from "../../../../../lib/handleMessageValidation";
 import Field from "../../../../components/inputs/field/Field";
 import { useSelector } from "react-redux";
+import { getToken } from "../../../../../lib/misc/getToken";
 
 const ChangePassword = (props) => {
 	const user = useSelector((state) => state.user.user.value);
@@ -45,12 +46,14 @@ const ChangePassword = (props) => {
 		console.log(`User id: ${user._id}`);
 		console.log(`Password info:`, passwordInfo);
 
+		// Token for jwt authentication
+		const token = getToken();
 		axios
 			.post("http://localhost:3001/api/profile/changePassword", {
 				newPassword: passwordInput.newPassword,
 				currentPassword: passwordInput.currentPassword,
 				_id: user._id,
-				token: update.token,
+				token,
 			})
 			.then((res) => {
 				// The response should be like this

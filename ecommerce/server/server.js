@@ -20,7 +20,7 @@ app.use("/uploads", express.static("uploads"));
 
 app.use("/api/products", require("./routes/products"));
 app.use("/api/users", require("./routes/auth"));
-app.use("/api/profile", require("./routes/profile"));
+app.use("/api/profile", require("./routes/profile/profile"));
 
 app.listen(process.env.PORT, () => {
 	console.log(`Server listening on port ${process.env.PORT}`);

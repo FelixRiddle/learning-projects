@@ -4,6 +4,7 @@ import axios from "axios";
 import { handleMessageValidationv2 } from "../../../../../lib/handleMessageValidation";
 import Field from "../../../../components/inputs/field/Field";
 import { useSelector } from "react-redux";
+import { getToken } from "../../../../../lib/misc/getToken";
 
 const ChangeAddress = (props) => {
 	const user = useSelector((state) => state.user.user.value);
@@ -34,10 +35,14 @@ const ChangeAddress = (props) => {
 
 	const handleChangeAddressSubmit = (e) => {
 		e.preventDefault();
+		
+		// Token for jwt authentication
+		const token = getToken();
 		axios
 			.post("http://localhost:3001/api/profile/changeAddress", {
 				...input,
 				_id: user._id,
+				token,
 				...location,
 			})
 			.then((res) => {
