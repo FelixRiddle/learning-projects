@@ -28,23 +28,27 @@ function App() {
 
 	useEffect(() => {
 		// Token management
-		const token = localStorage.getItem("token");
-		if (token) {
-			Promise.resolve(jwt_decode(token))
-				.then((prevSession) => {
-					console.log(`Previous session found`);
-					// Save user on redux reducer
-					dispatch(
-						insertUser({
-							id: nanoid(),
-							value: { ...prevSession },
-						})
-					);
-				})
-				.catch((err) => {
-					console.log(`No previous session found`);
-					localStorage.removeItem("token");
-				});
+		try {
+			const token = localStorage.getItem("token");
+			if (token) {
+				Promise.resolve(jwt_decode(token))
+					.then((prevSession) => {
+						console.log(`Previous session found`);
+						// Save user on redux reducer
+						dispatch(
+							insertUser({
+								id: nanoid(),
+								value: { ...prevSession },
+							})
+						);
+					})
+					.catch((err) => {
+						console.log(`No previous session found`);
+						localStorage.removeItem("token");
+					});
+			}
+		} catch (err) {
+			console.warn(`There was an error:`, err);
 		}
 	}, [dispatch]);
 

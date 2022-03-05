@@ -1,11 +1,10 @@
-const jwt = require("jsonwebtoken");
-
 const { get_time } = require("../../../lib/debug_info");
 const User = require("../../../models/User");
 const { basicInfoValidation } = require("../../../validation");
 const {
 	validateUserPasswordEmailAsync,
 } = require("../../../lib/user/validateUser");
+const { updateUserAsync } = require("../../../lib/user/updateUser");
 
 // Change basic info
 module.exports = changeBasicInfo = async (req, res) => {
@@ -23,13 +22,11 @@ module.exports = changeBasicInfo = async (req, res) => {
 			});
 
 		const { _id } = req.body;
-		let user = {};
 		{
-			const { date, iat, password, email } = req.body;
+			const { password, email } = req.body;
 			const foundUser = await User.findOne({ _id });
-			user = foundUser._doc;
-			
-			const resultMessage = await validateUserPasswordEmailAsync(user, {
+
+			const resultMessage = await validateUserPasswordEmailAsync(foundUser, {
 				password,
 				email,
 			});
@@ -38,19 +35,20 @@ module.exports = changeBasicInfo = async (req, res) => {
 
 		// Find and update
 		const query = { _id };
-		const update = { ...user };
-		const userUpdated = await User.findOneAndUpdate(query, update, {
-			new: true, // For returning the document
-		});
-		const { password, ...newUser } = userUpdated._doc;
 
-		const newToken = jwt.sign({ ...newUser }, process.env.TOKEN_SECRET);
-		return res.header("auth-token", newToken).status(200).send({
-			token: newToken,
-			error: false,
-			state: "success",
-			message: `User updated!`,
-		});
+		// Update
+		const { firstName, lastName, email, age, phoneNumber } = req.body;
+		const update = { firstName, lastName, email, age, phoneNumber };
+
+		// Update the user
+		const newToken = updateUserAsync(query, update);
+		if (newToken)
+			return res.header("auth-token", newToken).status(200).send({
+				token: newToken,
+				error: false,
+				state: "success",
+				message: `User updated!`,
+			});
 	} catch (err) {
 		console.error(err);
 		return res.send({
