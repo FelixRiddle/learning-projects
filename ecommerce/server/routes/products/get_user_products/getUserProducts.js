@@ -8,10 +8,9 @@ exports.getUserProducts = async (req, res) => {
 	try {
 		const { _id } = req.body;
 
-		const query = { _id };
+		const query = { ownerId: _id };
 		const products = await Product.find(query);
 
-		console.log(`Products:`, products);
 		res.send({
 			products,
 		});

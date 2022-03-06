@@ -7,13 +7,14 @@ import Navbar from "./components/navbar/Navbar";
 import { getAll } from "../lib/products/getProducts";
 import { insertProducts } from "../lib/redux/actions/productsSlice";
 import { insertUser } from "../lib/redux/actions/userSlice";
+import { useUserProducts } from "../lib/products/useUserProducts";
 
 export const GlobalContext = React.createContext();
 
 function App() {
 	const dispatch = useDispatch();
 	const user = useSelector((state) => state.user);
-	console.log(`User(App.jsx):`, user);
+	useUserProducts(user._id);
 
 	useEffect(() => {
 		getAll("http://localhost:3001/api/products/getAll").then((data) => {

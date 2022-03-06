@@ -8,24 +8,17 @@ export const useUserProducts = (_id) => {
 	const dispatch = useDispatch();
 
 	useEffect(() => {
-		let isMounted = false;
-
-		new Promise((resolve, reject) => {
-			axios.get(`${serverUrl}api/products/getUserProducts`).then((res) => {
-				resolve(res);
-			});
-		})
-			.then((res) => {
-				if (isMounted) {
-					console.log(`Res data:`, res.data);
-					dispatch(insertUserProducts(res.data));
-				}
-			})
-			.catch((err) => {});
-
-		// To prevent state updates when the component is not mounted)?
-		return () => {
-			isMounted = false;
-		};
-	}, [dispatch, serverUrl]);
+		if (!_id) return;
+		Promise.resolve(
+			axios
+				.post(`${serverUrl}api/products/getUserProducts`, { _id })
+				.then((res) => {
+					console.log(`Res:`, res.data.products);
+					dispatch(insertUserProducts(res.data.products));
+				})
+				.catch((err) => {
+					console.warn(`An error ocurred on useUserProducts hook.`);
+				})
+		);
+	}, [_id, dispatch, serverUrl]);
 };

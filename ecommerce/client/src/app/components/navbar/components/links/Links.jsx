@@ -25,7 +25,6 @@ const Links = (props) => {
 	};
 
 	useEffect(() => {
-		console.log(`User:`, user);
 		if (user) {
 			if (user._id) {
 				setShowProfile(true);

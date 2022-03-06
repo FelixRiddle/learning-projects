@@ -205,6 +205,6 @@ router.post("/create", upload.array("images", 15), async (req, res) => {
 });
 
 router.get("/getAll", getAll);
-router.get("/getUserProducts", getUserProducts);
+router.post("/getUserProducts", getUserProducts);
 
 module.exports = router;
