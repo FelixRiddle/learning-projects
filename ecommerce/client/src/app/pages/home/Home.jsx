@@ -9,7 +9,7 @@ const Home = () => {
 	return (
 		<div>
 			<h2>Home</h2>
-			<DefaultPanelView items={products} />
+			<DefaultPanelView items={products} rows={2} />
 		</div>
 	);
 };

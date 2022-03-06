@@ -4,13 +4,13 @@ import counterReducer from "./actions/counterSlice";
 import userReducer from "./actions/userSlice";
 import productsReducer from "./actions/productsSlice";
 import constantsSlice from "./actions/constantsSlice";
-import userProductsSlice from "./actions/userProductsSlice";
+import userProductsReducer from "./actions/userProductsSlice";
 
 export default configureStore({
 	reducer: {
 		counter: counterReducer,
 		user: userReducer,
-		userProducts: userProductsSlice,
+		userProducts: userProductsReducer,
 		products: productsReducer,
 		constants: constantsSlice,
 	},

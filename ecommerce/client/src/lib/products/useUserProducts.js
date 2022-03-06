@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+
 import { insertUserProducts } from "../redux/actions/userProductsSlice";
 
 export const useUserProducts = (_id) => {
@@ -13,7 +14,6 @@ export const useUserProducts = (_id) => {
 			axios
 				.post(`${serverUrl}api/products/getUserProducts`, { _id })
 				.then((res) => {
-					console.log(`Res:`, res.data.products);
 					dispatch(insertUserProducts(res.data.products));
 				})
 				.catch((err) => {

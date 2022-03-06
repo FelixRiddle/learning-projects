@@ -12,11 +12,6 @@ export const productsSlice = createSlice({
 			state.products = action.payload;
 		},
 		updateProducts: (state, action) => {
-			// const { _id, description, id, images, name } = action.payload;
-			// console.log(`State:`, state);
-			// const existingProduct = state.find((state) => state.id === id);
-			// console.log(`Existing product:`, existingProduct);
-			
 		},
 	},
 });

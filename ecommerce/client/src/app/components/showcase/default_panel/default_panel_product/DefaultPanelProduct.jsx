@@ -4,9 +4,17 @@ import { v4 as uuidv4 } from "uuid";
 import "./DefaultPanelProduct.css";
 
 function DefaultPanelProduct(props) {
-	const { clickFn, id, image, price, title, size } = props;
+	const {
+		clickFn,
+		id,
+		image,
+		marginRight,
+		offsetPosition,
+		price,
+		size,
+		title,
+	} = props;
 
-	const [boxOffsetSize, setBoxOffsetSize] = useState({});
 	const [imageId] = useState(uuidv4());
 	const [titleId] = useState(uuidv4());
 	const [titleOffsetSize, setTitleOffsetSize] = useState({});
@@ -14,24 +22,7 @@ function DefaultPanelProduct(props) {
 	const [priceOffsetSize, setPriceOffsetSize] = useState({});
 
 	useEffect(() => {
-		const box = document.getElementById(id);
-		setBoxOffsetSize((prevInput) => {
-			return {
-				...prevInput,
-				width: box.offsetWidth,
-				height: box.offsetHeight,
-			};
-		});
-
 		const titleElement = document.getElementById(titleId);
-		// const newTitle = document.createElement("div");
-		// newTitle.innerHTML = title;
-		// console.log(`Paragraph element:`, newTitle);
-		// console.log(`Its width: ${newTitle.width}`);
-		// console.log(`Its style width: ${newTitle.style.width}`);
-		// console.log(`Its offset width: ${newTitle.offsetWidth}`);
-		// console.log(`Its client width: ${newTitle.clientWidth}`);
-		// console.log(`Its scroll width: ${newTitle.scrollWidth}`);
 		setTitleOffsetSize((prevInput) => {
 			return {
 				...prevInput,
@@ -48,21 +39,23 @@ function DefaultPanelProduct(props) {
 				height: priceElement.offsetHeight,
 			};
 		});
-	}, [id, priceId, titleId]);
-
-	useEffect(() => {
-		// console.log(`Image:`, image);
-		// console.log(`Box offset size:`, boxOffsetSize);
-		// console.log(`Title offset size:`, titleOffsetSize);
-		// console.log(`Price offset size:`, priceOffsetSize);
-	}, [boxOffsetSize, titleOffsetSize, priceOffsetSize, image]);
+	}, [priceId, titleId]);
 
 	return (
 		<article
 			id={id}
 			className={"DefaultPanelProduct"}
 			onClick={clickFn}
-			style={{ width: size.width, height: size.height, marginRight: "10px" }}
+			style={{
+				position: "relative",
+				top: `${(offsetPosition && offsetPosition.top) || 0}px`,
+				right: `${(offsetPosition && offsetPosition.right) || 0}px`,
+				bottom: `${(offsetPosition && offsetPosition.bottom) || 0}px`,
+				left: `${(offsetPosition && offsetPosition.left) || 0}px`,
+				width: size.width,
+				height: size.height,
+				marginRight: marginRight + "px",
+			}}
 		>
 			<p
 				id={titleId}

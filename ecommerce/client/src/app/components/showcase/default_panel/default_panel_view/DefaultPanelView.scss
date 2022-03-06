@@ -1,10 +1,11 @@
 .DefaultPanelView {
 	// border: 1px solid red;
 	margin-bottom: 20px;
-	
+
 	.items {
 		display: flex;
 		flex-direction: row;
 		justify-content: left;
+		flex-wrap: wrap;
 	}
 }
