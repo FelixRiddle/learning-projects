@@ -5,7 +5,7 @@ import "./Links.css";
 import IconLink from "../../../iconLink/IconLink";
 
 const Links = (props) => {
-	const user = useSelector((state) => state.user.user.value);
+	const user = useSelector((state) => state.user);
 
 	const [showProfile, setShowProfile] = useState(false);
 	const [input, setInput] = useState("");

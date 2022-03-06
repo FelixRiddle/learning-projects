@@ -2,22 +2,21 @@ import { createSlice } from "@reduxjs/toolkit";
 
 export const userSlice = createSlice({
 	name: "user",
-	initialState: {
-		user: {
-			id: "",
-			user: {},
-		},
-	},
+	initialState: {},
 	reducers: {
 		insertUser: (state, action) => {
-			state.user = action.payload;
+			for (let key of Object.entries(action.payload)) {
+				state[key[0]] = key[1];
+			}
 		},
 		updateUser: (state, action) => {
-			state.user = action.payload;
+			for (let key of Object.entries(action.payload)) {
+				state[key[0]] = key[1];
+			}
 		},
 	},
 });
 
 export const { insertUser, updateUser } = userSlice.actions;
-export const selectUser = (state) => state.user.value;
+export const selectUser = (state) => state.user;
 export default userSlice.reducer;

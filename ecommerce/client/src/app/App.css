@@ -67,6 +67,10 @@
   font-family: "Quicksand", sans-serif;
 }
 
+.title {
+  text-align: center;
+}
+
 p,
 h1,
 h2,

@@ -58,7 +58,7 @@ function DefaultPanelProduct(props) {
 	}, [boxOffsetSize, titleOffsetSize, priceOffsetSize, image]);
 
 	return (
-		<div
+		<article
 			id={id}
 			className={"DefaultPanelProduct"}
 			onClick={clickFn}
@@ -96,7 +96,7 @@ function DefaultPanelProduct(props) {
 			>
 				${price}
 			</p>
-		</div>
+		</article>
 	);
 }
 

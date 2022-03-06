@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import jwt_decode from "jwt-decode";
-import { useDispatch } from "react-redux";
-import { nanoid } from "@reduxjs/toolkit";
+import { useDispatch, useSelector } from "react-redux";
 
 import "./App.css";
 import Navbar from "./components/navbar/Navbar";
@@ -13,13 +12,14 @@ export const GlobalContext = React.createContext();
 
 function App() {
 	const dispatch = useDispatch();
+	const user = useSelector((state) => state.user);
+	console.log(`User(App.jsx):`, user);
 
 	useEffect(() => {
 		getAll("http://localhost:3001/api/products/getAll").then((data) => {
 			// Dispatch products
 			dispatch(
 				insertProducts({
-					id: nanoid(),
 					value: [...data],
 				})
 			);
@@ -34,17 +34,18 @@ function App() {
 				Promise.resolve(jwt_decode(token))
 					.then((prevSession) => {
 						console.log(`Previous session found`);
+						if (!prevSession) return;
 						// Save user on redux reducer
 						dispatch(
 							insertUser({
-								id: nanoid(),
-								value: { ...prevSession },
+								...prevSession,
 							})
 						);
 					})
 					.catch((err) => {
+						console.warn(err);
 						console.log(`No previous session found`);
-						localStorage.removeItem("token");
+						// localStorage.removeItem("token");
 					});
 			}
 		} catch (err) {

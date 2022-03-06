@@ -8,7 +8,7 @@ import { useSelector } from "react-redux";
 
 function Login(props) {
 	// const { user } = useContext(GlobalContext);
-	const user = useSelector((state) => state.user.user.value);
+	const user = useSelector((state) => state.user);
 
 	const [input, setInput] = useState({ email: "", password: "" });
 	const [message, setMessage] = useState("none");

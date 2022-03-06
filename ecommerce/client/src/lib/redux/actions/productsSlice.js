@@ -4,7 +4,6 @@ export const productsSlice = createSlice({
 	name: "products",
 	initialState: {
 		products: {
-			id: "",
 			products: [],
 		},
 	},
@@ -12,9 +11,16 @@ export const productsSlice = createSlice({
 		insertProducts: (state, action) => {
 			state.products = action.payload;
 		},
+		updateProducts: (state, action) => {
+			// const { _id, description, id, images, name } = action.payload;
+			// console.log(`State:`, state);
+			// const existingProduct = state.find((state) => state.id === id);
+			// console.log(`Existing product:`, existingProduct);
+			
+		},
 	},
 });
 
-export const { insertProducts } = productsSlice.actions;
+export const { insertProducts, updateProducts } = productsSlice.actions;
 export const selectProducts = (state) => state.products.value;
 export default productsSlice.reducer;

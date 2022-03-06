@@ -9,7 +9,8 @@ import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 function Profile(props) {
-	const user = useSelector((state) => state.user.user.value);
+	const user = useSelector((state) => state.user);
+	const host = useSelector((state) => state.constants.clientUrl);
 
 	// Hooks
 	const { setReRender } = props;
@@ -102,7 +103,7 @@ function Profile(props) {
 
 	return (
 		<div>
-			<h2>Profile</h2>
+			<h2 className="title">Profile</h2>
 			<div className="profile">
 				{/* Bad request/internal server error/not logged in */}
 				{error.state === "danger" && error.message && (
@@ -110,16 +111,17 @@ function Profile(props) {
 						<div className="errorMessage">{error.message}</div>
 					</div>
 				)}
+
+				{/* Check if the user is logged in and then show the settings */}
 				{isLoggedIn && (
 					<div className="profile-navbar">
 						{/* Navigation bar */}
-						<div className="links">
-							<a href="http://localhost:3000/profile/changeBasicInfo">Info</a>
-							<a href="http://localhost:3000/profile/changePassword">
-								Change password
-							</a>
-							<a href="http://localhost:3000/profile/changeAddress">Address</a>
-						</div>
+						<nav className="links">
+							<a href={`${host}profile/changeBasicInfo`}>Info</a>
+							<a href={`${host}profile/changePassword`}>Change password</a>
+							<a href={`${host}profile/changeAddress`}>Address</a>
+							<a href={`${host}profile/updateProducts`}>Your products</a>
+						</nav>
 
 						{/* Routes to profile settings */}
 						<ProfileRoutes

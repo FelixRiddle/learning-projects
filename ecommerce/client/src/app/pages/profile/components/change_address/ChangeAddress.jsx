@@ -7,7 +7,7 @@ import { useSelector } from "react-redux";
 import { getToken } from "../../../../../lib/misc/getToken";
 
 const ChangeAddress = (props) => {
-	const user = useSelector((state) => state.user.user.value);
+	const user = useSelector((state) => state.user);
 
 	const { handleChange, input, setIsInChildComponent } = props;
 

@@ -19,16 +19,19 @@ import { useSelector } from "react-redux";
 
 export const CreateProductContext = React.createContext();
 
-// Constant values
-const defaultImage = "http://localhost:3001/public/iconsx64/image_1.png";
-const arrowIcon = "http://localhost:3001/public/iconsx64/arrow_right_1.png";
-const defaultUploadImage = "http://localhost:3001/public/iconsx64/upload_1.png";
-const disabledImage =
-	"http://localhost:3001/public/iconsx64/disabled_image_1.png";
-const maxImages = 100;
-
 function CreateProduct() {
-	const user = useSelector((state) => state.user.user.value);
+	const user = useSelector((state) => state.user);
+	const { maxImages, serverUrl } = useSelector((state) => state.constants);
+
+	// Icons
+	const [arrowIcon] = useState(`${serverUrl}public/iconsx64/arrow_right_1.png`);
+	const [defaultImage] = useState(`${serverUrl}public/iconsx64/image_1.png`);
+	const [defaultUploadImage] = useState(
+		`${serverUrl}public/iconsx64/upload_1.png`
+	);
+	const [disabledImage] = useState(
+		`${serverUrl}public/iconsx64/disabled_image_1.png`
+	);
 
 	// States
 	const [config, setConfig] = useState({
@@ -86,13 +89,12 @@ function CreateProduct() {
 		// console.log(`New Input:`, newInput);
 		// console.log(`Images:`, input.images);
 		for (const key of Object.keys(newInput)) {
-			// if (key === "images") continue;
 			formData.append(key, input[key]);
 		}
 		formData.append("_id", user._id);
 
 		await axios
-			.post("http://localhost:3001/api/products/create", formData, {
+			.post(`${serverUrl}api/products/create`, formData, {
 				headers: {
 					"Content-Type": "multipart/form-data",
 					"X-Content-Type-Options": "nosniff",
@@ -194,7 +196,7 @@ function CreateProduct() {
 		const image = new Image();
 		image.src = defaultImage;
 		setImages([image]);
-	}, []);
+	}, [defaultImage]);
 
 	useEffect(() => {
 		// If there is no image selected, set the first image as
