@@ -51,7 +51,7 @@
 ⬜️ Product view  
 | ✅ Price component  
 | ✅ Buy/Add to cart buttons  
-| | ⬜️ Functionality to buy  
+| | ⬜️ Buy functionality  
 | ✅ Dynamic  
 | ✅ Image selector  
 | ⬜️ Edit product button/icon(only for the owner)

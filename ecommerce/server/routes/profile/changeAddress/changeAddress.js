@@ -79,7 +79,7 @@ module.exports = changeAddress = async (req, res) => {
 		});
 	} catch (err) {
 		console.error(err);
-		res.status(400).send({
+		res.send({
 			state: "danger",
 			message: "Internal server error.",
 			error: "true",

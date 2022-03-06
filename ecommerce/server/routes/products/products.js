@@ -1,13 +1,14 @@
 const fs = require("fs");
 const multer = require("multer");
 const router = require("express").Router();
-const verify = require("../verifyToken");
 const { v4 } = require("uuid");
 
-const User = require("../models/User");
-const Product = require("../models/Product");
-const { createProductValidation } = require("../validation");
-const { get_time } = require("../lib/debug_info");
+const User = require("../../models/User");
+const Product = require("../../models/Product");
+const { createProductValidation } = require("../../validation");
+const { get_time } = require("../../lib/debug_info");
+const { getAll } = require("./get_all/getAll");
+const { getUserProducts } = require("./get_user_products/getUserProducts");
 const uuidv4 = v4;
 
 const DIR = "uploads";
@@ -203,23 +204,7 @@ router.post("/create", upload.array("images", 15), async (req, res) => {
 	}
 });
 
-router.get("/getAll", async (req, res) => {
-	get_time();
-	console.log("/api/products/getAll");
-
-	try {
-		const products = await Product.find();
-		console.log(`Products:`, products);
-		return res.send(products);
-	} catch (err) {
-		console.error(err);
-		return res.send({
-			state: "danger",
-			error: true,
-			field: "",
-			message: "Internal server error please try again later.",
-		});
-	}
-});
+router.get("/getAll", getAll);
+router.get("/getUserProducts", getUserProducts);
 
 module.exports = router;
