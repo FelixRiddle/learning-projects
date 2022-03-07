@@ -12,7 +12,6 @@ function RowView(props) {
 	const [newItems, setNewItems] = useState([]);
 
 	const handleClick = (props) => {
-		console.log(`Clicked on image:`, props);
 		const e = props;
 		const url = `${clientUrl}app/${e._id}/${e.name.replaceAll(" ", "-")}`;
 		window.open(url, "_blank").focus();

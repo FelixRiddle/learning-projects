@@ -4,9 +4,9 @@ const name = 3;
 
 module.exports.registerValidation = registerValidation = (data) => {
 	const schema = Joi.object({
-		firstName: Joi.string().min(name).max(max).required(),
-		lastName: Joi.string().min(name).max(max).required(),
-		email: Joi.string().min(5).required().email(),
+		firstName: Joi.string().min(name).max(max).allow(null, ""),
+		lastName: Joi.string().min(name).max(max).allow(null, ""),
+		email: Joi.string().min(5).email().required(),
 		password: Joi.string().min(8).max(max).required(),
 		country: Joi.string().max(max).allow(null, ""),
 		province: Joi.string().max(max).allow(null, ""),

@@ -2,11 +2,10 @@ import React, { useState } from "react";
 import "./Register.css";
 import axios from "axios";
 import Alert from "../../components/alert/Alert";
+import Field from "../../components/inputs/field/Field";
 
 function Register() {
 	const [input, setInput] = useState({
-		firstName: "",
-		lastName: "",
 		email: "",
 		password: "",
 		confirmPassword: "",
@@ -24,12 +23,14 @@ function Register() {
 	const handleSubmit = (e) => {
 		e.preventDefault();
 		const { confirmPassword, ...data } = input;
+		
+		// Check if passwords match
 		if (confirmPassword !== data.password) {
 			setState("danger");
 			setMessage("Passwords don't match.");
 			return;
 		}
-		
+
 		axios
 			.post("http://localhost:3001/api/users/register", { ...data })
 			.then((res) => {
@@ -51,15 +52,11 @@ function Register() {
 
 					console.log(`Matching variables`);
 					const prevValues = [
-						/"firstName"/,
-						/"lastName"/,
 						/"email"/,
 						/"password"/,
 					];
 					prevValues.map((e, index) => console.log(prevValues[index]));
 					const placeholderValues = [
-						"First name",
-						"Last name",
 						"Email",
 						"Password",
 					];
@@ -95,10 +92,34 @@ function Register() {
 	};
 
 	return (
-		<div className="register">
+		<div>
 			<h2 className="title">Register</h2>
-			<form className="grid-container">
-				<div className="registerLabels">
+			<form>
+				<Field
+					fieldParentDivClasses="input-field"
+					inputLabel="Email"
+					inputName="email"
+					inputOnChange={handleChange}
+					inputType="text"
+					inputValue={input && input.email}
+				/>
+				<Field
+					fieldParentDivClasses="input-field"
+					inputLabel="Password"
+					inputName="password"
+					inputOnChange={handleChange}
+					inputType="password"
+					inputValue={input && input.password}
+				/>
+				<Field
+					fieldParentDivClasses="input-field"
+					inputLabel="Confirm password"
+					inputName="confirmPassword"
+					inputOnChange={handleChange}
+					inputType="password"
+					inputValue={input && input.confirmPassword}
+				/>
+				{/* <div className="registerLabels">
 					<label className="first-name" htmlFor="firstName">
 						First name
 					</label>
@@ -115,7 +136,6 @@ function Register() {
 						Confirm password
 					</label>
 				</div>
-
 				<div className="registerInputs">
 					<input
 						className="first-name"
@@ -157,8 +177,8 @@ function Register() {
 						value={input.confirmPassword}
 						placeholder="Enter your password again"
 					/>
-				</div>
-				<button className="registerButton" type="submit" onClick={handleSubmit}>
+				</div> */}
+				<button className="btn" type="submit" onClick={handleSubmit}>
 					Create account
 				</button>
 			</form>

@@ -19,7 +19,7 @@ app.use("/public", express.static("public"));
 app.use("/uploads", express.static("uploads"));
 
 app.use("/api/products", require("./routes/products/products"));
-app.use("/api/users", require("./routes/auth"));
+app.use("/api/users", require("./routes/auth/auth"));
 app.use("/api/profile", require("./routes/profile/profile"));
 
 app.listen(process.env.PORT, () => {

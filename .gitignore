@@ -1,6 +1,8 @@
 *.css.map
 database/
 uploads/
+.secret
+.env
 
 # Logs
 logs

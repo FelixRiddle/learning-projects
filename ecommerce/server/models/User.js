@@ -1,22 +1,53 @@
 const mongoose = require("mongoose");
 
 const userSchema = new mongoose.Schema({
-	firstName: {
+	address: {
 		type: String,
-		required: true,
-		min: 1,
 		max: 128,
 	},
-	lastName: {
+	age: {
+		type: Date,
+		default: Date.now,
+	},
+	city: {
 		type: String,
-		required: true,
-		min: 1,
 		max: 128,
+	},
+	country: {
+		type: String,
+		max: 128,
+	},
+	// Register date
+	date: {
+		default: Date.now,
+		lowercase: true,
+		type: Date,
 	},
 	email: {
 		type: String,
 		required: true,
 		min: 5,
+	},
+	firstName: {
+		type: String,
+		min: 1,
+		max: 128,
+	},
+	info: {
+		type: Object,
+		default: {
+			confirmedEmail: false,
+			confirmEmailToken: "",
+		},
+	},
+	lastName: {
+		type: String,
+		min: 1,
+		max: 128,
+	},
+	lastUpdated: {
+		type: Date,
+		default: Date.now,
 	},
 	password: {
 		type: String,
@@ -29,40 +60,17 @@ const userSchema = new mongoose.Schema({
 		max: 128,
 		min: 4,
 	},
-	age: {
-		type: Date,
-		default: Date.now,
-	},
-	country: {
-		type: String,
-		max: 128,
-	},
-	province: {
-		type: String,
-		max: 128,
-	},
-	city: {
-		type: String,
-		max: 128,
-	},
-	address: {
-		type: String,
-		max: 128,
-	},
 	postalCode: {
 		type: String,
 		max: 32,
 	},
+	// Store owned products id
 	products: {
-		type: Array, // Store products id
+		type: Array,
 	},
-	date: {
-		type: Date,
-		default: Date.now,
-	},
-	lastUpdated: {
-		type: Date,
-		default: Date.now,
+	province: {
+		type: String,
+		max: 128,
 	},
 });
 

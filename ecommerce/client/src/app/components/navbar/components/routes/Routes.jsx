@@ -11,6 +11,7 @@ import Profile from "../../../../pages/profile/Profile";
 import CreateProduct from "../../../../pages/createProduct/CreateProduct";
 import ProductView from "../../../../pages/product_view/ProductView";
 import Test from "../../../../pages/test/Test";
+import ConfirmEmail from "../../../../pages/confirm_email/ConfirmEmail";
 
 const Routes = (props) => {
 	const products = useSelector((state) => state.products.products.value);
@@ -40,6 +41,8 @@ const Routes = (props) => {
 							/>
 						);
 					})}
+
+				<Route path="/confirmEmail/:id" element={<ConfirmEmail />} />
 
 				{/* Profile */}
 				<Route

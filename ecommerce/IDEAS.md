@@ -1,6 +1,7 @@
 # Objectives
 
 (This looks better on VSCode)
+---- Frontend ----
 ⬜️ Consumer help  
 | ⬜️ Page on price variations  
 | ⬜️ Tutorials on how to use the website
@@ -113,9 +114,19 @@ the last index of the array).
 | | ⬜️ Delete products  
 | ⬜️ Fix Styling
 
-|Others  
-| | ⬜️ Add dark mode, for this, create a gigantic div that covers everything
-and move it accordingly with z-index.
+⬜️ Register  
+| ✅ Register form  
+| ⬜️ Feedback  
+| | ⬜️ Status messages  
+| ⬜️ Email verification  
+| | ⬜️ Option to resend the email  
+| | | ⬜️ Also validate that this option has a limit and cannot be executed often
+
+---- Backend ----
+| ⬜️ Add a log system
+
+---- Others ----  
+| ⬜️ Add diferent website styling options.
 
 |Hardmode  
 | | ⬜️ Drag and drop with the small images.
