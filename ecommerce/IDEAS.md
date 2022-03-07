@@ -12,7 +12,7 @@
 ⬜️ Home  
 | ✅ Products panel-like view  
 | | ✅ Dynamic  
-| ⬜️ Row-like view  
+| ✅ Row-like view
 
 ✅ Create Product  
 | ✅ Form  
@@ -108,6 +108,9 @@ the last index of the array).
 | | | ✅ Validate data with joi  
 | | | ✅ Error handling  
 | | | ✅ Update data  
+| ⬜️ Products  
+| | ⬜️ Edit products  
+| | ⬜️ Delete products  
 | ⬜️ Fix Styling
 
 |Others  

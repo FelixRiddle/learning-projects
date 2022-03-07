@@ -116,11 +116,19 @@ function Profile(props) {
 				{isLoggedIn && (
 					<div className="profile-navbar">
 						{/* Navigation bar */}
-						<nav className="links">
-							<a href={`${host}profile/changeBasicInfo`}>Info</a>
-							<a href={`${host}profile/changePassword`}>Change password</a>
-							<a href={`${host}profile/changeAddress`}>Address</a>
-							<a href={`${host}profile/updateProducts`}>Your products</a>
+						<nav className="links" style={{ width: "200px" }}>
+							<a className="link" href={`${host}profile/changeBasicInfo`}>
+								Info
+							</a>
+							<a className="link" href={`${host}profile/changePassword`}>
+								Change password
+							</a>
+							<a className="link" href={`${host}profile/changeAddress`}>
+								Address
+							</a>
+							<a className="link" href={`${host}profile/updateProducts`}>
+								Your products
+							</a>
 						</nav>
 
 						{/* Routes to profile settings */}

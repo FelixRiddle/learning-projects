@@ -2,16 +2,16 @@ import { createSlice } from "@reduxjs/toolkit";
 
 export const userProductsSlice = createSlice({
 	name: "userProducts",
-	initialState: {},
+	initialState: [],
 	reducers: {
 		insertUserProducts: (state, action) => {
 			for (let key of Object.entries(action.payload)) {
-				state[key[0]] = key[1];
+				state.push(action.payload[key[0]]);
 			}
 		},
 		updateUserProducts: (state, action) => {
 			for (let key of Object.entries(action.payload)) {
-				state[key[0]] = key[1];
+				state.push(action.payload[key[0]]);
 			}
 		},
 	},

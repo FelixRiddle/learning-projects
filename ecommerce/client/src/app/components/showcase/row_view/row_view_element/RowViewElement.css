@@ -1,5 +1,5 @@
 .RowViewElement {
-  background-color: #aee6d5;
+  background-color: whitesmoke;
   border-radius: 5px;
   margin: 20px 0px 0px 20px;
   padding: 10px;
@@ -13,7 +13,7 @@
 }
 .RowViewElement .image-and-description .image {
   border-radius: 2px;
-  outline: 2px solid yellowgreen;
+  outline: 2px solid gray;
 }
 .RowViewElement .image-and-description .description-and-price {
   display: flex;

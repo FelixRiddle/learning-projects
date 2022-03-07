@@ -9,6 +9,10 @@
   margin-right: 10px;
   padding: 5px;
 }
+.profile-navbar .links .link {
+  white-space: "nowrap";
+  text-overflow: "ellipsis";
+}
 
 .fieldParentDiv {
   margin-bottom: 10px;

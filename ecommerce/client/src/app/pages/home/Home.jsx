@@ -11,7 +11,7 @@ const Home = () => {
 		<div>
 			<h2>Home</h2>
 			<DefaultPanelView items={products} rows={2} title={"Featured products"} />
-			<RowView items={products} title={"Trending"} />
+			<RowView items={products} title={"Trending"} maxItems={5} />
 		</div>
 	);
 };
