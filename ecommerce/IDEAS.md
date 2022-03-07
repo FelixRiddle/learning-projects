@@ -10,29 +10,31 @@
 |✅ Show "You are already logged in" alert
 
 ⬜️ Home  
-| ⬜️ Products panel-like view
+| ✅ Products panel-like view  
+| | ✅ Dynamic  
+| ⬜️ Row-like view  
 
 ✅ Create Product  
-|✅ Form  
-| |✅ Upload file  
-| |✅ Icon for upload  
-| |✅ Show big image on the left  
-| | |✅ Fixed image size  
-| | |✅ The image re-scales when the user resizes the window  
-| | |✅ There are arrows to navigate through each image  
-| | |✅ The user can select an image  
-| | |✅ Add a control bar below the big image  
-| | | |✅ Arrows for navigation  
-| | | |✅ Arrows for MOVING the image  
-| | | |✅ Delete image  
-| | | |✅ Change image  
-| | | |✅ Add image  
-| |✅ Show tiny images below  
-| | |✅ Add feedback to the selected image  
-| | |✅ When it's full of images, the last is disabled.  
-|✅ Feedback  
-| |✅ Status alerts  
-| |⬜️ Show an error when the maximum amount of images has been reached
+| ✅ Form  
+| | ✅ Upload file  
+| | ✅ Icon for upload  
+| | ✅ Show big image on the left  
+| | | ✅ Fixed image size  
+| | | ✅ The image re-scales when the user resizes the window  
+| | | ✅ There are arrows to navigate through each image  
+| | | ✅ The user can select an image  
+| | | ✅ Add a control bar below the big image  
+| | | | ✅ Arrows for navigation  
+| | | | ✅ Arrows for MOVING the image  
+| | | | ✅ Delete image  
+| | | | ✅ Change image  
+| | | | ✅ Add image  
+| | ✅ Show tiny images below  
+| | | ✅ Add feedback to the selected image  
+| | | ✅ When it's full of images, the last is disabled.  
+| ✅ Feedback  
+| | ✅ Status alerts  
+| | ⬜️ Show an error when the maximum amount of images has been reached
 
 ⬜️ Navbar  
 | ✅ Add a search input  
@@ -54,14 +56,14 @@
 | | ⬜️ Buy functionality  
 | ✅ Dynamic  
 | ✅ Image selector  
-| ⬜️ Edit product button/icon(only for the owner)
-| ⬜️ Delete product button/icon(only for the owner)
-| ⬜️ Comments
-| | ⬜️ Report comment
-| | ⬜️ Like comment
-| | ⬜️ Dislike comment
+| ⬜️ Edit product button/icon(only for the owner)  
+| ⬜️ Delete product button/icon(only for the owner)  
+| ⬜️ Comments  
+| | ⬜️ Report comment  
+| | ⬜️ Like comment  
+| | ⬜️ Dislike comment  
 | | | ⬜️ Disliked comments should be hidded(like, moved to
-the last index of the array).
+the last index of the array).  
 | ⬜️ Reviews
 
 ✅ Profile  
@@ -70,22 +72,22 @@ the last index of the array).
 | ✅ ChangeBasicInfo part  
 | | ✅ Ask for password before submitting a request  
 | | | ✅ show-hide password functionality  
-| | | ✅ Show a warning when it's empty  
+| | | ⬜️ Show a warning when it's empty  
 | | | | ⬜️ The warning must disappear after x seconds(I don't know how to do this, for now)  
-| | | | ✅ The warning can also disappear if the user clicks on the field  
-| | | | ✅ The red border doesn't disappear till the user clicks on the field  
-| | | | ✅ The warning should disappear when the user clicks on it  
+| | | | ⬜️ The warning can also disappear if the user clicks on the field  
+| | | | ⬜️ The red border doesn't disappear till the user clicks on the field  
+| | | | ⬜️ The warning should disappear when the user clicks on it  
 | | ✅ Validate email  
 | | ✅ Update data  
-| | ✅ Show messages  
-| | | ✅ Server offline  
-| | | ✅ Other errors  
-| | | | ✅ Email is already in use  
-| | | | ✅ The password is incorrect  
-| | | | ✅ If the server is offline/bad request  
-| | | ✅ Joi validation errors  
-| | | ✅ Success message  
-| | | | ✅ Popup is removed when the user clicks it  
+| | ⬜️ Show messages  
+| | | ⬜️ Server offline  
+| | | ⬜️ Other errors  
+| | | | ⬜️ Email is already in use  
+| | | | ⬜️ The password is incorrect  
+| | | | ⬜️ If the server is offline/bad request  
+| | | ⬜️ Joi validation errors  
+| | | ⬜️ Success message  
+| | | | ⬜️ Popup is removed when the user clicks it  
 | | ✅ Save token locally  
 | | ✅ Verify password through bcrypt  
 | ✅ Change password  
@@ -98,9 +100,9 @@ the last index of the array).
 | | | ✅ Current password isn't correct  
 | | | ✅ Password updated successfully  
 | ✅ Address  
-| | ✅ Messages  
-| | | ✅ Joi validation  
-| | | ✅ Success  
+| | ⬜️ Messages  
+| | | ⬜️ Joi validation  
+| | | ⬜️ Success  
 | | ✅ Refresh token  
 | | ✅ Backend functionality  
 | | | ✅ Validate data with joi  
@@ -109,11 +111,11 @@ the last index of the array).
 | ⬜️ Fix Styling
 
 |Others  
-| |⬜️ Add dark mode, for this, create a gigantic div that covers everything
+| | ⬜️ Add dark mode, for this, create a gigantic div that covers everything
 and move it accordingly with z-index.
 
 |Hardmode  
-| |⬜️ Drag and drop with the small images.
+| | ⬜️ Drag and drop with the small images.
 
 ⬜️ Licenses  
 |⬜️ Add the following attributions  

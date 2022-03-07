@@ -1,0 +1,27 @@
+.RowViewElement {
+	background-color: rgb(174, 230, 213);
+	border-radius: 5px;
+	margin: 20px 0px 0px 20px;
+	padding: 10px;
+
+	&:hover {
+		outline: 3px solid cornflowerblue;
+		cursor: pointer;
+	}
+
+	.image-and-description {
+		display: flex;
+		
+		.image {
+			border-radius: 2px;
+			outline: 2px solid yellowgreen;
+		}
+
+		.description-and-price {
+			display: flex;
+			flex-direction: column;
+
+			margin-left: 20px;
+		}
+	}
+}

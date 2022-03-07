@@ -36,6 +36,7 @@ function App() {
 					.then((prevSession) => {
 						console.log(`Previous session found`);
 						if (!prevSession) return;
+						
 						// Save user on redux reducer
 						dispatch(
 							insertUser({
@@ -46,7 +47,6 @@ function App() {
 					.catch((err) => {
 						console.warn(err);
 						console.log(`No previous session found`);
-						// localStorage.removeItem("token");
 					});
 			}
 		} catch (err) {

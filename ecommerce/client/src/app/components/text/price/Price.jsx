@@ -11,7 +11,7 @@ function Price(props) {
 		price,
 		strong,
 	} = props;
-
+	
 	const priceText = `$ ${price}`;
 
 	return (

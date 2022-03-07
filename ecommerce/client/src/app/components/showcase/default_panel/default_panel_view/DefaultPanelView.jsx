@@ -8,7 +8,7 @@ import DefaultPanelProduct from "../default_panel_product/DefaultPanelProduct";
 import "./DefaultPanelView.css";
 
 function DefaultPanelView(props) {
-	const { items, rows } = props;
+	const { items, rows, title } = props;
 
 	const { clientUrl, serverUrl } = useSelector((state) => state.constants);
 
@@ -35,10 +35,8 @@ function DefaultPanelView(props) {
 		);
 		const totalItems = squeezedItems * rows;
 		const itemsAdded = [];
-		console.log(`Total items:`, totalItems);
 		for (let i = 0; i < totalItems; i++) itemsAdded.push(items[i]);
 		setVisibleItems(itemsAdded);
-		console.log(`Items added:`, itemsAdded);
 	}, [itemSize, items, loaded, rows, viewportSize]);
 
 	// Check when the loaded
@@ -46,7 +44,9 @@ function DefaultPanelView(props) {
 
 	return (
 		<div className="DefaultPanelView">
-			<p>DefaultPanelView</p>
+			<p className="title">
+				<b>{title}</b>
+			</p>
 			<nav className="items" id={navId}>
 				{/* To prevent any kind of errors */}
 				{visibleItems &&
