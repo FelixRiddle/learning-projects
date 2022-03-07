@@ -14,12 +14,15 @@ function ConfirmEmail() {
 
 	useEffect(() => {
 		if (params.id) {
-			axios.get(`${serverUrl}api/users/confirmEmail`);
+			axios.get(`${serverUrl}api/users/confirmEmail`).then(() => {
+				setLoading(false);
+			});
 		}
 	}, [params, serverUrl]);
 
 	return (
 		<div>
+			{loading && <p>Loading...</p>}
 			{(!params || !params.id) && (
 				<div>
 					<h2 className="title">User not found</h2>
