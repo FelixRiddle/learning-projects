@@ -1,4 +1,5 @@
 const bcrypt = require("bcrypt");
+const nodemailer = require("nodemailer");
 
 const User = require("../../../models/User");
 const { registerValidation } = require("../../../validation");
@@ -30,18 +31,32 @@ exports.register = async (req, res) => {
 				confirmEmailToken,
 			},
 		});
-		const savedUser = await user.save();
 
 		// Send email for verification
-		const transporter = nodemailer.createTransport({
+		const transporter = await nodemailer.createTransport({
 			host: "smtp.gmail.com",
 			port: 465,
 			secure: true,
+			auth: {
+				user: process.env.GOOGLE_GMAIL_ADDRESS,
+				pass: process.env.GOOGLE_ACCESS_PASS,
+			},
 		});
-		
-		const info = await transporter.sendMail({})
 
-		console.log(`User created!`);
+		const info = await transporter.sendMail({
+			from: `"Ecommerce email verification" <${process.env.GOOGLE_GMAIL_ADDRESS}>`,
+			to: email,
+			subject: "Email verification",
+			html: `<b>Verify email</b>
+			<p>Click the link below to verify your email:</p>
+			<a href="${process.env.CLIENT_URL}confirmEmail/${confirmEmailToken}" >
+			Confirm email</a>`,
+		});
+
+		// Save at the end
+		const savedUser = await user.save();
+		console.log(`User ${email} saved`);
+
 		return res.status(200).send(savedUser);
 	} catch (err) {
 		console.error(err);

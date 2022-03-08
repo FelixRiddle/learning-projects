@@ -1,0 +1,6 @@
+CLIENT_URL=http://localhost:3000/
+GOOGLE_GMAIL_ADDRESS=example@gmail.com
+GOOGLE_ACCESS_PASS=Google access pass
+MONGODB_URI=mongodb://127.0.0.1:27017/database
+PORT=50000
+TOKEN_SECRET=joe mama

@@ -125,6 +125,13 @@ the last index of the array).
 ---- Backend ----
 | ⬜️ Add a log system
 
+⬜️ Auth  
+| ⬜️ Register  
+| | ⬜️ Email verification process
+| | ⬜️ New accounts have an expiricy date, which will delete the account when
+the time runs out, and if the value is null, that means the account was activated
+thus the account won't be deleted.
+
 ---- Others ----  
 | ⬜️ Add diferent website styling options.
 
