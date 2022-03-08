@@ -9,7 +9,7 @@ import { getToken } from "../../../../../lib/misc/getToken";
 const ChangePassword = (props) => {
 	const user = useSelector((state) => state.user);
 
-	const { input, setIsInChildComponent } = props;
+	const { input } = props;
 
 	const [passwordInfo, setPasswordInfo] = useState({
 		icon: false,
@@ -146,9 +146,9 @@ const ChangePassword = (props) => {
 		});
 	}, [update]);
 
-	useEffect(() => {
-		setIsInChildComponent(true);
-	}, [setIsInChildComponent]);
+	// useEffect(() => {
+	// 	setIsInChildComponent(true);
+	// }, [setIsInChildComponent]);
 
 	return (
 		<div className="changePasswords">

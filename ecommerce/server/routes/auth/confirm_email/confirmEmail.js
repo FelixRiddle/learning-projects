@@ -29,8 +29,9 @@ exports.confirmEmail = async (req, res) => {
 		const result = await User.findByIdAndUpdate(user._id, update, {
 			new: true,
 		});
-		console.log(`New user:`, result);
+		// console.log(`New user:`, result);
 
+		console.log(`Email verified`)
 		return res.send({ message: "Success!" });
 	} catch (err) {
 		console.warn(err);

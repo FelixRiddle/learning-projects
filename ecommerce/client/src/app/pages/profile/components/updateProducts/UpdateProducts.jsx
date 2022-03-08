@@ -5,7 +5,6 @@ import RowView from "../../../../components/showcase/row_view/row_view/RowView";
 
 function UpdateProducts() {
 	const userProducts = useSelector((state) => state.userProducts);
-	console.log(`User products:`, userProducts);
 
 	return (
 		<div>

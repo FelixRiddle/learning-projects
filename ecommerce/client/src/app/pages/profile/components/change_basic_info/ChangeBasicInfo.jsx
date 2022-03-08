@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import axios from "axios";
 
 import { handleMessageValidationv2 } from "../../../../../lib/handleMessageValidation";
@@ -15,7 +15,6 @@ const ChangeBasicInfo = (props) => {
 		passwordInfo,
 		setPasswordInfo,
 		input,
-		setIsInChildComponent,
 		setError,
 		error,
 	} = props;
@@ -138,9 +137,9 @@ const ChangeBasicInfo = (props) => {
 		}
 	};
 
-	useEffect(() => {
-		setIsInChildComponent(true);
-	}, [setIsInChildComponent]);
+	// useEffect(() => {
+	// 	setIsInChildComponent(true);
+	// }, [setIsInChildComponent]);
 
 	return (
 		<div className="changeBasicInfo">

@@ -1,9 +1,9 @@
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 
-const get_time = require("../../../lib/debug_info");
 const User = require("../../../models/User");
 const { loginValidation } = require("../../../validation");
+const { get_time } = require("../../../lib/debug_info");
 
 exports.login = async (req, res) => {
 	get_time();

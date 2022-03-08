@@ -9,7 +9,7 @@ import { getToken } from "../../../../../lib/misc/getToken";
 const ChangeAddress = (props) => {
 	const user = useSelector((state) => state.user);
 
-	const { handleChange, input, setIsInChildComponent } = props;
+	const { handleChange, input } = props;
 
 	const [location, setLocation] = useState({
 		country: "",
@@ -125,9 +125,9 @@ const ChangeAddress = (props) => {
 		}
 	}, [location, user, dataLoaded]);
 
-	useEffect(() => {
-		setIsInChildComponent(true);
-	}, [setIsInChildComponent]);
+	// useEffect(() => {
+	// 	setIsInChildComponent(true);
+	// }, [setIsInChildComponent]);
 
 	return (
 		<div className="changeAddress">

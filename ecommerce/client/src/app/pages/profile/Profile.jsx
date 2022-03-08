@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
+import axios from "axios";
 
 import "./Profile.css";
-import axios from "axios";
 import { get_year_month_day } from "../../../lib/misc/transformDate";
 import { useUserData } from "../../../lib/user/useUserData";
 import ProfileRoutes from "./components/profile_routes/ProfileRoutes";
-import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
 
 function Profile(props) {
 	const user = useSelector((state) => state.user);
@@ -22,9 +21,7 @@ function Profile(props) {
 		superiorError: false,
 		joiMessage: "",
 	});
-	const [isInChildComponent, setIsInChildComponent] = useState(true);
 	const [isLoggedIn, setIsLoggedIn] = useState(false);
-	const navigate = useNavigate();
 	const [passwordInfo, setPasswordInfo] = useState({
 		error: false,
 		errorMessage: "",
@@ -32,6 +29,7 @@ function Profile(props) {
 		duration: 10000,
 		show: false,
 	});
+	const [loading, setLoading] = useState(true);
 
 	useEffect(() => {
 		// If the error already exists
@@ -96,17 +94,31 @@ function Profile(props) {
 		}
 	}, [user, isLoggedIn, setUserData]);
 
+	// Check if the page is loading or not
 	useEffect(() => {
-		console.log(`Is in child component?: ${isInChildComponent}`);
-		if (!isInChildComponent) navigate("/profile/changeBasicInfo");
-	}, [isInChildComponent, navigate]);
+		// All this "isMounted" stuff is to prevent updating a state
+		// when the component is not mounted, which throws an error.
+		let isMounted = true;
+
+		new Promise((resolve, reject) => {
+			window.onload = resolve();
+		}).then(() => {
+			if (isMounted) {
+				setLoading(false);
+			}
+		});
+
+		return () => {
+			isMounted = false;
+		};
+	}, []);
 
 	return (
 		<div>
 			<h2 className="title">Profile</h2>
 			<div className="profile">
 				{/* Bad request/internal server error/not logged in */}
-				{error.state === "danger" && error.message && (
+				{loading && error.state === "danger" && error.message && (
 					<div className={"error " + (error.state && error.state)}>
 						<div className="errorMessage">{error.message}</div>
 					</div>
@@ -139,7 +151,6 @@ function Profile(props) {
 							passwordInfo={passwordInfo}
 							setError={setError}
 							setInput={setUserData}
-							setIsInChildComponent={setIsInChildComponent}
 							setPasswordInfo={setPasswordInfo}
 							setReRender={setReRender}
 						/>

@@ -1,5 +1,7 @@
 const bcrypt = require("bcrypt");
 const nodemailer = require("nodemailer");
+const { v4 } = require("uuid");
+const uuidv4 = v4;
 
 const User = require("../../../models/User");
 const { registerValidation } = require("../../../validation");
@@ -22,7 +24,7 @@ exports.register = async (req, res) => {
 		const salt = await bcrypt.genSalt(10);
 		const hashedPassword = await bcrypt.hash(req.body.password, salt);
 
-		const confirmEmailToken = await bcrypt.hash("a", 10);
+		const confirmEmailToken = uuidv4() + uuidv4() + uuidv4();
 		console.log(`Confirm email token:`, confirmEmailToken);
 		const user = new User({
 			email,
@@ -56,6 +58,7 @@ exports.register = async (req, res) => {
 		// Save at the end
 		const savedUser = await user.save();
 		console.log(`User ${email} saved`);
+		// console.log(`Info:`, info);
 
 		return res.status(200).send(savedUser);
 	} catch (err) {
