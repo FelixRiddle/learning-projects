@@ -72,8 +72,14 @@ export const handleMessageValidationv2 = (
 
 	// Force a copy of the string
 	let responseData = (" " + res.data.joiMessage).slice(1);
+	console.log(`Response data sliced: ${responseData}`);
 	for (let index in inputKeys) {
-		if (responseData.match(inputKeys[index])) {
+		console.log(
+			`Replacing: ${inputKeys[index]} for ${placeholderValues[index]}`
+		);
+		console.log(`Does it match?: ${responseData.match(inputKeys[index])}`);
+		console.log(`Response data: ${responseData}`);
+		if (responseData.match(inputKeys[index]) !== null) {
 			if (setError)
 				setError({
 					...error,

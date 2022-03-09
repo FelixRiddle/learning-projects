@@ -5,6 +5,7 @@ import "./Register.css";
 import Alert from "../../components/alert/Alert";
 import Field from "../../components/inputs/field/Field";
 import { handleMessageValidationv2 } from "../../../lib/handleMessageValidation";
+import { getAnyMessage } from "../../../lib/debug/handleMessages";
 
 function Register() {
 	const [input, setInput] = useState({
@@ -52,87 +53,87 @@ function Register() {
 				console.log(`Response data:`);
 				console.log(res.data);
 				console.log(`Its typeof ${typeof res.data}`);
+				getAnyMessage(input, ["Email", "Password", "Confirm Password"], res);
 
-				if (typeof res.data === "object") {
-					setStatus((prevValues) => {
-						return {
-							...prevValues,
-							state: "success",
-							message: "Account created, check your email",
-							field: "",
-							error: false,
-						};
-					});
-					return;
-				} else if (res.data === "Email already exists") {
-					setStatus((prevValues) => {
-						return {
-							...prevValues,
-							state: "danger",
-							message: "Email already exists.",
-							field: "email",
-							error: true,
-						};
-					});
-					return;
-				} else if (res.data) {
-					const inputKeys = [];
-					Object.entries(input).map((e) => inputKeys.push(e[0]));
+				// if (typeof res.data === "object") {
+				// 	setStatus((prevValues) => {
+				// 		return {
+				// 			...prevValues,
+				// 			state: "success",
+				// 			message: "Account created, check your email",
+				// 			field: "",
+				// 			error: false,
+				// 		};
+				// 	});
+				// 	return;
+				// } else if (res.data === "Email already exists") {
+				// 	setStatus((prevValues) => {
+				// 		return {
+				// 			...prevValues,
+				// 			state: "danger",
+				// 			message: "Email already exists.",
+				// 			field: "email",
+				// 			error: true,
+				// 		};
+				// 	});
+				// 	return;
+				// } else if (res.data) {
+				// 	const inputKeys = [];
+				// 	Object.entries(input).map((e) => inputKeys.push(e[0]));
 
-					console.log(`Matching variables`);
-					const prevValues = [/"email"/, /"password"/];
-					const placeholderValues = ["Email", "Password"];
-					// Force a copy of the string
-					let responseData = (" " + res.data).slice(1);
+				// 	console.log(`Matching variables`);
+				// 	const prevValues = ["email", "password"];
+				// 	const placeholderValues = ["Email", "Password"];
+				// 	// Force a copy of the string
+				// 	let responseData = res.data;
+				// 	handleMessageValidationv2(
+				// 		{ email: "", password: "" },
+				// 		responseData,
+				// 		placeholderValues
+				// 	);
 
-					handleMessageValidationv2(
-						{ email: "", password: "" },
-						res,
-						placeholderValues
-					);
+				// 	const newMessage = handleMessageValidationv2(
+				// 		prevValues,
+				// 		responseData,
+				// 		placeholderValues
+				// 	);
 
-					const newMessage = handleMessageValidationv2(
-						prevValues,
-						res,
-						placeholderValues
-					);
+				// 	setStatus((prevValues) => {
+				// 		return {
+				// 			...prevValues,
+				// 			state: "danger",
+				// 			message: newMessage,
+				// 			field: "email",
+				// 			error: true,
+				// 		};
+				// 	});
 
-					setStatus((prevValues) => {
-						return {
-							...prevValues,
-							state: "danger",
-							message: newMessage,
-							field: "email",
-							error: true,
-						};
-					});
-
-					// for (let index in prevValues) {
-					// 	if (responseData.match(prevValues[index])) {
-					// 		console.log(
-					// 			`Current: ${prevValues[index]}, ${
-					// 				placeholderValues[index]
-					// 			}, result: ${responseData.replace(
-					// 				prevValues[index],
-					// 				placeholderValues[index]
-					// 			)}`
-					// 		);
-					// 		const resultMessage = responseData.replace(
-					// 			prevValues[index],
-					// 			placeholderValues[index]
-					// 		);
-					// 		setStatus((prevValues) => {
-					// 			return {
-					// 				...prevValues,
-					// 				state: "danger",
-					// 				message: resultMessage,
-					// 				field: "email",
-					// 				error: true,
-					// 			};
-					// 		});
-					// 	}
-					// }
-				}
+				// 	// for (let index in prevValues) {
+				// 	// 	if (responseData.match(prevValues[index])) {
+				// 	// 		console.log(
+				// 	// 			`Current: ${prevValues[index]}, ${
+				// 	// 				placeholderValues[index]
+				// 	// 			}, result: ${responseData.replace(
+				// 	// 				prevValues[index],
+				// 	// 				placeholderValues[index]
+				// 	// 			)}`
+				// 	// 		);
+				// 	// 		const resultMessage = responseData.replace(
+				// 	// 			prevValues[index],
+				// 	// 			placeholderValues[index]
+				// 	// 		);
+				// 	// 		setStatus((prevValues) => {
+				// 	// 			return {
+				// 	// 				...prevValues,
+				// 	// 				state: "danger",
+				// 	// 				message: resultMessage,
+				// 	// 				field: "email",
+				// 	// 				error: true,
+				// 	// 			};
+				// 	// 		});
+				// 	// 	}
+				// 	// }
+				// }
 			})
 			.catch((err) => {
 				console.warn(err);

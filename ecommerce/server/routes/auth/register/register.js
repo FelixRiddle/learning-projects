@@ -1,5 +1,4 @@
 const bcrypt = require("bcrypt");
-const nodemailer = require("nodemailer");
 const { v4 } = require("uuid");
 const uuidv4 = v4;
 
@@ -13,7 +12,14 @@ exports.register = async (req, res) => {
 
 	try {
 		const { error } = registerValidation(req.body);
-		if (error) return res.send(error.details[0].message);
+		if (error)
+			return res.send({
+				debug: {
+					error: true,
+					joiMessage: error.details[0].message,
+					state: "error",
+				},
+			});
 
 		// Check if the user is already in the database
 		const email = req.body.email.toLowerCase();
@@ -39,7 +45,7 @@ exports.register = async (req, res) => {
 		console.log(`User ${email} saved`);
 		// console.log(`Info:`, info);
 
-		return res.send({ user: savedUser});
+		return res.send({ user: savedUser });
 	} catch (err) {
 		console.error(err);
 		return res.send(err);
