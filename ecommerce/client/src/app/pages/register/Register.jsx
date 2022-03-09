@@ -1,8 +1,10 @@
 import React, { useState } from "react";
-import "./Register.css";
 import axios from "axios";
+
+import "./Register.css";
 import Alert from "../../components/alert/Alert";
 import Field from "../../components/inputs/field/Field";
+import { handleMessageValidationv2 } from "../../../lib/handleMessageValidation";
 
 function Register() {
 	const [input, setInput] = useState({
@@ -12,6 +14,12 @@ function Register() {
 	});
 	const [state, setState] = useState("none");
 	const [message, setMessage] = useState("");
+	const [status, setStatus] = useState({
+		message: "",
+		state: "",
+		field: "",
+		error: "",
+	});
 
 	const handleChange = (e) => {
 		const { name, value } = e.target;
@@ -23,71 +31,121 @@ function Register() {
 	const handleSubmit = (e) => {
 		e.preventDefault();
 		const { confirmPassword, ...data } = input;
-		
+
 		// Check if passwords match
 		if (confirmPassword !== data.password) {
-			setState("danger");
-			setMessage("Passwords don't match.");
+			setStatus((prevValues) => {
+				return {
+					...prevValues,
+					state: "danger",
+					message: "Passwords don't match",
+					field: "password",
+					error: true,
+				};
+			});
 			return;
 		}
 
 		axios
 			.post("http://localhost:3001/api/users/register", { ...data })
 			.then((res) => {
+				console.log(`Response data:`);
 				console.log(res.data);
-				console.log(`Is res.data an object?: ${typeof res.data}`);
-				//console.log(`Body: ${res.body}`);
+				console.log(`Its typeof ${typeof res.data}`);
+
 				if (typeof res.data === "object") {
-					setState("success");
-					setMessage("Account created successfully, check your email.");
+					setStatus((prevValues) => {
+						return {
+							...prevValues,
+							state: "success",
+							message: "Account created, check your email",
+							field: "",
+							error: false,
+						};
+					});
 					return;
-				} else if (res.data === "Email already exists.") {
-					setState("danger");
-					setMessage("Email already exists.");
+				} else if (res.data === "Email already exists") {
+					setStatus((prevValues) => {
+						return {
+							...prevValues,
+							state: "danger",
+							message: "Email already exists.",
+							field: "email",
+							error: true,
+						};
+					});
 					return;
 				} else if (res.data) {
-					setState("danger");
 					const inputKeys = [];
 					Object.entries(input).map((e) => inputKeys.push(e[0]));
 
 					console.log(`Matching variables`);
-					const prevValues = [
-						/"email"/,
-						/"password"/,
-					];
-					prevValues.map((e, index) => console.log(prevValues[index]));
-					const placeholderValues = [
-						"Email",
-						"Password",
-					];
+					const prevValues = [/"email"/, /"password"/];
+					const placeholderValues = ["Email", "Password"];
 					// Force a copy of the string
 					let responseData = (" " + res.data).slice(1);
-					for (let index in prevValues) {
-						if (responseData.match(prevValues[index])) {
-							console.log(
-								`Current: ${prevValues[index]}, ${
-									placeholderValues[index]
-								}, result: ${responseData.replace(
-									prevValues[index],
-									placeholderValues[index]
-								)}`
-							);
-							setMessage(
-								responseData.replace(
-									prevValues[index],
-									placeholderValues[index]
-								)
-							);
-						}
-					}
+
+					handleMessageValidationv2(
+						{ email: "", password: "" },
+						res,
+						placeholderValues
+					);
+
+					const newMessage = handleMessageValidationv2(
+						prevValues,
+						res,
+						placeholderValues
+					);
+
+					setStatus((prevValues) => {
+						return {
+							...prevValues,
+							state: "danger",
+							message: newMessage,
+							field: "email",
+							error: true,
+						};
+					});
+
+					// for (let index in prevValues) {
+					// 	if (responseData.match(prevValues[index])) {
+					// 		console.log(
+					// 			`Current: ${prevValues[index]}, ${
+					// 				placeholderValues[index]
+					// 			}, result: ${responseData.replace(
+					// 				prevValues[index],
+					// 				placeholderValues[index]
+					// 			)}`
+					// 		);
+					// 		const resultMessage = responseData.replace(
+					// 			prevValues[index],
+					// 			placeholderValues[index]
+					// 		);
+					// 		setStatus((prevValues) => {
+					// 			return {
+					// 				...prevValues,
+					// 				state: "danger",
+					// 				message: resultMessage,
+					// 				field: "email",
+					// 				error: true,
+					// 			};
+					// 		});
+					// 	}
+					// }
 				}
 			})
 			.catch((err) => {
-				console.error(err);
-				setState("danger");
-				setMessage(
-					"Network error, this usually means that the server is down."
-				);
+				console.warn(err);
+				setStatus((prevValues) => {
+					return {
+						...prevValues,
+						state: "danger",
+						message:
+							"Network error, this usually means that the server is down.",
+						field: "email",
+						error: true,
+					};
+				});
 			});
 	};
 
@@ -100,7 +158,7 @@ function Register() {
 					inputLabel="Email"
 					inputName="email"
 					inputOnChange={handleChange}
-					inputType="text"
+					inputType="email"
 					inputValue={input && input.email}
 				/>
 				<Field
@@ -119,75 +177,15 @@ function Register() {
 					inputType="password"
 					inputValue={input && input.confirmPassword}
 				/>
-				{/* <div className="registerLabels">
-					<label className="first-name" htmlFor="firstName">
-						First name
-					</label>
-					<label className="last-name" htmlFor="lastName">
-						Last name
-					</label>
-					<label className="email" htmlFor="email">
-						Email
-					</label>
-					<label className="password" htmlFor="password">
-						Password
-					</label>
-					<label className="confirm-password" htmlFor="confirmPassword">
-						Confirm password
-					</label>
-				</div>
-				<div className="registerInputs">
-					<input
-						className="first-name"
-						type="text"
-						name="firstName"
-						onChange={handleChange}
-						value={input.firstName}
-						placeholder="First name"
-					/>
-					<input
-						className="last-name"
-						type="text"
-						name="lastName"
-						onChange={handleChange}
-						value={input.lastName}
-						placeholder="Last name"
-					/>
-					<input
-						className="email"
-						type="email"
-						name="email"
-						onChange={handleChange}
-						value={input.email}
-						placeholder="Email"
-					/>
-					<input
-						className="password"
-						type="password"
-						name="password"
-						onChange={handleChange}
-						value={input.password}
-						placeholder="Password"
-					/>
-					<input
-						className="confirm-password"
-						type="password"
-						name="confirmPassword"
-						onChange={handleChange}
-						value={input.confirmPassword}
-						placeholder="Enter your password again"
-					/>
-				</div> */}
 				<button className="btn" type="submit" onClick={handleSubmit}>
 					Create account
 				</button>
 			</form>
-			{(state === "success" && (
-				<Alert class="success" description={message} forceCenter={true} />
-			)) ||
-				(state === "danger" && (
-					<Alert class="danger" description={message} forceCenter={true} />
-				))}
+			<Alert
+				class={status.state}
+				description={status.message}
+				forceCenter={true}
+			/>
 		</div>
 	);
 }

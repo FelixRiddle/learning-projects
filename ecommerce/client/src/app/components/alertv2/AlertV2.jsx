@@ -21,6 +21,7 @@ function AlertV2(props) {
 	const [boxStyle, setBoxStyle] = useState({});
 	const [boxOffset, setBoxOffset] = useState({});
 	const [descriptionId] = useState(uuidv4());
+	const [iconId] = useState(uuidv4());
 	const [iconSize, setIconSize] = useState({});
 
 	useEffect(() => {
@@ -63,9 +64,22 @@ function AlertV2(props) {
 					height: icon.height,
 				};
 			});
+			console.log(`Use effect icon sizes:`, {
+				width: icon.width,
+				height: icon.height,
+			});
 		};
 		icon.src = closeAlertIcon;
 	}, [iconSize]);
+
+	const handleIconLoad = () => {
+		const icon = document.getElementById(iconId);
+
+		console.log(`Found icon sizes: `, {
+			width: icon.width,
+			height: icon.height,
+		});
+	};
 
 	return (
 		<div
@@ -79,6 +93,8 @@ function AlertV2(props) {
 				<img
 					alt="Close alert."
 					className={"closeIcon"}
+					id={iconId}
+					onLoad={handleIconLoad}
 					src={closeAlertIcon}
 					style={{ left: boxOffset.width - iconSize.width || 0, marginTop: 5 }}
 					width={"20px"}

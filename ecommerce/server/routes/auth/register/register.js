@@ -34,35 +34,14 @@ exports.register = async (req, res) => {
 			},
 		});
 
-		// Send email for verification
-		const transporter = await nodemailer.createTransport({
-			host: "smtp.gmail.com",
-			port: 465,
-			secure: true,
-			auth: {
-				user: process.env.GOOGLE_GMAIL_ADDRESS,
-				pass: process.env.GOOGLE_ACCESS_PASS,
-			},
-		});
-
-		const info = await transporter.sendMail({
-			from: `"Ecommerce email verification" <${process.env.GOOGLE_GMAIL_ADDRESS}>`,
-			to: email,
-			subject: "Email verification",
-			html: `<b>Verify email</b>
-			<p>Click the link below to verify your email:</p>
-			<a href="${process.env.CLIENT_URL}confirmEmail/${confirmEmailToken}" >
-			Confirm email</a>`,
-		});
-
 		// Save at the end
 		const savedUser = await user.save();
 		console.log(`User ${email} saved`);
 		// console.log(`Info:`, info);
 
-		return res.status(200).send(savedUser);
+		return res.send({ user: savedUser});
 	} catch (err) {
 		console.error(err);
-		return res.status(400).send(err);
+		return res.send(err);
 	}
 };

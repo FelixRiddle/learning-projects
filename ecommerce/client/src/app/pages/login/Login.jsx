@@ -5,16 +5,15 @@ import { handleMessageValidationv2 } from "../../../lib/handleMessageValidation"
 import "./Login.css";
 import Alert from "../../components/alert/Alert";
 import { useSelector } from "react-redux";
+import Field from "../../components/inputs/field/Field";
 
 function Login(props) {
-	// const { user } = useContext(GlobalContext);
 	const user = useSelector((state) => state.user);
 
 	const [input, setInput] = useState({ email: "", password: "" });
 	const [message, setMessage] = useState("none");
 	const [state, setState] = useState("");
 	const [isLoggedIn, setIsLoggedIn] = useState(false);
-	const [isPasswordShown, setIsPasswordShown] = useState(false);
 
 	const handleChange = (e) => {
 		const { name, value } = e.target;
@@ -78,54 +77,34 @@ function Login(props) {
 			{isLoggedIn && (
 				<Alert class="caution" description={message} forceCenter={true} />
 			)}
-			<form className="grid-container" action="submit">
-				<div className="loginLabels">
-					<label htmlFor="email">Email</label>
-					<label htmlFor="password">Password</label>
-				</div>
-				<div className="loginInputs">
-					<input
-						type="email"
-						placeholder="Email"
-						name="email"
-						onChange={handleChange}
-						value={input.email}
-					/>
-					<input
-						type={isPasswordShown ? "text" : "password"}
-						placeholder="Password"
-						name="password"
-						onChange={handleChange}
-						value={input.password}
-					/>
-				</div>
-				<button className="loginButton" type="submit" onClick={handleSubmit}>
+			<form action="submit">
+				<Field
+					fieldParentDivClasses="input-field"
+					inputLabel="Email"
+					inputName="email"
+					inputOnChange={handleChange}
+					inputType="email"
+					inputValue={input && input.email}
+				/>
+				<Field
+					fieldParentDivClasses="input-field"
+					inputLabel="Password"
+					inputName="password"
+					inputOnChange={handleChange}
+					inputType="password"
+					inputValue={input && input.password}
+				/>
+				<button className="btn" type="submit" onClick={handleSubmit}>
 					Login
 				</button>
 			</form>
-			{/* show-hide password icon image */}
-			{(!isPasswordShown && (
-				<img
-					className="password-show-hide-icon"
-					alt="Show password"
-					src="http://localhost:3001/public/icons/Show.png"
-					onClick={() => setIsPasswordShown(!isPasswordShown)}
-				/>
-			)) ||
-				(isPasswordShown && (
-					<img
-						className="password-show-hide-icon"
-						alt="Show password"
-						src="http://localhost:3001/public/icons/Hide.png"
-						onClick={() => setIsPasswordShown(!isPasswordShown)}
-					/>
-				))}
-			{(state === "success" && (
+			<Alert class={state} description={message} forceCenter={true} />
+			{/* {(state === "success" && (
 				<Alert class="success" description={message} forceCenter={true} />
 			)) ||
 				(state === "danger" && (
 					<Alert class="danger" description={message} forceCenter={true} />
-				))}
+				))} */}
 		</div>
 	);
 }

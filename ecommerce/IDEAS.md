@@ -6,10 +6,6 @@
 | ⬜️ Page on price variations  
 | ⬜️ Tutorials on how to use the website
 
-✅ Login  
-|✅ Add show password icon  
-|✅ Show "You are already logged in" alert
-
 ⬜️ Home  
 | ✅ Products panel-like view  
 | | ✅ Dynamic  
@@ -36,6 +32,13 @@
 | ✅ Feedback  
 | | ✅ Status alerts  
 | | ⬜️ Show an error when the maximum amount of images has been reached
+
+
+✅ Login  
+| ✅ Add show password icon  
+| ✅ Show "You are already logged in" alert  
+| ⬜️ Forgot password  
+| | ⬜️ Resend email
 
 ⬜️ Navbar  
 | ✅ Add a search input  
@@ -127,10 +130,7 @@ the last index of the array).
 
 ⬜️ Auth  
 | ⬜️ Register  
-| | ⬜️ Email verification process
-| | ⬜️ New accounts have an expiricy date, which will delete the account when
-the time runs out, and if the value is null, that means the account was activated
-thus the account won't be deleted.
+| | ⬜️ Email verification process  
 
 ---- Others ----  
 | ⬜️ Add diferent website styling options.

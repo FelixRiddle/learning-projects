@@ -57,12 +57,19 @@ export const handleMessageValidationv2 = (
 	setError,
 	error
 ) => {
-	const inputKeys = [];
-	Object.entries(input).map((e) => inputKeys.push(`"${e[0]}"`));
+	let inputKeys = [];
+	console.log(`Typeofs: ${typeof input}`);
+	if (Array.isArray(input)) {
+		console.log(`Input is array.`);
+		inputKeys = [...input];
+	} else {
+		Object.entries(input).map((e) => inputKeys.push(`"${e[0]}"`));
+	}
+	console.log(`Input keys:`, inputKeys);
 
 	//inputKeys.map((e, index) => console.log(inputKeys[index]));
 	//placeholderValues = ["First name", "Last name", "Email", "Password"];
-	
+
 	// Force a copy of the string
 	let responseData = (" " + res.data.joiMessage).slice(1);
 	for (let index in inputKeys) {
