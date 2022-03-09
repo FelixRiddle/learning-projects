@@ -58,38 +58,6 @@ function Form() {
 							inputType="number"
 							inputValue={input && input.price}
 						/>
-						{/* <span className="labels">
-							{fields.map((e) => (
-								<label key={uuidv4()} htmlFor={e.name}>
-									{e.placeholder}
-								</label>
-							))}
-						</span>
-						<span className="inputs">
-							<input
-								type="text"
-								name="name"
-								placeholder="Name"
-								value={input.name}
-								onChange={handleInputChange}
-							/>
-							<input
-								type="number"
-								name="stock"
-								placeholder="Stock"
-								// pattern="^\d*(\.\d{0,2})?$"
-								value={input.stock}
-								onChange={handleInputChange}
-							/>
-							<input
-								type="number"
-								name="price"
-								placeholder="Price"
-								// pattern="^\d*(\.\d{0,2})?$"
-								value={input.price}
-								onChange={handleInputChange}
-							/>
-						</span> */}
 					</div>
 				</span>
 			</form>

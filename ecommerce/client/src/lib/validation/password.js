@@ -1,5 +1,7 @@
+import { getAnyMessage } from "../debug/handleMessages";
+
 /** Sets the status message by the callback
- * 
+ *
  * @param {String} password Password
  * @param {String} confirmPassword Confirm password
  * @param {Function} setStatusCB Set callback
@@ -11,15 +13,19 @@ export const confirmPasswordValidation = (
 	setStatusCB
 ) => {
 	if (confirmPassword !== password) {
-		setStatusCB((prevValues) => {
-			return {
-				...prevValues,
-				state: "danger",
-				message: "Passwords don't match",
-				field: "password",
-				error: true,
-			};
+		getAnyMessage({
+			setCB: setStatusCB,
+			options: { messageType: "passwordsDontMatch" },
 		});
+		// setStatusCB((prevValues) => {
+		// 	return {
+		// 		...prevValues,
+		// 		state: "danger",
+		// 		message: "Passwords don't match",
+		// 		field: "password",
+		// 		error: true,
+		// 	};
+		// });
 		return false;
 	}
 	return true;

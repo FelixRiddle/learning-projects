@@ -2,13 +2,13 @@ import React, { useState } from "react";
 import axios from "axios";
 
 import "./Register.css";
-import Alert from "../../components/alert/Alert";
 import Field from "../../components/inputs/field/Field";
 import {
 	getAnyMessage,
-	getNetworkErrorMessage,
+	// getNetworkErrorMessage,
 } from "../../../lib/debug/handleMessages";
 import { confirmPasswordValidation } from "../../../lib/validation/password";
+import AlertV2 from "../../components/alertv2/AlertV2";
 
 function Register() {
 	const [input, setInput] = useState({
@@ -46,22 +46,33 @@ function Register() {
 				// console.log(`Its typeof ${typeof res.data}`);
 
 				// Set status message
-				getAnyMessage(
+				getAnyMessage({
 					input,
-					["Email", "Password", "Confirm Password"],
-					res,
-					setStatus
-				);
+					inputPlaceHolderValues: ["Email", "Password", "Confirm Password"],
+					debug: res,
+					setCB: setStatus,
+				});
 			})
 			.catch((err) => {
 				console.warn(err);
-				getNetworkErrorMessage(setStatus);
+				getAnyMessage({
+					setCB: setStatus,
+					options: { messageType: "networkError" },
+				});
 			});
 	};
 
 	return (
 		<div>
 			<h2 className="title">Register</h2>
+			<AlertV2
+				center={true}
+				// message={status.message}
+				// setMessage={setStatus}
+				// state={status.state}
+				status={status}
+				setStatus={setStatus}
+			/>
 			<form>
 				<Field
 					fieldParentDivClasses="input-field"
@@ -91,11 +102,6 @@ function Register() {
 					Create account
 				</button>
 			</form>
-			<Alert
-				class={status.state}
-				description={status.message}
-				forceCenter={true}
-			/>
 		</div>
 	);
 }

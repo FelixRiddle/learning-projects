@@ -2,7 +2,7 @@
   position: absolute;
 }
 .alertV2 .text {
-  border-radius: 5px;
+  border-radius: 3px;
   padding: 0px 20px 0px 20px;
 }
 .alertV2 .text .closeIcon {
