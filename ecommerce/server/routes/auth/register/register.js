@@ -24,7 +24,15 @@ exports.register = async (req, res) => {
 		// Check if the user is already in the database
 		const email = req.body.email.toLowerCase();
 		const emailExist = await User.findOne({ email });
-		if (emailExist) return res.send(`Email already exists.`);
+		if (emailExist)
+			return res.send({
+				debug: {
+					error: true,
+					field: "email",
+					message: `Email already exists.`,
+					state: "error",
+				},
+			});
 
 		// Hash the password
 		const salt = await bcrypt.genSalt(10);
@@ -32,6 +40,7 @@ exports.register = async (req, res) => {
 
 		const confirmEmailToken = uuidv4() + uuidv4() + uuidv4();
 		console.log(`Confirm email token:`, confirmEmailToken);
+
 		const user = new User({
 			email,
 			password: hashedPassword,
@@ -48,6 +57,13 @@ exports.register = async (req, res) => {
 		return res.send({ user: savedUser });
 	} catch (err) {
 		console.error(err);
-		return res.send(err);
+		return res.send({
+			debug: {
+				error: true,
+				field: "email",
+				message: "Internal error",
+				state: "error",
+			},
+		});
 	}
 };

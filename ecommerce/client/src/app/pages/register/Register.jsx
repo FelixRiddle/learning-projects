@@ -4,8 +4,11 @@ import axios from "axios";
 import "./Register.css";
 import Alert from "../../components/alert/Alert";
 import Field from "../../components/inputs/field/Field";
-import { handleMessageValidationv2 } from "../../../lib/handleMessageValidation";
-import { getAnyMessage } from "../../../lib/debug/handleMessages";
+import {
+	getAnyMessage,
+	getNetworkErrorMessage,
+} from "../../../lib/debug/handleMessages";
+import { confirmPasswordValidation } from "../../../lib/validation/password";
 
 function Register() {
 	const [input, setInput] = useState({
@@ -13,8 +16,6 @@ function Register() {
 		password: "",
 		confirmPassword: "",
 	});
-	const [state, setState] = useState("none");
-	const [message, setMessage] = useState("");
 	const [status, setStatus] = useState({
 		message: "",
 		state: "",
@@ -34,119 +35,27 @@ function Register() {
 		const { confirmPassword, ...data } = input;
 
 		// Check if passwords match
-		if (confirmPassword !== data.password) {
-			setStatus((prevValues) => {
-				return {
-					...prevValues,
-					state: "danger",
-					message: "Passwords don't match",
-					field: "password",
-					error: true,
-				};
-			});
+		if (!confirmPasswordValidation(confirmPassword, data.password, setStatus))
 			return;
-		}
 
 		axios
 			.post("http://localhost:3001/api/users/register", { ...data })
 			.then((res) => {
-				console.log(`Response data:`);
-				console.log(res.data);
-				console.log(`Its typeof ${typeof res.data}`);
-				getAnyMessage(input, ["Email", "Password", "Confirm Password"], res);
+				// console.log(`Response data:`);
+				// console.log(res.data);
+				// console.log(`Its typeof ${typeof res.data}`);
 
-				// if (typeof res.data === "object") {
-				// 	setStatus((prevValues) => {
-				// 		return {
-				// 			...prevValues,
-				// 			state: "success",
-				// 			message: "Account created, check your email",
-				// 			field: "",
-				// 			error: false,
-				// 		};
-				// 	});
-				// 	return;
-				// } else if (res.data === "Email already exists") {
-				// 	setStatus((prevValues) => {
-				// 		return {
-				// 			...prevValues,
-				// 			state: "danger",
-				// 			message: "Email already exists.",
-				// 			field: "email",
-				// 			error: true,
-				// 		};
-				// 	});
-				// 	return;
-				// } else if (res.data) {
-				// 	const inputKeys = [];
-				// 	Object.entries(input).map((e) => inputKeys.push(e[0]));
-
-				// 	console.log(`Matching variables`);
-				// 	const prevValues = ["email", "password"];
-				// 	const placeholderValues = ["Email", "Password"];
-				// 	// Force a copy of the string
-				// 	let responseData = res.data;
-				// 	handleMessageValidationv2(
-				// 		{ email: "", password: "" },
-				// 		responseData,
-				// 		placeholderValues
-				// 	);
-
-				// 	const newMessage = handleMessageValidationv2(
-				// 		prevValues,
-				// 		responseData,
-				// 		placeholderValues
-				// 	);
-
-				// 	setStatus((prevValues) => {
-				// 		return {
-				// 			...prevValues,
-				// 			state: "danger",
-				// 			message: newMessage,
-				// 			field: "email",
-				// 			error: true,
-				// 		};
-				// 	});
-
-				// 	// for (let index in prevValues) {
-				// 	// 	if (responseData.match(prevValues[index])) {
-				// 	// 		console.log(
-				// 	// 			`Current: ${prevValues[index]}, ${
-				// 	// 				placeholderValues[index]
-				// 	// 			}, result: ${responseData.replace(
-				// 	// 				prevValues[index],
-				// 	// 				placeholderValues[index]
-				// 	// 			)}`
-				// 	// 		);
-				// 	// 		const resultMessage = responseData.replace(
-				// 	// 			prevValues[index],
-				// 	// 			placeholderValues[index]
-				// 	// 		);
-				// 	// 		setStatus((prevValues) => {
-				// 	// 			return {
-				// 	// 				...prevValues,
-				// 	// 				state: "danger",
-				// 	// 				message: resultMessage,
-				// 	// 				field: "email",
-				// 	// 				error: true,
-				// 	// 			};
-				// 	// 		});
-				// 	// 	}
-				// 	// }
-				// }
+				// Set status message
+				getAnyMessage(
+					input,
+					["Email", "Password", "Confirm Password"],
+					res,
+					setStatus
+				);
 			})
 			.catch((err) => {
 				console.warn(err);
-				setStatus((prevValues) => {
-					return {
-						...prevValues,
-						state: "danger",
-						message:
-							"Network error, this usually means that the server is down.",
-						field: "email",
-						error: true,
-					};
-				});
+				getNetworkErrorMessage(setStatus);
 			});
 	};
 
