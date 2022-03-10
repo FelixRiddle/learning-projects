@@ -12,7 +12,11 @@ import { messages } from "./notificationMessages";
  * {
  *   messageType: The message type,
  * 	 // Overwrites a field at the end,
- *   overwrite: { field: New value, message: New value, ... }
+ *   overwrite: { field: New value, message: New value, ... },
+ *   // Keys for reorganizing the object keys useful in situations
+ *   // where the key positions are important.
+ *   // (Obviously, it MUST be in order)
+ *   reorganizedKeys: ["First name", "Last name", ...],
  * }
  * @returns Message or undefined.
  */
@@ -24,7 +28,12 @@ export const getAnyMessage = ({
 	options,
 }) => {
 	// For normal messages or joi errors
-	const enhancedMessage = enhanceMessage(input, placeHolderValues, debug);
+	const enhancedMessage = enhanceMessage(
+		input,
+		placeHolderValues,
+		debug,
+		options
+	);
 
 	// Other kind of messages
 	const normalMessage = getMessage(options && options.messageType);
@@ -39,6 +48,7 @@ export const getAnyMessage = ({
 	if (!result)
 		return console.warn("Something went wrong in getAnyMessage function");
 	result.messageCopy = result.message;
+	result.fieldCopy = result.field;
 
 	// Overwrite a field at the end
 	// Because the ids and input keys password and confirmPassword
@@ -83,7 +93,7 @@ const getMessage = (messageType) => {
  * @param {*} debug
  * @returns
  */
-const enhanceMessage = (input, placeHolderValues, debug) => {
+const enhanceMessage = (input, placeHolderValues, debug, options) => {
 	if (!debug || !debug.data || !debug.data.debug) return undefined;
 
 	const debugObject = debug.data.debug;
@@ -92,7 +102,8 @@ const enhanceMessage = (input, placeHolderValues, debug) => {
 	const messageResult = messageAndFieldValidation(
 		input,
 		placeHolderValues,
-		message
+		message,
+		options
 	);
 
 	const newMessage =
@@ -112,24 +123,6 @@ const enhanceMessage = (input, placeHolderValues, debug) => {
 	return resultObject;
 };
 
-/** Sets network error message
- *
- * @param {Function} setStatus Callback
- */
-// export const getNetworkErrorMessage = (setStatus) => {
-// 	if (setStatus)
-// 		setStatus((prevValues) => {
-// 			return {
-// 				...prevValues,
-// 				error: true,
-// 				field: "",
-// 				message: "Network error, this usually means that the server is down.",
-// 				state: "danger",
-// 			};
-// 		});
-// 	else return console.warn("Warning no setStatus callback provided.");
-// };
-
 /** Convert JOI error messages into messages readable by the user
  *
  * @param {*} input
@@ -137,17 +130,31 @@ const enhanceMessage = (input, placeHolderValues, debug) => {
  * @param {*} message
  * @returns
  */
-const messageAndFieldValidation = (input, placeHolderValues, message) => {
+const messageAndFieldValidation = (
+	input,
+	placeHolderValues,
+	message,
+	options
+) => {
 	if (!message || typeof message !== "string")
 		return { message: "Unexpected error" };
 
 	if (input) {
-		const inputKeys = Object.keys(input);
+		const inputKeys =
+			(options && options.reorganizedKeys) || Object.keys(input);
+
+		// console.log(`Input:`, input);
+		// console.log(`Input keys:`, inputKeys);
 
 		for (let i in inputKeys) {
 			i = parseInt(i);
 			const template = `"${inputKeys[i]}"`;
 			const match = message.match(template);
+
+			// console.log(`Template:`, template);
+			// console.log(`Its replace value:`, placeHolderValues[i]);
+			// console.log(`Match:`, match);
+
 			if (match) {
 				return {
 					field: inputKeys[i],

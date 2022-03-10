@@ -5,6 +5,9 @@ const {
 	validateUserPasswordEmailAsync,
 } = require("../../../lib/user/validateUser");
 const { updateUserAsync } = require("../../../lib/user/updateUser");
+const {
+	validationMessages,
+} = require("../../../lib/validation/validationMessages");
 
 // Change basic info
 module.exports = changeBasicInfo = async (req, res) => {
@@ -16,9 +19,12 @@ module.exports = changeBasicInfo = async (req, res) => {
 		const { error } = basicInfoValidation(req.body);
 		if (error)
 			return res.send({
-				state: "danger",
-				error: true,
-				joiMessage: error.details[0].message,
+				debug: {
+					error: true,
+					field: "",
+					joiMessage: error.details[0].message,
+					state: "error",
+				},
 			});
 
 		const { _id, firstName, lastName, email, age, password, phoneNumber } =
@@ -47,25 +53,27 @@ module.exports = changeBasicInfo = async (req, res) => {
 		// Update the user
 		const newToken = await updateUserAsync(query, update);
 		if (newToken)
-			return res.header("auth-token", newToken).status(200).send({
+			return res.header("auth-token", newToken).send({
+				debug: {
+					error: false,
+					field: "",
+					message: `User updated!`,
+					state: "success",
+				},
 				token: newToken,
-				error: false,
-				state: "success",
-				message: `User updated!`,
 			});
 
-		return res.status(400).send({
-			error: true,
-			state: "error",
-			message:
-				"Unspecified error or user not found, try logging out and login again.",
+		return res.send({
+			debug: {
+				...validationMessages.unspecifiedError,
+			},
 		});
 	} catch (err) {
 		console.error(err);
 		return res.send({
-			state: "danger",
-			error: true,
-			message: "Internal server error, please try again later.",
+			debug: {
+				...validationMessages.networkError,
+			},
 		});
 	}
 };

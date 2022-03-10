@@ -1,5 +1,6 @@
 const bcrypt = require("bcrypt");
 const User = require("../../models/User");
+const { validationMessages } = require("../validation/validationMessages");
 
 /** Validate user and password, and respond with messages respectively
  *
@@ -49,12 +50,9 @@ exports.validateUserPasswordEmailAsync = async (user, input) => {
 
 	if (!user) {
 		result.message = {
-			error: true,
-			field: "",
-			state: "danger",
-			message:
-				"User doesn't exist, try logging out and logging in again." +
-				"\nIf the error persists please contact us.",
+			debug: {
+				...validationMessages.userDoesntExist,
+			},
 		};
 
 		return result.message;
@@ -66,10 +64,9 @@ exports.validateUserPasswordEmailAsync = async (user, input) => {
 		const emailExists = await User.findOne({ email: input.email });
 		if (emailExists) {
 			result.message = {
-				error: true,
-				field: "email",
-				state: "danger",
-				message: `That email is already in use.`,
+				debug: {
+					...validationMessages.emailExists,
+				},
 			};
 		}
 	}
@@ -78,10 +75,9 @@ exports.validateUserPasswordEmailAsync = async (user, input) => {
 	const passResult = await bcrypt.compare(input.password, user.password);
 	if (!passResult) {
 		result.message = {
-			error: true,
-			field: "password",
-			state: "danger",
-			message: "The password is incorrect",
+			debug: {
+				...validationMessages.incorrectPassword,
+			},
 		};
 	}
 

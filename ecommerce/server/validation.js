@@ -56,16 +56,16 @@ module.exports.basicInfoValidation = basicInfoValidation = (data) => {
 	};
 
 	const schema = Joi.object({
-		firstName: Joi.string().min(name).max(max).required(),
-		lastName: Joi.string().min(name).max(max).required(),
-		email: Joi.string().min(5).required().email(),
+		firstName: Joi.string().min(name).max(max).allow(null, ""),
+		lastName: Joi.string().min(name).max(max).allow(null, ""),
+		email: Joi.string().min(5).email().required(),
 		password: Joi.string().min(8).max(max).required(),
-		phoneNumber: Joi.string().min(3).max(max),
-		country: Joi.string().max(max),
-		province: Joi.string().max(max),
-		city: Joi.string().max(max),
-		address: Joi.string().max(max),
-		postalCode: Joi.string().max(32),
+		phoneNumber: Joi.string().min(3).max(max).allow(null, ""),
+		country: Joi.string().max(max).allow(null, ""),
+		province: Joi.string().max(max).allow(null, ""),
+		city: Joi.string().max(max).allow(null, ""),
+		address: Joi.string().max(max).allow(null, ""),
+		postalCode: Joi.string().max(32).allow(null, ""),
 		age: Joi.date(),
 	});
 

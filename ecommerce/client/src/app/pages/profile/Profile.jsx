@@ -54,9 +54,9 @@ function Profile(props) {
 						firstName: firstName || "",
 						lastName: lastName || "",
 						email: email || "",
+						age: newAge,
 						phoneNumber: phoneNumber || "",
 						password: "",
-						age: newAge,
 					};
 				});
 

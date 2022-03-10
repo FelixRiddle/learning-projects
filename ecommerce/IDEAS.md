@@ -81,7 +81,9 @@ the last index of the array).
 | | | | ⬜️ The warning can also disappear if the user clicks on the field  
 | | | | ⬜️ The red border doesn't disappear till the user clicks on the field  
 | | | | ⬜️ The warning should disappear when the user clicks on it  
-| | ✅ Validate email  
+| | ⬜️ Email  
+| | | ✅ Validate email  
+| | | ⬜️ If it is changed, send verification email  
 | | ✅ Update data  
 | | ⬜️ Show messages  
 | | | ⬜️ Server offline  
