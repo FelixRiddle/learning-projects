@@ -58,27 +58,27 @@ export const handleMessageValidationv2 = (
 	error
 ) => {
 	let inputKeys = [];
-	console.log(`Typeofs: ${typeof input}`);
+	// console.log(`Typeofs: ${typeof input}`);
 	if (Array.isArray(input)) {
-		console.log(`Input is array.`);
+		// console.log(`Input is array.`);
 		inputKeys = [...input];
 	} else {
 		Object.entries(input).map((e) => inputKeys.push(`"${e[0]}"`));
 	}
-	console.log(`Input keys:`, inputKeys);
+	// console.log(`Input keys:`, inputKeys);
 
 	//inputKeys.map((e, index) => console.log(inputKeys[index]));
 	//placeholderValues = ["First name", "Last name", "Email", "Password"];
 
 	// Force a copy of the string
 	let responseData = (" " + res.data.joiMessage).slice(1);
-	console.log(`Response data sliced: ${responseData}`);
+	// console.log(`Response data sliced: ${responseData}`);
 	for (let index in inputKeys) {
-		console.log(
-			`Replacing: ${inputKeys[index]} for ${placeholderValues[index]}`
-		);
-		console.log(`Does it match?: ${responseData.match(inputKeys[index])}`);
-		console.log(`Response data: ${responseData}`);
+		// console.log(
+		// 	`Replacing: ${inputKeys[index]} for ${placeholderValues[index]}`
+		// );
+		// console.log(`Does it match?: ${responseData.match(inputKeys[index])}`);
+		// console.log(`Response data: ${responseData}`);
 		if (responseData.match(inputKeys[index]) !== null) {
 			if (setError)
 				setError({

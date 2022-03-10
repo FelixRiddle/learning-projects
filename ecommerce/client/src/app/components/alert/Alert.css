@@ -8,11 +8,6 @@
   margin: 20px;
 }
 
-.danger {
-  background-color: #ff6161;
-  border: 3px solid rgba(209, 60, 60, 0.4);
-}
-
 .success {
   background-color: rgba(98, 216, 98, 0.95);
   border: 3px solid rgba(105, 197, 105, 0.7);

@@ -17,15 +17,23 @@ export const confirmPasswordValidation = (
 			setCB: setStatusCB,
 			options: { messageType: "passwordsDontMatch" },
 		});
-		// setStatusCB((prevValues) => {
-		// 	return {
-		// 		...prevValues,
-		// 		state: "danger",
-		// 		message: "Passwords don't match",
-		// 		field: "password",
-		// 		error: true,
-		// 	};
-		// });
+		return false;
+	}
+	return true;
+};
+
+/**
+ *
+ * @param {*} password
+ * @param {*} setStatusCB
+ * @param {*} overwrite
+ */
+export const validatePasswordLength = (password, setStatusCB, overwrite) => {
+	if (password.length < 8) {
+		getAnyMessage({
+			setCB: setStatusCB,
+			options: { messageType: "shortPassword", overwrite },
+		});
 		return false;
 	}
 	return true;

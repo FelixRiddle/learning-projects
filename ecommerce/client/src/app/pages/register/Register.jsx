@@ -67,9 +67,6 @@ function Register() {
 			<h2 className="title">Register</h2>
 			<AlertV2
 				center={true}
-				// message={status.message}
-				// setMessage={setStatus}
-				// state={status.state}
 				status={status}
 				setStatus={setStatus}
 			/>

@@ -6,14 +6,15 @@ import "./Login.css";
 import Alert from "../../components/alert/Alert";
 import { useSelector } from "react-redux";
 import Field from "../../components/inputs/field/Field";
+import AlertV2 from "../../components/alertv2/AlertV2";
+import { getAnyMessage } from "../../../lib/debug/handleMessages";
+import { validatePasswordLength } from "../../../lib/validation/password";
 
 function Login(props) {
 	const user = useSelector((state) => state.user);
 
 	const [input, setInput] = useState({ email: "", password: "" });
-	const [message, setMessage] = useState("none");
-	const [state, setState] = useState("");
-	const [isLoggedIn, setIsLoggedIn] = useState(false);
+	const [status, setStatus] = useState({});
 
 	const handleChange = (e) => {
 		const { name, value } = e.target;
@@ -27,56 +28,51 @@ function Login(props) {
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
+
+		if (!validatePasswordLength(input.password, setStatus)) return;
+
 		await axios
 			.post("http://localhost:3001/api/users/login", { ...input })
 			.then((res) => {
-				console.log(`Response ${res.data}`);
-				console.log(`Typeof: ${typeof res.data}`);
-				if (res.data === "Email or password is wrong.") {
-					setState("danger");
-					setMessage("Email or password is wrong.");
-				} else if (typeof res.data === "string") {
-					setState("danger");
-					handleMessageValidationv2(
-						input,
-						res,
-						["Email", "Password"],
-						setMessage
-					);
-				} else if (res.data.token) {
+				console.log(`Response:`, res.data);
+
+				getAnyMessage({
+					input,
+					placeHolderValues: ["Email", "Password"],
+					debug: res,
+					setCB: setStatus,
+				});
+
+				// If the login was successful
+				if (res.data.token) {
+					console.log(`Token:`, res.data.token);
 					localStorage.setItem("token", res.data.token);
-
-					setState("success");
-					setMessage("Successfully logged in, going to the home page...");
-
-					// setTimeout(() => {
 					window.location.href = "/home";
-					// }, 5000);
 				}
 			})
 			.catch((err) => {
 				console.error(err);
-				setState("danger");
-				setMessage(
-					"Internal server error, the website may be offline for a short time, try again later."
-				);
+				getAnyMessage({
+					setCB: setStatus,
+					options: { messageType: "networkError" },
+				});
 			});
 	};
 
 	useEffect(() => {
-		console.log(`User:`, user);
 		if (user && user._id) {
-			setIsLoggedIn(true);
-			setMessage(`You are already logged in.`);
+			console.log(`User:`, user);
+			getAnyMessage({
+				setCB: setStatus,
+				options: { messageType: "alreadyLoggedIn" },
+			});
 		}
 	}, [user]);
 
 	return (
 		<div className="login">
 			<h2 className="loginTitle">Login</h2>
-			{isLoggedIn && (
-				<Alert class="caution" description={message} forceCenter={true} />
-			)}
+			<AlertV2 center={true} status={status} setStatus={setStatus} />
 			<form action="submit">
 				<Field
 					fieldParentDivClasses="input-field"
@@ -98,13 +94,6 @@ function Login(props) {
 					Login
 				</button>
 			</form>
-			<Alert class={state} description={message} forceCenter={true} />
-			{/* {(state === "success" && (
-				<Alert class="success" description={message} forceCenter={true} />
-			)) ||
-				(state === "danger" && (
-					<Alert class="danger" description={message} forceCenter={true} />
-				))} */}
 		</div>
 	);
 }

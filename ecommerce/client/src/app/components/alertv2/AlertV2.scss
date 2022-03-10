@@ -4,6 +4,7 @@
 	.text {
 		border-radius: 3px;
 		padding: 0px 20px 0px 20px;
+		padding: 5px;
 
 		.closeIcon {
 			position: absolute;
@@ -12,6 +13,11 @@
 
 	.danger {
 		background-color: rgba(255, 0, 0, 0.85);
+	}
+
+	.warn,
+	.warning {
+		background-color: rgb(238, 218, 41, 0.85);
 	}
 
 	.headerText {

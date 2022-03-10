@@ -4,12 +4,17 @@
 .alertV2 .text {
   border-radius: 3px;
   padding: 0px 20px 0px 20px;
+  padding: 5px;
 }
 .alertV2 .text .closeIcon {
   position: absolute;
 }
 .alertV2 .danger {
   background-color: rgba(255, 0, 0, 0.85);
+}
+.alertV2 .warn,
+.alertV2 .warning {
+  background-color: rgba(238, 218, 41, 0.85);
 }
 .alertV2 .headerText {
   text-align: center;
