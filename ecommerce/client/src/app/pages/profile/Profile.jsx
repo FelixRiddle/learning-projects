@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
-import axios from "axios";
 
 import "./Profile.css";
 import { get_year_month_day } from "../../../lib/misc/transformDate";
 import { useUserData } from "../../../lib/user/useUserData";
 import ProfileRoutes from "./components/profile_routes/ProfileRoutes";
+import AlertV2 from "../../components/alertv2/AlertV2";
+import { getAnyMessage } from "../../../lib/debug/handleMessages";
 
 function Profile(props) {
 	const user = useSelector((state) => state.user);
@@ -29,23 +30,17 @@ function Profile(props) {
 		duration: 10000,
 		show: false,
 	});
-	const [loading, setLoading] = useState(true);
+	const [status, setStatus] = useState({
+		...getAnyMessage({ options: { messageType: "loading" } }),
+	});
+	const [updated, setUpdated] = useState(false);
 
 	useEffect(() => {
 		// If the error already exists
 		if (isLoggedIn) return;
 
-		axios.get("http://localhost:3001/test").catch((err) => {
-			console.log(err);
-			setError({
-				superiorError: false,
-				joiMessage: "",
-				state: "danger",
-				message: "Internal server offline.",
-			});
-		});
-
 		try {
+			// console.log(`User:`, user);
 			if (user && user._id) {
 				setIsLoggedIn(true);
 
@@ -55,46 +50,42 @@ function Profile(props) {
 				const { firstName, lastName, email, phoneNumber } = user;
 				setUserData((prevInput) => {
 					return {
-						firstName,
-						lastName,
-						email,
-						phoneNumber,
+						...prevInput,
+						firstName: firstName || "",
+						lastName: lastName || "",
+						email: email || "",
+						phoneNumber: phoneNumber || "",
 						password: "",
 						age: newAge,
 					};
 				});
 
-				setError({
-					superiorError: false,
-					joiMessage: "",
-					state: "",
-					message: "",
-				});
-				return;
+				setStatus({ ...status, messageCopy: "" });
 			} else {
+				if (updated) return;
+
+				console.log(`Status updated`);
 				setIsLoggedIn(false);
-				setError({
-					superiorError: false,
-					joiMessage: "",
-					state: "danger",
-					message: "Error 403: You aren't logged in.",
+				setUpdated(true);
+				getAnyMessage({
+					options: { messageType: "notLoggedIn" },
+					setCB: setStatus,
 				});
-				return;
 			}
 		} catch (err) {
-			setError({
-				state: "danger",
-				message: "Something went wrong, try logging out and login.",
-				superiorError: false,
-				joiMessage: "",
-			});
 			setIsLoggedIn(false);
 			console.error(err);
-			return;
+			getAnyMessage({
+				options: { messageType: "somethingWentWrong" },
+				setCB: setStatus,
+			});
 		}
-	}, [user, isLoggedIn, setUserData]);
+	}, [user, isLoggedIn, setUserData, status, updated]);
 
-	// Check if the page is loading or not
+	// useEffect(() => {
+	// 	console.log(`status:`, status);
+	// }, [status]);
+
 	useEffect(() => {
 		// All this "isMounted" stuff is to prevent updating a state
 		// when the component is not mounted, which throws an error.
@@ -104,7 +95,6 @@ function Profile(props) {
 			window.onload = resolve();
 		}).then(() => {
 			if (isMounted) {
-				setLoading(false);
 			}
 		});
 
@@ -115,45 +105,42 @@ function Profile(props) {
 
 	return (
 		<div>
-			<h2 className="title">Profile</h2>
 			<div className="profile">
-				{/* Bad request/internal server error/not logged in */}
-				{loading && error.state === "danger" && error.message && (
-					<div className={"error " + (error.state && error.state)}>
-						<div className="errorMessage">{error.message}</div>
-					</div>
-				)}
+				<AlertV2 center={true} setStatus={setStatus} status={status} />
 
 				{/* Check if the user is logged in and then show the settings */}
-				{isLoggedIn && (
-					<div className="profile-navbar">
-						{/* Navigation bar */}
-						<nav className="links" style={{ width: "200px" }}>
-							<a className="link" href={`${host}profile/changeBasicInfo`}>
-								Info
-							</a>
-							<a className="link" href={`${host}profile/changePassword`}>
-								Change password
-							</a>
-							<a className="link" href={`${host}profile/changeAddress`}>
-								Address
-							</a>
-							<a className="link" href={`${host}profile/updateProducts`}>
-								Your products
-							</a>
-						</nav>
+				{user && user._id && (
+					<div>
+						<h2 className="title">Profile</h2>
+						<div className="profile-navbar">
+							{/* Navigation bar */}
+							<nav className="links" style={{ width: "200px" }}>
+								<a className="link" href={`${host}profile/changeBasicInfo`}>
+									Info
+								</a>
+								<a className="link" href={`${host}profile/changePassword`}>
+									Change password
+								</a>
+								<a className="link" href={`${host}profile/changeAddress`}>
+									Address
+								</a>
+								<a className="link" href={`${host}profile/updateProducts`}>
+									Your products
+								</a>
+							</nav>
 
-						{/* Routes to profile settings */}
-						<ProfileRoutes
-							error={error}
-							handleChange={handleChange}
-							input={userData}
-							passwordInfo={passwordInfo}
-							setError={setError}
-							setInput={setUserData}
-							setPasswordInfo={setPasswordInfo}
-							setReRender={setReRender}
-						/>
+							{/* Routes to profile settings */}
+							<ProfileRoutes
+								error={error}
+								handleChange={handleChange}
+								input={userData}
+								passwordInfo={passwordInfo}
+								setError={setError}
+								setInput={setUserData}
+								setPasswordInfo={setPasswordInfo}
+								setReRender={setReRender}
+							/>
+						</div>
 					</div>
 				)}
 			</div>

@@ -137,10 +137,6 @@ const ChangeBasicInfo = (props) => {
 		}
 	};
 
-	// useEffect(() => {
-	// 	setIsInChildComponent(true);
-	// }, [setIsInChildComponent]);
-
 	return (
 		<div className="changeBasicInfo">
 			{/* Show or hide repeated email error message */}

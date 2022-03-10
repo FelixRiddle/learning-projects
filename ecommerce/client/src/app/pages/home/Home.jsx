@@ -5,7 +5,7 @@ import RowView from "../../components/showcase/row_view/row_view/RowView";
 import "./Home.css";
 
 const Home = () => {
-	const products = useSelector((state) => state.products.products.value);
+	const products = useSelector((state) => state.products);
 
 	return (
 		<div>

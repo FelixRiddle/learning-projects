@@ -8,6 +8,7 @@ import { getAll } from "../lib/products/getProducts";
 import { insertProducts } from "../lib/redux/actions/productsSlice";
 import { insertUser } from "../lib/redux/actions/userSlice";
 import { useUserProducts } from "../lib/products/useUserProducts";
+import { arrayToObject } from "../lib/misc/arrayToObject";
 
 export const GlobalContext = React.createContext();
 
@@ -21,7 +22,7 @@ function App() {
 			// Dispatch products
 			dispatch(
 				insertProducts({
-					value: [...data],
+					...arrayToObject(data),
 				})
 			);
 		});
@@ -34,9 +35,9 @@ function App() {
 			if (token) {
 				Promise.resolve(jwt_decode(token))
 					.then((prevSession) => {
-						console.log(`Previous session found`);
 						if (!prevSession) return;
-						
+						console.log(`Previous session`, prevSession);
+
 						// Save user on redux reducer
 						dispatch(
 							insertUser({

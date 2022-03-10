@@ -9,9 +9,15 @@ export const productsSlice = createSlice({
 	},
 	reducers: {
 		insertProducts: (state, action) => {
-			state.products = action.payload;
+			// state.products = action.payload;
+			for (let key of Object.entries(action.payload)) {
+				state[key[0]] = key[1];
+			}
 		},
 		updateProducts: (state, action) => {
+			for (let key of Object.entries(action.payload)) {
+				state[key[0]] = key[1];
+			}
 		},
 	},
 });

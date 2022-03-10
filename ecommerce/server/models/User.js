@@ -20,7 +20,7 @@ const userSchema = new mongoose.Schema({
 	// Register date
 	date: {
 		default: Date.now,
-		lowercase: true,
+		// lowercase: true,
 		type: Date,
 	},
 	email: {
@@ -47,8 +47,8 @@ const userSchema = new mongoose.Schema({
 		max: 128,
 	},
 	lastUpdated: {
-		type: Date,
 		default: Date.now,
+		type: Date,
 	},
 	password: {
 		type: String,

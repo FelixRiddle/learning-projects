@@ -68,6 +68,7 @@ const getMessage = (messageType) => {
 
 		const type = messageTypes[i];
 		if (type === messageType) {
+			// console.log(`Message:`, messages[type]);
 			return messages[type];
 		}
 	}
