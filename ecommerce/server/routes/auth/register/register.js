@@ -5,6 +5,10 @@ const uuidv4 = v4;
 const User = require("../../../models/User");
 const { registerValidation } = require("../../../validation");
 const { get_time } = require("../../../lib/debug_info");
+const {
+	validationMessages,
+} = require("../../../lib/validation/validationMessages");
+const { sendVerificationEmailGoogleSMTP } = require("../../../lib/email/email");
 
 exports.register = async (req, res) => {
 	get_time();
@@ -39,7 +43,9 @@ exports.register = async (req, res) => {
 		const hashedPassword = await bcrypt.hash(req.body.password, salt);
 
 		const confirmEmailToken = uuidv4() + uuidv4() + uuidv4();
-		console.log(`Confirm email token:`, confirmEmailToken);
+		// console.log(`Confirm email token:`, confirmEmailToken);
+
+		const info = await sendVerificationEmailGoogleSMTP(email, confirmEmailToken);
 
 		const user = new User({
 			email,
@@ -51,19 +57,15 @@ exports.register = async (req, res) => {
 
 		// Save at the end
 		const savedUser = await user.save();
-		console.log(`User ${email} saved`);
-		// console.log(`Info:`, info);
+		// console.log(`User ${email} saved`);
+		console.log(`Info:`, info);
 
-		return res.send({ user: savedUser });
+		return res.send({
+			debug: { ...validationMessages.userCreated },
+			user: savedUser,
+		});
 	} catch (err) {
 		console.error(err);
-		return res.send({
-			debug: {
-				error: true,
-				field: "email",
-				message: "Internal error",
-				state: "error",
-			},
-		});
+		return res.send({ debug: { ...validationMessages.internalServerError } });
 	}
 };

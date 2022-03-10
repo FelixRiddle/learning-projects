@@ -7,7 +7,10 @@ import {
 	getAnyMessage,
 	// getNetworkErrorMessage,
 } from "../../../lib/debug/handleMessages";
-import { confirmPasswordValidation } from "../../../lib/validation/password";
+import {
+	confirmPasswordValidation,
+	validatePasswordLength,
+} from "../../../lib/validation/password";
 import AlertV2 from "../../components/alertv2/AlertV2";
 
 function Register() {
@@ -33,18 +36,23 @@ function Register() {
 	const handleSubmit = (e) => {
 		e.preventDefault();
 		const { confirmPassword, ...data } = input;
+		
+		// Validate passwords length
+		if (!validatePasswordLength(data.password, setStatus)) return;
+		if (
+			!validatePasswordLength(confirmPassword, setStatus, {
+				field: "confirmPassword",
+			})
+		)
+			return;
 
-		// Check if passwords match
 		if (!confirmPasswordValidation(confirmPassword, data.password, setStatus))
+			// Check if passwords match
 			return;
 
 		axios
 			.post("http://localhost:3001/api/users/register", { ...data })
 			.then((res) => {
-				// console.log(`Response data:`);
-				// console.log(res.data);
-				// console.log(`Its typeof ${typeof res.data}`);
-
 				// Set status message
 				getAnyMessage({
 					input,
@@ -65,11 +73,7 @@ function Register() {
 	return (
 		<div>
 			<h2 className="title">Register</h2>
-			<AlertV2
-				center={true}
-				status={status}
-				setStatus={setStatus}
-			/>
+			<AlertV2 center={true} status={status} setStatus={setStatus} />
 			<form>
 				<Field
 					fieldParentDivClasses="input-field"

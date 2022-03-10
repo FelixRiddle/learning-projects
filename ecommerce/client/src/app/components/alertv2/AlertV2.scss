@@ -15,13 +15,22 @@
 		background-color: rgba(255, 0, 0, 0.85);
 	}
 
+	.headerText {
+		text-align: center;
+	}
+
+	.success {
+		background-color: rgb(91, 250, 131);
+	}
+
+	.wait,
+	.waiting {
+		background-color: aquamarine;
+	}
+
 	.warn,
 	.warning {
 		background-color: rgb(238, 218, 41, 0.85);
-	}
-
-	.headerText {
-		text-align: center;
 	}
 
 	&:hover {

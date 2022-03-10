@@ -6,12 +6,12 @@ export const messages = {
 		message: "You are already logged in",
 		state: "warn",
 	},
-	// loginSuccess: {
-	// 	error: false,
-	// 	field: "",
-	// 	message: "Successfully logged in, going to the home page...",
-	// 	state: "success",
-	// },
+	loading: {
+		error: false,
+		field: "",
+		message: "Loading...",
+		state: "wait" // wait || waiting
+	},
 	networkError: {
 		error: true,
 		field: "",

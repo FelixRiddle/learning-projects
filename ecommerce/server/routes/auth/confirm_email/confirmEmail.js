@@ -1,5 +1,8 @@
 const { get_time } = require("../../../lib/debug_info");
 const User = require("../../../models/User");
+const {
+	validationMessages,
+} = require("../../../lib/validation/validationMessages");
 
 exports.confirmEmail = async (req, res) => {
 	console.log(`/api/users/confirmEmail`);
@@ -12,10 +15,7 @@ exports.confirmEmail = async (req, res) => {
 			info: { confirmEmailToken: id },
 		});
 		if (!mongoDBDocument)
-			return res.send({
-				error: true,
-				message: "The account was already activated or the link is wrong.",
-			});
+			return res.send({ debug: { ...validationMessages.wrongLink } });
 		const user = mongoDBDocument._doc;
 
 		const update = {
@@ -31,10 +31,12 @@ exports.confirmEmail = async (req, res) => {
 		});
 		// console.log(`New user:`, result);
 
-		console.log(`Email verified`)
-		return res.send({ message: "Success!" });
+		console.log(`Email verified`);
+		return res.send({ debug: { ...validationMessages.emailVerified } });
 	} catch (err) {
 		console.warn(err);
-		return res.status(400).send(`Error: ${err}`);
+		return res.send({
+			debug: { ...validationMessages.internalServerError },
+		});
 	}
 };

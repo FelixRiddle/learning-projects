@@ -1,51 +1,42 @@
 import axios from "axios";
 import React, { useState } from "react";
-import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
+
+import { getAnyMessage } from "../../../lib/debug/handleMessages";
+import AlertV2 from "../../components/alertv2/AlertV2";
 
 function ConfirmEmail() {
 	const params = useParams();
 	const { serverUrl } = useSelector((state) => state.constants);
 
-	const [loading, setLoading] = useState();
-	const [status, setStatus] = useState({
-		message: "",
-	});
-	useEffect(() => {
-		if (params.id && status && !status.message) {
+	const [status, setStatus] = useState(
+		getAnyMessage({ options: { messageType: "loading" } })
+	);
+	
+	window.onload = () => {
+		if (params.id && status) {
 			console.log(`Param id: ${params.id}`);
 			axios
 				.post(`${serverUrl}api/users/confirmEmail`, { id: params.id })
 				.then((res) => {
-					setLoading(false);
-					setStatus((prevInput) => {
-						return { ...prevInput, message: "Account verified!" };
-					});
-					setStatus((prevInput) => {
-						return {
-							...prevInput,
-							...res.data,
-						};
-					});
+
+					console.log(`Res data:`, res.data);
+					getAnyMessage({ debug: res, setCB: setStatus });
 				})
 				.catch((err) => {
 					console.warn("Error:", err);
-					setLoading(false);
-					setStatus((prevInput) => {
-						return {
-							...prevInput,
-							message: `There was an error when trying to verify
-							your account.`,
-						};
+					getAnyMessage({
+						setCB: setStatus,
+						options: { messageType: "networkError" },
 					});
 				});
 		}
-	}, [params, serverUrl, status]);
+	};
 
 	return (
 		<div>
-			{(loading && <p>Loading...</p>) || (!loading && <p>{status.message}</p>)}
+			<AlertV2 center={true} setStatus={setStatus} status={status} />
 			{(!params || !params.id) && (
 				<div>
 					<h2 className="title">User not found</h2>

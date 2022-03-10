@@ -12,12 +12,19 @@
 .alertV2 .danger {
   background-color: rgba(255, 0, 0, 0.85);
 }
+.alertV2 .headerText {
+  text-align: center;
+}
+.alertV2 .success {
+  background-color: #5bfa83;
+}
+.alertV2 .wait,
+.alertV2 .waiting {
+  background-color: aquamarine;
+}
 .alertV2 .warn,
 .alertV2 .warning {
   background-color: rgba(238, 218, 41, 0.85);
-}
-.alertV2 .headerText {
-  text-align: center;
 }
 .alertV2:hover {
   cursor: pointer;

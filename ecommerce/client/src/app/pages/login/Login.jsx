@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
-import { handleMessageValidationv2 } from "../../../lib/handleMessageValidation";
 import "./Login.css";
-import Alert from "../../components/alert/Alert";
 import { useSelector } from "react-redux";
 import Field from "../../components/inputs/field/Field";
 import AlertV2 from "../../components/alertv2/AlertV2";

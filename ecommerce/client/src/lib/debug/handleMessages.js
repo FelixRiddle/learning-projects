@@ -30,6 +30,12 @@ export const getAnyMessage = ({
 	const normalMessage = getMessage(options && options.messageType);
 
 	let result = enhancedMessage || normalMessage;
+
+	// console.log(`Debug:`, debug);
+	// console.log(`Enhanced message:`, enhancedMessage);
+	// console.log(`Normal message:`, normalMessage);
+	// console.log(`Result:`, result);
+
 	if (!result)
 		return console.warn("Something went wrong in getAnyMessage function");
 	result.messageCopy = result.message;
@@ -78,7 +84,6 @@ const getMessage = (messageType) => {
  */
 const enhanceMessage = (input, placeHolderValues, debug) => {
 	if (!debug || !debug.data || !debug.data.debug) return undefined;
-	if (!input) return undefined;
 
 	const debugObject = debug.data.debug;
 	const message = debugObject.message || debugObject.joiMessage;
@@ -88,7 +93,7 @@ const enhanceMessage = (input, placeHolderValues, debug) => {
 		placeHolderValues,
 		message
 	);
-	
+
 	const newMessage =
 		(typeof debugObject.message === "string" && debugObject.message) ||
 		messageResult.message;
@@ -135,18 +140,24 @@ const messageAndFieldValidation = (input, placeHolderValues, message) => {
 	if (!message || typeof message !== "string")
 		return { message: "Unexpected error" };
 
-	const inputKeys = Object.keys(input);
+	if (input) {
+		const inputKeys = Object.keys(input);
 
-	for (let i in inputKeys) {
-		i = parseInt(i);
-		const template = `"${inputKeys[i]}"`;
-		const match = message.match(template);
-		if (match) {
-			return {
-				field: inputKeys[i],
-				message: message.replace(template, placeHolderValues[i]),
-			};
+		for (let i in inputKeys) {
+			i = parseInt(i);
+			const template = `"${inputKeys[i]}"`;
+			const match = message.match(template);
+			if (match) {
+				return {
+					field: inputKeys[i],
+					message: message.replace(template, placeHolderValues[i]),
+				};
+			}
 		}
+	} else {
+		return {
+			message,
+		};
 	}
 };
 

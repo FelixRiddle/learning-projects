@@ -1,7 +1,7 @@
 const nodemailer = require("nodemailer");
 require("dotenv").config();
 
-exports.verifyEmail = () => {
+exports.sendVerificationEmailGoogleSMTP = async (email, confirmEmailToken) => {
 	// Send email for verification
 	const transporter = nodemailer.createTransport({
 		host: "smtp.gmail.com",
@@ -22,4 +22,6 @@ exports.verifyEmail = () => {
 			<a href="${process.env.CLIENT_URL}confirmEmail/${confirmEmailToken}" >
 			Confirm email</a>`,
 	});
+
+	return info;
 };
