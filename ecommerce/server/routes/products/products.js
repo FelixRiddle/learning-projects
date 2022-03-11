@@ -1,12 +1,13 @@
 const router = require("express").Router();
 const { v4 } = require("uuid");
+const uuidv4 = v4;
 const multer = require("multer");
 
 const { get_time } = require("../../lib/debug_info");
 const { getAll } = require("./get_all/getAll");
 const { getUserProducts } = require("./get_user_products/getUserProducts");
 const { create } = require("./create/create");
-const uuidv4 = v4;
+const { getProduct } = require("./get_product/getProduct");
 
 const DIR = "uploads";
 
@@ -43,6 +44,7 @@ const upload = multer({
 
 router.post("/create", upload.array("images", 15), create);
 router.get("/getAll", getAll);
+router.post("/getProduct", getProduct);
 router.post("/getUserProducts", getUserProducts);
 
 module.exports = router;

@@ -30,7 +30,7 @@ const Routes = (props) => {
 				<Route path="/search" element={<Search />} />
 
 				{/* Products */}
-				{products &&
+				{/* {products &&
 					Object.keys(products).length > 0 &&
 					Object.getPrototypeOf(products) === Object.prototype &&
 					products.map((e) => {
@@ -43,7 +43,8 @@ const Routes = (props) => {
 								element={<ProductView {...e} />}
 							/>
 						);
-					})}
+					})} */}
+				<Route path="/app/:userId/:productId/:name" element={<ProductView />} />
 				<Route path="/createProduct" element={<CreateProduct />} />
 
 				<Route path="/confirmEmail/:id" element={<ConfirmEmail />} />

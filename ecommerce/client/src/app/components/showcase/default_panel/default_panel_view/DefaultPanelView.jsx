@@ -5,6 +5,7 @@ import { v4 as uuidv4 } from "uuid";
 import { useViewportSize } from "../../../../../lib/viewport/useViewportSize";
 
 import DefaultPanelProduct from "../default_panel_product/DefaultPanelProduct";
+import redirect from "../../../../../lib/misc/redirect/redirect";
 import "./DefaultPanelView.css";
 
 function DefaultPanelView(props) {
@@ -23,8 +24,8 @@ function DefaultPanelView(props) {
 	const { viewportSize } = useViewportSize(true);
 
 	const handleItemClick = (e) => {
-		const url = `${clientUrl}app/${e._id}/${e.name.replaceAll(" ", "-")}`;
-		window.open(url, "_blank").focus();
+		// console.log(`E:`, e);
+		redirect(e, clientUrl);
 	};
 
 	// Limit the amount of items being shown

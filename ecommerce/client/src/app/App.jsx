@@ -1,21 +1,19 @@
 import React, { useEffect } from "react";
 import jwt_decode from "jwt-decode";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
 import "./App.css";
 import Navbar from "./components/navbar/Navbar";
 import { getAll } from "../lib/products/getProducts";
 import { insertProducts } from "../lib/redux/actions/productsSlice";
 import { insertUser } from "../lib/redux/actions/userSlice";
-import { useUserProducts } from "../lib/products/useUserProducts";
+// import { useUserProducts } from "../lib/products/useUserProducts";
 import { arrayToObject } from "../lib/misc/vanilla/transformations";
 
 export const GlobalContext = React.createContext();
 
 function App() {
 	const dispatch = useDispatch();
-	const user = useSelector((state) => state.user);
-	useUserProducts(user._id);
 
 	useEffect(() => {
 		getAll("http://localhost:3001/api/products/getAll").then((data) => {

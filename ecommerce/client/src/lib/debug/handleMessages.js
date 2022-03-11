@@ -17,6 +17,8 @@ import { messages } from "./notificationMessages";
  *   // where the key positions are important.
  *   // (Obviously, it MUST be in order)
  *   reorganizedKeys: ["firstName", "password", ...],
+ *   // If true no warning is shown on the console
+ *   noWarn: Boolean,
  * }
  * @returns Message or undefined.
  */
@@ -27,11 +29,6 @@ export const getAnyMessage = ({
 	setCB,
 	options,
 }) => {
-	// console.log(` --- getAnyMessage ---`);
-	// console.log(`Input:`, input);
-	// console.log(`Debug:`, debug);
-	// console.log(`Placeholder values:`, placeholderValues);
-
 	// For normal messages or joi errors
 	const enhancedMessage = enhanceMessage(
 		input,
@@ -45,18 +42,16 @@ export const getAnyMessage = ({
 
 	let result = enhancedMessage || normalMessage;
 
-	// console.log(`Enhanced message:`, enhancedMessage);
-	// console.log(`Normal message:`, normalMessage);
-	// console.log(`Result:`, result);
-
-	if (!result)
-		return console.warn("Something went wrong in getAnyMessage function");
+	// If there is no result, return;
+	if (!result) {
+		if (!options && options.noWarn)
+			return console.warn("Something went wrong in getAnyMessage function");
+		else return;
+	}
 
 	// Overwrite a field at the end
 	// Because the ids and input keys password and confirmPassword
 	// are different
-	// console.log(`Options:`, options);
-	// console.log(`Overwrite:`, options.overwrite);
 	if (options && options.overwrite) {
 		result = {
 			...result,
@@ -107,11 +102,14 @@ const getMessage = (messageType) => {
  * @returns
  */
 const enhanceMessage = (input, placeholderValues, debug, options) => {
-	if (!debug || !debug.data || !debug.data.debug) return undefined;
+	const debugLayer1 = debug && debug.debug;
+	const debugLayer2 = debug && debug.data && debug.data.debug;
 
-	const debugObject = debug.data.debug;
+	if (!debugLayer1 && !debugLayer2) return undefined;
+
+	const debugObject = debugLayer1 || debugLayer2;
+	
 	const message = debugObject.message || debugObject.joiMessage;
-
 	const messageResult = messageAndFieldValidation(
 		input,
 		placeholderValues,
@@ -119,8 +117,6 @@ const enhanceMessage = (input, placeholderValues, debug, options) => {
 		options
 	);
 
-	// console.log(`Debug object:`, debugObject);
-	// console.log(`Debug message:`, messageResult);
 	const newMessage =
 		(debugObject &&
 			typeof debugObject.message === "string" &&

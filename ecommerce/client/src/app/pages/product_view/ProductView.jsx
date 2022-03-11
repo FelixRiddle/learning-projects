@@ -1,28 +1,50 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
+import { useParams } from "react-router-dom";
+import axios from "axios";
+import { useSelector } from "react-redux";
 
-import BigImage from "../../components/images/big_image/BigImage";
 import "./ProductView.css";
+
 import ImageSelector from "../../components/images/image_selector/ImageSelector";
 import Title from "../../components/text/title/Title";
+import Paragraph from "../../components/text/paragraph/Paragraph";
+import Price from "../../components/text/price/Price";
+import BigImage from "../../components/images/big_image/BigImage";
+
 import { useFullImageUrls } from "../../../lib/images/useFullImageUrls";
 import { useCssDetails } from "../../../lib/misc/useCssDetails";
 import { useViewportSize } from "../../../lib/viewport/useViewportSize";
-import Paragraph from "../../components/text/paragraph/Paragraph";
-import Price from "../../components/text/price/Price";
+import { useProduct } from "../../../lib/products/useProduct";
+import AlertV2 from "../../components/alertv2/AlertV2";
+import { getAnyMessage } from "../../../lib/debug/handleMessages";
 
-const serverUrl = "http://localhost:3001/";
+// const serverUrl = "http://localhost:3001/";
 
-function ProductView(props) {
-	const { description, images, name, price } = props;
+function ProductView() {
+	const { serverUrl } = useSelector((state) => state.constants);
+
+	const { productId, userId } = useParams();
+	const { product, resData } = useProduct({ productId, userId });
+
+	const [description, setDescription] = useState("");
+	const [images, setImages] = useState([]);
+	const [name, setName] = useState("");
+	const [price, setPrice] = useState("");
+	// const { description, images, name, price } = product;
 
 	const { cssDetails } = useCssDetails();
 	const [config, setConfig] = useState({});
 	const [divId] = useState(uuidv4());
 	const { fullImageUrls } = useFullImageUrls(images);
 	const [paragraphHeight, setParagraphHeight] = useState();
-	const [selectedImage, setSelectedImage] = useState(serverUrl + images[0]);
+	const [selectedImage, setSelectedImage] = useState(
+		serverUrl + ((images && images[0]) + "")
+	);
+	const [status, setStatus] = useState({});
 	const { viewportSize } = useViewportSize(true);
+
+	// console.log(`Params:`, params);
 
 	const handleTinyImageClick = (imageSrc) => {
 		setSelectedImage(imageSrc);
@@ -37,6 +59,25 @@ function ProductView(props) {
 		return conditionHellResult;
 	};
 
+	// For notification messages
+	useEffect(() => {
+		if (resData) {
+			getAnyMessage({
+				debug: resData,
+				setCB: setStatus,
+				options: { noWarn: true },
+			});
+		}
+	}, [resData]);
+
+	// Updating values
+	useEffect(() => {
+		console.log(`Product:`, product);
+		if (product) {
+			setDescription(product.description);
+		}
+	}, [product]);
+
 	return (
 		<div
 			className="ProductView"
@@ -47,6 +88,8 @@ function ProductView(props) {
 					viewportSize.height + paragraphHeight + 10,
 			}}
 		>
+			<AlertV2 center={true} setStatus={setStatus} status={status} />
+
 			<div className="product">
 				<div className="left">
 					<BigImage

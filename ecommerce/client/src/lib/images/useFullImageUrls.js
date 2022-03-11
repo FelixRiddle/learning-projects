@@ -6,13 +6,15 @@ export const useFullImageUrls = (images) => {
 	const [fullImageUrls, setFullImageUrls] = useState([]);
 
 	useEffect(() => {
-		images.map((e) => {
-			setFullImageUrls((prevInput) => {
-				const result = [...prevInput, serverUrl + e];
-				return result;
+		if (images)
+			images.map((e) => {
+				setFullImageUrls((prevInput) => {
+					const result = [...prevInput, serverUrl + e];
+					return result;
+				});
+				return e;
 			});
-			return e;
-		});
+		else return console.warn("There are no images!")
 	}, [images]);
 
 	return { fullImageUrls, setFullImageUrls };

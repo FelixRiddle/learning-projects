@@ -23,6 +23,12 @@ exports.validationMessages = {
 		message: "Internal server error",
 		state: "error",
 	},
+	itemNotFound: {
+		error: true,
+		field: "",
+		message: "Item not found",
+		state: "error",
+	},
 	passwordUpdated: {
 		error: false,
 		message: "Password updated successfully.",
