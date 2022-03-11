@@ -5,7 +5,7 @@ const multer = require("multer");
 const { get_time } = require("../../lib/debug_info");
 const { getAll } = require("./get_all/getAll");
 const { getUserProducts } = require("./get_user_products/getUserProducts");
-const { create } = require("../../models/Product");
+const { create } = require("./create/create");
 const uuidv4 = v4;
 
 const DIR = "uploads";

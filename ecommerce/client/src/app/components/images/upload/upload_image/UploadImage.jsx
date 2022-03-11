@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 
+// First prototype, keeping it only because of that
 function UploadImage(props) {
 	// Component properties
 	const {

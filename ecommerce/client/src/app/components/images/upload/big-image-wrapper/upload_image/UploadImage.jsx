@@ -4,8 +4,8 @@ import { v4 as uuidv4 } from "uuid";
 
 import { resizeByPercentage } from "../../../../../../lib/images/resizer";
 import { useViewportSize } from "../../../../../../lib/viewport/useViewportSize";
-import { CreateProductContext } from "../../../CreateProduct";
-import { image_resizer } from "../../../lib/image_resizer";
+import { imageResizer } from "../../../../../../lib/images/imageResizer";
+import { CreateProductContext } from "../../../../../pages/createProduct/CreateProduct";
 
 function UploadImage(props) {
 	const {
@@ -107,7 +107,7 @@ function UploadImage(props) {
 				const currentImage = images[i];
 
 				// Resize images to fit the canvas
-				image_resizer(img, config, (width, height) => {
+				imageResizer(img, config, (width, height) => {
 					img.style.width = width + "px";
 					img.style.height = height + "px";
 				});

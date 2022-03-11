@@ -116,7 +116,7 @@ the last index of the array).
 | ⬜️ Products  
 | | ⬜️ Edit products  
 | | ⬜️ Delete products  
-| ⬜️ Fix Styling
+| ⬜️ Fix Styling  
 
 ⬜️ Register  
 | ✅ Register form  
@@ -133,15 +133,18 @@ the last index of the array).
 | ⬜️ Register  
 | | ⬜️ Email verification process
 
---- Components ---
+--- Components ---  
 ⬜️ Field  
 | ⬜️ The user is able to reset the content of the field(mainly for the profile)
 
+⬜️ Notification messages  
+| ⬜️ Move the notification as the user scrolls the page
+
 ---- Others ----  
-| ⬜️ Add diferent website styling options.
+| ⬜️ Add diferent website styling options.  
 
 |Hardmode  
-| | ⬜️ Drag and drop with the small images.
+| | ⬜️ Drag and drop with the small images.  
 
 ⬜️ Licenses  
 |⬜️ Add the following attributions  

@@ -1,6 +1,6 @@
 import React, { useEffect, useContext } from "react";
 
-import { CreateProductContext } from "../../../CreateProduct";
+import { CreateProductContext } from "../../../../../pages/createProduct/CreateProduct";
 
 function Arrow(props) {
 	const { config } = useContext(CreateProductContext);

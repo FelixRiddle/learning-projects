@@ -16,7 +16,7 @@ import { messages } from "./notificationMessages";
  *   // Keys for reorganizing the object keys useful in situations
  *   // where the key positions are important.
  *   // (Obviously, it MUST be in order)
- *   reorganizedKeys: ["First name", "Last name", ...],
+ *   reorganizedKeys: ["firstName", "password", ...],
  * }
  * @returns Message or undefined.
  */

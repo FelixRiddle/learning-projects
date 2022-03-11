@@ -44,10 +44,10 @@ exports.create = async (req, res) => {
 		if (!files[0]) {
 			return res.send({
 				debug: {
-					state: "danger",
 					error: true,
 					field: "",
-					message: "You have to upload at least 1 image.",
+					message: "You have to upload at least 1 image",
+					state: "danger",
 				},
 			});
 		}
@@ -66,10 +66,10 @@ exports.create = async (req, res) => {
 			console.log(`Error:`, error.details[0].message);
 			return res.send({
 				debug: {
-					state: "danger",
 					error: true,
 					field: "",
 					joiMessage: error.details[0].message,
+					state: "danger",
 				},
 			});
 		}
@@ -83,10 +83,10 @@ exports.create = async (req, res) => {
 				debug: {
 					error: true,
 					field: "",
-					state: "danger",
 					message:
-						"User doesn't exist, try logging out and logging in again." +
-						"\nIf the error persists please contact us.",
+						"User doesn't exist, try logging out and logging in again," +
+						"\nIf the error persists please contact us",
+					state: "danger",
 				},
 			});
 		} else {
@@ -104,8 +104,9 @@ exports.create = async (req, res) => {
 						debug: {
 							error: true,
 							field: "name",
+							message:
+								"A product with the same name(in your account) already exists",
 							state: "error",
-							message: "A product with the same name already exists.",
 						},
 					});
 				}
@@ -118,10 +119,10 @@ exports.create = async (req, res) => {
 					debug: {
 						error: true,
 						field: "",
-						state: "danger",
 						message:
 							"You have reached the maximum amount of products," +
-							"please upgrade your account if you want to post more products.",
+							"please upgrade your account if you want to post more products",
+						state: "danger",
 					},
 				});
 			}
@@ -161,10 +162,10 @@ exports.create = async (req, res) => {
 
 			return res.send({
 				debug: {
-					error: false,
 					field: "",
 					state: "success",
-					message: "Product created.",
+					message: "Product created",
+					error: false,
 				},
 			});
 		}
@@ -173,9 +174,9 @@ exports.create = async (req, res) => {
 		deleteFilesSync(req.files);
 		return res.send({
 			debug: {
-				state: "danger",
 				error: true,
-				message: "Internal server error.",
+				message: "Internal server error",
+				state: "danger",
 			},
 		});
 	}

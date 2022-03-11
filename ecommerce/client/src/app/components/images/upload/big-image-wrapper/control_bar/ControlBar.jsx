@@ -1,8 +1,9 @@
 import React, { useState, useContext } from "react";
 import { v4 as uuidv4 } from "uuid";
-import { CreateProductContext } from "../../../CreateProduct";
 
 import Icon from "./components/Icon";
+
+import { CreateProductContext } from "../../../../../pages/createProduct/CreateProduct";
 
 function ControlBar() {
 	const {

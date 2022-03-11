@@ -4,8 +4,14 @@ import Field from "../../../../components/inputs/field/Field";
 import { CreateProductContext } from "../../CreateProduct";
 
 function Form() {
-	const { input, handleInputChange, cssDetails, viewportSize } =
-		useContext(CreateProductContext);
+	const {
+		input,
+		handleInputChange,
+		cssDetails,
+		status,
+		setStatus,
+		viewportSize,
+	} = useContext(CreateProductContext);
 
 	const [formId] = useState(uuidv4());
 
@@ -41,6 +47,8 @@ function Form() {
 							inputOnChange={handleInputChange}
 							inputType="text"
 							inputValue={input && input.name}
+							setStatus={setStatus}
+							status={status}
 						/>
 						<Field
 							fieldParentDivClasses={"input-field"}
@@ -49,6 +57,8 @@ function Form() {
 							inputOnChange={handleInputChange}
 							inputType="number"
 							inputValue={input && input.stock}
+							setStatus={setStatus}
+							status={status}
 						/>
 						<Field
 							fieldParentDivClasses={"input-field"}
@@ -57,6 +67,8 @@ function Form() {
 							inputOnChange={handleInputChange}
 							inputType="number"
 							inputValue={input && input.price}
+							setStatus={setStatus}
+							status={status}
 						/>
 					</div>
 				</span>

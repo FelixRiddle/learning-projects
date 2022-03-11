@@ -1,10 +1,13 @@
 import React, { useState, useContext } from "react";
-import { CreateProductContext } from "../../CreateProduct";
 import { v4 as uuidv4 } from "uuid";
 
+// Components
 import UploadImage from "./upload_image/UploadImage";
 import Arrow from "./arrow/Arrow";
 import ControlBar from "./control_bar/ControlBar";
+
+// Others
+import { CreateProductContext } from "../../../../pages/createProduct/CreateProduct";
 import { files_to_images } from "../../../../../lib/files/images/files_to_images";
 import { useCssDetails } from "../../../../../lib/misc/useCssDetails";
 

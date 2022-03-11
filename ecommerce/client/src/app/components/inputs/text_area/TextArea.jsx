@@ -16,12 +16,19 @@ function TextArea(props) {
 		inputValue,
 		inputWidth,
 		parent,
+		setStatus,
+		status,
 		textAreaColumns,
 		textAreaRows,
 	} = props;
 
 	const [newInputId] = useState(inputId || uuidv4());
 	const [inputStyles, setInputStyles] = useState({});
+
+	const handleInputClick = (e) => {
+		if (inputOnClick) inputOnClick(e);
+		if (setStatus) setStatus({ ...status, messageCopy: "", fieldCopy: "" });
+	};
 
 	// Set the input sizes to the provided sizes
 	useEffect(() => {
@@ -35,6 +42,34 @@ function TextArea(props) {
 				return { ...prevInput, height: inputHeight };
 			});
 	}, [inputHeight, inputWidth]);
+
+	// Change the outline color, every time the status is updated
+	useEffect(() => {
+		// console.log(`Current status:`, status);
+		// console.log(`Input name:`, inputName);
+		// console.log(
+		// 	`Is this the component with red border?:`,
+		// 	status && status.fieldCopy && status.fieldCopy === inputName
+		// );
+
+		setInputStyles((prevInput) => {
+			return {
+				...prevInput,
+				borderBottom:
+					(status &&
+						status.fieldCopy &&
+						status.fieldCopy === inputName &&
+						"1px solid red") ||
+					"",
+				outline:
+					(status &&
+						status.fieldCopy &&
+						status.fieldCopy === inputName &&
+						"2px solid red") ||
+					"",
+			};
+		});
+	}, [inputName, status]);
 
 	return (
 		<div
@@ -52,7 +87,7 @@ function TextArea(props) {
 				id={newInputId}
 				name={inputName}
 				onChange={inputOnChange}
-				onClick={inputOnClick}
+				onClick={handleInputClick}
 				placeholder={inputLabel}
 				rows={textAreaRows}
 				style={{ ...inputStyles, ...inputStyle }}

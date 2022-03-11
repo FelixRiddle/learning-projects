@@ -1,21 +1,21 @@
 /* eslint-disable no-new-wrappers */
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { useSelector } from "react-redux";
 
 // Css
 import "./CreateProduct.css";
 
 // Components
 import AlertV2 from "../../components/alertv2/AlertV2";
-import BigImageWrapper from "./components/big-image-wrapper/BigImageWrapper";
+import BigImageWrapper from "../../components/images/upload/big-image-wrapper/BigImageWrapper";
 import Description from "./components/description/Description";
 import Form from "./components/form/Form";
 import ImageSelector from "../../components/images/image_selector/ImageSelector";
 
 // Others
-import { handleMessageValidationv2 } from "../../../lib/handleMessageValidation";
 import { remove_images } from "./lib/transform_input";
-import { useSelector } from "react-redux";
+import { getAnyMessage } from "../../../lib/debug/handleMessages";
 
 export const CreateProductContext = React.createContext();
 
@@ -65,16 +65,6 @@ function CreateProduct() {
 		show: false,
 	});
 
-	// Functions
-	const alertClick = () => {
-		setStatus((prevInput) => {
-			return {
-				...prevInput,
-				show: !prevInput.show,
-			};
-		});
-	};
-
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 
@@ -105,37 +95,16 @@ function CreateProduct() {
 	};
 
 	const handleResponse = async (res, data, formData) => {
-		// console.log(`Res status:`, res.status);
-		// console.log(`Data:`, data);
-		// console.log(`Joi message:`, data.joiMessage);
-		// console.log(`Message`, data.message);
-		if (data.joiMessage && data.error) {
-			const newMessage = handleMessageValidationv2(input, res, [
-				"Description",
-				"Images",
-				"Name",
-				"Price",
-				"Stock",
-			]);
-			console.log(`New message:`, newMessage);
-			setStatus({
-				...status,
-				message: newMessage,
-				error: data.error,
-				field: data.field,
-				state: data.state,
-				show: true,
-			});
-		} else if (data.message) {
-			setStatus({
-				...status,
-				message: data.message,
-				error: data.error,
-				field: data.field,
-				state: data.state,
-				show: true,
-			});
-		}
+		console.log(`Response data:`, data);
+
+		return getAnyMessage({
+			debug: res,
+			options: {
+				reorganizedKeys: ["description", "images", "name", "price", "stock"],
+			},
+			placeholderValues: ["Description", "Images", "Name", "Price", "Stock"],
+			setCB: setStatus,
+		});
 	};
 
 	const handleError = (err) => {
@@ -244,17 +213,11 @@ function CreateProduct() {
 					status,
 				}}
 			>
+				{/* TODO: Move the notification as the user scrolls the page */}
 				<AlertV2
-					// state={(status.error && "danger") || (!status.error && "success")}
-					// description={status.message}
-					// center={true}
-					// clickFn={() => alertClick()}
-					// hidden={!status.show}
-					// title={status.error && "Error"}
-					// extraStyle={{ position: "fixed" }}
 					center={true}
-					setStatus={true}
-					status={true}
+					setStatus={setStatus}
+					status={status}
 				/>
 
 				<h2 className="title">Create a product</h2>

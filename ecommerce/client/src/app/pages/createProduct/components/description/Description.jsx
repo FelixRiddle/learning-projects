@@ -6,7 +6,8 @@ import { CreateProductContext } from "../../CreateProduct";
 import "./Description.css";
 
 function Description() {
-	const { input, handleInputChange } = useContext(CreateProductContext);
+	const { input, handleInputChange, setStatus, status } =
+		useContext(CreateProductContext);
 	const { viewportSize } = useViewportSize();
 
 	return (
@@ -20,6 +21,8 @@ function Description() {
 					inputStyle={{ width: viewportSize.width - 30 + "px" }}
 					inputType="textarea"
 					inputValue={input && input.description}
+					setStatus={setStatus}
+					status={status}
 					textAreaColumns={30}
 					textAreaRows={10}
 				/>
