@@ -38,18 +38,10 @@ function ImageSelector(props) {
 
 	useEffect(() => {
 		if (!images)
-			console.log(
+			console.warn(
 				`No images provided on src/app/components/images/image_selector`
 			);
 	}, [images]);
-
-	useEffect(() => {
-		if (!selectedImage) {
-			console.error(
-				`Warning: There is no selected image on src/app/components/images/image_selector`
-			);
-		}
-	}, [selectedImage]);
 
 	return (
 		<div

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { useParams } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import "./ProductView.css";
 
@@ -17,9 +17,12 @@ import { useCssDetails } from "../../../lib/misc/useCssDetails";
 import { useViewportSize } from "../../../lib/viewport/useViewportSize";
 import { useProduct } from "../../../lib/products/useProduct";
 import { getAnyMessage } from "../../../lib/debug/handleMessages";
+import { insertVariables } from "../../../lib/redux/actions/variablesSlice";
 
 function ProductView() {
 	const { serverUrl } = useSelector((state) => state.constants);
+	const variables = useSelector((state) => state.variables);
+	const dispatch = useDispatch();
 
 	const { productId, userId } = useParams();
 	const { product, resData } = useProduct({ productId, userId });
@@ -34,9 +37,7 @@ function ProductView() {
 	const [divId] = useState(uuidv4());
 	const { fullImageUrls } = useFullImageUrls(images);
 	const [paragraphHeight, setParagraphHeight] = useState();
-	const [selectedImage, setSelectedImage] = useState(
-		serverUrl + ((images && images[0]) + "")
-	);
+	const [selectedImage, setSelectedImage] = useState("");
 	const [status, setStatus] = useState({});
 	const { viewportSize } = useViewportSize(true);
 
@@ -72,6 +73,16 @@ function ProductView() {
 			setPrice(product.price);
 		}
 	}, [product]);
+
+	window.onload = () => {
+		setSelectedImage(serverUrl + (images && images[0]));
+		dispatch(
+			insertVariables({
+				...variables,
+				scrollHeight: document.body.scrollHeight,
+			})
+		);
+	};
 
 	return (
 		<div

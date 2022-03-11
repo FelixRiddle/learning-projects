@@ -43,7 +43,7 @@ function BigImage(props) {
 			});
 		});
 	}, [cssDetails, divId, setConfig, viewportSize]);
-
+	
 	// Create the image components
 	useEffect(() => {
 		const resizeImagePercentage = cssDetails.bigImage;
