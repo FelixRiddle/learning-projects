@@ -14,10 +14,6 @@ exports.getProduct = async (req, res) => {
 		const query = { _id: productId, ownerId: userId };
 		const product = await Product.findOne(query);
 		const id = product._id.toString();
-		// console.log(`Product:`, product);
-		// console.log(`Product id:`, id);
-		// console.log(`Input id:`, productId);
-		// console.log(`Comparison:`, id === productId);
 
 		if (id !== productId)
 			return res.send({

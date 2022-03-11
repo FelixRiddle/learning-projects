@@ -1,6 +1,4 @@
 import { BrowserRouter, Route, Routes as Routes1 } from "react-router-dom";
-import { useSelector } from "react-redux";
-import { v4 as uuidv4 } from "uuid";
 
 import Home from "../../../../pages/home/Home";
 import About from "../../../../pages/about/About";
@@ -12,11 +10,8 @@ import CreateProduct from "../../../../pages/createProduct/CreateProduct";
 import ProductView from "../../../../pages/product_view/ProductView";
 import Test from "../../../../pages/test/Test";
 import ConfirmEmail from "../../../../pages/confirm_email/ConfirmEmail";
-import { objectToArray } from "../../../../../lib/misc/vanilla/transformations";
 
 const Routes = (props) => {
-	const productsObject = useSelector((state) => state.products);
-	const products = objectToArray(productsObject);
 
 	return (
 		<BrowserRouter>
@@ -30,31 +25,17 @@ const Routes = (props) => {
 				<Route path="/search" element={<Search />} />
 
 				{/* Products */}
-				{/* {products &&
-					Object.keys(products).length > 0 &&
-					Object.getPrototypeOf(products) === Object.prototype &&
-					products.map((e) => {
-						// console.log(`Product:`, e);
-						const productUrl = `app/${e._id}/${e.name.replaceAll(" ", "-")}`;
-						return (
-							<Route
-								key={uuidv4()}
-								path={productUrl}
-								element={<ProductView {...e} />}
-							/>
-						);
-					})} */}
 				<Route path="/app/:userId/:productId/:name" element={<ProductView />} />
 				<Route path="/createProduct" element={<CreateProduct />} />
-
-				<Route path="/confirmEmail/:id" element={<ConfirmEmail />} />
 
 				{/* Profile */}
 				<Route
 					path="/profile/*"
-					element={<Profile setReRender={props.setReRender} />}
-				></Route>
+					element={<Profile />}
+				/>
+				<Route path="/confirmEmail/:id" element={<ConfirmEmail />} />
 
+				{/* Other */}
 				<Route path="/test" element={<Test />} />
 				<Route path="*" element={<h1>404: Page not found.</h1>} />
 			</Routes1>

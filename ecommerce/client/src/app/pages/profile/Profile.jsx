@@ -12,9 +12,6 @@ function Profile(props) {
 	const user = useSelector((state) => state.user);
 	const host = useSelector((state) => state.constants.clientUrl);
 
-	// Hooks
-	const { setReRender } = props;
-
 	const { handleChange, userData, setUserData } = useUserData();
 	const [error, setError] = useState({
 		state: "",
@@ -118,7 +115,6 @@ function Profile(props) {
 								setError={setError}
 								setInput={setUserData}
 								setPasswordInfo={setPasswordInfo}
-								setReRender={setReRender}
 							/>
 						</div>
 					</div>

@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { useParams } from "react-router-dom";
-import axios from "axios";
 import { useSelector } from "react-redux";
 
 import "./ProductView.css";
@@ -11,15 +10,13 @@ import Title from "../../components/text/title/Title";
 import Paragraph from "../../components/text/paragraph/Paragraph";
 import Price from "../../components/text/price/Price";
 import BigImage from "../../components/images/big_image/BigImage";
+import AlertV2 from "../../components/alertv2/AlertV2";
 
 import { useFullImageUrls } from "../../../lib/images/useFullImageUrls";
 import { useCssDetails } from "../../../lib/misc/useCssDetails";
 import { useViewportSize } from "../../../lib/viewport/useViewportSize";
 import { useProduct } from "../../../lib/products/useProduct";
-import AlertV2 from "../../components/alertv2/AlertV2";
 import { getAnyMessage } from "../../../lib/debug/handleMessages";
-
-// const serverUrl = "http://localhost:3001/";
 
 function ProductView() {
 	const { serverUrl } = useSelector((state) => state.constants);
@@ -31,7 +28,6 @@ function ProductView() {
 	const [images, setImages] = useState([]);
 	const [name, setName] = useState("");
 	const [price, setPrice] = useState("");
-	// const { description, images, name, price } = product;
 
 	const { cssDetails } = useCssDetails();
 	const [config, setConfig] = useState({});
@@ -44,18 +40,14 @@ function ProductView() {
 	const [status, setStatus] = useState({});
 	const { viewportSize } = useViewportSize(true);
 
-	// console.log(`Params:`, params);
-
 	const handleTinyImageClick = (imageSrc) => {
 		setSelectedImage(imageSrc);
 	};
 
 	const cbImageSelectorClasses = (settings) => {
 		const isSelected = settings.isSelected;
-
 		const conditionHellResult =
 			"tiny-image " + (isSelected && "selected-image");
-
 		return conditionHellResult;
 	};
 
@@ -72,9 +64,12 @@ function ProductView() {
 
 	// Updating values
 	useEffect(() => {
-		console.log(`Product:`, product);
+		// console.log(`Product:`, product);
 		if (product) {
 			setDescription(product.description);
+			setImages(product.images);
+			setName(product.name);
+			setPrice(product.price);
 		}
 	}, [product]);
 
