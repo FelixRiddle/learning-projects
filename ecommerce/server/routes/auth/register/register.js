@@ -11,8 +11,8 @@ const {
 const { sendVerificationEmailGoogleSMTP } = require("../../../lib/email/email");
 
 exports.register = async (req, res) => {
-	get_time();
 	console.log(`/api/users/register`);
+	get_time();
 
 	try {
 		const { error } = registerValidation(req.body);
@@ -45,7 +45,10 @@ exports.register = async (req, res) => {
 		const confirmEmailToken = uuidv4() + uuidv4() + uuidv4();
 		// console.log(`Confirm email token:`, confirmEmailToken);
 
-		const info = await sendVerificationEmailGoogleSMTP(email, confirmEmailToken);
+		const info = await sendVerificationEmailGoogleSMTP(
+			email,
+			confirmEmailToken
+		);
 
 		const user = new User({
 			email,

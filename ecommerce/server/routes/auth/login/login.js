@@ -6,8 +6,8 @@ const { loginValidation } = require("../../../validation");
 const { get_time } = require("../../../lib/debug_info");
 
 exports.login = async (req, res) => {
-	get_time();
 	console.log("/api/users/login");
+	get_time();
 
 	const data = req.body;
 	try {

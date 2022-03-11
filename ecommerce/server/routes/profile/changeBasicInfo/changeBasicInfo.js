@@ -11,8 +11,8 @@ const {
 
 // Change basic info
 module.exports = changeBasicInfo = async (req, res) => {
-	get_time();
 	console.log(`/changeBasicInfo`);
+	get_time();
 
 	try {
 		// Validate data

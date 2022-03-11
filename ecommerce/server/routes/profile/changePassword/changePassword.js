@@ -12,8 +12,8 @@ const {
 
 // Change password
 module.exports = changePassword = async (req, res) => {
-	get_time();
 	console.log("/changePassword");
+	get_time();
 
 	try {
 		const { _id, ...data } = req.body;

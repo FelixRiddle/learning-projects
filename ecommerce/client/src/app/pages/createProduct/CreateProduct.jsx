@@ -105,10 +105,10 @@ function CreateProduct() {
 	};
 
 	const handleResponse = async (res, data, formData) => {
-		console.log(`Res status:`, res.status);
-		console.log(`Data:`, data);
-		console.log(`Joi message:`, data.joiMessage);
-		console.log(`Message`, data.message);
+		// console.log(`Res status:`, res.status);
+		// console.log(`Data:`, data);
+		// console.log(`Joi message:`, data.joiMessage);
+		// console.log(`Message`, data.message);
 		if (data.joiMessage && data.error) {
 			const newMessage = handleMessageValidationv2(input, res, [
 				"Description",
@@ -245,13 +245,16 @@ function CreateProduct() {
 				}}
 			>
 				<AlertV2
-					state={(status.error && "danger") || (!status.error && "success")}
-					description={status.message}
+					// state={(status.error && "danger") || (!status.error && "success")}
+					// description={status.message}
+					// center={true}
+					// clickFn={() => alertClick()}
+					// hidden={!status.show}
+					// title={status.error && "Error"}
+					// extraStyle={{ position: "fixed" }}
 					center={true}
-					clickFn={() => alertClick()}
-					hidden={!status.show}
-					title={status.error && "Error"}
-					extraStyle={{ position: "fixed" }}
+					setStatus={true}
+					status={true}
 				/>
 
 				<h2 className="title">Create a product</h2>

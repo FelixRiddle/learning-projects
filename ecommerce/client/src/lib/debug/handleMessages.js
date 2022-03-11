@@ -67,7 +67,13 @@ export const getAnyMessage = ({
 	result.messageCopy = result.message;
 	result.fieldCopy = result.field;
 
-	if (setCB) setCB(result);
+	if (setCB)
+		setCB((prevInput) => {
+			return {
+				...prevInput,
+				...result,
+			};
+		});
 
 	return result;
 };
