@@ -75,7 +75,7 @@ const ChangeBasicInfo = (props) => {
 					"password",
 				],
 			},
-			placeHolderValues: [
+			placeholderValues: [
 				"First name",
 				"Last name",
 				"Email",

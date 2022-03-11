@@ -4,7 +4,7 @@ import { messages } from "./notificationMessages";
  *
  * @param {Object} Main object which contains the following options:
  * @param {Object} input Input data
- * @param {Object} placeHolderValues Replace input names for this
+ * @param {Object} placeholderValues Replace input names for this
  * values(MUST be in order)
  * @param {Object} debug The response object o res.data
  * @param {Function} setCB Callback for setting values
@@ -22,15 +22,20 @@ import { messages } from "./notificationMessages";
  */
 export const getAnyMessage = ({
 	input,
-	placeHolderValues,
+	placeholderValues,
 	debug,
 	setCB,
 	options,
 }) => {
+	// console.log(` --- getAnyMessage ---`);
+	// console.log(`Input:`, input);
+	// console.log(`Debug:`, debug);
+	// console.log(`Placeholder values:`, placeholderValues);
+
 	// For normal messages or joi errors
 	const enhancedMessage = enhanceMessage(
 		input,
-		placeHolderValues,
+		placeholderValues,
 		debug,
 		options
 	);
@@ -40,11 +45,9 @@ export const getAnyMessage = ({
 
 	let result = enhancedMessage || normalMessage;
 
-	console.log(` --- getAnyMessage ---`);
-	console.log(`Debug:`, debug);
-	console.log(`Enhanced message:`, enhancedMessage);
-	console.log(`Normal message:`, normalMessage);
-	console.log(`Result:`, result);
+	// console.log(`Enhanced message:`, enhancedMessage);
+	// console.log(`Normal message:`, normalMessage);
+	// console.log(`Result:`, result);
 
 	if (!result)
 		return console.warn("Something went wrong in getAnyMessage function");
@@ -93,11 +96,11 @@ const getMessage = (messageType) => {
 /** Fix joi error messages or enhances normal messages
  *
  * @param {*} input
- * @param {*} placeHolderValues
+ * @param {*} placeholderValues
  * @param {*} debug
  * @returns
  */
-const enhanceMessage = (input, placeHolderValues, debug, options) => {
+const enhanceMessage = (input, placeholderValues, debug, options) => {
 	if (!debug || !debug.data || !debug.data.debug) return undefined;
 
 	const debugObject = debug.data.debug;
@@ -105,14 +108,19 @@ const enhanceMessage = (input, placeHolderValues, debug, options) => {
 
 	const messageResult = messageAndFieldValidation(
 		input,
-		placeHolderValues,
+		placeholderValues,
 		message,
 		options
 	);
 
+	// console.log(`Debug object:`, debugObject);
+	// console.log(`Debug message:`, messageResult);
 	const newMessage =
-		(typeof debugObject.message === "string" && debugObject.message) ||
-		messageResult.message;
+		(debugObject &&
+			typeof debugObject.message === "string" &&
+			debugObject.message) ||
+		(messageResult && messageResult.message) ||
+		"Unexpected error";
 
 	const resultObject = {
 		error: debugObject.error,
@@ -130,25 +138,29 @@ const enhanceMessage = (input, placeHolderValues, debug, options) => {
 /** Convert JOI error messages into messages readable by the user
  *
  * @param {*} input
- * @param {*} placeHolderValues
+ * @param {*} placeholderValues
  * @param {*} message
  * @returns
  */
 const messageAndFieldValidation = (
 	input,
-	placeHolderValues,
+	placeholderValues,
 	message,
 	options
 ) => {
 	if (!message || typeof message !== "string")
 		return { message: "Unexpected error" };
 
-	if (input) {
+	// console.log(`Options:`, options);
+	if (input || (options && options.reorganizedKeys)) {
 		const inputKeys =
 			(options && options.reorganizedKeys) || Object.keys(input);
 
+		// console.log(`--- messageAndFieldValidation --- `);
 		// console.log(`Input:`, input);
 		// console.log(`Input keys:`, inputKeys);
+		// console.log(`Message:`, message);
+		// console.log(`Its type: ${typeof message}`);
 
 		for (let i in inputKeys) {
 			i = parseInt(i);
@@ -156,13 +168,13 @@ const messageAndFieldValidation = (
 			const match = message.match(template);
 
 			// console.log(`Template:`, template);
-			// console.log(`Its replace value:`, placeHolderValues[i]);
+			// console.log(`Its replace value:`, placeholderValues[i]);
 			// console.log(`Match:`, match);
 
 			if (match) {
 				return {
 					field: inputKeys[i],
-					message: message.replace(template, placeHolderValues[i]),
+					message: message.replace(template, placeholderValues[i]),
 				};
 			}
 		}
@@ -173,7 +185,7 @@ const messageAndFieldValidation = (
 	}
 };
 
-// const messageValidation = (input, placeHolderValues, message) => {
+// const messageValidation = (input, placeholderValues, message) => {
 // 	const inputKeys = Object.keys(input);
 
 // 	for (let i in inputKeys) {
@@ -181,7 +193,7 @@ const messageAndFieldValidation = (
 // 		const template = `"${inputKeys[i]}"`;
 // 		const match = message.match(template);
 // 		if (match) {
-// 			return message.replace(template, placeHolderValues[i]);
+// 			return message.replace(template, placeholderValues[i]);
 // 		}
 // 	}
 // };

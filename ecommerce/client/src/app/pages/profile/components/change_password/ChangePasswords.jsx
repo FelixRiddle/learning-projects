@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import axios from "axios";
 
-import { handleMessageValidationv2 } from "../../../../../lib/handleMessageValidation";
 import Field from "../../../../components/inputs/field/Field";
 import { useSelector } from "react-redux";
 import { getToken } from "../../../../../lib/misc/getToken";
@@ -29,12 +28,11 @@ const ChangePassword = (props) => {
 		newPassword: "",
 		repeatNewPassword: "",
 	});
-	// const [resData, setResData] = useState({});
 	const [status, setStatus] = useState({});
-	const [update, setUpdate] = useState({
-		token: "",
-		updated: false,
-	});
+	// const [update, setUpdate] = useState({
+	// 	token: "",
+	// 	updated: false,
+	// });
 
 	const handlePasswordChange = (e) => {
 		const { name, value } = e.target;
@@ -74,11 +72,6 @@ const ChangePassword = (props) => {
 		)
 			return;
 
-		// if (!passwordValidation()) return;
-		// console.log(`Input:`, passwordInput);
-		// console.log(`User id: ${user._id}`);
-		// console.log(`Password info:`, passwordInfo);
-
 		// Token for jwt authentication
 		const token = getToken();
 		axios
@@ -91,42 +84,13 @@ const ChangePassword = (props) => {
 				getAnyMessage({
 					debug: res,
 					input: passwordInput,
-					placeHolderValues: ["Password", "New password", "Confirm password"],
+					placeholderValues: ["Password", "New password", "Confirm password"],
 					setCB: setStatus,
 				});
 
 				if (res.data.token) localStorage.setItem("token", res.data.token);
 
 				return;
-
-				// The response should be like this
-				// if (res.data.joiMessage !== undefined) {
-				// 	const responseMessage = handleMessageValidationv2(
-				// 		{
-				// 			password: passwordInput.password,
-				// 			newPassword: passwordInput.newPassword,
-				// 			repeatNewPassword: passwordInput.repeatNewPassword,
-				// 		},
-				// 		res,
-				// 		["Current password", "New password", "Repeat password"]
-				// 	);
-				// 	// setResData({ ...res.data, message: responseMessage });
-				// }
-				// if (res.data.message !== undefined) {
-				// 	setPasswordInfo({
-				// 		message: res.data.message,
-				// 		error: res.data.error,
-				// 		state: res.data.state,
-				// 		field: res.data.field,
-				// 	});
-				// 	if (!res.data.error && res.data.state === "success") {
-				// 		console.log(`New token saved`);
-
-				// 		// Set the new token
-				// 		const newToken = localStorage.setItem("token", res.data.token);
-				// 		setUpdate({ ...update, token: newToken, updated: false });
-				// 	}
-				// }
 			})
 			.catch((err) => {
 				console.error(err);
@@ -137,31 +101,23 @@ const ChangePassword = (props) => {
 	// 	if (status) console.log(status);
 	// }, [status]);
 
-	useEffect(() => {
-		// If the token already exists return
-		if (update.token) return;
-		if (update.updated) return;
-		console.log(`Updating password...`);
+	// useEffect(() => {
+	// 	// If the token already exists return
+	// 	if (update.token) return;
+	// 	if (update.updated) return;
+	// 	console.log(`Updating password...`);
 
-		// Get token
-		setUpdate({
-			...update,
-			token: localStorage.getItem("token"),
-			updated: true,
-		});
-	}, [update]);
+	// 	// Get token
+	// 	setUpdate({
+	// 		...update,
+	// 		token: localStorage.getItem("token"),
+	// 		updated: true,
+	// 	});
+	// }, [update]);
 
 	return (
 		<div className="changePasswords">
 			<h6>Change password</h6>
-
-			{/* For error or success messages
-			<Messages
-				passwordInfo={passwordInfo}
-				setPasswordInfo={setPasswordInfo}
-				resData={resData}
-				setResData={setResData}
-			/> */}
 
 			<AlertV2 center={true} setStatus={setStatus} status={status} />
 
@@ -225,25 +181,6 @@ const ChangePassword = (props) => {
 					Change password
 				</button>
 			</form>
-		</div>
-	);
-};
-
-const Messages = (props) => {
-	const { passwordInfo, setPasswordInfo, resData, setResData } = props;
-
-	return (
-		<div
-			className={
-				"messages " + (passwordInfo.state + " ") + (resData.state + " ")
-			}
-			onClick={() => {
-				setPasswordInfo({ ...passwordInfo, message: "" });
-				setResData({ ...resData, message: "", joiMessage: "" });
-			}}
-			hidden={!passwordInfo.message && !resData.message && true}
-		>
-			<div>{passwordInfo.message || resData.message}</div>
 		</div>
 	);
 };

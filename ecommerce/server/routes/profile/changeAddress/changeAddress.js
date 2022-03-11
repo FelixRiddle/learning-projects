@@ -4,17 +4,20 @@ const {
 	validateDataExists,
 	validateUserAndPasswordAsync,
 } = require("../../../lib/user/validateUser");
+const {
+	validationMessages,
+} = require("../../../lib/validation/validationMessages");
 const User = require("../../../models/User");
 const { changeAddressValidation } = require("../../../validation");
 
 // For the change address part
 module.exports = changeAddress = async (req, res) => {
-	get_time();
 	console.log("/changeAddress");
+	get_time();
 
 	try {
 		const { _id, password } = req.body;
-		console.log(`Id:`, _id);
+		// console.log(`Id:`, _id);
 		const data = {
 			country: req.body.country,
 			province: req.body.province,
@@ -27,9 +30,11 @@ module.exports = changeAddress = async (req, res) => {
 		const { error } = changeAddressValidation(data);
 		if (error) {
 			return res.send({
-				state: "danger",
-				error: true,
-				joiMessage: error.details[0].message,
+				debug: {
+					state: "danger",
+					error: true,
+					joiMessage: error.details[0].message,
+				},
 			});
 		}
 
@@ -40,9 +45,12 @@ module.exports = changeAddress = async (req, res) => {
 		// If for some reason there is no _id field
 		if (!_id)
 			return res.send({
-				state: "danger",
-				message:
-					"Sorry there was an internal error, try to logout and login again.",
+				debug: {
+					error: true,
+					message:
+						"Sorry there was an internal error, try to logout and log in again.",
+					state: "danger",
+				},
 			});
 
 		const foundUser = await User.findOne({ _id });
@@ -51,7 +59,7 @@ module.exports = changeAddress = async (req, res) => {
 		const userValidation = await validateUserAndPasswordAsync(foundUser, {
 			password,
 		});
-		if (userValidation) return res.send(userValidation);
+		if (userValidation) return res.send({ debug: userValidation });
 
 		// Update the user
 		const query = { _id };
@@ -66,24 +74,24 @@ module.exports = changeAddress = async (req, res) => {
 		const newToken = await updateUserAsync(query, update);
 		if (newToken)
 			return res.status(200).send({
+				debug: {
+					error: false,
+					state: "success",
+					message: "Address updated.",
+				},
 				token: newToken,
-				error: false,
-				state: "success",
-				message: "Address updated.",
 			});
-		return res.status(400).send({
-			error: true,
-			state: "danger",
-			message:
-				"Unspecified error or user not found, try logging out and log in again.",
+		return res.send({
+			debug: {
+				...validationMessages.unspecifiedError,
+			},
 		});
 	} catch (err) {
 		console.error(err);
 		res.send({
-			state: "danger",
-			message: "Internal server error.",
-			error: "true",
-			err,
+			debug: {
+				...validationMessages.internalServerError,
+			},
 		});
 	}
 };

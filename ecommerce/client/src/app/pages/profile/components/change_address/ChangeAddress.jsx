@@ -1,16 +1,19 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 
-import { handleMessageValidationv2 } from "../../../../../lib/handleMessageValidation";
 import Field from "../../../../components/inputs/field/Field";
 import { useSelector } from "react-redux";
 import { getToken } from "../../../../../lib/misc/getToken";
+import AlertV2 from "../../../../components/alertv2/AlertV2";
+import { validatePasswordLength } from "../../../../../lib/validation/password";
+import { getAnyMessage } from "../../../../../lib/debug/handleMessages";
 
 const ChangeAddress = (props) => {
 	const user = useSelector((state) => state.user);
 
 	const { handleChange, input } = props;
 
+	const [dataLoaded, setDataLoaded] = useState(false);
 	const [location, setLocation] = useState({
 		country: "",
 		province: "",
@@ -24,7 +27,7 @@ const ChangeAddress = (props) => {
 		state: "",
 		field: "",
 	});
-	const [dataLoaded, setDataLoaded] = useState(false);
+	const [status, setStatus] = useState({});
 
 	const handleAddressChange = (e) => {
 		const { name, value } = e.target;
@@ -36,7 +39,8 @@ const ChangeAddress = (props) => {
 	const handleAddressSubmit = (e) => {
 		e.preventDefault();
 
-		if (!handlePasswordValidation()) return;
+		// if (!handlePasswordValidation()) return;
+		if (!validatePasswordLength(input.password, setStatus)) return;
 
 		// Token for jwt authentication
 		const token = getToken();
@@ -48,56 +52,35 @@ const ChangeAddress = (props) => {
 				...location,
 			})
 			.then((res) => {
-				console.log(res);
-				if (res.data.joiMessage) {
-					const joiMessage = handleMessageValidationv2(
-						{
-							...location,
-						},
-						res,
-						["Country", "Province/State", "City", "Postal Code", "Address"]
-					);
-					setMessage({
-						message: joiMessage,
-						error: res.data.error,
-						state: res.data.state,
-						field: res.data.state,
-					});
-					console.log(joiMessage);
-					console.log(message);
-				} else if (res.data) {
-					const { token, error, state, message } = res.data;
+				if (res && res.data && res.data.token)
+					localStorage.setItem("token", res.data.token);
 
-					// Save token
-					if (token) localStorage.setItem("token", token);
-
-					// Show message
-					setMessage({
-						message,
-						state,
-						error,
-					});
-				} else {
-					console.log(`Impossible.`);
-				}
+				return getAnyMessage({
+					debug: res,
+					placeholderValues: [
+						"Country",
+						"Province/State",
+						"City",
+						"Street address",
+						"Postal code",
+						"Password",
+					],
+					options: {
+						reorganizedKeys: [
+							"country",
+							"province",
+							"city",
+							"address",
+							"postalCode",
+							"password",
+						],
+					},
+					setCB: setStatus,
+				});
 			})
 			.catch((err) => {
 				console.error(err);
 			});
-	};
-
-	const handlePasswordValidation = () => {
-		if (input.password.length < 8) {
-			setMessage({
-				error: true,
-				field: "password",
-				message: "The password must be at least 8 characters long.",
-				state: "danger",
-			});
-			return false;
-		}
-
-		return true;
 	};
 
 	useEffect(() => {
@@ -125,14 +108,11 @@ const ChangeAddress = (props) => {
 		}
 	}, [location, user, dataLoaded]);
 
-	// useEffect(() => {
-	// 	setIsInChildComponent(true);
-	// }, [setIsInChildComponent]);
-
 	return (
 		<div className="changeAddress">
 			<h6>For location services</h6>
-			<Message message={message} setMessage={setMessage} />
+
+			<AlertV2 center={true} setStatus={setStatus} status={status} />
 
 			<form action="submit">
 				<Field
@@ -142,6 +122,8 @@ const ChangeAddress = (props) => {
 					inputOnChange={handleAddressChange}
 					inputType="text"
 					inputValue={location && location.country}
+					setStatus={setStatus}
+					status={status}
 				/>
 				<Field
 					fieldParentDivClasses="input-field"
@@ -150,6 +132,8 @@ const ChangeAddress = (props) => {
 					inputOnChange={handleAddressChange}
 					inputType="text"
 					inputValue={location && location.province}
+					setStatus={setStatus}
+					status={status}
 				/>
 				<Field
 					fieldParentDivClasses="input-field"
@@ -158,6 +142,8 @@ const ChangeAddress = (props) => {
 					inputOnChange={handleAddressChange}
 					inputType="text"
 					inputValue={location && location.city}
+					setStatus={setStatus}
+					status={status}
 				/>
 				<Field
 					fieldParentDivClasses="input-field"
@@ -166,6 +152,8 @@ const ChangeAddress = (props) => {
 					inputOnChange={handleAddressChange}
 					inputType="text"
 					inputValue={location && location.address}
+					setStatus={setStatus}
+					status={status}
 				/>
 				<Field
 					fieldParentDivClasses="input-field"
@@ -174,6 +162,8 @@ const ChangeAddress = (props) => {
 					inputOnChange={handleAddressChange}
 					inputType="text"
 					inputValue={location && location.postalCode}
+					setStatus={setStatus}
+					status={status}
 				/>
 				<Field
 					fieldParentDivClasses="input-field"
@@ -184,32 +174,13 @@ const ChangeAddress = (props) => {
 					inputOnClick={(e) => setMessage({ ...message, error: false })}
 					inputType="password"
 					inputValue={input && input.password}
+					setStatus={setStatus}
+					status={status}
 				/>
 				<button className="btn" type="submit" onClick={handleAddressSubmit}>
 					Save address
 				</button>
 			</form>
-		</div>
-	);
-};
-
-const Message = (props) => {
-	const { message, setMessage } = props;
-
-	return (
-		<div
-			className={"message " + message.state}
-			onClick={() =>
-				setMessage({
-					message: "",
-					error: false,
-					state: "",
-					field: "",
-				})
-			}
-			hidden={!message.message && true}
-		>
-			{message.message && message.message}
 		</div>
 	);
 };

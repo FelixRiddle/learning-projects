@@ -36,7 +36,7 @@ function Login(props) {
 
 				getAnyMessage({
 					input,
-					placeHolderValues: ["Email", "Password"],
+					placeholderValues: ["Email", "Password"],
 					debug: res,
 					setCB: setStatus,
 				});
