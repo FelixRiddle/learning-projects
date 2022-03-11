@@ -19,9 +19,14 @@ exports.validationMessages = {
 	},
 	internalServerError: {
 		error: true,
-		field: "email",
+		field: "",
 		message: "Internal server error",
 		state: "error",
+	},
+	passwordUpdated: {
+		error: false,
+		message: "Password updated successfully.",
+		state: "success",
 	},
 	unspecifiedError: {
 		error: true,

@@ -6,6 +6,9 @@ const { updateUserAsync } = require("../../../lib/user/updateUser");
 const {
 	validateUserAndPasswordAsync,
 } = require("../../../lib/user/validateUser");
+const {
+	validationMessages,
+} = require("../../../lib/validation/validationMessages");
 
 // Change password
 module.exports = changePassword = async (req, res) => {
@@ -24,9 +27,11 @@ module.exports = changePassword = async (req, res) => {
 		});
 		if (error)
 			return res.send({
-				state: "danger",
-				error: true,
-				joiMessage: error.details[0].message,
+				debug: {
+					state: "danger",
+					error: true,
+					joiMessage: error.details[0].message,
+				},
 			});
 
 		let user = await User.findOne({ _id });
@@ -34,12 +39,12 @@ module.exports = changePassword = async (req, res) => {
 		// console.log(user);
 
 		// KSDrjioejroiasiorjsodjfasfdojs;fpdj
-		const result = await validateUserAndPasswordAsync(user, data.password);
+		const result = await validateUserAndPasswordAsync(user, req.body);
 
-		console.log(`Result:`, result);
+		// console.log(`Result:`, result);
 		if (result) {
 			// Passwords are not the same
-			return res.send(result);
+			return res.send({ debug: { ...result } });
 		}
 
 		if (!result) {
@@ -54,11 +59,11 @@ module.exports = changePassword = async (req, res) => {
 			const newToken = await updateUserAsync(query, update);
 			// console.log(`User updated?: ${newToken}`);
 			if (newToken)
-				return res.header("auth-token", newToken).status(200).send({
+				return res.header("auth-token", newToken).send({
 					token: newToken,
-					error: false,
-					state: "success",
-					message: "Password updated successfully.",
+					debug: {
+						...validationMessages.passwordUpdated,
+					},
 				});
 		}
 
@@ -69,6 +74,6 @@ module.exports = changePassword = async (req, res) => {
 		});
 	} catch (err) {
 		console.error(err);
-		res.status(400).send(err);
+		res.send({ debug: { ...validationMessages.internalServerError } });
 	}
 };

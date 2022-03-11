@@ -40,25 +40,29 @@ export const getAnyMessage = ({
 
 	let result = enhancedMessage || normalMessage;
 
-	// console.log(`Debug:`, debug);
-	// console.log(`Enhanced message:`, enhancedMessage);
-	// console.log(`Normal message:`, normalMessage);
-	// console.log(`Result:`, result);
+	console.log(` --- getAnyMessage ---`);
+	console.log(`Debug:`, debug);
+	console.log(`Enhanced message:`, enhancedMessage);
+	console.log(`Normal message:`, normalMessage);
+	console.log(`Result:`, result);
 
 	if (!result)
 		return console.warn("Something went wrong in getAnyMessage function");
-	result.messageCopy = result.message;
-	result.fieldCopy = result.field;
 
 	// Overwrite a field at the end
 	// Because the ids and input keys password and confirmPassword
 	// are different
+	// console.log(`Options:`, options);
+	// console.log(`Overwrite:`, options.overwrite);
 	if (options && options.overwrite) {
 		result = {
 			...result,
 			...options.overwrite,
 		};
 	}
+
+	result.messageCopy = result.message;
+	result.fieldCopy = result.field;
 
 	if (setCB) setCB(result);
 

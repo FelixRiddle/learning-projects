@@ -67,8 +67,8 @@ function PasswordInput(props) {
 
 	// Change the outline color, every time the status is updated
 	useEffect(() => {
-		// console.log(`Current status:`, status);
 		// console.log(`Input name:`, inputName);
+		// console.log(`Field name:`, status && status.fieldCopy);
 		// console.log(
 		// 	`Is this the component with red border?:`,
 		// 	status && status.fieldCopy && status.fieldCopy === inputName

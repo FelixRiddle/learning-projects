@@ -10,25 +10,27 @@ import { getAnyMessage } from "../debug/handleMessages";
 export const confirmPasswordValidation = (
 	password,
 	confirmPassword,
-	setStatusCB
+	setStatusCB,
+	options
 ) => {
 	if (confirmPassword !== password) {
 		getAnyMessage({
 			setCB: setStatusCB,
-			options: { messageType: "passwordsDontMatch" },
+			options: { messageType: "passwordsDontMatch", ...options },
 		});
 		return false;
 	}
 	return true;
 };
 
-/**
+/** Check if password length is less than 8
  *
- * @param {*} password
- * @param {*} setStatusCB
- * @param {*} overwrite
+ * @param {String} password The password
+ * @param {Function} setStatusCB Set state
+ * @param {Object} overwrite Overwrites the field, like confirmPassword
  */
 export const validatePasswordLength = (password, setStatusCB, overwrite) => {
+	// console.log(`Overwrite:`, overwrite);
 	if (password.length < 8) {
 		getAnyMessage({
 			setCB: setStatusCB,

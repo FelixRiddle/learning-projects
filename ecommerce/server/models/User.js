@@ -26,7 +26,6 @@ const userSchema = new mongoose.Schema({
 	email: {
 		type: String,
 		required: true,
-		min: 5,
 	},
 	firstName: {
 		type: String,
@@ -59,7 +58,6 @@ const userSchema = new mongoose.Schema({
 	phoneNumber: {
 		type: String,
 		max: 128,
-		min: 4,
 	},
 	postalCode: {
 		type: String,

@@ -23,6 +23,9 @@ exports.validateUserAndPasswordAsync = async (user, input) => {
 		};
 	}
 
+	// console.log(`Input pasword:`, input.password);
+	// console.log(`User password:`, user.password);
+
 	// Compare passwords
 	const passResult = await bcrypt.compare(input.password, user.password);
 	if (!passResult) {

@@ -12,9 +12,11 @@ import CreateProduct from "../../../../pages/createProduct/CreateProduct";
 import ProductView from "../../../../pages/product_view/ProductView";
 import Test from "../../../../pages/test/Test";
 import ConfirmEmail from "../../../../pages/confirm_email/ConfirmEmail";
+import { objectToArray } from "../../../../../lib/misc/vanilla/transformations";
 
 const Routes = (props) => {
-	const products = useSelector((state) => state.products.products.value);
+	const productsObject = useSelector((state) => state.products);
+	const products = objectToArray(productsObject);
 
 	return (
 		<BrowserRouter>
@@ -28,8 +30,9 @@ const Routes = (props) => {
 				<Route path="/search" element={<Search />} />
 
 				{/* Products */}
-				<Route path="/createProduct" element={<CreateProduct />} />
 				{products &&
+					Object.keys(products).length > 0 &&
+					Object.getPrototypeOf(products) === Object.prototype &&
 					products.map((e) => {
 						// console.log(`Product:`, e);
 						const productUrl = `app/${e._id}/${e.name.replaceAll(" ", "-")}`;
@@ -41,6 +44,7 @@ const Routes = (props) => {
 							/>
 						);
 					})}
+				<Route path="/createProduct" element={<CreateProduct />} />
 
 				<Route path="/confirmEmail/:id" element={<ConfirmEmail />} />
 

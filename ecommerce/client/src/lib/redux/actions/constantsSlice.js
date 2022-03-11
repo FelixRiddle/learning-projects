@@ -4,8 +4,10 @@ export const constantsSlice = createSlice({
 	name: "constants",
 	initialState: {
 		clientUrl: "http://localhost:3000/",
+		clientUrls: [""],
 		maxImages: 20,
 		serverUrl: "http://localhost:3001/",
+		serverUrls: [""],
 	},
 	reducers: {},
 });

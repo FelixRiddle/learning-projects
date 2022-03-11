@@ -72,7 +72,7 @@ module.exports = changeBasicInfo = async (req, res) => {
 		console.error(err);
 		return res.send({
 			debug: {
-				...validationMessages.networkError,
+				...validationMessages.internalServerError,
 			},
 		});
 	}

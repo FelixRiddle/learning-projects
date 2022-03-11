@@ -5,11 +5,15 @@ import { handleMessageValidationv2 } from "../../../../../lib/handleMessageValid
 import Field from "../../../../components/inputs/field/Field";
 import { useSelector } from "react-redux";
 import { getToken } from "../../../../../lib/misc/getToken";
+import { getAnyMessage } from "../../../../../lib/debug/handleMessages";
+import AlertV2 from "../../../../components/alertv2/AlertV2";
+import {
+	confirmPasswordValidation,
+	validatePasswordLength,
+} from "../../../../../lib/validation/password";
 
 const ChangePassword = (props) => {
 	const user = useSelector((state) => state.user);
-
-	const { input } = props;
 
 	const [passwordInfo, setPasswordInfo] = useState({
 		icon: false,
@@ -25,7 +29,8 @@ const ChangePassword = (props) => {
 		newPassword: "",
 		repeatNewPassword: "",
 	});
-	const [resData, setResData] = useState({});
+	// const [resData, setResData] = useState({});
+	const [status, setStatus] = useState({});
 	const [update, setUpdate] = useState({
 		token: "",
 		updated: false,
@@ -40,11 +45,39 @@ const ChangePassword = (props) => {
 
 	const handleChangePasswordsSubmit = (e) => {
 		e.preventDefault();
-		if (!passwordValidation()) return;
-		console.log(`Input:`, input);
-		console.log(`Input id:`, input._id);
-		console.log(`User id: ${user._id}`);
-		console.log(`Password info:`, passwordInfo);
+
+		console.log(`Are the passwords at least 8 characters long?:`);
+		if (!validatePasswordLength(passwordInput.password, setStatus)) return;
+		console.log(`New password`);
+		if (
+			!validatePasswordLength(passwordInput.newPassword, setStatus, {
+				field: "newPassword",
+			})
+		)
+			return;
+		console.log(`Confirm new password`);
+		if (
+			!validatePasswordLength(passwordInput.repeatNewPassword, setStatus, {
+				field: "repeatNewPassword",
+			})
+		)
+			return;
+
+		console.log(`Do passwords match?:`);
+		if (
+			!confirmPasswordValidation(
+				passwordInput.newPassword,
+				passwordInput.repeatNewPassword,
+				setStatus,
+				{ overwrite: { field: "newPassword" } }
+			)
+		)
+			return;
+
+		// if (!passwordValidation()) return;
+		// console.log(`Input:`, passwordInput);
+		// console.log(`User id: ${user._id}`);
+		// console.log(`Password info:`, passwordInfo);
 
 		// Token for jwt authentication
 		const token = getToken();
@@ -55,82 +88,54 @@ const ChangePassword = (props) => {
 				token,
 			})
 			.then((res) => {
-				// The response should be like this
-				if (res.data.joiMessage !== undefined) {
-					const responseMessage = handleMessageValidationv2(
-						{
-							password: passwordInput.password,
-							newPassword: passwordInput.newPassword,
-							repeatNewPassword: passwordInput.repeatNewPassword,
-						},
-						res,
-						["Current password", "New password", "Repeat password"]
-					);
-					setResData({ ...res.data, message: responseMessage });
-				}
-				if (res.data.message !== undefined) {
-					setPasswordInfo({
-						message: res.data.message,
-						error: res.data.error,
-						state: res.data.state,
-						field: res.data.field,
-					});
-					if (!res.data.error && res.data.state === "success") {
-						console.log(`New token saved`);
+				getAnyMessage({
+					debug: res,
+					input: passwordInput,
+					placeHolderValues: ["Password", "New password", "Confirm password"],
+					setCB: setStatus,
+				});
 
-						// Set the new token
-						const newToken = localStorage.setItem("token", res.data.token);
-						setUpdate({ ...update, token: newToken, updated: false });
-					}
-				}
+				if (res.data.token) localStorage.setItem("token", res.data.token);
+
+				return;
+
+				// The response should be like this
+				// if (res.data.joiMessage !== undefined) {
+				// 	const responseMessage = handleMessageValidationv2(
+				// 		{
+				// 			password: passwordInput.password,
+				// 			newPassword: passwordInput.newPassword,
+				// 			repeatNewPassword: passwordInput.repeatNewPassword,
+				// 		},
+				// 		res,
+				// 		["Current password", "New password", "Repeat password"]
+				// 	);
+				// 	// setResData({ ...res.data, message: responseMessage });
+				// }
+				// if (res.data.message !== undefined) {
+				// 	setPasswordInfo({
+				// 		message: res.data.message,
+				// 		error: res.data.error,
+				// 		state: res.data.state,
+				// 		field: res.data.field,
+				// 	});
+				// 	if (!res.data.error && res.data.state === "success") {
+				// 		console.log(`New token saved`);
+
+				// 		// Set the new token
+				// 		const newToken = localStorage.setItem("token", res.data.token);
+				// 		setUpdate({ ...update, token: newToken, updated: false });
+				// 	}
+				// }
 			})
 			.catch((err) => {
 				console.error(err);
 			});
 	};
 
-	const passwordValidation = () => {
-		// Validation
-		if (passwordInput.password.length < 8) {
-			setPasswordInfo({
-				...passwordInfo,
-				state: "danger",
-				field: "password",
-				message: "The password must be 8 characters long.",
-			});
-			return false;
-		}
-
-		if (passwordInput.newPassword.length < 8) {
-			setPasswordInfo({
-				...passwordInfo,
-				state: "danger",
-				field: "newPassword",
-				message: "The password must be 8 characters long.",
-			});
-			return false;
-		}
-
-		if (passwordInput.repeatNewPassword.length < 8) {
-			setPasswordInfo({
-				...passwordInfo,
-				state: "danger",
-				field: "repeatNewPassword",
-				message: "The password must be 8 characters long.",
-			});
-			return false;
-		} else if (passwordInput.newPassword !== passwordInput.repeatNewPassword) {
-			setPasswordInfo({
-				...passwordInfo,
-				state: "danger",
-				field: "",
-				message: "The passwords don't match.",
-			});
-			return false;
-		}
-
-		return true;
-	};
+	// useEffect(() => {
+	// 	if (status) console.log(status);
+	// }, [status]);
 
 	useEffect(() => {
 		// If the token already exists return
@@ -146,21 +151,19 @@ const ChangePassword = (props) => {
 		});
 	}, [update]);
 
-	// useEffect(() => {
-	// 	setIsInChildComponent(true);
-	// }, [setIsInChildComponent]);
-
 	return (
 		<div className="changePasswords">
 			<h6>Change password</h6>
 
-			{/* For error or success messages */}
+			{/* For error or success messages
 			<Messages
 				passwordInfo={passwordInfo}
 				setPasswordInfo={setPasswordInfo}
 				resData={resData}
 				setResData={setResData}
-			/>
+			/> */}
+
+			<AlertV2 center={true} setStatus={setStatus} status={status} />
 
 			<form action="submit">
 				<Field
@@ -177,6 +180,8 @@ const ChangePassword = (props) => {
 					}
 					inputType="password"
 					inputValue={passwordInput && passwordInput.password}
+					setStatus={setStatus}
+					status={status}
 				/>
 				<Field
 					fieldParentDivClasses="input-field"
@@ -192,6 +197,8 @@ const ChangePassword = (props) => {
 					}
 					inputType="password"
 					inputValue={passwordInput && passwordInput.newPassword}
+					setStatus={setStatus}
+					status={status}
 				/>
 				<Field
 					fieldParentDivClasses="input-field"
@@ -207,6 +214,8 @@ const ChangePassword = (props) => {
 					}
 					inputType="password"
 					inputValue={passwordInput && passwordInput.repeatNewPassword}
+					setStatus={setStatus}
+					status={status}
 				/>
 				<button
 					className="btn"

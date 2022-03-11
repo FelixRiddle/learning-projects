@@ -33,7 +33,6 @@
 | | ✅ Status alerts  
 | | ⬜️ Show an error when the maximum amount of images has been reached
 
-
 ✅ Login  
 | ✅ Add show password icon  
 | ✅ Show "You are already logged in" alert  
@@ -127,12 +126,16 @@ the last index of the array).
 | | ⬜️ Option to resend the email  
 | | | ⬜️ Also validate that this option has a limit and cannot be executed often
 
----- Backend ----
+---- Backend ----  
 | ⬜️ Add a log system
 
 ⬜️ Auth  
 | ⬜️ Register  
-| | ⬜️ Email verification process  
+| | ⬜️ Email verification process
+
+--- Components ---
+⬜️ Field  
+| ⬜️ The user is able to reset the content of the field(mainly for the profile)
 
 ---- Others ----  
 | ⬜️ Add diferent website styling options.

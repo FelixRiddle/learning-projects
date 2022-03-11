@@ -58,9 +58,9 @@ module.exports.basicInfoValidation = basicInfoValidation = (data) => {
 	const schema = Joi.object({
 		firstName: Joi.string().min(name).max(max).allow(null, ""),
 		lastName: Joi.string().min(name).max(max).allow(null, ""),
-		email: Joi.string().min(5).email().required(),
+		email: Joi.string().email().required(),
 		password: Joi.string().min(8).max(max).required(),
-		phoneNumber: Joi.string().min(3).max(max).allow(null, ""),
+		phoneNumber: Joi.string().max(max).allow(null, ""),
 		country: Joi.string().max(max).allow(null, ""),
 		province: Joi.string().max(max).allow(null, ""),
 		city: Joi.string().max(max).allow(null, ""),

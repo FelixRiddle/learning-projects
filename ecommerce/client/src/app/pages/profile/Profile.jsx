@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useSelector } from "react-redux";
 
 import "./Profile.css";
@@ -23,6 +23,7 @@ function Profile(props) {
 		joiMessage: "",
 	});
 	const [isLoggedIn, setIsLoggedIn] = useState(false);
+	// const [loading, setLoading] = useState(false);
 	const [passwordInfo, setPasswordInfo] = useState({
 		error: false,
 		errorMessage: "",
@@ -35,7 +36,7 @@ function Profile(props) {
 	});
 	const [updated, setUpdated] = useState(false);
 
-	useEffect(() => {
+	window.onload = () => {
 		// If the error already exists
 		if (isLoggedIn) return;
 
@@ -80,28 +81,7 @@ function Profile(props) {
 				setCB: setStatus,
 			});
 		}
-	}, [user, isLoggedIn, setUserData, status, updated]);
-
-	// useEffect(() => {
-	// 	console.log(`status:`, status);
-	// }, [status]);
-
-	useEffect(() => {
-		// All this "isMounted" stuff is to prevent updating a state
-		// when the component is not mounted, which throws an error.
-		let isMounted = true;
-
-		new Promise((resolve, reject) => {
-			window.onload = resolve();
-		}).then(() => {
-			if (isMounted) {
-			}
-		});
-
-		return () => {
-			isMounted = false;
-		};
-	}, []);
+	};
 
 	return (
 		<div>

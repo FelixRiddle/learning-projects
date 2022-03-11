@@ -2,10 +2,13 @@ import { createSlice } from "@reduxjs/toolkit";
 
 export const productsSlice = createSlice({
 	name: "products",
-	initialState: {},
+	initialState: {
+		// products: {
+		// 	products: [],
+		// },
+	},
 	reducers: {
 		insertProducts: (state, action) => {
-			// state.products = action.payload;
 			for (let key of Object.entries(action.payload)) {
 				state[key[0]] = key[1];
 			}

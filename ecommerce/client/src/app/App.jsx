@@ -8,7 +8,7 @@ import { getAll } from "../lib/products/getProducts";
 import { insertProducts } from "../lib/redux/actions/productsSlice";
 import { insertUser } from "../lib/redux/actions/userSlice";
 import { useUserProducts } from "../lib/products/useUserProducts";
-import { arrayToObject } from "../lib/misc/arrayToObject";
+import { arrayToObject } from "../lib/misc/vanilla/transformations";
 
 export const GlobalContext = React.createContext();
 
