@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 
@@ -13,26 +13,46 @@ function ConfirmEmail() {
 	const [status, setStatus] = useState(
 		getAnyMessage({ options: { messageType: "loading" } })
 	);
-	
-	window.onload = () => {
-		if (params.id && status) {
-			console.log(`Param id: ${params.id}`);
-			axios
-				.post(`${serverUrl}api/users/confirmEmail`, { id: params.id })
-				.then((res) => {
 
-					console.log(`Res data:`, res.data);
-					getAnyMessage({ debug: res, setCB: setStatus });
-				})
-				.catch((err) => {
-					console.warn("Error:", err);
-					getAnyMessage({
-						setCB: setStatus,
-						options: { messageType: "networkError" },
-					});
-				});
-		}
-	};
+	useEffect(() => {
+		let isMounted = true;
+
+		new Promise((resolve, reject) => {
+			window.addEventListener("load", () => {
+				resolve();
+			});
+			window.addEventListener("abort", () => {
+				reject();
+			});
+		})
+			.then(() => {
+				if (isMounted) {
+					if (params.id && status) {
+						console.log(`Param id: ${params.id}`);
+						axios
+							.post(`${serverUrl}api/users/confirmEmail`, { id: params.id })
+							.then((res) => {
+								console.log(`Res data:`, res.data);
+								getAnyMessage({ debug: res, setCB: setStatus });
+							})
+							.catch((err) => {
+								console.warn("Error:", err);
+								getAnyMessage({
+									setCB: setStatus,
+									options: { messageType: "networkError" },
+								});
+							});
+					}
+				}
+			})
+			.catch((err) => {
+				console.error(err);
+			});
+		
+		return () => {
+			isMounted = false;
+		};
+	}, [params, serverUrl, status]);
 
 	return (
 		<div>

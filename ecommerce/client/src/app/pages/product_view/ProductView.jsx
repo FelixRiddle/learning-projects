@@ -74,15 +74,32 @@ function ProductView() {
 		}
 	}, [product]);
 
-	window.onload = () => {
-		setSelectedImage(serverUrl + (images && images[0]));
-		dispatch(
-			insertVariables({
-				...variables,
-				scrollHeight: document.body.scrollHeight,
+	useEffect(() => {
+		let isMounted = true;
+
+		new Promise((resolve, reject) => {
+			window.addEventListener("load", () => resolve());
+			window.addEventListener("abort", () => reject());
+		})
+			.then(() => {
+				if (isMounted) {
+					setSelectedImage(serverUrl + (images && images[0]));
+					dispatch(
+						insertVariables({
+							...variables,
+							scrollHeight: document.body.scrollHeight,
+						})
+					);
+				}
 			})
-		);
-	};
+			.catch((err) => {
+				console.error(err);
+			});
+
+		return () => {
+			isMounted = false;
+		};
+	}, [dispatch, images, serverUrl, variables]);
 
 	return (
 		<div

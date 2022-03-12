@@ -3,11 +3,12 @@ import jwt_decode from "jwt-decode";
 import { useDispatch } from "react-redux";
 
 import "./App.css";
+
 import Navbar from "./components/navbar/Navbar";
+
 import { getAll } from "../lib/products/getProducts";
 import { insertProducts } from "../lib/redux/actions/productsSlice";
 import { insertUser } from "../lib/redux/actions/userSlice";
-// import { useUserProducts } from "../lib/products/useUserProducts";
 import { arrayToObject } from "../lib/misc/vanilla/transformations";
 
 export const GlobalContext = React.createContext();
@@ -15,6 +16,7 @@ export const GlobalContext = React.createContext();
 function App() {
 	const dispatch = useDispatch();
 
+	// TODO: Implement different on production
 	useEffect(() => {
 		getAll("http://localhost:3001/api/products/getAll").then((data) => {
 			// Dispatch products

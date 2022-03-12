@@ -1,13 +1,14 @@
+import { useEffect } from "react";
 import { useSelector } from "react-redux";
 
 import "./Footer.css";
 
 const Footer = () => {
 	const { scrollHeight } = useSelector((state) => state.variables);
-	console.log(
-		`Variables:`,
-		useSelector((state) => state.variables)
-	);
+
+	useEffect(() => {
+		console.log(`Scroll height:`, scrollHeight);
+	}, [scrollHeight]);
 
 	return (
 		<div style={{ position: "absolute", top: scrollHeight }}>

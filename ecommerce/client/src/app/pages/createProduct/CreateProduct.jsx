@@ -95,8 +95,6 @@ function CreateProduct() {
 	};
 
 	const handleResponse = async (res, data, formData) => {
-		console.log(`Response data:`, data);
-
 		return getAnyMessage({
 			debug: res,
 			options: {

@@ -2,10 +2,12 @@ import React, { useState } from "react";
 import { useSelector } from "react-redux";
 
 import "./Profile.css";
-import { get_year_month_day } from "../../../lib/misc/transformDate";
-import { useUserData } from "../../../lib/user/useUserData";
+
 import ProfileRoutes from "./components/profile_routes/ProfileRoutes";
 import AlertV2 from "../../components/alertv2/AlertV2";
+
+import { get_year_month_day } from "../../../lib/misc/transformDate";
+import { useUserData } from "../../../lib/user/useUserData";
 import { getAnyMessage } from "../../../lib/debug/handleMessages";
 
 function Profile(props) {
@@ -20,7 +22,6 @@ function Profile(props) {
 		joiMessage: "",
 	});
 	const [isLoggedIn, setIsLoggedIn] = useState(false);
-	// const [loading, setLoading] = useState(false);
 	const [passwordInfo, setPasswordInfo] = useState({
 		error: false,
 		errorMessage: "",
@@ -33,7 +34,7 @@ function Profile(props) {
 	});
 	const [updated, setUpdated] = useState(false);
 
-	window.onload = () => {
+	window.addEventListener("load", () => {
 		// If the error already exists
 		if (isLoggedIn) return;
 
@@ -78,7 +79,7 @@ function Profile(props) {
 				setCB: setStatus,
 			});
 		}
-	};
+	});
 
 	return (
 		<div>
