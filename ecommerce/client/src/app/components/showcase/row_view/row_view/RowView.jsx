@@ -19,90 +19,85 @@ function RowView(props) {
 
 	// States
 	const [compArray, setCompArray] = useState([]);
-	const [conf, setConf] = useState({
+	const [conf] = useState({
 		defaultMaxItems: 5,
 	});
 	const [updated, setUpdated] = useState(false);
-	const [visibleItems, setVisibleItems] = useState([]);
 
 	// Set visible items
 	useEffect(() => {
 		if (items && !updated) {
-			if (maxItems) {
-				const newVisibleItemsArray = [];
-				for (let i in items) {
-					i = parseInt(i);
-					if (i < maxItems) {
-						newVisibleItemsArray.push(items[i]);
-					} else break;
-				}
-				setVisibleItems(newVisibleItemsArray);
-			} else if (infiniteScroll) {
-				const newVisibleItemsArray = [];
+			if (infiniteScroll) {
+				const newVisibleComponentsArray = [];
 
 				// Get the max items
 				const newMaxItems = maxItems || conf.defaultMaxItems;
-				const showAmount = visibleItems.length + newMaxItems;
+				const showAmount = compArray.length + newMaxItems;
 
 				// Push items in the visible array
-				for (let i = visibleItems.length; i < showAmount; i++) {
+				for (let i = compArray.length; i < showAmount; i++) {
 					i = parseInt(i);
-					if (i === visibleItems.length - 1)
-						setConf((prev) => {
-							return { ...prev, lastElementId: items[i]._id };
-						});
+
 					if (i < showAmount && typeof items[i] !== "undefined") {
-						newVisibleItemsArray.push(items[i]);
+						newVisibleComponentsArray.push(items[i]);
 					} else break;
 				}
 
 				// Set the components
-				const newCompArray = newVisibleItemsArray.map((e, index) => {
-					return (
+				const newCompArray = newVisibleComponentsArray.map((e, index) => {
+					const rowElement = (
 						<RowViewElement
 							key={uuidv4()}
 							{...e}
 							clickFn={() => redirect(e, clientUrl)}
 						/>
 					);
+					return rowElement;
 				});
+
+				// Update the components array
 				setCompArray((prev) => {
 					return [...prev, ...newCompArray];
 				});
+			} else if (maxItems || (conf && conf.defaultMaxItems)) {
+				const newVisibleComponentsArray = [];
 
-				// Put the new items in the state
-				setVisibleItems((prev) => {
-					return [...prev, ...newVisibleItemsArray];
-				});
-			} else if (conf && conf.defaultMaxItems) {
-				const newVisibleItemsArray = [];
+				// Get the max items
+				const newMaxItems = maxItems || conf.defaultMaxItems;
+
 				for (let i in items) {
 					i = parseInt(i);
-					if (i < conf.defaultMaxItems) {
-						newVisibleItemsArray.push(items[i]);
+					if (i < newMaxItems) {
+						newVisibleComponentsArray.push(items[i]);
 					} else break;
 				}
-				setVisibleItems(newVisibleItemsArray);
+				
+				// Set the components
+				const newCompArray = newVisibleComponentsArray.map((e, index) => {
+					const rowElement = (
+						<RowViewElement
+							key={uuidv4()}
+							{...e}
+							clickFn={() => redirect(e, clientUrl)}
+						/>
+					);
+					return rowElement;
+				});
+				
+				setCompArray(newCompArray);
 			}
 
+			// Now it's updated
 			setUpdated(true);
 		}
-	}, [
-		clientUrl,
-		conf,
-		compArray,
-		infiniteScroll,
-		items,
-		maxItems,
-		updated,
-		visibleItems,
-	]);
+	}, [clientUrl, conf, compArray, infiniteScroll, items, maxItems, updated]);
 
 	// Every time items change, set updated to false
 	useEffect(() => {
 		setUpdated(false);
 	}, [items]);
 
+	// Infinite scrolling
 	window.onscroll = () => {
 		if (
 			!compArray ||
@@ -132,10 +127,8 @@ function RowView(props) {
 
 			<nav>
 				{compArray &&
-					compArray[0] &&
-					Object.entries(compArray).length >= 1 &&
+					compArray.length > 0 &&
 					compArray.map((e, index) => {
-						// console.log(`Item:`, e);
 						return e;
 					})}
 			</nav>
