@@ -10,10 +10,10 @@ import variablesReducer from "./actions/variablesSlice";
 export default configureStore({
 	reducer: {
 		counter: counterReducer,
+		constants: constantsReducer,
+		products: productsReducer,
 		user: userReducer,
 		userProducts: userProductsReducer,
-		products: productsReducer,
-		constants: constantsReducer,
 		variables: variablesReducer,
 	},
 });

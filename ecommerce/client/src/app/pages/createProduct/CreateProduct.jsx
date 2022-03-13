@@ -212,11 +212,7 @@ function CreateProduct() {
 				}}
 			>
 				{/* TODO: Move the notification as the user scrolls the page */}
-				<AlertV2
-					center={true}
-					setStatus={setStatus}
-					status={status}
-				/>
+				<AlertV2 center={true} setStatus={setStatus} status={status} />
 
 				<h2 className="title">Create a product</h2>
 				<div className="form-and-image">

@@ -114,9 +114,10 @@ the last index of the array).
 | | | ✅ Error handling  
 | | | ✅ Update data  
 | ⬜️ Products  
+| | ✅ Infinite scroll  
 | | ⬜️ Edit products  
 | | ⬜️ Delete products  
-| ⬜️ Fix Styling  
+| ⬜️ Improve Styling
 
 ⬜️ Register  
 | ✅ Register form  
@@ -141,10 +142,10 @@ the last index of the array).
 | ⬜️ Move the notification as the user scrolls the page
 
 ---- Others ----  
-| ⬜️ Add diferent website styling options.  
+| ⬜️ Add diferent website styling options.
 
 |Hardmode  
-| | ⬜️ Drag and drop with the small images.  
+| | ⬜️ Drag and drop with the small images.
 
 ⬜️ Licenses  
 |⬜️ Add the following attributions  

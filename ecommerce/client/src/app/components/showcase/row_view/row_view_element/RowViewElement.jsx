@@ -31,7 +31,7 @@ function RowViewElement(props) {
 	const { serverUrl } = useSelector((state) => state.constants);
 
 	return (
-		<div className="RowViewElement" onClick={() => clickFn(newProps)}>
+		<div className="RowViewElement" id={_id} onClick={() => clickFn(newProps)}>
 			<p
 				style={{
 					overflow: "hidden",
