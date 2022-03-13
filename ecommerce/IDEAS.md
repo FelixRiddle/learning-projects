@@ -121,8 +121,8 @@ the last index of the array).
 
 ⬜️ Register  
 | ✅ Register form  
-| ⬜️ Feedback  
-| | ⬜️ Status messages  
+| ✅ Feedback  
+| | ✅ Status messages  
 | ⬜️ Email verification  
 | | ⬜️ Option to resend the email  
 | | | ⬜️ Also validate that this option has a limit and cannot be executed often
@@ -133,6 +133,7 @@ the last index of the array).
 ⬜️ Auth  
 | ⬜️ Register  
 | | ⬜️ Email verification process
+
 
 --- Components ---  
 ⬜️ Field  
